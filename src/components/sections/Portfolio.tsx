@@ -30,11 +30,17 @@ export const Portfolio: React.FC = () => {
   return (
     <section
       id="work"
-      className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
       aria-label="Selected Work & Case Studies"
     >
-      {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 border-b border-[#161a22] pb-8">
+      {/* Section Header with scroll reveal */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6 border-b border-[#161a22] pb-8"
+      >
         <div>
           <span className="font-mono text-xs uppercase tracking-widest text-[#0a5cff]">
             {t.label}
@@ -47,11 +53,11 @@ export const Portfolio: React.FC = () => {
           </p>
         </div>
 
-        {/* Category Filters */}
+        {/* Category Filters: Architectural refined buttons */}
         <div
           role="tablist"
           aria-label="Filter portfolio projects"
-          className="flex flex-wrap items-center gap-1.5 p-1 bg-[#101216] border border-[#1e232d] rounded-full self-start md:self-end"
+          className="flex flex-wrap items-center gap-1.5 p-1 bg-[#0c0e12] border border-[#1e232d] rounded-lg self-start md:self-end"
         >
           {categories.map((cat) => (
             <button
@@ -59,9 +65,9 @@ export const Portfolio: React.FC = () => {
               role="tab"
               aria-selected={activeCategory === cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all duration-200 outline-none focus-visible:ring-1 focus-visible:ring-[#0a5cff] ${
+              className={`px-3 sm:px-3.5 py-1.5 rounded-md text-xs font-mono transition-colors duration-150 outline-none focus-visible:ring-1 focus-visible:ring-[#0a5cff] ${
                 activeCategory === cat.id
-                  ? 'bg-[#1b2230] text-white font-semibold shadow-sm'
+                  ? 'bg-[#181f2c] text-white font-semibold border border-[#2b3547]'
                   : 'text-[#8b92a5] hover:text-white'
               }`}
             >
@@ -69,7 +75,7 @@ export const Portfolio: React.FC = () => {
             </button>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Projects Grid */}
       <motion.div layout className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -82,12 +88,13 @@ export const Portfolio: React.FC = () => {
                 layout
                 key={project.slug}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className={`${
                   isFeatured ? 'lg:col-span-12' : 'lg:col-span-6'
-                } group relative rounded-2xl bg-[#0e1014] border border-[#1a1f29] hover:border-[#2b3547] transition-all duration-300 overflow-hidden flex flex-col justify-between`}
+                } group relative rounded-xl bg-[#0c0e12] border border-[#181d26] hover:border-[#2b3548] transition-colors duration-200 overflow-hidden flex flex-col justify-between`}
                 data-cursor="explore"
                 data-cursor-text={language === 'es' ? 'VER CASO ↗' : 'EXPLORE ↗'}
               >
@@ -97,8 +104,7 @@ export const Portfolio: React.FC = () => {
                   className="relative w-full aspect-[16/10] overflow-hidden bg-[#07080a] block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0a5cff]"
                   aria-label={`${project.title} - ${project.categoryLabel[language]}`}
                 >
-                  <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.03]">
-                    {/* Responsive image / vector preview */}
+                  <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.02]">
                     <Image
                       src={project.coverImage}
                       alt={project.title}
@@ -110,17 +116,17 @@ export const Portfolio: React.FC = () => {
                   </div>
 
                   {/* Gradient overlay for contrast */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e1014] via-transparent to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e12] via-transparent to-transparent opacity-80" />
 
                   {/* Badges on Image */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                    <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#0a0c10]/80 backdrop-blur-md border border-white/10 text-[10px] font-mono tracking-wider uppercase text-[#cbd4e6]">
+                    <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-[#07090c]/85 backdrop-blur-md border border-white/10 text-[10px] font-mono tracking-wider uppercase text-[#cbd4e6]">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#0a5cff]" />
                       <span>{t.conceptBadge}</span>
                     </span>
 
                     {project.featured && (
-                      <span className="px-2.5 py-1 rounded-full bg-[#0a5cff]/90 text-white text-[10px] font-mono tracking-wider uppercase">
+                      <span className="px-2.5 py-1 rounded-md bg-[#0a5cff] text-white text-[10px] font-mono tracking-wider uppercase font-semibold">
                         {t.featuredTag}
                       </span>
                     )}

@@ -153,7 +153,7 @@ export const Header: React.FC = () => {
               <Link
                 href="/#contact"
                 onClick={(e) => handleLinkClick(e, '/#contact')}
-                className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-[#0a5cff] hover:bg-[#2672ff] text-white text-xs font-medium tracking-wide transition-all duration-200 shadow-[0_0_15px_rgba(10,92,255,0.3)] hover:shadow-[0_0_20px_rgba(10,92,255,0.5)] outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] focus-visible:ring-[#0a5cff]"
+                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-[#0a5cff] hover:bg-[#1f6bff] text-white text-xs font-mono tracking-wider transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] focus-visible:ring-[#0a5cff]"
               >
                 <span>{t.cta}</span>
               </Link>

@@ -1,73 +1,90 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
   <defs>
-    <linearGradient id="bg-aura" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0e1014" />
-      <stop offset="50%" stop-color="#14171d" />
-      <stop offset="100%" stop-color="#0a0b0d" />
+    <linearGradient id="aura-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#05070a" />
+      <stop offset="45%" stop-color="#0a0e16" />
+      <stop offset="80%" stop-color="#101724" />
+      <stop offset="100%" stop-color="#080a0f" />
     </linearGradient>
-    <linearGradient id="glow-aura" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#0a5cff" stop-opacity="0.15" />
-      <stop offset="100%" stop-color="#0a5cff" stop-opacity="0" />
+
+    <linearGradient id="aura-lantern" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5e6ca" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#e0be88" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#a87938" stop-opacity="0.1" />
     </linearGradient>
-    <linearGradient id="mountain-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1c212a" />
-      <stop offset="100%" stop-color="#101318" />
+
+    <radialGradient id="aura-ambient" cx="620" cy="440" r="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#e8c992" stop-opacity="0.22" />
+      <stop offset="50%" stop-color="#0a5cff" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#05070a" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="ridge-front" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#161c27" />
+      <stop offset="100%" stop-color="#07090d" />
     </linearGradient>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.04" />
-    </pattern>
+
+    <linearGradient id="ridge-back" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e131d" />
+      <stop offset="100%" stop-color="#06070a" />
+    </linearGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="800" fill="url(#bg-aura)" />
-  <rect width="1200" height="800" fill="url(#grid)" />
-  
-  <!-- Subtle lighting aura -->
-  <circle cx="600" cy="280" r="320" fill="url(#glow-aura)" />
+  <!-- Sky Canvas -->
+  <rect width="1200" height="800" fill="url(#aura-sky)" />
 
-  <!-- Mountain Silhouette / Contours -->
-  <path d="M 0 540 Q 280 430, 540 480 T 1000 390 L 1200 440 L 1200 800 L 0 800 Z" fill="url(#mountain-grad)" />
-  <path d="M 0 600 Q 360 520, 680 570 T 1200 520 L 1200 800 L 0 800 Z" fill="#0d0f13" />
-
-  <!-- Architectural Minimal Pavilion Structure -->
-  <g transform="translate(420, 360)">
-    <!-- Base platform -->
-    <rect x="0" y="110" width="360" height="12" fill="#242a35" />
-    <rect x="20" y="122" width="320" height="40" fill="#151920" />
-    
-    <!-- Floor-to-ceiling glass volume -->
-    <rect x="30" y="30" width="300" height="80" fill="#0d1117" stroke="#2a3240" stroke-width="1.5" />
-    <line x1="105" y1="30" x2="105" y2="110" stroke="#1f2633" stroke-width="1.5" />
-    <line x1="180" y1="30" x2="180" y2="110" stroke="#1f2633" stroke-width="1.5" />
-    <line x1="255" y1="30" x2="255" y2="110" stroke="#1f2633" stroke-width="1.5" />
-    
-    <!-- Warm interior light glow -->
-    <rect x="35" y="35" width="65" height="70" fill="#e6d5b8" fill-opacity="0.12" />
-    <rect x="185" y="35" width="65" height="70" fill="#e6d5b8" fill-opacity="0.18" />
-
-    <!-- Overhanging cantilevered roof -->
-    <polygon points="-20,30 380,30 360,20 0,20" fill="#2b3240" />
-    <line x1="-20" y1="30" x2="380" y2="30" stroke="#0a5cff" stroke-width="1" stroke-opacity="0.6" />
+  <!-- Subtle Atmospheric Topographic Contour Lines -->
+  <g stroke="#1d2636" stroke-width="0.75" fill="none" opacity="0.65">
+    <path d="M-50,220 Q240,160 520,190 T1050,140 T1250,160" />
+    <path d="M-50,260 Q200,210 480,240 T980,190 T1250,210" />
+    <path d="M-50,300 Q180,260 440,280 T920,240 T1250,270" />
   </g>
 
-  <!-- Technical Overlay Elements -->
-  <g font-family="monospace" font-size="11" fill="#8892b0" letter-spacing="2">
-    <text x="60" y="70">AURA SANCTUARY // BOUTIQUE HOSP. CONCEPT</text>
-    <text x="60" y="90" fill="#4d5b7c">LAT 45°58'N  LON 07°42'E — ALT 1,840M</text>
-    <text x="1000" y="70" text-anchor="end">SPEC. EDITION 01</text>
-    <text x="1000" y="90" text-anchor="end" fill="#0a5cff">STATUS: CONCEPT</text>
+  <!-- Background Mountain Silhouette -->
+  <path d="M-20,520 L180,390 L340,460 L560,330 L740,410 L920,310 L1120,430 L1220,380 L1220,800 L-20,800 Z" fill="url(#ridge-back)" />
+
+  <!-- Midground Ridge -->
+  <path d="M-20,580 L220,470 L480,530 L690,440 L880,510 L1080,450 L1220,500 L1220,800 L-20,800 Z" fill="url(#ridge-front)" />
+
+  <!-- Warm Sanctuary Interior Glow Behind Pavilion -->
+  <circle cx="620" cy="440" r="280" fill="url(#aura-ambient)" />
+
+  <!-- Cantilevered Alpine Glass & Cedar Pavilion -->
+  <g transform="translate(420, 390)">
+    <!-- Heavy Basalt Foundation -->
+    <polygon points="0,130 380,130 360,170 20,170" fill="#0b0e13" stroke="#222b3a" stroke-width="1.25" />
+
+    <!-- Glazed Volume with Structural Steel Mullions -->
+    <rect x="25" y="45" width="330" height="85" fill="#080b10" stroke="#2b3648" stroke-width="1.5" />
+    <line x1="108" y1="45" x2="108" y2="130" stroke="#1d2532" stroke-width="1.5" />
+    <line x1="190" y1="45" x2="190" y2="130" stroke="#1d2532" stroke-width="1.5" />
+    <line x1="272" y1="45" x2="272" y2="130" stroke="#1d2532" stroke-width="1.5" />
+
+    <!-- Warm Glowing Interior Suites -->
+    <rect x="32" y="52" width="70" height="72" fill="url(#aura-lantern)" />
+    <rect x="196" y="52" width="70" height="72" fill="url(#aura-lantern)" opacity="0.85" />
+
+    <!-- Minimal Silhouette of Guest Standing by Glass -->
+    <rect x="70" y="76" width="7" height="38" rx="2" fill="#07090d" />
+    <circle cx="73.5" cy="71" r="4.5" fill="#07090d" />
+
+    <!-- Sharp Floating Cantilever Roof with Electric Blue Tension Cable -->
+    <polygon points="-30,45 410,45 390,32 -10,32" fill="#18202c" stroke="#2c3749" stroke-width="1.25" />
+    <line x1="-30" y1="45" x2="410" y2="45" stroke="#0a5cff" stroke-width="1.5" />
+    <line x1="190" y1="32" x2="190" y2="-40" stroke="#0a5cff" stroke-width="1" stroke-dasharray="2,3" />
   </g>
 
-  <!-- Precision Crosshairs -->
-  <g stroke="#ffffff" stroke-opacity="0.2" stroke-width="1">
-    <line x1="60" y1="740" x2="90" y2="740" />
-    <line x1="75" y1="725" x2="75" y2="755" />
-    <line x1="1110" y1="740" x2="1140" y2="740" />
-    <line x1="1125" y1="725" x2="1125" y2="755" />
+  <!-- Editorial Spatial Index & Coordinates -->
+  <g font-family="monospace" font-size="11" fill="#8d99ae" letter-spacing="2">
+    <text x="64" y="68">AURA SANCTUARY // BOUTIQUE SANCTUARY</text>
+    <text x="64" y="88" fill="#525d70">ELEVATION 1,840M — NORTH FACE RIDGE</text>
+    <text x="1136" y="68" text-anchor="end" fill="#f4f5f8">CASE STUDY 01</text>
+    <text x="1136" y="88" text-anchor="end" fill="#0a5cff">// CONCEPT</text>
   </g>
 
-  <g font-family="monospace" font-size="10" fill="#6c7893" letter-spacing="1">
-    <text x="105" y="744">MONOLITH SUITE // 84 M² PRIVATE TERRACE</text>
-    <text x="1100" y="744" text-anchor="end">ZYRVAE CASE STUDY</text>
+  <!-- Bottom Technical Grid Legend -->
+  <g font-family="monospace" font-size="10" fill="#525d70" letter-spacing="1.5">
+    <text x="64" y="736">STRUCTURE: PREFABRICATED CROSS-LAMINATED TIMBER &amp; LOW-E SOLAR GLAZING</text>
+    <text x="1136" y="736" text-anchor="end" fill="#8d99ae">ZYRVAE DIGITAL STUDIO</text>
   </g>
 </svg>

@@ -1,46 +1,80 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
   <defs>
-    <linearGradient id="bg-kon" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f0e0c" />
-      <stop offset="50%" stop-color="#141310" />
-      <stop offset="100%" stop-color="#0a0a08" />
+    <linearGradient id="kon-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0907" />
+      <stop offset="50%" stop-color="#12100d" />
+      <stop offset="100%" stop-color="#070605" />
     </linearGradient>
-    <radialGradient id="plate-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#2a251d" stop-opacity="0.8" />
-      <stop offset="100%" stop-color="#0f0e0c" stop-opacity="0" />
+
+    <radialGradient id="kon-plate-depth" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e1a15" stop-opacity="0.9" />
+      <stop offset="70%" stop-color="#100e0b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#080705" stop-opacity="0.95" />
     </radialGradient>
+
+    <linearGradient id="gold-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d4af37" />
+      <stop offset="100%" stop-color="#f5e08c" />
+    </linearGradient>
   </defs>
 
-  <rect width="1200" height="800" fill="url(#bg-kon)" />
+  <!-- Deep Warm Charcoal Canvas -->
+  <rect width="1200" height="800" fill="url(#kon-bg)" />
 
-  <!-- Subtle ambient glow -->
-  <circle cx="600" cy="400" r="340" fill="url(#plate-glow)" />
+  <!-- Textured Matte Ceramic Plate Surface -->
+  <g transform="translate(600, 410)">
+    <!-- Outer Ceramic Rim -->
+    <circle cx="0" cy="0" r="270" fill="url(#kon-plate-depth)" stroke="#2b251d" stroke-width="2.5" />
+    <circle cx="0" cy="0" r="268" fill="none" stroke="#3d3429" stroke-width="0.75" stroke-opacity="0.5" />
 
-  <!-- Ceramic plate abstraction / Botanical arrangement -->
-  <circle cx="600" cy="400" r="220" fill="#171512" stroke="#312a20" stroke-width="2" />
-  <circle cx="600" cy="400" r="150" fill="#12100d" stroke="#251f18" stroke-width="1.5" />
+    <!-- Shallow Basin Depression -->
+    <circle cx="0" cy="0" r="190" fill="#0c0b09" stroke="#1d1913" stroke-width="2" />
 
-  <!-- Botanical precision geometry / Plating concept -->
-  <g stroke="#0a5cff" stroke-width="1.5" fill="none" opacity="0.85">
-    <circle cx="600" cy="400" r="60" stroke-dasharray="3,6" />
-    <circle cx="560" cy="370" r="14" fill="#0a5cff" fill-opacity="0.2" />
-    <circle cx="630" cy="410" r="8" fill="#d4af37" fill-opacity="0.4" stroke="#d4af37" />
-    <circle cx="590" cy="440" r="6" fill="#e2e8f0" fill-opacity="0.5" stroke="#e2e8f0" />
-    <line x1="560" y1="370" x2="630" y2="410" stroke="#4a5568" stroke-width="0.8" />
+    <!-- Radial Plating Guide Axes (Hairline technical kitchen marks) -->
+    <g stroke="#352e24" stroke-width="0.75" stroke-dasharray="2,6" opacity="0.7">
+      <line x1="-180" y1="0" x2="180" y2="0" />
+      <line x1="0" y1="-180" x2="0" y2="180" />
+      <circle cx="0" cy="0" r="110" />
+    </g>
+
+    <!-- Culinary Composition (Micro-Botanical Plating Abstraction) -->
+    <!-- Smoked Emulsion Arc -->
+    <path d="M-80,-20 Q-30,-80 50,-50 Q110,-20 80,40" fill="none" stroke="#2a2319" stroke-width="24" stroke-linecap="round" />
+    <path d="M-80,-20 Q-30,-80 50,-50 Q110,-20 80,40" fill="none" stroke="#18140f" stroke-width="18" stroke-linecap="round" />
+
+    <!-- Botanical Elements & Pine Infusion Drops -->
+    <circle cx="-50" cy="-35" r="16" fill="#1b281f" stroke="#2d4434" stroke-width="1.5" />
+    <circle cx="-45" cy="-32" r="3" fill="#88b594" />
+
+    <circle cx="45" cy="-45" r="11" fill="#2d1d13" stroke="#523422" stroke-width="1.25" />
+    <circle cx="42" cy="-48" r="2.5" fill="#c4784a" />
+
+    <circle cx="75" cy="20" r="14" fill="#161e2b" stroke="#283a54" stroke-width="1.5" />
+    <circle cx="72" cy="18" r="3" fill="#0a5cff" />
+
+    <!-- Saffron & Gold Leaf Flakes -->
+    <polygon points="12,-15 16,-12 14,-8 10,-11" fill="url(#gold-accent)" />
+    <polygon points="-18,22 -14,25 -16,29 -20,26" fill="url(#gold-accent)" />
+    <circle cx="0" cy="5" r="2" fill="#d4af37" />
+
+    <!-- Concentric Drizzle Droplets -->
+    <circle cx="-25" cy="-70" r="3" fill="#4d3e2b" />
+    <circle cx="20" cy="-78" r="4.5" fill="#4d3e2b" />
+    <circle cx="95" cy="-10" r="3.5" fill="#4d3e2b" />
+    <circle cx="35" cy="55" r="4" fill="#4d3e2b" />
   </g>
 
-  <!-- Editorial Typography Overlay -->
-  <g font-family="monospace" font-size="11" fill="#a39682" letter-spacing="2">
-    <text x="70" y="75">KÔN ATELIER // HARVEST CYCLE 04</text>
-    <text x="70" y="95" fill="#695f51">AUTUMN MICRO-BOTANICAL MENU — 11 SERVICES</text>
-    <text x="1130" y="75" text-anchor="end">EXPERIENCE CONCEPT</text>
-    <text x="1130" y="95" text-anchor="end" fill="#0a5cff">STATUS: CONCEPT</text>
+  <!-- Editorial Gastronomy Typography -->
+  <g font-family="monospace" font-size="11" fill="#998973" letter-spacing="2">
+    <text x="64" y="68">KÔN ATELIER // HARVEST CYCLE 04</text>
+    <text x="64" y="88" fill="#5c5142">DEGUSTATION MENU — 11 SERVICES // PRIVATE DINING</text>
+    <text x="1136" y="68" text-anchor="end" fill="#f4f5f8">CASE STUDY 02</text>
+    <text x="1136" y="88" text-anchor="end" fill="#0a5cff">// CONCEPT</text>
   </g>
 
-  <!-- Editorial Course Index -->
-  <g font-family="monospace" font-size="10" fill="#8c7e6b" letter-spacing="1">
-    <text x="70" y="710">COURSE 07 — WILD JUNIPER &amp; CHARRED MATSUTAKE</text>
-    <text x="70" y="730" fill="#574d3f">FERMENTED PINE INFUSION / SEARED CHESTNUT</text>
-    <text x="1130" y="720" text-anchor="end">ZYRVAE CASE STUDY</text>
+  <!-- Bottom Culinary Specifications -->
+  <g font-family="monospace" font-size="10" fill="#5c5142" letter-spacing="1.5">
+    <text x="64" y="736">FOCUS: FORAGED PATAGONIAN FLORA, CHARRED MATSUTAKE &amp; VINEYARD CELLAR CURATION</text>
+    <text x="1136" y="736" text-anchor="end" fill="#998973">ZYRVAE DIGITAL STUDIO</text>
   </g>
 </svg>

@@ -49,14 +49,14 @@ export const Footer: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <Link
                 href="/#contact"
-                className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-[#0a5cff] hover:bg-[#2672ff] text-white text-sm font-medium tracking-wide transition-all shadow-[0_0_25px_rgba(10,92,255,0.35)] hover:shadow-[0_0_35px_rgba(10,92,255,0.55)] outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] focus-visible:ring-[#0a5cff]"
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-lg bg-[#0a5cff] hover:bg-[#1f6bff] text-white text-xs sm:text-sm font-mono tracking-wider transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] focus-visible:ring-[#0a5cff]"
               >
                 <span>{t.closing.button}</span>
               </Link>
 
               <a
                 href="mailto:zyrvae.co@gmail.com"
-                className="inline-flex items-center space-x-2 px-5 py-3 rounded-full bg-[#101216] hover:bg-[#151922] border border-[#1e232d] text-[#cbd4e6] hover:text-white text-sm font-mono transition-all outline-none focus-visible:ring-1 focus-visible:ring-[#0a5cff]"
+                className="inline-flex items-center space-x-2 px-5 py-3 rounded-lg bg-[#0c0e12] hover:bg-[#151922] border border-[#1e232d] text-[#cbd4e6] hover:text-white text-xs sm:text-sm font-mono transition-colors outline-none focus-visible:ring-1 focus-visible:ring-[#0a5cff]"
               >
                 <Mail size={15} className="text-[#0a5cff]" />
                 <span>zyrvae.co@gmail.com</span>

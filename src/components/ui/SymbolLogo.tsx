@@ -7,12 +7,14 @@ interface SymbolLogoProps {
   className?: string;
   size?: number;
   animate?: boolean;
+  showPlate?: boolean;
 }
 
 export const SymbolLogo: React.FC<SymbolLogoProps> = ({
   className = '',
   size = 32,
   animate = false,
+  showPlate = true,
 }) => {
   return (
     <div
@@ -28,27 +30,29 @@ export const SymbolLogo: React.FC<SymbolLogoProps> = ({
         xmlns="http://www.w3.org/2000/svg"
         className="overflow-visible"
       >
-        {/* Background dark subtle plate */}
-        <rect
-          x="2"
-          y="2"
-          width="44"
-          height="44"
-          rx="10"
-          fill="#101216"
-          stroke="#1e232d"
-          strokeWidth="1.5"
-        />
+        {/* Background architectural dark plate (optional) */}
+        {showPlate && (
+          <rect
+            x="2"
+            y="2"
+            width="44"
+            height="44"
+            rx="8"
+            fill="#0e1014"
+            stroke="#1e232d"
+            strokeWidth="1.25"
+          />
+        )}
 
-        {/* Outer assembly guidelines */}
+        {/* Top horizontal line */}
         <motion.line
-          x1="10"
+          x1="11"
           y1="14"
-          x2="38"
+          x2="37"
           y2="14"
           stroke="#f4f5f8"
-          strokeWidth="2.75"
-          strokeLinecap="round"
+          strokeWidth="2.5"
+          strokeLinecap="square"
           initial={animate ? { pathLength: 0 } : false}
           animate={{ pathLength: 1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -56,55 +60,55 @@ export const SymbolLogo: React.FC<SymbolLogoProps> = ({
 
         {/* Diagonal dynamic axis */}
         <motion.line
-          x1="38"
+          x1="37"
           y1="14"
-          x2="10"
+          x2="11"
           y2="34"
           stroke="#f4f5f8"
-          strokeWidth="2.75"
-          strokeLinecap="round"
+          strokeWidth="2.5"
+          strokeLinecap="square"
           initial={animate ? { pathLength: 0 } : false}
           animate={{ pathLength: 1 }}
-          transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
         />
 
-        {/* Base horizontal terminal */}
+        {/* Base horizontal line */}
         <motion.line
-          x1="10"
+          x1="11"
           y1="34"
-          x2="38"
+          x2="37"
           y2="34"
           stroke="#f4f5f8"
-          strokeWidth="2.75"
-          strokeLinecap="round"
+          strokeWidth="2.5"
+          strokeLinecap="square"
           initial={animate ? { pathLength: 0 } : false}
           animate={{ pathLength: 1 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
         />
 
-        {/* Electric blue precision anchor */}
+        {/* Electric blue precision vertical anchor */}
         <motion.line
-          x1="10"
+          x1="11"
           y1="14"
-          x2="10"
-          y2="22"
+          x2="11"
+          y2="21"
           stroke="#0a5cff"
-          strokeWidth="2.75"
-          strokeLinecap="round"
-          initial={animate ? { scaleY: 0 } : false}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 0.4, delay: 0.45 }}
+          strokeWidth="2.5"
+          strokeLinecap="square"
+          initial={animate ? { pathLength: 0 } : false}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 0.4, delay: 0.36, ease: [0.16, 1, 0.3, 1] }}
         />
 
-        {/* Subtle geometric vertex dot */}
+        {/* Geometric datum coordinate dot */}
         <motion.circle
           cx="28"
           cy="24"
-          r="2.5"
+          r="2.25"
           fill="#0a5cff"
           initial={animate ? { scale: 0, opacity: 0 } : false}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.55 }}
+          transition={{ duration: 0.3, delay: 0.45 }}
         />
       </svg>
     </div>

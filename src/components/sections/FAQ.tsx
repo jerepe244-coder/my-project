@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { faqItems } from '@/data/faq';
@@ -9,7 +10,7 @@ import { ChevronDown } from 'lucide-react';
 export const FAQ: React.FC = () => {
   const { language } = useLanguage();
   const t = translations[language].faq;
-  const [openIndex, setOpenIndex] = useState<number | null>(0); // First item open by default for immediate context
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleItem = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -18,12 +19,18 @@ export const FAQ: React.FC = () => {
   return (
     <section
       id="faq"
-      className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-[#161a22]"
+      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-[#161a22]"
       aria-label="Frequently Asked Questions"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
         {/* Left Column */}
-        <div className="lg:col-span-4 space-y-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-4 space-y-4"
+        >
           <span className="font-mono text-xs uppercase tracking-widest text-[#0a5cff]">
             {t.label}
           </span>
@@ -34,7 +41,7 @@ export const FAQ: React.FC = () => {
             {t.subtitle}
           </p>
 
-          <div className="pt-6">
+          <div className="pt-4 sm:pt-6">
             <p className="font-mono text-xs text-[#515768] uppercase">
               {t.moreQuestions}
             </p>
@@ -45,17 +52,23 @@ export const FAQ: React.FC = () => {
               {t.contactUs}
             </a>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right Column: Accordion Items */}
-        <div className="lg:col-span-8 divide-y divide-[#1e232d] border-t border-b border-[#1e232d]">
+        {/* Right Column: Accordion Items with fluid height animations */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-8 divide-y divide-[#1e232d] border-t border-b border-[#1e232d]"
+        >
           {faqItems.map((item, idx) => {
             const isOpen = openIndex === idx;
             const contentId = `faq-answer-${item.id}`;
             const headerId = `faq-header-${item.id}`;
 
             return (
-              <div key={item.id} className="py-6">
+              <div key={item.id} className="py-5 sm:py-6">
                 <h3>
                   <button
                     type="button"
@@ -69,30 +82,37 @@ export const FAQ: React.FC = () => {
                       {item.question[language]}
                     </span>
                     <span
-                      className={`p-1.5 rounded-full bg-[#12151b] border border-[#1e232d] text-[#8b92a5] group-hover:text-white transition-transform duration-300 shrink-0 ${
-                        isOpen ? 'rotate-180 bg-[#1c2230] text-[#0a5cff]' : ''
+                      className={`p-1.5 rounded-lg bg-[#101318] border border-[#1e232d] text-[#8b92a5] group-hover:text-white transition-all duration-200 shrink-0 ${
+                        isOpen ? 'rotate-180 bg-[#161c26] text-[#0a5cff] border-[#0a5cff]/40' : ''
                       }`}
                     >
-                      <ChevronDown size={16} />
+                      <ChevronDown size={15} />
                     </span>
                   </button>
                 </h3>
 
-                <div
-                  id={contentId}
-                  role="region"
-                  aria-labelledby={headerId}
-                  hidden={!isOpen}
-                  className={`mt-4 text-xs sm:text-sm text-[#8b92a5] font-sans leading-relaxed pl-1 transition-all ${
-                    isOpen ? 'block' : 'hidden'
-                  }`}
-                >
-                  <p>{item.answer[language]}</p>
-                </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      id={contentId}
+                      role="region"
+                      aria-labelledby={headerId}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pt-3 pb-2 text-xs sm:text-sm text-[#8b92a5] font-sans leading-relaxed pl-1">
+                        <p>{item.answer[language]}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

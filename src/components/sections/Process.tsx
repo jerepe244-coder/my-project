@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { processStages } from '@/data/process';
@@ -13,11 +14,17 @@ export const Process: React.FC = () => {
   return (
     <section
       id="process"
-      className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-[#161a22]"
+      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-[#161a22]"
       aria-label="Approach and Methodology"
     >
       {/* Header */}
-      <div className="mb-20 max-w-3xl">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="mb-16 sm:mb-20 max-w-3xl"
+      >
         <span className="font-mono text-xs uppercase tracking-widest text-[#0a5cff]">
           {t.label}
         </span>
@@ -27,17 +34,24 @@ export const Process: React.FC = () => {
         <p className="text-sm sm:text-base text-[#8b92a5] font-sans mt-4 leading-relaxed">
           {t.subtitle}
         </p>
-      </div>
+      </motion.div>
 
-      {/* Vertical Editorial Timeline */}
-      <div className="relative border-l border-[#1e232d] ml-4 sm:ml-8 pl-6 sm:pl-12 space-y-16">
-        {processStages.map((stage) => (
-          <div key={stage.id} className="relative group">
+      {/* Vertical Editorial Timeline with progressive entry */}
+      <div className="relative border-l border-[#1e232d] ml-3 sm:ml-8 pl-5 sm:pl-12 space-y-12 sm:space-y-16">
+        {processStages.map((stage, idx) => (
+          <motion.div
+            key={stage.id}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className="relative group"
+          >
             {/* Timeline Marker Dot */}
-            <div className="absolute -left-[31px] sm:-left-[55px] top-1.5 w-3.5 h-3.5 rounded-full bg-[#101216] border-2 border-[#1e232d] group-hover:border-[#0a5cff] group-hover:bg-[#0a5cff] transition-all" />
+            <div className="absolute -left-[27px] sm:-left-[55px] top-2 w-3.5 h-3.5 rounded-full bg-[#0a0c10] border-2 border-[#1e232d] group-hover:border-[#0a5cff] group-hover:bg-[#0a5cff] transition-colors duration-200" />
 
-            {/* Stage Content */}
-            <div className="bg-[#0e1014] border border-[#1a1f29] rounded-2xl p-6 sm:p-8 hover:border-[#2b3547] transition-all">
+            {/* Stage Content Card */}
+            <div className="bg-[#0c0e12] border border-[#181d26] rounded-xl p-6 sm:p-8 hover:border-[#2b3547] transition-all duration-200">
               {/* Stage Header */}
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-[#161a22] pb-4">
                 <div className="flex items-baseline space-x-3">
@@ -77,7 +91,7 @@ export const Process: React.FC = () => {
                 </div>
 
                 {/* Key Deliverables */}
-                <div className="md:col-span-5 bg-[#12151d] p-4 sm:p-5 rounded-xl border border-[#1d2330] space-y-3">
+                <div className="md:col-span-5 bg-[#0e1117] p-4 sm:p-5 rounded-lg border border-[#1c222e] space-y-3">
                   <h4 className="font-mono text-xs text-[#0a5cff] uppercase tracking-wider">
                     // {t.deliverablesLabel}
                   </h4>
@@ -92,16 +106,22 @@ export const Process: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
       {/* Note on Timelines */}
-      <div className="mt-12 ml-4 sm:ml-8 pl-6 sm:pl-12 text-xs font-mono text-[#515768]">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="mt-12 ml-3 sm:ml-8 pl-5 sm:pl-12 text-xs font-mono text-[#515768]"
+      >
         {language === 'es'
           ? '* Los plazos de entrega y entregables específicos se acuerdan de acuerdo con la escala y complejidad técnica de cada proyecto.'
           : '* Exact delivery milestones and specific assets are scheduled according to individual project scale and engineering requirements.'}
-      </div>
+      </motion.div>
     </section>
   );
 };

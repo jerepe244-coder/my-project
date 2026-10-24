@@ -1,58 +1,87 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
   <defs>
-    <linearGradient id="bg-vectra" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0a0c0e" />
-      <stop offset="100%" stop-color="#12161c" />
+    <linearGradient id="vectra-canvas" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07090c" />
+      <stop offset="50%" stop-color="#0c1017" />
+      <stop offset="100%" stop-color="#06080b" />
     </linearGradient>
-    <linearGradient id="monolith-face1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#242a35" />
-      <stop offset="100%" stop-color="#171b22" />
+
+    <!-- Raw Board-Formed Concrete Shading -->
+    <linearGradient id="concrete-light" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a3342" />
+      <stop offset="100%" stop-color="#19202b" />
     </linearGradient>
-    <linearGradient id="monolith-face2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#313948" />
-      <stop offset="100%" stop-color="#1e242f" />
+
+    <linearGradient id="concrete-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f2633" />
+      <stop offset="100%" stop-color="#121720" />
     </linearGradient>
-    <pattern id="arch-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#252c38" stroke-width="0.75" />
+
+    <linearGradient id="concrete-top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b485d" />
+      <stop offset="100%" stop-color="#252f3f" />
+    </linearGradient>
+
+    <pattern id="arch-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#161e2a" stroke-width="0.75" />
+      <circle cx="0" cy="0" r="1" fill="#222d3e" />
     </pattern>
   </defs>
 
-  <rect width="1200" height="800" fill="url(#bg-vectra)" />
-  <rect width="1200" height="800" fill="url(#arch-grid)" opacity="0.6" />
+  <!-- Technical Grid Background -->
+  <rect width="1200" height="800" fill="url(#vectra-canvas)" />
+  <rect width="1200" height="800" fill="url(#arch-grid)" />
 
-  <!-- Monolithic Isometric Building Projection -->
+  <!-- Monolithic Brutalist Civic Archive & Pavilion -->
   <g transform="translate(600, 420)">
-    <!-- Base podium -->
-    <polygon points="-360,120 0,220 360,120 0,20" fill="#14171e" stroke="#2c3444" stroke-width="1.5" />
-    
-    <!-- Left Tower -->
-    <polygon points="-240,80 -100,120 -100,-220 -240,-260" fill="url(#monolith-face1)" stroke="#394459" stroke-width="1.5" />
-    <polygon points="-100,120 40,80 40,-260 -100,-220" fill="url(#monolith-face2)" stroke="#394459" stroke-width="1.5" />
-    <polygon points="-240,-260 -100,-220 40,-260 -100,-300" fill="#3d495f" stroke="#0a5cff" stroke-width="1.5" />
+    <!-- Sub-grade podium foundation -->
+    <polygon points="-380,140 0,250 380,140 0,30" fill="#090c10" stroke="#1f2735" stroke-width="1.5" />
 
-    <!-- Right Tower / Bridge -->
-    <polygon points="60,80 200,40 200,-160 60,-120" fill="url(#monolith-face1)" stroke="#394459" stroke-width="1.5" />
-    <polygon points="200,40 320,70 320,-130 200,-160" fill="url(#monolith-face2)" stroke="#394459" stroke-width="1.5" />
-    <polygon points="60,-120 200,-160 320,-130 180,-90" fill="#323c4e" stroke="#2c3545" stroke-width="1.5" />
+    <!-- West Monolith (Primary Tower) -->
+    <polygon points="-240,100 -90,145 -90,-220 -240,-265" fill="url(#concrete-dark)" stroke="#323e52" stroke-width="1.5" />
+    <polygon points="-90,145 60,100 60,-265 -90,-220" fill="url(#concrete-light)" stroke="#323e52" stroke-width="1.5" />
+    <polygon points="-240,-265 -90,-220 60,-265 -90,-310" fill="url(#concrete-top)" stroke="#0a5cff" stroke-width="1.5" />
 
-    <!-- Structural cantilever bridge connecting them -->
-    <polygon points="-60,-60 120,-110 120,-80 -60,-30" fill="#0a5cff" fill-opacity="0.25" stroke="#0a5cff" stroke-width="1.5" />
+    <!-- Vertical Board-Form Striations on Main Monolith -->
+    <line x1="-190" y1="115" x2="-190" y2="-250" stroke="#161c26" stroke-width="1" />
+    <line x1="-140" y1="130" x2="-140" y2="-235" stroke="#161c26" stroke-width="1" />
+    <line x1="-40" y1="130" x2="-40" y2="-235" stroke="#252f3f" stroke-width="1" />
+    <line x1="10" y1="115" x2="10" y2="-250" stroke="#252f3f" stroke-width="1" />
 
-    <!-- Measurement lines & datum marks -->
-    <line x1="-270" y1="80" x2="-270" y2="-260" stroke="#0a5cff" stroke-width="1" stroke-dasharray="3,3" />
-    <text x="-285" y="-90" font-family="monospace" font-size="10" fill="#0a5cff" text-anchor="end">+112.4M</text>
+    <!-- East Monolith (Secondary Cantilever Archive) -->
+    <polygon points="90,90 230,50 230,-150 90,-110" fill="url(#concrete-dark)" stroke="#2b3547" stroke-width="1.5" />
+    <polygon points="230,50 340,80 340,-120 230,-150" fill="url(#concrete-light)" stroke="#2b3547" stroke-width="1.5" />
+    <polygon points="90,-110 230,-150 340,-120 200,-80" fill="url(#concrete-top)" stroke="#2b3547" stroke-width="1.5" />
+
+    <!-- Tectonic Suspended Glass & Steel Skybridge -->
+    <polygon points="-40,-50 140,-100 140,-65 -40,-15" fill="#0a5cff" fill-opacity="0.22" stroke="#0a5cff" stroke-width="1.5" />
+    <line x1="50" y1="-75" x2="50" y2="-40" stroke="#ffffff" stroke-width="1" stroke-opacity="0.6" />
+
+    <!-- Dimension Datum Marks & Elevation Ticks -->
+    <line x1="-280" y1="100" x2="-280" y2="-265" stroke="#0a5cff" stroke-width="1" stroke-dasharray="3,3" />
+    <line x1="-290" y1="100" x2="-270" y2="100" stroke="#0a5cff" stroke-width="1.25" />
+    <line x1="-290" y1="-265" x2="-270" y2="-265" stroke="#0a5cff" stroke-width="1.25" />
+    <text x="-300" y="-80" font-family="monospace" font-size="11" fill="#0a5cff" text-anchor="end">+108.5M</text>
+
+    <!-- Base axis coordinate crosshair -->
+    <g stroke="#0a5cff" stroke-width="1" opacity="0.8">
+      <circle cx="0" cy="250" r="4" fill="none" />
+      <line x1="-12" y1="250" x2="12" y2="250" />
+      <line x1="0" y1="238" x2="0" y2="262" />
+    </g>
   </g>
 
-  <!-- Headers & Metadata -->
-  <g font-family="monospace" font-size="11" fill="#7d8ba1" letter-spacing="2">
-    <text x="60" y="70">VECTRA ARCHITECTS // MONOLITH 04</text>
-    <text x="60" y="90" fill="#465163">BRUTALIST PAVILION &amp; CIVIC ARCHIVE</text>
-    <text x="1140" y="70" text-anchor="end">TECTONIC PRACTICE</text>
-    <text x="1140" y="90" text-anchor="end" fill="#0a5cff">STATUS: CONCEPT</text>
+  <!-- Editorial Architectural Metadata -->
+  <g font-family="monospace" font-size="11" fill="#8d9eb5" letter-spacing="2">
+    <text x="64" y="68">VECTRA ARCHITECTS // MONOLITH 04</text>
+    <text x="64" y="88" fill="#4d5a6b">BRUTALIST ARCHIVE &amp; SPATIAL RESEARCH PRACTICE</text>
+    <text x="1136" y="68" text-anchor="end" fill="#f4f5f8">CASE STUDY 03</text>
+    <text x="1136" y="88" text-anchor="end" fill="#0a5cff">// CONCEPT</text>
   </g>
 
-  <g font-family="monospace" font-size="10" fill="#5c697e" letter-spacing="1">
-    <text x="60" y="730">PROJECT V-8891 // 14,200 M² REINFORCED BOARD-FORMED CONCRETE</text>
-    <text x="1140" y="730" text-anchor="end">ZYRVAE CASE STUDY</text>
+  <!-- Bottom Material & Specification Schedule -->
+  <g font-family="monospace" font-size="10" fill="#4d5a6b" letter-spacing="1.5">
+    <text x="64" y="736">MATERIALS: HYDRAULIC CONCRETE, WEATHERED COR-TEN STEEL &amp; STRUCTURAL SILICA</text>
+    <text x="1136" y="736" text-anchor="end" fill="#8d9eb5">ZYRVAE DIGITAL STUDIO</text>
   </g>
 </svg>
