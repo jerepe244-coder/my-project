@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-kon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0e0c" />
+      <stop offset="50%" stop-color="#141310" />
+      <stop offset="100%" stop-color="#0a0a08" />
+    </linearGradient>
+    <radialGradient id="plate-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2a251d" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0f0e0c" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#bg-kon)" />
+
+  <!-- Subtle ambient glow -->
+  <circle cx="600" cy="400" r="340" fill="url(#plate-glow)" />
+
+  <!-- Ceramic plate abstraction / Botanical arrangement -->
+  <circle cx="600" cy="400" r="220" fill="#171512" stroke="#312a20" stroke-width="2" />
+  <circle cx="600" cy="400" r="150" fill="#12100d" stroke="#251f18" stroke-width="1.5" />
+
+  <!-- Botanical precision geometry / Plating concept -->
+  <g stroke="#0a5cff" stroke-width="1.5" fill="none" opacity="0.85">
+    <circle cx="600" cy="400" r="60" stroke-dasharray="3,6" />
+    <circle cx="560" cy="370" r="14" fill="#0a5cff" fill-opacity="0.2" />
+    <circle cx="630" cy="410" r="8" fill="#d4af37" fill-opacity="0.4" stroke="#d4af37" />
+    <circle cx="590" cy="440" r="6" fill="#e2e8f0" fill-opacity="0.5" stroke="#e2e8f0" />
+    <line x1="560" y1="370" x2="630" y2="410" stroke="#4a5568" stroke-width="0.8" />
+  </g>
+
+  <!-- Editorial Typography Overlay -->
+  <g font-family="monospace" font-size="11" fill="#a39682" letter-spacing="2">
+    <text x="70" y="75">KÔN ATELIER // HARVEST CYCLE 04</text>
+    <text x="70" y="95" fill="#695f51">AUTUMN MICRO-BOTANICAL MENU — 11 SERVICES</text>
+    <text x="1130" y="75" text-anchor="end">EXPERIENCE CONCEPT</text>
+    <text x="1130" y="95" text-anchor="end" fill="#0a5cff">STATUS: CONCEPT</text>
+  </g>
+
+  <!-- Editorial Course Index -->
+  <g font-family="monospace" font-size="10" fill="#8c7e6b" letter-spacing="1">
+    <text x="70" y="710">COURSE 07 — WILD JUNIPER &amp; CHARRED MATSUTAKE</text>
+    <text x="70" y="730" fill="#574d3f">FERMENTED PINE INFUSION / SEARED CHESTNUT</text>
+    <text x="1130" y="720" text-anchor="end">ZYRVAE CASE STUDY</text>
+  </g>
+</svg>

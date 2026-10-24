@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-v-d2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090a0d" />
+      <stop offset="100%" stop-color="#12151c" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg-v-d2)" />
+
+  <g font-family="monospace" font-size="11" fill="#7d8ba1" letter-spacing="2">
+    <text x="80" y="80">MATERIAL MATRIX &amp; TECTONIC ASSEMBLY</text>
+  </g>
+
+  <!-- Materials breakdown -->
+  <g transform="translate(80, 130)">
+    <!-- Plate 1 -->
+    <rect x="0" y="0" width="320" height="500" fill="#1b2029" stroke="#2d3544" stroke-width="1.5" />
+    <rect x="25" y="25" width="270" height="200" fill="#242b37" />
+    <text x="25" y="270" font-family="monospace" font-size="11" fill="#0a5cff">SPEC-01</text>
+    <text x="25" y="300" font-family="sans-serif" font-size="18" fill="#e2e8f0">Cast-in-Place Concrete</text>
+    <text x="25" y="330" font-family="sans-serif" font-size="13" fill="#818ea4">Rough Douglas fir board texture with exposed tie-rod holes and matte hydrophobic sealant.</text>
+
+    <!-- Plate 2 -->
+    <rect x="360" y="0" width="320" height="500" fill="#1b2029" stroke="#2d3544" stroke-width="1.5" />
+    <rect x="385" y="25" width="270" height="200" fill="#15171d" />
+    <text x="385" y="270" font-family="monospace" font-size="11" fill="#0a5cff">SPEC-02</text>
+    <text x="385" y="300" font-family="sans-serif" font-size="18" fill="#e2e8f0">Blackened Structural Steel</text>
+    <text x="385" y="330" font-family="sans-serif" font-size="13" fill="#818ea4">Hot-rolled wide-flange I-beams with natural oxidation patina and hand-waxed finish.</text>
+
+    <!-- Plate 3 -->
+    <rect x="720" y="0" width="320" height="500" fill="#1b2029" stroke="#2d3544" stroke-width="1.5" />
+    <rect x="745" y="25" width="270" height="200" fill="#101824" stroke="#0a5cff" stroke-width="1" />
+    <text x="745" y="270" font-family="monospace" font-size="11" fill="#0a5cff">SPEC-03</text>
+    <text x="745" y="300" font-family="sans-serif" font-size="18" fill="#e2e8f0">Low-Iron Acoustic Glass</text>
+    <text x="745" y="330" font-family="sans-serif" font-size="13" fill="#818ea4">Triple-glazed laminated panels with non-reflective coating for seamless daylight clarity.</text>
+  </g>
+</svg>

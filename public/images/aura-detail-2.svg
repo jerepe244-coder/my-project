@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-aura-detail2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c0e12" />
+      <stop offset="100%" stop-color="#141820" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg-aura-detail2)" />
+
+  <!-- Abstract Materiality: Basalt Stone & Wood Geometry -->
+  <g transform="translate(180, 160)">
+    <!-- Slab 1: Dark Volcanic Rock -->
+    <rect x="0" y="0" width="240" height="420" fill="#181c24" stroke="#252b38" stroke-width="2" />
+    <text x="25" y="380" font-family="monospace" font-size="11" fill="#717f99">MAT. 01</text>
+    <text x="25" y="400" font-family="monospace" font-size="13" fill="#cbd4e6">PORPHYRY BASALT</text>
+
+    <!-- Slab 2: Brushed Raw Zinc -->
+    <rect x="290" y="60" width="240" height="360" fill="#1e232e" stroke="#0a5cff" stroke-width="1.5" />
+    <text x="315" y="380" font-family="monospace" font-size="11" fill="#717f99">MAT. 02</text>
+    <text x="315" y="400" font-family="monospace" font-size="13" fill="#cbd4e6">PATINATED ZINC</text>
+
+    <!-- Slab 3: Charred Larch Wood -->
+    <rect x="580" y="120" width="240" height="300" fill="#13161c" stroke="#2b3140" stroke-width="2" />
+    <text x="605" y="380" font-family="monospace" font-size="11" fill="#717f99">MAT. 03</text>
+    <text x="605" y="400" font-family="monospace" font-size="13" fill="#cbd4e6">SHOU SUGI BAN</text>
+  </g>
+
+  <g font-family="monospace" font-size="11" fill="#8892b0" letter-spacing="2">
+    <text x="180" y="110">MATERIAL HONESTY PALETTE // SENSORY TACTILITY STUDY</text>
+  </g>
+</svg>

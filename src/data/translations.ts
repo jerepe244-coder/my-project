@@ -1,0 +1,394 @@
+export const translations = {
+  es: {
+    nav: {
+      work: 'Portfolio',
+      services: 'Servicios',
+      process: 'Proceso',
+      studio: 'Estudio',
+      faq: 'FAQ',
+      cta: 'Iniciar un proyecto ↗',
+      menu: 'Menú',
+      close: 'Cerrar',
+      skipToContent: 'Saltar al contenido principal',
+    },
+    hero: {
+      badge: 'Estudio Digital Independiente',
+      headlinePart1: 'Digital,',
+      headlinePart2: 'con intención.',
+      subhead:
+        'Diseñamos y desarrollamos sitios web distintivos para marcas que quieren destacar, transmitir confianza y convertir visitas en oportunidades.',
+      ctaPrimary: 'Iniciar un proyecto ↗',
+      ctaSecondary: 'Ver casos de estudio ↓',
+      scrollPrompt: 'Desplazar para explorar',
+    },
+    portfolio: {
+      label: '01 / Trabajo Seleccionado',
+      title: 'Proyectos y conceptos digitales.',
+      subtitle:
+        'Exploración de sistemas visuales y técnicos diseñados para resolver necesidades comerciales específicas.',
+      filterAll: 'Todos',
+      filterHospitality: 'Hospitalidad',
+      filterGastronomy: 'Gastronomía',
+      filterArchitecture: 'Arquitectura',
+      conceptBadge: 'Proyecto conceptual',
+      viewProject: 'Ver caso de estudio ↗',
+      featuredTag: 'Destacado',
+      tryDemo: 'Probar demo interactiva',
+    },
+    services: {
+      label: '02 / Capacidades',
+      title: 'Servicios orientados a objetivos comerciales.',
+      subtitle:
+        'Conectamos las necesidades reales de tu negocio con soluciones visuales y de ingeniería web a medida.',
+      cta: 'Consultar por un servicio ↗',
+    },
+    process: {
+      label: '03 / Metodología',
+      title: 'Un proceso deliberado y transparente.',
+      subtitle:
+        'Cada proyecto se estructura en etapas claras, con entregables precisos y comunicación directa.',
+      stageLabel: 'Etapa',
+      objectiveLabel: 'Objetivo',
+      deliverablesLabel: 'Entregables clave',
+    },
+    studio: {
+      label: '04 / Sobre el Estudio',
+      headline: 'Independientes por diseño. Con una mirada internacional.',
+      paragraph1:
+        'ZYRVAE nace como un estudio digital independiente enfocado en la precisión técnica y la sobriedad estética. No creemos en plantillas genéricas ni en procesos inflados.',
+      paragraph2:
+        'Operamos con atención minuciosa al detalle tipográfico, interacción fluida y código limpio. Trabajamos directamente con fundadores y líderes de negocios de Argentina y el mundo para transformar su presencia digital en una ventaja competitiva sostenible.',
+      principles: [
+        {
+          title: 'Diseño con intención',
+          desc: 'Cada decisión visual, desde el espaciado hasta la jerarquía tipográfica, responde a un objetivo de comunicación concreto.',
+        },
+        {
+          title: 'Precisión técnica',
+          desc: 'Construimos interfaces rápidas, accesibles y robustas que funcionan sin fallas en todos los dispositivos.',
+        },
+        {
+          title: 'Comunicación directa',
+          desc: 'Sin intermediarios. Trato directo, alcance definido antes de comenzar y honestidad en cada fase.',
+        },
+      ],
+    },
+    faq: {
+      label: '05 / Preguntas Frecuentes',
+      title: 'Claridad desde el primer momento.',
+      subtitle:
+        'Respuestas transparentes sobre cómo colaboramos, tiempos y requerimientos técnicos.',
+      moreQuestions: '¿Tenés una consulta específica?',
+      contactUs: 'Escribinos directamente a zyrvae.co@gmail.com ↗',
+    },
+    form: {
+      label: '06 / Iniciar un Proyecto',
+      title: 'Conversemos sobre tu próximo sitio.',
+      subtitle:
+        'Completá este brief progresivo para comprender tu propuesta de valor, requerimientos y alcance.',
+      step1Title: '01. Información esencial',
+      step1Desc: 'Datos de contacto para responderte de forma directa.',
+      step2Title: '02. Sobre el proyecto',
+      step2Desc: 'Objetivos, tipo de desarrollo y funcionalidades deseadas.',
+      step3Title: '03. Alcance y presupuesto',
+      step3Desc: 'Tiempos estimados y rango de inversión para una cotización certera.',
+      stepReviewTitle: '04. Revisión y confirmación',
+      stepReviewDesc: 'Verificá los datos ingresados antes de realizar el envío.',
+      
+      fields: {
+        name: 'Nombre completo *',
+        namePlaceholder: 'Ej. Martina Rossi',
+        email: 'Email profesional *',
+        emailPlaceholder: 'nombre@empresa.com',
+        brand: 'Marca o empresa *',
+        brandPlaceholder: 'Nombre de tu negocio o proyecto',
+        country: 'País *',
+        countryPlaceholder: 'Ej. Argentina, España, México...',
+        
+        projectType: 'Tipo de proyecto *',
+        projectTypeOptions: {
+          hospitality: 'Hospitalidad / Hotel / Alojamiento boutique',
+          gastronomy: 'Gastronomía / Restaurante / Bar / Atelier',
+          architecture: 'Arquitectura / Diseño espacial / Interiorismo',
+          corporate: 'Negocio de servicios / Web corporativa',
+          ecommerce: 'Comercio digital / Tienda especializada',
+          portfolio: 'Portfolio / Estudio profesional / Personal',
+          custom: 'Experiencia personalizada / Otro',
+        },
+        mainGoal: 'Objetivo principal *',
+        mainGoalPlaceholder: 'Ej. Elevar la percepción de marca, captar clientes internacionales, lanzar una nueva propuesta...',
+        targetAudience: 'Público al que se dirige',
+        targetAudiencePlaceholder: 'Ej. Clientes premium, estudios de diseño, empresas B2B...',
+        features: 'Funcionalidades requeridas (seleccioná las que apliquen)',
+        projectDescription: 'Breve descripción del proyecto *',
+        projectDescriptionPlaceholder: 'Contanos el contexto del proyecto, qué problemas buscás resolver y qué esperás lograr...',
+        references: 'Sitios de referencia o inspiración (opcional)',
+        referencesPlaceholder: 'Enlaces de páginas que te gusten por estética o funcionamiento...',
+        
+        budgetRange: 'Rango estimado de presupuesto *',
+        budgetOptions: {
+          tier1: 'USD 800 — USD 1,500',
+          tier2: 'USD 1,500 — USD 3,000',
+          tier3: 'USD 3,000 — USD 6,000',
+          tier4: 'Más de USD 6,000 / A definir en consulta',
+        },
+        timeline: 'Fecha estimada de lanzamiento *',
+        timelineOptions: {
+          urgent: '1 mes (Prioritario)',
+          medium: '2 a 3 meses (Recomendado)',
+          relaxed: '3 a 6 meses',
+          flexible: 'Flexible / Sin fecha fija',
+        },
+        additionalNotes: 'Información adicional o consultas (opcional)',
+        additionalNotesPlaceholder: 'Cualquier detalle relevante que quieras sumar...',
+      },
+
+      buttons: {
+        next: 'Continuar etapa →',
+        back: '← Volver',
+        submit: 'Enviar propuesta a ZYRVAE ↗',
+        submitting: 'Verificando y enviando...',
+        edit: 'Modificar datos',
+      },
+
+      errors: {
+        required: 'Este campo es obligatorio.',
+        emailInvalid: 'Por favor, ingresá una dirección de correo válida.',
+        generic: 'Ocurrió un error al enviar el formulario. Por favor, reintentá o escribinos directamente a zyrvae.co@gmail.com.',
+        network: 'No se pudo conectar con el servidor. Tus datos siguen guardados aquí abajo para que no pierdas nada.',
+      },
+
+      success: {
+        title: 'Brief recibido con éxito.',
+        subtitle:
+          'Gracias por compartir tu visión con ZYRVAE. Analizaremos tu requerimiento detenidamente y nos pondremos en contacto vía correo electrónico para coordinar los siguientes pasos.',
+        detailsSummary: 'Resumen enviado a zyrvae.co@gmail.com',
+        restart: 'Enviar otra consulta',
+      },
+    },
+    closing: {
+      ctaTitle: '¿Tenés un proyecto en mente?',
+      ctaAction: 'Hablemos.',
+      copy: 'Construyamos una presencia digital que represente la calidad de lo que hacés.',
+      button: 'Iniciar un proyecto ↗',
+    },
+    footer: {
+      description: 'Estudio digital independiente. Diseño y desarrollo web con criterio y rigor técnico.',
+      rights: 'Todos los derechos reservados.',
+      directContact: 'Contacto directo:',
+      backToTop: 'Volver arriba ↑',
+    },
+    caseStudy: {
+      back: '← Volver al portfolio',
+      conceptNotice: 'Este proyecto es un concepto de diseño y desarrollo creado por ZYRVAE para demostrar capacidades técnicas y visuales.',
+      clientLabel: 'Concepto',
+      yearLabel: 'Año',
+      categoryLabel: 'Disciplina',
+      objectiveTitle: '01 / Objetivo de Diseño',
+      visualDecisionsTitle: '02 / Dirección Visual y Tipográfica',
+      interactionsTitle: '03 / Experiencia e Interacciones',
+      featuresTitle: '04 / Funcionalidades Desarrolladas',
+      benefitsTitle: '05 / Beneficios Potenciales Hipotéticos',
+      demoTitle: '06 / Demostración Interactiva en Vivo',
+      demoNotice: 'Esta es una simulación interactiva con fines demostrativos. No se procesan transacciones ni reservas reales.',
+      ctaTitle: '¿Buscás una solución similar para tu negocio?',
+      ctaButton: 'Iniciar un proyecto ↗',
+    },
+  },
+  en: {
+    nav: {
+      work: 'Selected Work',
+      services: 'Services',
+      process: 'Process',
+      studio: 'Studio',
+      faq: 'FAQ',
+      cta: 'Start a project ↗',
+      menu: 'Menu',
+      close: 'Close',
+      skipToContent: 'Skip to main content',
+    },
+    hero: {
+      badge: 'Independent Digital Studio',
+      headlinePart1: 'Digital,',
+      headlinePart2: 'with intention.',
+      subhead:
+        'We design and build distinctive websites that help ambitious businesses communicate their value and move forward.',
+      ctaPrimary: 'Start a project ↗',
+      ctaSecondary: 'Explore case studies ↓',
+      scrollPrompt: 'Scroll to explore',
+    },
+    portfolio: {
+      label: '01 / Selected Work',
+      title: 'Digital projects & concepts.',
+      subtitle:
+        'Exploration of visual and technical systems engineered to solve targeted commercial requirements.',
+      filterAll: 'All',
+      filterHospitality: 'Hospitality',
+      filterGastronomy: 'Gastronomy',
+      filterArchitecture: 'Architecture',
+      conceptBadge: 'Concept Project',
+      viewProject: 'View case study ↗',
+      featuredTag: 'Featured',
+      tryDemo: 'Launch interactive demo',
+    },
+    services: {
+      label: '02 / Capabilities',
+      title: 'Services focused on commercial objectives.',
+      subtitle:
+        'We connect your business’s concrete goals with bespoke visual design and web engineering.',
+      cta: 'Inquire about a service ↗',
+    },
+    process: {
+      label: '03 / Approach',
+      title: 'A deliberate, transparent process.',
+      subtitle:
+        'Each engagement is structured into transparent stages with defined deliverables and direct communication.',
+      stageLabel: 'Stage',
+      objectiveLabel: 'Objective',
+      deliverablesLabel: 'Key deliverables',
+    },
+    studio: {
+      label: '04 / About the Studio',
+      headline: 'Independent by design. International in outlook.',
+      paragraph1:
+        'ZYRVAE is an independent digital studio centered on technical precision and aesthetic sobriety. We do not rely on generic templates or inflated agency layers.',
+      paragraph2:
+        'We operate with meticulous typographic care, fluid interaction design, and clean code. We partner directly with founders and business leaders in Argentina and across global markets to turn digital presence into a sustainable competitive edge.',
+      principles: [
+        {
+          title: 'Design with intention',
+          desc: 'Every aesthetic decision, from spatial rhythm to typography, serves an intentional communication goal.',
+        },
+        {
+          title: 'Technical precision',
+          desc: 'We construct fast, accessible, and resilient interfaces that perform flawlessly across all devices.',
+        },
+        {
+          title: 'Direct communication',
+          desc: 'No middlemen. Direct dialogue, upfront scope definition, and honesty at every stage of collaboration.',
+        },
+      ],
+    },
+    faq: {
+      label: '05 / Frequently Asked Questions',
+      title: 'Clarity from day one.',
+      subtitle:
+        'Straightforward answers regarding our collaboration model, timelines, and technical requirements.',
+      moreQuestions: 'Have a specific question?',
+      contactUs: 'Reach out directly at zyrvae.co@gmail.com ↗',
+    },
+    form: {
+      label: '06 / Start a Project',
+      title: 'Let’s discuss your next website.',
+      subtitle:
+        'Complete this progressive brief so we can understand your value proposition, requirements, and scope.',
+      step1Title: '01. Essential details',
+      step1Desc: 'Contact information so we can follow up directly.',
+      step2Title: '02. About the project',
+      step2Desc: 'Goals, project type, and key capabilities required.',
+      step3Title: '03. Scope & budget',
+      step3Desc: 'Estimated launch timeframe and budget bracket for an accurate quote.',
+      stepReviewTitle: '04. Review & confirmation',
+      stepReviewDesc: 'Verify the information entered before submitting.',
+      
+      fields: {
+        name: 'Full name *',
+        namePlaceholder: 'e.g. Julian Hayes',
+        email: 'Business email *',
+        emailPlaceholder: 'name@company.com',
+        brand: 'Brand or company *',
+        brandPlaceholder: 'Your business or venture name',
+        country: 'Country *',
+        countryPlaceholder: 'e.g. United States, Germany, Argentina...',
+        
+        projectType: 'Project type *',
+        projectTypeOptions: {
+          hospitality: 'Hospitality / Boutique hotel / Retreat',
+          gastronomy: 'Gastronomy / Culinary atelier / Restaurant',
+          architecture: 'Architecture / Spatial practice / Interior design',
+          corporate: 'Service business / Corporate website',
+          ecommerce: 'Specialized digital commerce',
+          portfolio: 'Studio portfolio / Personal practice',
+          custom: 'Bespoke web experience / Other',
+        },
+        mainGoal: 'Primary objective *',
+        mainGoalPlaceholder: 'e.g. Elevate brand perception, acquire international clients, launch a new service...',
+        targetAudience: 'Target audience',
+        targetAudiencePlaceholder: 'e.g. Premium hospitality guests, enterprise buyers, design studios...',
+        features: 'Desired capabilities (select all that apply)',
+        projectDescription: 'Project summary *',
+        projectDescriptionPlaceholder: 'Tell us about the project context, problems you aim to solve, and expected outcomes...',
+        references: 'Inspirational references (optional)',
+        referencesPlaceholder: 'Links to websites you appreciate for aesthetic or technical execution...',
+        
+        budgetRange: 'Estimated budget bracket *',
+        budgetOptions: {
+          tier1: 'USD 800 — USD 1,500',
+          tier2: 'USD 1,500 — USD 3,000',
+          tier3: 'USD 3,000 — USD 6,000',
+          tier4: 'USD 6,000+ / Custom enterprise scope',
+        },
+        timeline: 'Desired launch timeline *',
+        timelineOptions: {
+          urgent: '1 month (Expedited)',
+          medium: '2 to 3 months (Recommended)',
+          relaxed: '3 to 6 months',
+          flexible: 'Flexible / Unspecified launch date',
+        },
+        additionalNotes: 'Additional notes or requirements (optional)',
+        additionalNotesPlaceholder: 'Any other relevant context you would like to mention...',
+      },
+
+      buttons: {
+        next: 'Next stage →',
+        back: '← Back',
+        submit: 'Submit proposal to ZYRVAE ↗',
+        submitting: 'Validating & sending...',
+        edit: 'Edit details',
+      },
+
+      errors: {
+        required: 'This field is required.',
+        emailInvalid: 'Please enter a valid business email address.',
+        generic: 'An error occurred while submitting your brief. Please retry or contact us directly at zyrvae.co@gmail.com.',
+        network: 'Could not connect to the server. Your data remains saved below so nothing is lost.',
+      },
+
+      success: {
+        title: 'Brief received successfully.',
+        subtitle:
+          'Thank you for sharing your vision with ZYRVAE. We will review your requirements with care and reach out via email to discuss next steps.',
+        detailsSummary: 'Summary dispatched to zyrvae.co@gmail.com',
+        restart: 'Submit another inquiry',
+      },
+    },
+    closing: {
+      ctaTitle: 'Have a project in mind?',
+      ctaAction: 'Let’s talk.',
+      copy: 'Let us build a digital presence worthy of the quality of your work.',
+      button: 'Start a project ↗',
+    },
+    footer: {
+      description: 'Independent digital studio. Web design and engineering with intention and technical rigor.',
+      rights: 'All rights reserved.',
+      directContact: 'Direct contact:',
+      backToTop: 'Back to top ↑',
+    },
+    caseStudy: {
+      back: '← Back to portfolio',
+      conceptNotice: 'This project is a design and engineering concept crafted by ZYRVAE to demonstrate visual and technical capabilities.',
+      clientLabel: 'Concept',
+      yearLabel: 'Year',
+      categoryLabel: 'Discipline',
+      objectiveTitle: '01 / Design Objective',
+      visualDecisionsTitle: '02 / Visual & Typographic Direction',
+      interactionsTitle: '03 / Experience & Interactions',
+      featuresTitle: '04 / Engineered Features',
+      benefitsTitle: '05 / Potential Commercial Benefits',
+      demoTitle: '06 / Live Interactive Demo',
+      demoNotice: 'This is an interactive simulation for demonstration purposes. No real reservations or payments are processed.',
+      ctaTitle: 'Looking for a similar digital experience?',
+      ctaButton: 'Start a project ↗',
+    },
+  },
+};
