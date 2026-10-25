@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { Sparkles, Layers, Box, Compass, Download, Info } from 'lucide-react';
+import { Sparkles, Layers, Box, Compass, Download } from 'lucide-react';
 
 export const ArchitectureDemo: React.FC = () => {
   const { language } = useLanguage();

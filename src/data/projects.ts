@@ -250,4 +250,87 @@ export const projects: ProjectDetail[] = [
     ],
     demoType: 'architecture',
   },
+  {
+    slug: 'soma-formulations',
+    category: 'ecommerce',
+    categoryLabel: {
+      es: 'Beauty & Commerce / Cuidado Celular',
+      en: 'Beauty & Commerce / Cellular Care',
+    },
+    title: 'SŌMA Formulations',
+    tagline: {
+      es: 'Biotecnología botánica pura, rituales celulares y comercio digital sensorial de alta fidelidad.',
+      en: 'Pure botanical biotechnology, cellular rituals, and high-fidelity sensory e-commerce.',
+    },
+    isConcept: true,
+    year: '2025',
+    featured: false,
+    coverImage: '/images/soma-cover.svg',
+    galleryImages: [
+      '/images/soma-cover.svg',
+      '/images/soma-detail-1.svg',
+      '/images/soma-detail-2.svg',
+    ],
+    clientContext: {
+      es: 'Concepto desarrollado para una marca de cosmética bioactiva y cuidado celular de autor. Busca trascender las tiendas online convencionales saturadas de pop-ups y agresividad promocional, creando un catálogo táctil de ritmo editorial con foco en ingredientes puros y formulación científica.',
+      en: 'Concept engineered for an artisanal bioactive skincare and cellular formulation label. Diverges from cluttered, cookie-cutter online stores by offering a tactile editorial catalog focused on ingredient transparency and cosmetic biotechnology.',
+    },
+    designGoal: {
+      es: 'Articular una experiencia de compra fluida y serena: tipografía de catálogo botánico, selector dinámico de variantes (volumen y envase recargable), visualización molecular de activos y microinteracciones de carrito en tiempo real.',
+      en: 'Deliver a serene, tactile shopping flow: botanical apothecary typography, dynamic variant selection (volume and sustainable refills), molecular active breakdowns, and instantaneous cart microinteractions.',
+    },
+    visualDecisions: [
+      {
+        es: 'Paleta monocromática cálida: contrastes entre grafito profundo, ámbar botánico tenue y acentos minerales.',
+        en: 'Warm monochrome palette: deep graphite foundations, muted botanical amber, and refined mineral accents.',
+      },
+      {
+        es: 'Composición editorial de espécimen: fichas técnicas de laboratorio con coordenadas de cosecha y pureza molecular.',
+        en: 'Editorial specimen composition: laboratory-grade specification sheets with harvest provenance and molecular purity.',
+      },
+      {
+        es: 'Tipografía monoespaciada para datos bioactivos (% escualano, péptidos de cobre, lípidos botánicos).',
+        en: 'Technical mono typography for bioactive parameters (% squalane, copper peptides, botanical lipids).',
+      },
+    ],
+    interactions: [
+      {
+        es: 'Selector interactivo de variantes por volumen (30ml vs 50ml) y tipo de envase (vidrio biofotónico vs recarga sustentable).',
+        en: 'Interactive variant selector by volume (30ml vs 50ml) and packaging type (biophotonic glass vs sustainable refill).',
+      },
+      {
+        es: 'Explorador dinámico de fórmula botánica con desglose de principios activos, modo de aplicación y textura.',
+        en: 'Dynamic botanical formula inspector with active ingredient breakdown, usage ritual, and sensorial texture preview.',
+      },
+      {
+        es: 'Simulador funcional de carrito de compras en tiempo real con adición fluida, ajuste de cantidades y checkout sin cobro real.',
+        en: 'Functional real-time cart simulator featuring seamless item additions, quantity management, and friction-free mock checkout.',
+      },
+    ],
+    features: [
+      {
+        es: 'Catálogo reactivo con filtrado por necesidad cutánea (Regeneración, Barrera Lipídica, Hidratación Celular).',
+        en: 'Reactive product catalog filterable by skin ritual (Cellular Regeneration, Lipid Barrier, Deep Hydration).',
+      },
+      {
+        es: 'Cálculo de envíos sustentables neutros en carbono y empaque libre de plásticos en el drawer de compra.',
+        en: 'Transparent carbon-neutral delivery estimate and plastic-free packaging guarantee inside the cart drawer.',
+      },
+      {
+        es: 'Diseño responsive de extrema precisión táctil optimizado para navegación con una mano en smartphones.',
+        en: 'Ergonomically tuned responsive touch targets designed for seamless one-handed mobile navigation.',
+      },
+    ],
+    potentialBenefits: [
+      {
+        es: 'Aumento proyectado del ratio de conversión directa gracias a una experiencia de compra libre de fricción y distracciones.',
+        en: 'Projected uplift in direct-to-consumer conversion via distraction-free checkout architecture.',
+      },
+      {
+        es: 'Mayor fidelización de marca al elevar el desempaque digital al nivel de una boutique de cosmética de lujo.',
+        en: 'Higher customer lifetime value by elevating digital discovery to the standard of an apothecary luxury atelier.',
+      },
+    ],
+    demoType: 'ecommerce',
+  },
 ];

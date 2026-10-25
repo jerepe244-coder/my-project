@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="detail2-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07080a" />
+      <stop offset="100%" stop-color="#0b0f16" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="600" fill="url(#detail2-bg)" />
+
+  <rect x="30" y="30" width="740" height="540" fill="none" stroke="#1a202c" stroke-width="1" />
+  <line x1="30" y1="90" x2="770" y2="90" stroke="#1a202c" stroke-width="1" />
+
+  <text x="50" y="65" fill="#f4f5f8" font-family="monospace" font-size="11" font-weight="bold" letter-spacing="2">SŌMA // RESPONSIVE COMMERCE ARCHITECTURE</text>
+  <text x="750" y="65" fill="#0a5cff" font-family="monospace" font-size="10" text-anchor="end" letter-spacing="1">CATALOG DETAIL 02</text>
+
+  <!-- Wireframe of Tactile Cart & Variant System -->
+  <g transform="translate(60, 130)">
+    <!-- Mobile Frame Mockup -->
+    <rect x="0" y="0" width="280" height="400" rx="20" fill="#0c0e14" stroke="#252e3e" stroke-width="1.5" />
+    <rect x="100" y="10" width="80" height="12" rx="6" fill="#141822" />
+
+    <!-- Inside Mobile View: Product header -->
+    <text x="24" y="55" fill="#8b92a5" font-family="monospace" font-size="8">// SŌMA FORM-01</text>
+    <text x="24" y="75" fill="#ffffff" font-family="sans-serif" font-size="13" font-weight="bold">Cellular Nectar</text>
+    <text x="24" y="95" fill="#0a5cff" font-family="monospace" font-size="11" font-weight="bold">$78 USD</text>
+
+    <!-- Mini bottle inside mobile -->
+    <rect x="180" y="45" width="55" height="100" rx="8" fill="#151b26" stroke="#2b364a" stroke-width="1" />
+    <text x="207" y="100" fill="#8b92a5" font-family="monospace" font-size="6" text-anchor="middle">SŌMA</text>
+
+    <!-- Variant buttons in mobile wireframe -->
+    <rect x="24" y="160" width="110" height="28" rx="6" fill="#182232" stroke="#0a5cff" stroke-width="1" />
+    <text x="36" y="178" fill="#ffffff" font-family="monospace" font-size="8">30ml · Glass</text>
+
+    <rect x="144" y="160" width="110" height="28" rx="6" fill="#10131a" stroke="#1d232f" stroke-width="1" />
+    <text x="156" y="178" fill="#8b92a5" font-family="monospace" font-size="8">50ml · Refill</text>
+
+    <!-- Add to cart CTA in mobile wireframe -->
+    <rect x="24" y="210" width="232" height="38" rx="10" fill="#0a5cff" />
+    <text x="140" y="233" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold" letter-spacing="1" text-anchor="middle">ADD TO CART · $78</text>
+
+    <!-- Mock drawer sliding from bottom in mobile frame -->
+    <rect x="0" y="270" width="280" height="130" rx="16" fill="#111620" stroke="#2a3446" stroke-width="1" />
+    <line x1="120" y1="280" x2="160" y2="280" stroke="#364259" stroke-width="2" stroke-linecap="round" />
+    <text x="24" y="305" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold">BAG (1) · $78 USD</text>
+    <text x="24" y="322" fill="#8b92a5" font-family="monospace" font-size="7">FREE SUSTAINABLE SHIPPING ELIGIBLE</text>
+    <rect x="24" y="338" width="232" height="30" rx="8" fill="#1b2434" stroke="#2e3c54" stroke-width="1" />
+    <text x="140" y="356" fill="#cbd4e6" font-family="monospace" font-size="8" text-anchor="middle">SIMULATE DIRECT CHECKOUT ↗</text>
+  </g>
+
+  <!-- Right Side: Engineering Capabilities Checklist -->
+  <g transform="translate(380, 130)">
+    <text x="0" y="0" fill="#0a5cff" font-family="monospace" font-size="9" letter-spacing="1.5">// TECHNICAL CAPABILITIES PROVEN</text>
+
+    <g transform="translate(0, 30)">
+      <circle cx="10" cy="10" r="10" fill="#0a5cff" fill-opacity="0.15" stroke="#0a5cff" stroke-width="1" />
+      <text x="10" y="14" fill="#0a5cff" font-family="monospace" font-size="10" text-anchor="middle">✓</text>
+      <text x="32" y="14" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="bold">Matrix Variant State Synchronization</text>
+      <text x="32" y="30" fill="#8b92a5" font-family="sans-serif" font-size="10">Real-time reactive price adjustments across volume &amp; packaging tiers.</text>
+    </g>
+
+    <g transform="translate(0, 95)">
+      <circle cx="10" cy="10" r="10" fill="#0a5cff" fill-opacity="0.15" stroke="#0a5cff" stroke-width="1" />
+      <text x="10" y="14" fill="#0a5cff" font-family="monospace" font-size="10" text-anchor="middle">✓</text>
+      <text x="32" y="14" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="bold">Zero-Friction Cart Drawer (SSR Safe)</text>
+      <text x="32" y="30" fill="#8b92a5" font-family="sans-serif" font-size="10">Subtotal calculations, item quantity controls, and threshold shipping logic.</text>
+    </g>
+
+    <g transform="translate(0, 160)">
+      <circle cx="10" cy="10" r="10" fill="#0a5cff" fill-opacity="0.15" stroke="#0a5cff" stroke-width="1" />
+      <text x="10" y="14" fill="#0a5cff" font-family="monospace" font-size="10" text-anchor="middle">✓</text>
+      <text x="32" y="14" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="bold">Tactile Ergonomics on 360–390px Viewports</text>
+      <text x="32" y="30" fill="#8b92a5" font-family="sans-serif" font-size="10">Minimum 44px tap targets adhering strictly to mobile accessibility guidelines.</text>
+    </g>
+
+    <g transform="translate(0, 225)">
+      <circle cx="10" cy="10" r="10" fill="#0a5cff" fill-opacity="0.15" stroke="#0a5cff" stroke-width="1" />
+      <text x="10" y="14" fill="#0a5cff" font-family="monospace" font-size="10" text-anchor="middle">✓</text>
+      <text x="32" y="14" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="bold">Honest Simulation Transparency</text>
+      <text x="32" y="30" fill="#8b92a5" font-family="sans-serif" font-size="10">Explicit concept labels without deceptive promotional counters or mock testimonials.</text>
+    </g>
+
+    <!-- Technical Specs Box -->
+    <rect x="0" y="300" width="350" height="70" rx="8" fill="#090c10" stroke="#1b2230" stroke-width="1" />
+    <text x="15" y="325" fill="#515768" font-family="monospace" font-size="8">// STACK INTEGRATION</text>
+    <text x="15" y="345" fill="#cbd4e6" font-family="monospace" font-size="10">NEXT.JS 16 · REACT 19 · TYPESCRIPT 5</text>
+    <text x="335" y="345" fill="#0a5cff" font-family="monospace" font-size="9" text-anchor="end">PRODUCTION GRADE</text>
+  </g>
+</svg>

@@ -6,7 +6,7 @@ import { motion } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { SymbolLogo } from '@/components/ui/SymbolLogo';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const { language } = useLanguage();

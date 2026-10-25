@@ -1,10 +1,10 @@
 export type Language = 'es' | 'en';
 
-export type ProjectCategory = 'all' | 'hospitality' | 'gastronomy' | 'architecture';
+export type ProjectCategory = 'all' | 'hospitality' | 'gastronomy' | 'architecture' | 'ecommerce';
 
 export interface ProjectDetail {
   slug: string;
-  category: 'hospitality' | 'gastronomy' | 'architecture';
+  category: 'hospitality' | 'gastronomy' | 'architecture' | 'ecommerce';
   categoryLabel: { es: string; en: string };
   title: string;
   tagline: { es: string; en: string };
@@ -19,7 +19,7 @@ export interface ProjectDetail {
   interactions: { es: string; en: string }[];
   features: { es: string; en: string }[];
   potentialBenefits: { es: string; en: string }[];
-  demoType: 'hospitality' | 'gastronomy' | 'architecture';
+  demoType: 'hospitality' | 'gastronomy' | 'architecture' | 'ecommerce';
 }
 
 export interface ServiceItem {

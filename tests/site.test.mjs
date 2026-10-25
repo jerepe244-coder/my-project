@@ -15,6 +15,9 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       'vectra-cover.svg',
       'vectra-detail-1.svg',
       'vectra-detail-2.svg',
+      'soma-cover.svg',
+      'soma-detail-1.svg',
+      'soma-detail-2.svg',
     ];
 
     for (const img of requiredImages) {
@@ -29,7 +32,7 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
 
   test('Project data structure integrity and honest concept declarations', async () => {
     const { projects } = await import('../src/data/projects.ts');
-    assert.equal(projects.length, 3, 'Must have exactly 3 concept projects');
+    assert.equal(projects.length, 4, 'Must have exactly 4 concept projects');
 
     for (const project of projects) {
       assert.equal(project.isConcept, true, `Project ${project.slug} must be declared as a concept`);
@@ -41,7 +44,7 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       assert.ok(project.interactions.length >= 2, `Project ${project.slug} must have interactions`);
       assert.ok(project.features.length >= 2, `Project ${project.slug} must have features`);
       assert.ok(project.potentialBenefits.length >= 1, `Project ${project.slug} must have potential benefits`);
-      assert.ok(['hospitality', 'gastronomy', 'architecture'].includes(project.demoType), `Invalid demo type`);
+      assert.ok(['hospitality', 'gastronomy', 'architecture', 'ecommerce'].includes(project.demoType), `Invalid demo type`);
     }
   });
 

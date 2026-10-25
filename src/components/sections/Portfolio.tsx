@@ -20,6 +20,7 @@ export const Portfolio: React.FC = () => {
     { id: 'hospitality', label: t.filterHospitality },
     { id: 'gastronomy', label: t.filterGastronomy },
     { id: 'architecture', label: t.filterArchitecture },
+    { id: 'ecommerce', label: t.filterEcommerce },
   ];
 
   const filteredProjects = projects.filter((project) => {
@@ -81,7 +82,8 @@ export const Portfolio: React.FC = () => {
       <motion.div layout className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <AnimatePresence>
           {filteredProjects.map((project, idx) => {
-            const isFeatured = project.featured && activeCategory === 'all' && idx === 0;
+            const isFullWidth = activeCategory === 'all' ? (idx === 0 || idx === 3) : true;
+            const projectNumber = `0${idx + 1}`;
 
             return (
               <motion.article
@@ -93,7 +95,7 @@ export const Portfolio: React.FC = () => {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className={`${
-                  isFeatured ? 'lg:col-span-12' : 'lg:col-span-6'
+                  isFullWidth ? 'lg:col-span-12' : 'lg:col-span-6'
                 } group relative rounded-xl bg-[#0c0e12] border border-[#181d26] hover:border-[#2b3548] transition-colors duration-200 overflow-hidden flex flex-col justify-between`}
                 data-cursor="explore"
                 data-cursor-text={language === 'es' ? 'VER CASO ↗' : 'EXPLORE ↗'}
@@ -111,7 +113,7 @@ export const Portfolio: React.FC = () => {
                       fill
                       className="object-cover object-center"
                       sizes="(max-width: 1024px) 100vw, 80vw"
-                      priority={isFeatured}
+                      priority={idx === 0}
                     />
                   </div>
 
@@ -125,11 +127,9 @@ export const Portfolio: React.FC = () => {
                       <span>{t.conceptBadge}</span>
                     </span>
 
-                    {project.featured && (
-                      <span className="px-2.5 py-1 rounded-md bg-[#0a5cff] text-white text-[10px] font-mono tracking-wider uppercase font-semibold">
-                        {t.featuredTag}
-                      </span>
-                    )}
+                    <span className="px-2.5 py-1 rounded-md bg-[#11141c]/90 border border-white/10 text-[#8b92a5] text-[10px] font-mono tracking-wider uppercase">
+                      {projectNumber} // 04
+                    </span>
                   </div>
                 </Link>
 
@@ -137,8 +137,8 @@ export const Portfolio: React.FC = () => {
                 <div className="p-6 sm:p-8 flex flex-col justify-between flex-grow">
                   <div>
                     <div className="flex items-center justify-between font-mono text-xs text-[#8b92a5] mb-2">
-                      <span>{project.categoryLabel[language]}</span>
-                      <span>{project.year}</span>
+                      <span className="text-[#0a5cff] font-medium">{project.categoryLabel[language]}</span>
+                      <span className="text-[#687185]">{project.year}</span>
                     </div>
 
                     <h3 className="text-2xl sm:text-3xl font-sans font-bold text-white group-hover:text-[#cbd4e6] transition-colors">

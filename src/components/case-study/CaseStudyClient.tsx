@@ -9,6 +9,7 @@ import { translations } from '@/data/translations';
 import { HospitalityDemo } from '@/components/demos/HospitalityDemo';
 import { GastronomyDemo } from '@/components/demos/GastronomyDemo';
 import { ArchitectureDemo } from '@/components/demos/ArchitectureDemo';
+import { EcommerceDemo } from '@/components/demos/EcommerceDemo';
 import { ArrowLeft, ArrowUpRight, Sparkles, Check, Compass, Layers, Zap } from 'lucide-react';
 
 interface CaseStudyClientProps {
@@ -27,6 +28,8 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
         return <GastronomyDemo />;
       case 'architecture':
         return <ArchitectureDemo />;
+      case 'ecommerce':
+        return <EcommerceDemo />;
       default:
         return null;
     }

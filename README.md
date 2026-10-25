@@ -33,11 +33,12 @@ Sitio web oficial, responsive, bilingüe (ES / EN) y de alto rendimiento técnic
    * Símbolo geométrico abstracto en vector SVG de alta precisión.
 
 3. **Portfolio & Selected Work:**
-   * Tres proyectos conceptuales honestamente declarados:
+   * Cuatro proyectos conceptuales honestamente declarados:
      * **AURA Sanctuary** (Hospitalidad / Alojamiento Boutique).
      * **KÔN Atelier** (Gastronomía / Atelier Culinario & Cocina de Estación).
      * **VECTRA Architects** (Arquitectura / Práctica Espacial & Monolito Urbano).
-   * Filtros dinámicos operativos por categoría: *Todos*, *Hospitalidad*, *Gastronomía*, *Arquitectura*.
+     * **SŌMA Formulations** (04 — Beauty & Commerce / Cosmética Bioactiva & Cuidado Celular).
+   * Filtros dinámicos operativos por categoría: *Todos*, *Hospitalidad*, *Gastronomía*, *Arquitectura*, *Beauty & Commerce*.
    * Cursor contextual no intrusivo en tarjetas de proyectos (solo en dispositivos con puntero fino, sin suplantar el cursor global).
    * Sin testimonios, clientes, métricas o cifras inventadas.
 
@@ -46,8 +47,9 @@ Sitio web oficial, responsive, bilingüe (ES / EN) y de alto rendimiento técnic
    * Desglose editorial completo: objetivo, contexto, decisiones visuales, interacciones, funcionalidades y beneficios comerciales hipotéticos claramente identificados.
    * **Demos funcionales en vivo:**
      * *AURA Sanctuary:* Inspector interactivo de suites, plano de planta, selector de noches/huéspedes y simulador de solicitud de reserva con aviso explícito de demostración.
-     * *KÔN Atelier:* Alternador de menú degustación (7 vs. 11 pasos), interruptor de maridaje de autor y simulador de reserva de mesa.
+     * *KÔN Atelier:* Alternador de menú degustación (7 vs. 11 pasos), interruptor de maridaje de autor, filtro dietario interactivo y simulador de reserva de mesa.
      * *VECTRA Architects:* Visor interactivo de axonometría 3D, corte transversal este-oeste, matriz de materiales (hormigón, acero patinado, vidrio acústico) y generador de ficha técnica de demostración.
+     * *SŌMA Formulations:* Catálogo de fórmulas bioactivas, selector interactivo de volumen y envases sustentables, desglose sensorial y simulador funcional de bolsa y checkout en tiempo real.
 
 5. **Servicios & Capacidades:**
    * Índice editorial numerado (01 a 05) con líneas divisorias, etiquetas técnicas y microinteracciones de contraste:
@@ -98,6 +100,7 @@ Sitio web oficial, responsive, bilingüe (ES / EN) y de alto rendimiento técnic
 * `/case-study/aura-sanctuary` — Caso de estudio y demo interactiva de hospitalidad boutique.
 * `/case-study/kon-atelier` — Caso de estudio y demo interactiva de gastronomía y atelier culinario.
 * `/case-study/vectra-architects` — Caso de estudio y demo interactiva de arquitectura espacial.
+* `/case-study/soma-formulations` — Caso de estudio y demo interactiva de cosmética de autor y e-commerce.
 * `/api/contact` — Endpoint POST para validación y despacho del formulario.
 * `/sitemap.xml` — Mapa de sitio XML autogenerado con indexación canónica.
 * `/robots.txt` — Reglas de rastreo para motores de búsqueda.

@@ -12,7 +12,6 @@ import {
   Copy,
   Mail,
   Edit2,
-  Sparkles,
 } from 'lucide-react';
 
 interface FormData {

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { Sparkles, Wine, Flame, Clock, Check, Info } from 'lucide-react';
+import { Sparkles, Wine, Check, Info } from 'lucide-react';
 
 export const GastronomyDemo: React.FC = () => {
   const { language } = useLanguage();
@@ -134,6 +134,32 @@ export const GastronomyDemo: React.FC = () => {
                   : pairingActive ? 'Pairing shown' : 'Pairing hidden'}
               </span>
             </button>
+
+            {/* Dietary Toggle */}
+            <div className="flex items-center space-x-1 bg-[#14120e] p-0.5 rounded-lg border border-[#26211a] text-xs font-mono">
+              <button
+                type="button"
+                onClick={() => setDietaryFilter('all')}
+                className={`px-2 py-1 rounded text-[11px] transition-colors ${
+                  dietaryFilter === 'all'
+                    ? 'bg-[#221c13] text-white font-medium'
+                    : 'text-[#8b92a5] hover:text-white'
+                }`}
+              >
+                {language === 'es' ? 'Todo' : 'All'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setDietaryFilter(dietaryFilter === 'plant-forward' ? 'all' : 'plant-forward')}
+                className={`px-2 py-1 rounded text-[11px] transition-colors ${
+                  dietaryFilter === 'plant-forward'
+                    ? 'bg-[#221c13] text-[#0a5cff] font-medium'
+                    : 'text-[#8b92a5] hover:text-white'
+                }`}
+              >
+                Plant-Forward
+              </button>
+            </div>
 
             {/* Quick Demo Table Action */}
             <button
