@@ -146,4 +146,71 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       );
     }
   });
+
+  test('KÔN Atelier gastronomy web experience defines menu, images, categories, and restaurant sections', async () => {
+    const {
+      KON_CATEGORIES,
+      KON_DISHES,
+      KON_SIGNATURE_DISHES,
+      KON_AMBIENCE_SPACES,
+      KON_TABLE_ZONES,
+    } = await import('../src/data/gastronomy.ts');
+
+    assert.equal(KON_CATEGORIES.length, 6, 'Must define 6 menu category views');
+    assert.equal(KON_DISHES.length, 10, 'Must define 10 seasonal culinary dishes');
+    assert.equal(KON_SIGNATURE_DISHES.length, 5, 'Must define 5 signature dishes with photography');
+    assert.equal(KON_AMBIENCE_SPACES.length, 4, 'Must define 4 restaurant spaces with photography');
+    assert.equal(KON_TABLE_ZONES.length, 4, 'Must define 4 seating zones for reservation simulator');
+
+    // Verify all images referenced by KÔN exist on disk and are optimized WebPs
+    const requiredKonImages = [
+      '/images/kon-hero.webp',
+      '/images/kon-interior.webp',
+      '/images/kon-hearth-fire.webp',
+      '/images/kon-dish-trout.webp',
+      '/images/kon-dish-sunchoke.webp',
+      '/images/kon-dish-morel.webp',
+      '/images/kon-dish-lamb.webp',
+      '/images/kon-dish-dessert.webp',
+      '/images/kon-cellar-wine.webp',
+      '/images/kon-botanical-pantry.webp',
+    ];
+
+    for (const imgPath of requiredKonImages) {
+      const diskPath = path.join(process.cwd(), 'public', imgPath.replace(/^\//, ''));
+      assert.ok(fs.existsSync(diskPath), `KÔN image asset missing on disk: ${imgPath}`);
+      const stats = fs.statSync(diskPath);
+      assert.ok(stats.size > 10000, `KÔN image asset is too small: ${imgPath}`);
+    }
+
+    // Verify each dish has bilingual details
+    for (const dish of KON_DISHES) {
+      assert.ok(dish.title.es && dish.title.en, `Dish ${dish.id} missing bilingual title`);
+      assert.ok(dish.desc.es && dish.desc.en, `Dish ${dish.id} missing bilingual description`);
+      assert.ok(dish.provenance.es && dish.provenance.en, `Dish ${dish.id} missing provenance`);
+      assert.ok(dish.pairing.es && dish.pairing.en, `Dish ${dish.id} missing wine pairing`);
+      assert.ok(dish.price > 0, `Dish ${dish.id} must have a valid price`);
+      assert.ok(dish.dietary.length > 0, `Dish ${dish.id} must have dietary tags`);
+    }
+
+    // Verify restaurant sections in KonRestaurantExperience.tsx
+    const konComponentTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'KonRestaurantExperience.tsx'),
+      'utf-8'
+    );
+    for (const sectionId of [
+      'kon-hero',
+      'kon-concept',
+      'kon-menu',
+      'kon-dishes',
+      'kon-ambience',
+      'kon-booking',
+      'kon-info',
+    ]) {
+      assert.ok(
+        konComponentTsx.includes(`id="${sectionId}"`),
+        `KonRestaurantExperience.tsx must include #${sectionId} restaurant section`
+      );
+    }
+  });
 });

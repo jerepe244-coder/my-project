@@ -99,11 +99,12 @@ export const projects: ProjectDetail[] = [
     isConcept: true,
     year: '2025',
     featured: false,
-    coverImage: '/images/kon-cover.svg',
+    coverImage: '/images/kon-hero.webp',
     galleryImages: [
-      '/images/kon-cover.svg',
-      '/images/kon-detail-1.svg',
-      '/images/kon-detail-2.svg',
+      '/images/kon-hero.webp',
+      '/images/kon-interior.webp',
+      '/images/kon-hearth-fire.webp',
+      '/images/kon-dish-trout.webp',
     ],
     clientContext: {
       es: 'Concepto concebido para una propuesta gastronómica de autor que renueva su menú según ciclos de cosecha. El sitio web reemplaza las cartas en PDF con una experiencia viva e interactiva.',

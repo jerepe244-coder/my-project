@@ -9,6 +9,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { HospitalityDemo, AURA_SUITES } from '@/components/demos/HospitalityDemo';
 import { GastronomyDemo } from '@/components/demos/GastronomyDemo';
+import { KonRestaurantExperience } from '@/components/case-study/KonRestaurantExperience';
 import { ArchitectureDemo } from '@/components/demos/ArchitectureDemo';
 import { EcommerceDemo } from '@/components/demos/EcommerceDemo';
 import {
@@ -587,6 +588,11 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
         </section>
       </div>
     );
+  }
+
+  const isKon = project.slug === 'kon-atelier';
+  if (isKon) {
+    return <KonRestaurantExperience project={project} />;
   }
 
   const renderDemo = () => {

@@ -352,6 +352,18 @@
       "created_at": "2026-10-26T02:41:40.276Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "87d64a8a-62dd-4b3c-ae63-1fbdffd0120d",
+      "role": "user",
+      "content": "ZYRVAE — FASE 3: GASTRONOMÍA\n\nTransformá la demo gastronómica existente en un sitio web completo, visualmente premium y funcional para un restaurante conceptual. Debe sentirse como la web de un restaurante real, no como una herramienta de prueba.\n\n1. Inspección y dirección artística\n\n* Revisá la implementación actual, componentes, rutas, funcionalidades, imágenes y traducciones antes de modificar.\n* Creá una identidad gastronómica propia y coherente; no copies AURA ni SŌMA.\n* Priorizá fotografía, composición editorial, tipografía, paleta, iluminación y detalles visuales de alta calidad.\n* Podés definir el nombre conceptual si hace falta.\n\n2. Imágenes — prioridad obligatoria\n\nNo te limites a reorganizar componentes. Revisá, incorporá y reemplazá imágenes para elevar realmente el resultado visual.\n\nNecesitamos fotografías coherentes y de alta calidad para el hero, platos destacados, menú, interior, ambiente y galería. Generá imágenes originales o utilizá fuentes legítimas. Evitá placeholders, imágenes repetidas, irrelevantes o enlaces frágiles. Optimizá formatos, dimensiones y carga.\n\n3. Estructura\n\nConstruí una experiencia completa con:\n\n* Header, identidad y CTA.\n* Hero fotográfico con titular breve.\n* Presentación del concepto.\n* Menú por categorías, platos, descripciones y precios ilustrativos.\n* Platos destacados y galería visual.\n* Ambiente y experiencia del restaurante.\n* Reserva o consulta de demostración.\n* Cierre y footer.\n\nPriorizá imágenes y contenido breve; evitá párrafos largos y tarjetas genéricas.\n\n4. Funcionalidad y honestidad\n\n* Los filtros del menú y controles deben funcionar.\n* Las reservas son demostrativas: nunca confirmes una reserva real.\n* No inventes clientes, reseñas, premios, direcciones, teléfonos ni redes sociales.\n* Identificá discretamente el proyecto como Concept Project / Proyecto conceptual.\n* Conservá y mejorá las funcionalidades existentes que aporten valor.\n\n5. Requisitos globales\n\n* Mantener ES/EN completo, incluyendo menú, formularios, errores y confirmaciones.\n* Mantener Dark / Light, adaptando cada tema intencionalmente.\n* Responsive real para móvil, tablet y escritorio.\n* Accesibilidad por teclado, foco visible, buen contraste y prefers-reduced-motion.\n* Transiciones sutiles, sin perjudicar rendimiento ni legibilidad.\n\n6. Restricciones y verificación\n\nNo modificar AURA, SŌMA ni otras secciones. No romper idiomas, temas o navegación. No crear otro proyecto de Vercel ni cambiar la configuración de publicación. Evitá dependencias innecesarias.\n\nEjecutá tests, lint y build; verificá imágenes, menú, interacciones, ES/EN, Dark/Light y responsive. Corregí los errores encontrados.\n\nAl finalizar, informá los cambios, imágenes y fuentes utilizadas, pruebas ejecutadas, resultados y pendientes. Diferenciá lo verificado de lo que no pudiste probar.\n\nTomá las decisiones técnicas y artísticas necesarias sin consultarme detalles que podés resolver por tu cuenta. El resultado debe parecer la web de un restaurante con identidad propia, fotografía protagonista y una experiencia comercial coherente.",
+      "status": "pending",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-10-26T03:06:57.559Z",
+      "sender": "ios",
+      "is_cancelled": false
     }
   ]
 }

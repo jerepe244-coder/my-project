@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { KON_DISHES, KON_TABLE_ZONES, DishItem } from '@/data/gastronomy';
 import { Sparkles, Wine, Check, Info } from 'lucide-react';
 
 export const GastronomyDemo: React.FC = () => {
@@ -11,60 +12,12 @@ export const GastronomyDemo: React.FC = () => {
   const [dietaryFilter, setDietaryFilter] = useState<'all' | 'pescatarian' | 'plant-forward'>('all');
   const [bookingSimOpen, setBookingSimOpen] = useState(false);
   const [bookedSuccess, setBookedSuccess] = useState(false);
+  const [selectedZone, setSelectedZone] = useState<string>('hearth');
 
-  const menuCourses = [
-    {
-      num: '01',
-      title: { es: 'Infusión de Agujas de Alerce y Consomé Frío', en: 'Larch Needle Infusion & Chilled Consommé' },
-      notes: { es: 'Baya de enebro silvestre, gotas de aceite de higuera.', en: 'Wild juniper berry, fig leaf oil droplets.' },
-      pairing: { es: 'Sidra de manzana salvaje del Valle de Uco 2022', en: 'Wild Fermented Apple Cider 2022' },
-      dietary: ['pescatarian', 'plant-forward'],
-    },
-    {
-      num: '02',
-      title: { es: 'Trucha Ahumada en Frío y Ovas Curadas', en: 'Cold-Smoked Lake Trout & Cured Roe' },
-      notes: { es: 'Alga marina patagónica, gelée de dashi de hongos secos.', en: 'Patagonian coastal kelp, dried mushroom dashi.' },
-      pairing: { es: 'Savagnin Ouillé 2021 (Crianza biológica)', en: 'Savagnin Ouillé 2021 (Biological aging)' },
-      dietary: ['pescatarian'],
-    },
-    {
-      num: '03',
-      title: { es: 'Topinambur Asado en Resina y Mantequilla Tostada', en: 'Resin-Roasted Sunchoke & Brown Butter' },
-      notes: { es: 'Crumble de trigo sarraceno y emulsión de levadura silvestre.', en: 'Buckwheat crumble and wild yeast emulsion.' },
-      pairing: { es: 'Torrontés de Maceración Pelicular 2023 (Cafayate)', en: 'Skin-Contact Torrontés 2023 (High Altitude)' },
-      dietary: ['pescatarian', 'plant-forward'],
-    },
-    {
-      num: '04',
-      title: { es: 'Hongos Morchella al Fuego de Quebracho', en: 'Quebracho-Fired Morel Mushrooms' },
-      notes: { es: 'Jugo concentrado de raíces asadas, brotes de ajo negro.', en: 'Concentrated roasted root glaze, black garlic shoots.' },
-      pairing: { es: 'Pinot Noir de Parcela No Filtrado 2020', en: 'Single-Parcel Unfiltered Pinot Noir 2020' },
-      dietary: ['pescatarian', 'plant-forward'],
-    },
-    {
-      num: '05',
-      title: { es: 'Cordero en Dos Cocciones con Cenizas de Romero', en: 'Two-Way Lamb with Rosemary Ashes' },
-      notes: { es: 'Puré de chirivía ahumada y reducción de bayas de sauco.', en: 'Smoked parsnip purée and elderberry reduction.' },
-      pairing: { es: 'Cabernet Franc de Suelo Calcáreo 2018', en: 'Limestone Terroir Cabernet Franc 2018' },
-      dietary: [],
-    },
-    {
-      num: '06',
-      title: { es: 'Nieve de Saúco y Sorbet de Verbena Limonera', en: 'Elderflower Snow & Lemon Verbena Sorbet' },
-      notes: { es: 'Cristales de miel de bosque y polen nativo recolectado a mano.', en: 'Forest honey crystals and hand-harvested pollen.' },
-      pairing: { es: 'Kombucha de Té Oolong y Miel de Pradera', en: 'Oolong & Meadow Honey Raw Kombucha' },
-      dietary: ['pescatarian', 'plant-forward'],
-    },
-    {
-      num: '07',
-      title: { es: 'Cacao Salvaje, Malta Tostada y Sal Marina de Cabo Blanco', en: 'Wild Cacao, Roasted Malt & Cabo Blanco Sea Salt' },
-      notes: { es: 'Helado de leche de oveja ahumada y aceite de oliva virgen.', en: 'Smoked sheep milk gelato and green olive oil.' },
-      pairing: { es: 'Vino de Licor de Cosecha Tardía 2016', en: 'Late Harvest Fortified Botrytis 2016' },
-      dietary: ['pescatarian', 'plant-forward'],
-    },
-  ];
-
-  const visibleCourses = courseCount === 7 ? menuCourses : [...menuCourses, ...menuCourses.slice(0, 4)];
+  // Filter 7 or 11 courses
+  const visibleCourses: DishItem[] = courseCount === 7
+    ? KON_DISHES.filter((d) => !['salt-beetroot', 'deep-prawn', 'sweetbreads-applewood'].includes(d.id))
+    : KON_DISHES;
 
   return (
     <div className="rounded-2xl border border-zy-warm-border bg-zy-warm-bg overflow-hidden text-zy-warm-fg font-sans shadow-sm">
@@ -100,7 +53,7 @@ export const GastronomyDemo: React.FC = () => {
                     : 'text-zy-warm-muted hover:text-zy-warm-fg'
                 }`}
               >
-                7 {language === 'es' ? 'Pasos' : 'Courses'}
+                7 {language === 'es' ? 'Pasos ($110 USD)' : 'Courses ($110 USD)'}
               </button>
               <button
                 type="button"
@@ -111,7 +64,7 @@ export const GastronomyDemo: React.FC = () => {
                     : 'text-zy-warm-muted hover:text-zy-warm-fg'
                 }`}
               >
-                11 {language === 'es' ? 'Pasos (Gran Recorrido)' : 'Courses (Full Journey)'}
+                11 {language === 'es' ? 'Pasos · Gran Recorrido ($165 USD)' : 'Courses · Full Journey ($165 USD)'}
               </button>
             </div>
           </div>
@@ -130,8 +83,12 @@ export const GastronomyDemo: React.FC = () => {
               <Wine size={14} className={pairingActive ? 'text-zy-blue' : 'text-zy-warm-dim'} />
               <span>
                 {language === 'es'
-                  ? pairingActive ? 'Maridaje incluido' : 'Sin maridaje'
-                  : pairingActive ? 'Pairing shown' : 'Pairing hidden'}
+                  ? pairingActive
+                    ? `Maridaje incluido (+${courseCount === 7 ? '$55' : '$80'})`
+                    : 'Sin maridaje'
+                  : pairingActive
+                  ? `Pairing shown (+${courseCount === 7 ? '$55' : '$80'})`
+                  : 'Pairing hidden'}
               </span>
             </button>
 
@@ -159,6 +116,17 @@ export const GastronomyDemo: React.FC = () => {
               >
                 Plant-Forward
               </button>
+              <button
+                type="button"
+                onClick={() => setDietaryFilter(dietaryFilter === 'pescatarian' ? 'all' : 'pescatarian')}
+                className={`px-2 py-1 rounded text-[11px] transition-colors ${
+                  dietaryFilter === 'pescatarian'
+                    ? 'bg-zy-warm-active text-zy-blue font-medium shadow-sm'
+                    : 'text-zy-warm-muted hover:text-zy-warm-fg'
+                }`}
+              >
+                Pescatarian
+              </button>
             </div>
 
             {/* Quick Demo Table Action */}
@@ -176,35 +144,38 @@ export const GastronomyDemo: React.FC = () => {
         <div className="space-y-4">
           {visibleCourses.map((item, index) => {
             const isFaded =
-              dietaryFilter === 'plant-forward' && !item.dietary.includes('plant-forward');
+              dietaryFilter !== 'all' && !item.dietary.includes(dietaryFilter);
 
             return (
               <div
-                key={index}
+                key={item.id}
                 className={`p-4 rounded-xl border border-zy-warm-border bg-zy-warm-card hover:border-zy-warm-border-hover transition-all flex flex-col md:flex-row md:items-start justify-between gap-4 ${
                   isFaded ? 'opacity-30' : 'opacity-100'
                 }`}
               >
                 <div className="flex items-start space-x-4">
-                  <span className="font-mono text-xs text-zy-blue pt-0.5">
-                    0{index + 1}
+                  <span className="font-mono text-xs text-zy-blue pt-0.5 font-bold">
+                    {item.num || `0${index + 1}`}
                   </span>
                   <div>
-                    <h5 className="text-base font-semibold text-zy-warm-fg font-sans">
+                    <h4 className="text-base font-semibold text-zy-warm-fg font-sans">
                       {item.title[language]}
-                    </h5>
+                    </h4>
                     <p className="text-xs text-zy-warm-muted mt-0.5">
-                      {item.notes[language]}
+                      {item.desc[language]}
                     </p>
+                    <span className="text-[10px] font-mono text-zy-warm-dim block mt-1">
+                      {item.provenance[language]}
+                    </span>
                   </div>
                 </div>
 
                 {pairingActive && (
                   <div className="md:text-right shrink-0 max-w-xs pl-8 md:pl-0 pt-1 md:pt-0 border-t md:border-t-0 border-zy-warm-border-subtle">
-                    <span className="text-[10px] font-mono uppercase text-zy-blue tracking-wider block">
+                    <span className="text-[10px] font-mono uppercase text-[#d49b57] tracking-wider block">
                       // {language === 'es' ? 'Armonía sugerida' : 'Wine pairing'}
                     </span>
-                    <span className="text-xs text-zy-fg-secondary font-mono">
+                    <span className="text-xs text-zy-warm-fg font-mono">
                       {item.pairing[language]}
                     </span>
                   </div>
@@ -251,7 +222,7 @@ export const GastronomyDemo: React.FC = () => {
                   <label className="text-zy-warm-muted block font-mono">
                     {language === 'es' ? 'Experiencia:' : 'Experience:'}
                   </label>
-                  <div className="p-2.5 bg-zy-warm-card rounded border border-zy-warm-border font-mono text-zy-warm-fg">
+                  <div className="p-2.5 bg-zy-warm-card rounded-lg border border-zy-warm-border font-mono text-zy-warm-fg">
                     {courseCount} {language === 'es' ? 'Pasos con maridaje de autor' : 'Courses with artisanal pairing'}
                   </div>
                 </div>
@@ -260,14 +231,20 @@ export const GastronomyDemo: React.FC = () => {
                   <label className="text-zy-warm-muted block font-mono">
                     {language === 'es' ? 'Zona deseada:' : 'Preferred seating:'}
                   </label>
-                  <select className="w-full p-2 bg-zy-warm-card border border-zy-warm-border rounded text-zy-warm-fg font-mono focus:border-zy-blue outline-none">
-                    <option>{language === 'es' ? 'The Open Hearth (Barra frente al fuego)' : 'The Open Hearth (Fire counter)'}</option>
-                    <option>{language === 'es' ? 'The Greenhouse Alcove (Jardín botánico)' : 'The Greenhouse Alcove (Garden banquette)'}</option>
-                    <option>{language === 'es' ? 'Private Vault (Cava privada)' : 'Private Vault (Wine cellar)'}</option>
+                  <select
+                    value={selectedZone}
+                    onChange={(e) => setSelectedZone(e.target.value)}
+                    className="w-full p-2.5 bg-zy-warm-card border border-zy-warm-border rounded-lg text-zy-warm-fg font-mono focus:border-zy-blue outline-none"
+                  >
+                    {KON_TABLE_ZONES.map((z) => (
+                      <option key={z.id} value={z.id}>
+                        {z.name[language]}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
-                <p className="text-[11px] text-zy-warm-dim">
+                <p className="text-[11px] text-zy-warm-dim leading-relaxed">
                   {language === 'es'
                     ? 'Demostración de flujo para restaurantes de alta cocina sin depender de widgets externos rígidos.'
                     : 'Showcase flow for fine dining establishments free from rigid third-party iframe widgets.'}
@@ -291,7 +268,7 @@ export const GastronomyDemo: React.FC = () => {
                 </h4>
                 <p className="text-xs text-zy-warm-muted">
                   {language === 'es'
-                    ? 'Esta acción simula la reserva instantánea y la sincronización con el sistema de sala del restaurante.'
+                    ? 'Esta acción simula la reserva instantánea y la coordinación del servicio de sala para el restaurante.'
                     : 'Demonstrates immediate guest intake and front-of-house table coordination.'}
                 </p>
                 <button
@@ -300,7 +277,7 @@ export const GastronomyDemo: React.FC = () => {
                     setBookingSimOpen(false);
                     setBookedSuccess(false);
                   }}
-                  className="px-4 py-1.5 rounded bg-zy-warm-badge hover:bg-zy-warm-border text-xs font-mono text-zy-warm-fg"
+                  className="px-4 py-1.5 rounded-lg bg-zy-warm-badge hover:bg-zy-warm-border text-xs font-mono text-zy-warm-fg transition-colors"
                 >
                   {language === 'es' ? 'Finalizar prueba' : 'Finish test'}
                 </button>
