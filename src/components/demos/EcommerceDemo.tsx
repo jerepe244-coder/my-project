@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { Sparkles, ShoppingBag, Plus, Minus, Trash2, Check, ArrowRight, ShieldCheck, Leaf, X } from 'lucide-react';
 
@@ -10,6 +11,7 @@ interface CartItem {
   title: { es: string; en: string };
   size: string;
   vessel: string;
+  vesselId?: string;
   unitPrice: number;
   quantity: number;
 }
@@ -24,6 +26,11 @@ interface ProductSpec {
   sizes: string[];
   sizeDelta: Record<string, number>;
   vessels: { id: string; name: { es: string; en: string }; delta: number }[];
+  images: {
+    glass: string;
+    refill: string;
+    vesselNote: { es: string; en: string };
+  };
   actives: { name: string; conc: string }[];
   sensory: {
     texture: { es: string; en: string };
@@ -58,6 +65,14 @@ export const EcommerceDemo: React.FC = () => {
         { id: 'glass', name: { es: 'Vidrio Biofotónico Miron', en: 'Miron Biophotonic Glass' }, delta: 0 },
         { id: 'refill', name: { es: 'Recarga Eco-Pouch Compostable', en: 'Compostable Refill Pouch' }, delta: -8 },
       ],
+      images: {
+        glass: '/images/soma-01-glass.webp',
+        refill: '/images/soma-refill-pouch.webp',
+        vesselNote: {
+          es: 'Frasco violeta oscuro con gotero de precisión',
+          en: 'Dark violet glass bottle with precision dropper',
+        },
+      },
       actives: [
         { name: 'Phyto-Peptide Matrix', conc: '4.8%' },
         { name: 'Olive Squalane', conc: '100% Purity' },
@@ -91,6 +106,14 @@ export const EcommerceDemo: React.FC = () => {
         { id: 'glass', name: { es: 'Vidrio Biofotónico Miron', en: 'Miron Biophotonic Glass' }, delta: 0 },
         { id: 'refill', name: { es: 'Recarga Eco-Pouch Compostable', en: 'Compostable Refill Pouch' }, delta: -8 },
       ],
+      images: {
+        glass: '/images/soma-02-glass.webp',
+        refill: '/images/soma-refill-pouch.webp',
+        vesselNote: {
+          es: 'Tarro apotecario de vidrio de boca ancha',
+          en: 'Wide-mouth biophotonic apothecary glass jar',
+        },
+      },
       actives: [
         { name: 'Botanical Ceramides (I, III, VI)', conc: '3.2%' },
         { name: 'Flaxseed Omega 3-6-9', conc: 'Cold Pressed' },
@@ -124,6 +147,14 @@ export const EcommerceDemo: React.FC = () => {
         { id: 'glass', name: { es: 'Vidrio Biofotónico Miron', en: 'Miron Biophotonic Glass' }, delta: 0 },
         { id: 'refill', name: { es: 'Recarga Eco-Pouch Compostable', en: 'Compostable Refill Pouch' }, delta: -8 },
       ],
+      images: {
+        glass: '/images/soma-03-glass.webp',
+        refill: '/images/soma-refill-pouch.webp',
+        vesselNote: {
+          es: 'Botella esbelta con atomizador micro-bruma',
+          en: 'Slender bottle with fine micro-mist atomizer',
+        },
+      },
       actives: [
         { name: 'High-Weight Polyglutamic', conc: '1.5%' },
         { name: 'Organic Damask Rose Water', conc: '92% Active Base' },
@@ -152,6 +183,7 @@ export const EcommerceDemo: React.FC = () => {
       },
       size: '30ml',
       vessel: 'Vidrio Biofotónico Miron',
+      vesselId: 'glass',
       unitPrice: 78,
       quantity: 1,
     },
@@ -165,6 +197,18 @@ export const EcommerceDemo: React.FC = () => {
   const currentVessel = product.vessels[selectedVesselIdx] ?? product.vessels[0];
   const sizeDeltaValue = product.sizeDelta[currentSize] ?? 0;
   const currentPrice = product.basePrice + sizeDeltaValue + currentVessel.delta;
+  const isRefillSelected = currentVessel.id === 'refill';
+  const activeImageSrc = isRefillSelected ? product.images.refill : product.images.glass;
+  const secondaryImageSrc = isRefillSelected ? product.images.glass : product.images.refill;
+
+  const getCartItemImage = (item: CartItem) => {
+    const matchedProduct = products.find((p) => p.id === item.productId) ?? products[0];
+    const isRefill =
+      item.vesselId === 'refill' ||
+      item.vessel.toLowerCase().includes('pouch') ||
+      item.vessel.toLowerCase().includes('recarga');
+    return isRefill ? matchedProduct.images.refill : matchedProduct.images.glass;
+  };
 
   const handleAddToCart = () => {
     const itemKey = `${product.id}-${currentSize}-${currentVessel.id}`;
@@ -181,6 +225,7 @@ export const EcommerceDemo: React.FC = () => {
           title: product.title,
           size: currentSize,
           vessel: currentVessel.name[language],
+          vesselId: currentVessel.id,
           unitPrice: currentPrice,
           quantity: 1,
         },
@@ -223,7 +268,7 @@ export const EcommerceDemo: React.FC = () => {
           <span className="font-semibold uppercase tracking-wider">
             {language === 'es' ? 'DEMO INTERACTIVA' : 'INTERACTIVE DEMO'}
           </span>
-          <span className="text-[#515768]">| SŌMA FORMULATIONS</span>
+          <span className="text-[#8b92a5]">| SŌMA FORMULATIONS</span>
         </div>
 
         <div className="flex items-center space-x-3">
@@ -239,7 +284,7 @@ export const EcommerceDemo: React.FC = () => {
             </span>
           </button>
 
-          <span className="inline-flex items-center px-2 py-0.5 rounded bg-[#161922] text-[#8b92a5] text-[10px] hidden sm:inline-flex">
+          <span className="inline-flex items-center px-2 py-0.5 rounded bg-[#161922] text-[#9ba3b8] text-[10px] hidden sm:inline-flex">
             {language === 'es' ? 'Simulación conceptual de e-commerce' : 'Conceptual e-commerce simulation'}
           </span>
         </div>
@@ -265,49 +310,111 @@ export const EcommerceDemo: React.FC = () => {
                     : 'text-[#8b92a5] hover:text-white'
                 }`}
               >
-                <span className="text-[10px] text-[#515768] block">{p.code}</span>
+                <span className="text-[10px] text-[#9ba3b8] block">{p.code}</span>
                 <span className="font-semibold block truncate">{p.title[language]}</span>
               </button>
             ))}
           </div>
 
           {/* Product Hero Visual Card */}
-          <div className="relative aspect-[16/10] rounded-xl bg-gradient-to-br from-[#12151c] to-[#0a0c10] border border-[#1e232d] p-6 flex flex-col justify-between overflow-hidden">
+          <div className="relative rounded-xl bg-gradient-to-br from-[#0d1016] via-[#080a0e] to-[#060709] border border-[#1e232d] p-4 sm:p-6 flex flex-col justify-between overflow-hidden">
             {/* Architectural Grid and Specimen Label */}
-            <div className="flex justify-between items-start text-xs font-mono text-[#8b92a5]">
+            <div className="flex justify-between items-start text-xs font-mono text-[#8b92a5] z-10">
               <div>
                 <span className="text-[#0a5cff] font-semibold block">{product.code}</span>
-                <span className="text-[11px] text-[#515768]">{product.category[language]}</span>
+                <span className="text-[11px] text-[#9ba3b8]">{product.category[language]}</span>
               </div>
               <div className="text-right">
-                <span className="text-[10px] block uppercase text-[#515768]">// SPECIMEN</span>
-                <span className="text-white font-mono text-sm">${currentPrice} USD</span>
+                <span className="text-[10px] block uppercase text-[#8b92a5]">// SPECIMEN</span>
+                <span className="text-white font-mono text-sm font-semibold">${currentPrice} USD</span>
               </div>
             </div>
 
-            {/* Central Minimalist Bottle Graphic */}
-            <div className="my-auto text-center space-y-2 py-4">
-              <div className="w-20 h-36 mx-auto rounded-t-2xl rounded-b-lg border border-[#303848] bg-gradient-to-b from-[#181d28] via-[#0f121a] to-[#0a0c10] relative flex flex-col items-center justify-between p-2 shadow-2xl">
-                {/* Cap */}
-                <div className="w-8 h-6 -mt-6 bg-[#262d3d] border border-[#444f68] rounded-t-md" />
-                {/* Label on bottle */}
-                <div className="w-full py-2 border-y border-[#262e3e] text-[8px] font-mono tracking-widest text-[#cbd4e6] uppercase">
-                  SŌMA
-                  <span className="block text-[6px] text-[#515768]">{product.code}</span>
-                </div>
-                {/* Fill line */}
-                <div className="w-full h-1 bg-[#0a5cff]/40 rounded-full" />
+            {/* Differentiated Studio Product Photography Stage */}
+            <div className="relative my-3 sm:my-4 aspect-[4/3] sm:aspect-[16/10] w-full rounded-lg bg-[#07090b] border border-[#171c26] overflow-hidden flex items-center justify-center">
+              <div
+                className={`relative w-full h-full transition-transform duration-500 ease-out ${
+                  selectedSizeIdx === 1 ? 'scale-100' : 'scale-[0.94]'
+                }`}
+              >
+                <Image
+                  key={`${product.id}-${currentVessel.id}`}
+                  src={activeImageSrc}
+                  alt={`${product.title[language]} — ${currentSize} ${currentVessel.name[language]}`}
+                  fill
+                  sizes="(max-width: 1024px) 92vw, 540px"
+                  className="object-contain object-center select-none"
+                  priority
+                />
               </div>
-              <p className="text-xs text-[#8b92a5] font-mono">
-                {currentSize} · {currentVessel.name[language]}
-              </p>
+
+              {/* Subtle Vignette & Active Variant Badges */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07090b] via-transparent to-transparent opacity-60" />
+
+              <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2 z-10">
+                <div className="px-2.5 py-1.5 rounded-md bg-[#0b0e14]/90 backdrop-blur-md border border-[#232b3a] text-[11px] font-mono">
+                  <span className="text-white font-semibold">{currentSize}</span>
+                  <span className="text-[#8b92a5]"> · {currentVessel.name[language]}</span>
+                  <span className="block text-[10px] text-[#9ba3b8]">
+                    {isRefillSelected
+                      ? language === 'es'
+                        ? `Recarga para ${product.images.vesselNote.es.toLowerCase()}`
+                        : `Refill for ${product.images.vesselNote.en.toLowerCase()}`
+                      : product.images.vesselNote[language]}
+                  </span>
+                </div>
+
+                {/* Quick Vessel Switcher Preview Thumbnail */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedVesselIdx(isRefillSelected ? 0 : 1)}
+                  className="group/vessel flex items-center space-x-2 p-1.5 rounded-md bg-[#0b0e14]/90 hover:bg-[#141a26] backdrop-blur-md border border-[#232b3a] hover:border-[#0a5cff] transition-all text-left shrink-0"
+                  title={
+                    isRefillSelected
+                      ? language === 'es'
+                        ? 'Ver envase de vidrio biofotónico'
+                        : 'View biophotonic glass vessel'
+                      : language === 'es'
+                        ? 'Ver recarga Eco-Pouch'
+                        : 'View Eco-Pouch refill'
+                  }
+                >
+                  <div className="relative w-8 h-8 rounded overflow-hidden bg-[#07090b] border border-[#1e2533] shrink-0">
+                    <Image
+                      src={secondaryImageSrc}
+                      alt={
+                        isRefillSelected
+                          ? product.vessels[0].name[language]
+                          : product.vessels[1].name[language]
+                      }
+                      fill
+                      sizes="32px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="hidden sm:block pr-1 font-mono">
+                    <span className="block text-[9px] uppercase text-[#8b92a5] group-hover/vessel:text-[#0a5cff] transition-colors">
+                      {isRefillSelected
+                        ? language === 'es'
+                          ? 'Ver Vidrio'
+                          : 'View Glass'
+                        : language === 'es'
+                          ? 'Ver Eco-Pouch'
+                          : 'View Refill'}
+                    </span>
+                    <span className="block text-[10px] text-white font-medium">
+                      {isRefillSelected ? product.code.split('/')[0] : '-$8 USD'}
+                    </span>
+                  </div>
+                </button>
+              </div>
             </div>
 
             {/* Actives Footer in Card */}
-            <div className="grid grid-cols-3 gap-2 pt-3 border-t border-[#1a1f29] text-[10px] font-mono">
+            <div className="grid grid-cols-3 gap-2 pt-3 border-t border-[#1a1f29] text-[10px] font-mono z-10">
               {product.actives.map((act, i) => (
                 <div key={i} className="text-center sm:text-left">
-                  <span className="text-[#515768] block truncate">{act.name}</span>
+                  <span className="text-[#8b92a5] block truncate">{act.name}</span>
                   <span className="text-[#cbd4e6] font-semibold">{act.conc}</span>
                 </div>
               ))}
@@ -321,19 +428,19 @@ export const EcommerceDemo: React.FC = () => {
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-sans">
               <div>
-                <span className="text-[#515768] text-[11px] block font-mono">
+                <span className="text-[#8b92a5] text-[11px] block font-mono">
                   {language === 'es' ? 'Textura' : 'Texture'}
                 </span>
                 <p className="text-[#cbd4e6] mt-0.5">{product.sensory.texture[language]}</p>
               </div>
               <div>
-                <span className="text-[#515768] text-[11px] block font-mono">
+                <span className="text-[#8b92a5] text-[11px] block font-mono">
                   {language === 'es' ? 'Aroma' : 'Aroma'}
                 </span>
                 <p className="text-[#cbd4e6] mt-0.5">{product.sensory.aroma[language]}</p>
               </div>
               <div>
-                <span className="text-[#515768] text-[11px] block font-mono">
+                <span className="text-[#8b92a5] text-[11px] block font-mono">
                   {language === 'es' ? 'Origen' : 'Origin'}
                 </span>
                 <p className="text-[#cbd4e6] mt-0.5">{product.sensory.origin[language]}</p>
@@ -373,7 +480,7 @@ export const EcommerceDemo: React.FC = () => {
                   }`}
                 >
                   <span className="font-semibold block">{s}</span>
-                  <span className="text-[10px] text-[#515768] block mt-0.5">
+                  <span className="text-[10px] text-[#8b92a5] block mt-0.5">
                     {idx === 0 ? (language === 'es' ? 'Tamaño estudio' : 'Studio size') : (language === 'es' ? 'Formato extendido' : 'Extended supply')}
                   </span>
                 </button>
@@ -402,7 +509,7 @@ export const EcommerceDemo: React.FC = () => {
                 >
                   <div>
                     <span className="font-medium block">{v.name[language]}</span>
-                    <span className="text-[10px] text-[#515768] block">
+                    <span className="text-[10px] text-[#8b92a5] block">
                       {v.id === 'glass' ? (language === 'es' ? 'Protección fotónica completa' : 'Full photonic light seal') : (language === 'es' ? 'Menor huella de carbono (-$8)' : 'Eco lower carbon footprint (-$8)')}
                     </span>
                   </div>
@@ -477,7 +584,7 @@ export const EcommerceDemo: React.FC = () => {
               {/* Items List */}
               <div className="py-4 space-y-4 max-h-[46vh] overflow-y-auto">
                 {cart.length === 0 ? (
-                  <div className="py-12 text-center text-xs font-mono text-[#515768]">
+                  <div className="py-12 text-center text-xs font-mono text-[#8b92a5]">
                     {language === 'es' ? 'Tu bolsa está vacía.' : 'Your bag is empty.'}
                   </div>
                 ) : (
@@ -486,8 +593,18 @@ export const EcommerceDemo: React.FC = () => {
                       key={item.id}
                       className="p-3 rounded-lg bg-[#11141b] border border-[#1d232e] flex items-start justify-between gap-3 text-xs"
                     >
-                      <div className="space-y-1 flex-1">
-                        <span className="font-sans font-bold text-white block">
+                      <div className="relative w-12 h-12 rounded-md overflow-hidden bg-[#07090b] border border-[#1e2533] shrink-0">
+                        <Image
+                          src={getCartItemImage(item)}
+                          alt={`${item.title[language]} — ${item.size}`}
+                          fill
+                          sizes="48px"
+                          className="object-cover"
+                        />
+                      </div>
+
+                      <div className="space-y-1 flex-1 min-w-0">
+                        <span className="font-sans font-bold text-white block truncate">
                           {item.title[language]}
                         </span>
                         <span className="text-[10px] font-mono text-[#8b92a5] block">
@@ -501,7 +618,7 @@ export const EcommerceDemo: React.FC = () => {
                       <div className="flex flex-col items-end space-y-2">
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="text-[#515768] hover:text-red-400 p-0.5"
+                          className="text-[#8b92a5] hover:text-red-400 p-0.5"
                           title="Eliminar"
                         >
                           <Trash2 size={13} />
@@ -559,7 +676,7 @@ export const EcommerceDemo: React.FC = () => {
                 <ArrowRight size={14} />
               </button>
 
-              <p className="text-[10px] text-center text-[#515768] font-mono">
+              <p className="text-[10px] text-center text-[#8b92a5] font-mono">
                 {language === 'es'
                   ? 'Entorno de demostración: no se cobrará importe real.'
                   : 'Demonstration environment: no real charge will be incurred.'}
