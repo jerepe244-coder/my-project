@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { ThemeProvider } from '@/context/ThemeContext';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -16,6 +17,25 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 });
+
+const themeInitScript = `
+(function() {
+  try {
+    var saved = localStorage.getItem('zyrvae_theme');
+    var theme = (saved === 'light' || saved === 'dark')
+      ? saved
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    var root = document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    root.setAttribute('data-theme', theme);
+    root.style.colorScheme = theme;
+  } catch (e) {
+    document.documentElement.classList.add('dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+`;
 
 export const metadata: Metadata = {
   title: 'ZYRVAE — Digital Studio | Diseño y Desarrollo Web',
@@ -85,18 +105,24 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#060709] text-[#f4f5f8] font-sans selection:bg-[#0a5cff]/30 selection:text-white">
-        <LanguageProvider>
-          <IntroAnimation />
-          <CustomCursor />
-          <Header />
-          <main id="main-content" className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-        </LanguageProvider>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="min-h-full flex flex-col bg-zy-bg text-zy-fg-soft font-sans selection:bg-zy-blue/30 selection:text-zy-fg">
+        <ThemeProvider>
+          <LanguageProvider>
+            <IntroAnimation />
+            <CustomCursor />
+            <Header />
+            <main id="main-content" className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

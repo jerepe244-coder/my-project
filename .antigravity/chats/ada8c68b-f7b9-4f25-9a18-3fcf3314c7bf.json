@@ -304,6 +304,18 @@
       "created_at": "2026-10-26T01:17:14.494Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "de13a331-1ba5-4baa-8d8f-bc10b9b432f5",
+      "role": "user",
+      "content": "ZYRVAE — FASE 1: SISTEMA DARK / LIGHT\n\nImplementá un sistema completo de modo oscuro y modo claro en el proyecto existente de ZYRVAE.\n\nObjetivo\n\n* Dark: conservar la identidad actual, sin cambios visuales innecesarios.\n* Light: crear una versión premium con fondos claros, texto oscuro, grises equilibrados y azul eléctrico como acento. No invertir colores automáticamente: ajustar cada componente con criterio visual.\n\nRequisitos\n\n1. Incorporar un selector accesible Dark / Light, visible en el header y disponible en móvil.\n2. Aplicar el tema globalmente: navegación, fondos, tipografía, botones, formularios, portfolio, casos de estudio, FAQ, modales y demos.\n3. Centralizar colores mediante tokens reutilizables; evitar estilos hardcodeados que impidan cambiar de tema.\n4. Persistir la elección del usuario y evitar destellos del tema incorrecto al cargar.\n5. Si no existe una preferencia guardada, detectar la preferencia del sistema. Mantener la elección manual durante la navegación.\n6. Respetar ES/EN, las rutas existentes y prefers-reduced-motion.\n7. Garantizar contraste legible, foco visible, navegación por teclado y estados accesibles.\n8. No alterar la lógica, los precios, las imágenes ni las funcionalidades de AURA Sanctuary y SŌMA Formulations.\n9. Mantener el responsive y evitar cambios innecesarios en la arquitectura.\n\nVerificación\n\n* Ejecutar lint, tests y build disponibles.\n* Revisar las páginas principales y ambos casos de estudio en los dos temas.\n* Comprobar persistencia, selector móvil, navegación, contraste y ausencia de errores.\n* Corregir cualquier regresión detectada.\n\nAlcance: únicamente el sistema de temas. No rediseñar secciones ni transformar las demos todavía. No publicar ni crear proyectos nuevos. Si hay cambios automáticos por Git/Vercel, identificarlos y reportarlos.\n\nAl terminar, informá archivos modificados, pruebas ejecutadas y pendientes reales. No afirmes que algo fue verificado si no lo comprobaste.",
+      "status": "pending",
+      "model": "gemini-4-argon-medium",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-10-26T02:10:31.643Z",
+      "sender": "ios",
+      "is_cancelled": false
     }
   ]
 }

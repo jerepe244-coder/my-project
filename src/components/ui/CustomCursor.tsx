@@ -73,7 +73,7 @@ export const CustomCursor: React.FC = () => {
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.5, opacity: 0 }}
-        className="px-3.5 py-1.5 rounded-full bg-[#0a5cff] text-white text-[11px] font-mono tracking-wider font-semibold shadow-[0_0_24px_rgba(10,92,255,0.45)] border border-white/20 select-none whitespace-nowrap"
+        className="px-3.5 py-1.5 rounded-full bg-zy-blue text-white text-[11px] font-mono tracking-wider font-semibold shadow-[0_0_24px_rgba(10,92,255,0.45)] border border-white/20 select-none whitespace-nowrap"
       >
         {cursorText}
       </motion.div>

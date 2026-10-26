@@ -1,5 +1,7 @@
 export type Language = 'es' | 'en';
 
+export type Theme = 'dark' | 'light';
+
 export type ProjectCategory = 'all' | 'hospitality' | 'gastronomy' | 'architecture' | 'ecommerce';
 
 export interface ProjectDetail {

@@ -40,16 +40,16 @@ export const Portfolio: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6 border-b border-[#161a22] pb-8"
+        className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6 border-b border-zy-border-subtle pb-8"
       >
         <div>
-          <span className="font-mono text-xs uppercase tracking-widest text-[#0a5cff]">
+          <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
             {t.label}
           </span>
-          <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-white mt-2">
+          <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
             {t.title}
           </h2>
-          <p className="text-sm sm:text-base text-[#8b92a5] font-sans max-w-xl mt-3">
+          <p className="text-sm sm:text-base text-zy-muted font-sans max-w-xl mt-3">
             {t.subtitle}
           </p>
         </div>
@@ -58,7 +58,7 @@ export const Portfolio: React.FC = () => {
         <div
           role="tablist"
           aria-label="Filter portfolio projects"
-          className="flex flex-wrap items-center gap-1.5 p-1 bg-[#0c0e12] border border-[#1e232d] rounded-lg self-start md:self-end"
+          className="flex flex-wrap items-center gap-1.5 p-1 bg-zy-control border border-zy-border rounded-lg self-start md:self-end"
         >
           {categories.map((cat) => (
             <button
@@ -66,10 +66,10 @@ export const Portfolio: React.FC = () => {
               role="tab"
               aria-selected={activeCategory === cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-3 sm:px-3.5 py-1.5 rounded-md text-xs font-mono transition-colors duration-150 outline-none focus-visible:ring-1 focus-visible:ring-[#0a5cff] ${
+              className={`px-3 sm:px-3.5 py-1.5 rounded-md text-xs font-mono transition-colors duration-150 outline-none focus-visible:ring-1 focus-visible:ring-zy-blue ${
                 activeCategory === cat.id
-                  ? 'bg-[#181f2c] text-white font-semibold border border-[#2b3547]'
-                  : 'text-[#8b92a5] hover:text-white'
+                  ? 'bg-zy-control-active text-zy-fg font-semibold border border-zy-border shadow-sm'
+                  : 'text-zy-muted hover:text-zy-fg'
               }`}
             >
               {cat.label}
@@ -96,14 +96,14 @@ export const Portfolio: React.FC = () => {
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className={`${
                   isFullWidth ? 'lg:col-span-12' : 'lg:col-span-6'
-                } group relative rounded-xl bg-[#0c0e12] border border-[#181d26] hover:border-[#2b3548] transition-colors duration-200 overflow-hidden flex flex-col justify-between`}
+                } group relative rounded-xl bg-zy-card border border-zy-border-card hover:border-zy-border-strong transition-colors duration-200 overflow-hidden flex flex-col justify-between shadow-sm`}
                 data-cursor="explore"
                 data-cursor-text={language === 'es' ? 'VER CASO ↗' : 'EXPLORE ↗'}
               >
                 {/* Visual Cover Asset */}
                 <Link
                   href={`/case-study/${project.slug}`}
-                  className="relative w-full aspect-[16/10] overflow-hidden bg-[#07080a] block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0a5cff]"
+                  className="relative w-full aspect-[16/10] overflow-hidden bg-[#07080a] block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
                   aria-label={`${project.title} - ${project.categoryLabel[language]}`}
                 >
                   <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.02]">
@@ -117,17 +117,17 @@ export const Portfolio: React.FC = () => {
                     />
                   </div>
 
-                  {/* Gradient overlay for contrast */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e12] via-transparent to-transparent opacity-80" />
+                  {/* Subtle vignette overlay on cover media */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
 
-                  {/* Badges on Image */}
+                  {/* Badges on Image (always over dark glass for photographic contrast) */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
                     <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md bg-[#07090c]/85 backdrop-blur-md border border-white/10 text-[10px] font-mono tracking-wider uppercase text-[#cbd4e6]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0a5cff]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-zy-blue" />
                       <span>{t.conceptBadge}</span>
                     </span>
 
-                    <span className="px-2.5 py-1 rounded-md bg-[#11141c]/90 border border-white/10 text-[#8b92a5] text-[10px] font-mono tracking-wider uppercase">
+                    <span className="px-2.5 py-1 rounded-md bg-[#11141c]/90 border border-white/10 text-[#9ba3b8] text-[10px] font-mono tracking-wider uppercase">
                       {projectNumber} // 04
                     </span>
                   </div>
@@ -136,35 +136,35 @@ export const Portfolio: React.FC = () => {
                 {/* Content Card Body */}
                 <div className="p-6 sm:p-8 flex flex-col justify-between flex-grow">
                   <div>
-                    <div className="flex items-center justify-between font-mono text-xs text-[#8b92a5] mb-2">
-                      <span className="text-[#0a5cff] font-medium">{project.categoryLabel[language]}</span>
-                      <span className="text-[#687185]">{project.year}</span>
+                    <div className="flex items-center justify-between font-mono text-xs text-zy-muted mb-2">
+                      <span className="text-zy-blue font-medium">{project.categoryLabel[language]}</span>
+                      <span className="text-zy-dim">{project.year}</span>
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-sans font-bold text-white group-hover:text-[#cbd4e6] transition-colors">
+                    <h3 className="text-2xl sm:text-3xl font-sans font-bold text-zy-fg group-hover:text-zy-blue transition-colors">
                       <Link
                         href={`/case-study/${project.slug}`}
-                        className="focus-visible:outline-none focus-visible:underline decoration-[#0a5cff]"
+                        className="focus-visible:outline-none focus-visible:underline decoration-zy-blue"
                       >
                         {project.title}
                       </Link>
                     </h3>
 
-                    <p className="mt-3 text-sm text-[#8b92a5] font-sans leading-relaxed">
+                    <p className="mt-3 text-sm text-zy-muted font-sans leading-relaxed">
                       {project.tagline[language]}
                     </p>
                   </div>
 
                   {/* Card Bottom Actions */}
-                  <div className="mt-8 pt-5 border-t border-[#181d26] flex items-center justify-between">
-                    <div className="flex items-center space-x-2 text-xs font-mono text-[#0a5cff]">
+                  <div className="mt-8 pt-5 border-t border-zy-border-card flex items-center justify-between">
+                    <div className="flex items-center space-x-2 text-xs font-mono text-zy-blue">
                       <Sparkles size={13} />
                       <span>{t.tryDemo}</span>
                     </div>
 
                     <Link
                       href={`/case-study/${project.slug}`}
-                      className="inline-flex items-center space-x-1 text-xs font-mono text-white hover:text-[#0a5cff] transition-colors group-hover:translate-x-0.5"
+                      className="inline-flex items-center space-x-1 text-xs font-mono text-zy-fg hover:text-zy-blue transition-colors group-hover:translate-x-0.5"
                     >
                       <span>{t.viewProject}</span>
                       <ArrowUpRight size={14} />

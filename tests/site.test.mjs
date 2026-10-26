@@ -92,4 +92,24 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     assert.ok(content.includes('RESEND_API_KEY'), '.env.example must document RESEND_API_KEY');
     assert.ok(content.includes('zyrvae.co@gmail.com'), '.env.example must reference zyrvae.co@gmail.com');
   });
+
+  test('Dark and Light theme system tokens, provider, anti-FOUC script, and selector integration', async () => {
+    const { THEME_STORAGE_KEY } = await import('../src/context/ThemeContext.tsx');
+    assert.equal(THEME_STORAGE_KEY, 'zyrvae_theme', 'Theme storage key must be zyrvae_theme');
+
+    const globalsCss = fs.readFileSync(path.join(process.cwd(), 'src', 'app', 'globals.css'), 'utf-8');
+    assert.ok(globalsCss.includes('html.dark'), 'globals.css must define html.dark tokens');
+    assert.ok(globalsCss.includes('html.light'), 'globals.css must define html.light tokens');
+    assert.ok(globalsCss.includes('--zy-bg:'), 'globals.css must define centralized --zy-bg token');
+    assert.ok(globalsCss.includes('--zy-fg:'), 'globals.css must define centralized --zy-fg token');
+    assert.ok(globalsCss.includes('--zy-blue: #0a5cff'), 'globals.css must preserve electric blue accent');
+
+    const layoutTsx = fs.readFileSync(path.join(process.cwd(), 'src', 'app', 'layout.tsx'), 'utf-8');
+    assert.ok(layoutTsx.includes('zyrvae_theme'), 'layout.tsx must include anti-FOUC script reading zyrvae_theme');
+    assert.ok(layoutTsx.includes('prefers-color-scheme: light'), 'layout.tsx must detect system color scheme preference');
+    assert.ok(layoutTsx.includes('<ThemeProvider>'), 'layout.tsx must wrap application in ThemeProvider');
+
+    const headerTsx = fs.readFileSync(path.join(process.cwd(), 'src', 'components', 'layout', 'Header.tsx'), 'utf-8');
+    assert.ok(headerTsx.includes('<ThemeToggle'), 'Header.tsx must render ThemeToggle selector');
+  });
 });

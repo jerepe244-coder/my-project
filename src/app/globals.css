@@ -1,38 +1,225 @@
 @import "tailwindcss";
 
-@theme {
-  --color-brand-graphite: #0c0d10;
-  --color-brand-black: #060709;
-  --color-brand-card: #101216;
-  --color-brand-card-hover: #15181e;
-  --color-brand-border: #1e222b;
-  --color-brand-blue: #0a5cff;
-  --color-brand-blue-hover: #2672ff;
-  --color-brand-text: #f4f5f8;
-  --color-brand-muted: #8b92a5;
-  --color-brand-dim: #515768;
-}
-
-:root {
+:root,
+html.dark,
+html[data-theme="dark"] {
   color-scheme: dark;
+
+  /* Core Backgrounds & Surfaces (Dark Default Identity) */
   --background: #060709;
   --foreground: #f4f5f8;
+  --zy-bg: #060709;
+  --zy-bg-elevated: #090b0e;
+  --zy-card: #0c0e12;
+  --zy-card-alt: #0e1014;
+  --zy-card-hover: #141720;
+  --zy-surface: #101216;
+  --zy-surface-alt: #0e1117;
+  --zy-surface-hover: #151922;
+  --zy-control: #12151b;
+  --zy-control-hover: #1a202c;
+  --zy-control-active: #1b2230;
+  --zy-accent-soft: #151d2b;
+  --zy-benefits-bg: #0e1117;
+  --zy-benefits-border: #1f2635;
+  --zy-logo-plate: #0e1014;
+
+  /* Overlays & Chrome */
+  --zy-header-scrolled: rgba(9, 11, 14, 0.85);
+  --zy-header-top: rgba(9, 11, 14, 0.4);
+  --zy-header-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  --zy-drawer-bg: rgba(6, 7, 9, 0.95);
+  --zy-modal-backdrop: rgba(0, 0, 0, 0.82);
+
+  /* Borders & Hairlines */
+  --zy-border-subtle: #161a22;
+  --zy-border: #1e232d;
+  --zy-border-card: #181d26;
+  --zy-border-strong: #2b3548;
+
+  /* Typography */
+  --zy-fg: #ffffff;
+  --zy-fg-soft: #f4f5f8;
+  --zy-fg-secondary: #cbd4e6;
+  --zy-fg-hero-sub: #d0d7e6;
+  --zy-muted: #8b92a5;
+  --zy-dim: #515768;
+  --zy-crosshair: #2c3340;
+
+  /* Brand Accent */
+  --zy-blue: #0a5cff;
+  --zy-blue-hover: #2672ff;
+
+  /* Error Banner Tokens */
+  --zy-error-bg: #171114;
+  --zy-error-border: rgba(255, 68, 68, 0.4);
+  --zy-error-divider: #2a1a1f;
+  --zy-error-fg: #ff8888;
+  --zy-error-text: #e2e8f0;
+
+  /* KÔN Atelier Warm Editorial Palette (Dark) */
+  --zy-warm-bg: #0c0b08;
+  --zy-warm-bar: #14120e;
+  --zy-warm-card: #100e0a;
+  --zy-warm-badge: #1e1b14;
+  --zy-warm-active: #221c13;
+  --zy-warm-border: #26211a;
+  --zy-warm-border-subtle: #1c1913;
+  --zy-warm-border-hover: #2f271c;
+  --zy-warm-fg: #f0ebe3;
+  --zy-warm-muted: #8c7e6b;
+  --zy-warm-dim: #695f51;
+}
+
+html.light,
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* Core Backgrounds & Surfaces (Premium Architectural Light) */
+  --background: #f6f8fb;
+  --foreground: #0b0e14;
+  --zy-bg: #f6f8fb;
+  --zy-bg-elevated: #ffffff;
+  --zy-card: #ffffff;
+  --zy-card-alt: #f0f3f8;
+  --zy-card-hover: #eaf0f8;
+  --zy-surface: #eff3f8;
+  --zy-surface-alt: #e9eff8;
+  --zy-surface-hover: #e2e9f4;
+  --zy-control: #ebeef5;
+  --zy-control-hover: #dfe5f0;
+  --zy-control-active: #ffffff;
+  --zy-accent-soft: #e8f0ff;
+  --zy-benefits-bg: #edf3fc;
+  --zy-benefits-border: #c5d6f2;
+  --zy-logo-plate: #eef2f8;
+
+  /* Overlays & Chrome */
+  --zy-header-scrolled: rgba(255, 255, 255, 0.88);
+  --zy-header-top: rgba(246, 248, 251, 0.72);
+  --zy-header-shadow: 0 8px 30px rgba(11, 14, 20, 0.07);
+  --zy-drawer-bg: rgba(246, 248, 251, 0.96);
+  --zy-modal-backdrop: rgba(11, 14, 20, 0.55);
+
+  /* Borders & Hairlines */
+  --zy-border-subtle: #e1e6f0;
+  --zy-border: #d0d8e6;
+  --zy-border-card: #d8e0ed;
+  --zy-border-strong: #9fb0c8;
+
+  /* Typography — High-Contrast Ink & Balanced Architectural Slates */
+  --zy-fg: #0b0e14;
+  --zy-fg-soft: #111622;
+  --zy-fg-secondary: #263042;
+  --zy-fg-hero-sub: #222b3c;
+  --zy-muted: #4a556b;
+  --zy-dim: #5e6a82;
+  --zy-crosshair: #b0bcd0;
+
+  /* Brand Accent */
+  --zy-blue: #0a5cff;
+  --zy-blue-hover: #004be0;
+
+  /* Error Banner Tokens */
+  --zy-error-bg: #fff5f5;
+  --zy-error-border: rgba(220, 38, 38, 0.35);
+  --zy-error-divider: #fecaca;
+  --zy-error-fg: #b91c1c;
+  --zy-error-text: #1e293b;
+
+  /* KÔN Atelier Warm Editorial Palette (Light) */
+  --zy-warm-bg: #faf8f5;
+  --zy-warm-bar: #f2eee8;
+  --zy-warm-card: #ffffff;
+  --zy-warm-badge: #e6dfd5;
+  --zy-warm-active: #ffffff;
+  --zy-warm-border: #dcd4c8;
+  --zy-warm-border-subtle: #e6dfd5;
+  --zy-warm-border-hover: #b8ac99;
+  --zy-warm-fg: #181510;
+  --zy-warm-muted: #574d40;
+  --zy-warm-dim: #6e6253;
+}
+
+@theme inline {
+  --color-brand-graphite: var(--zy-card);
+  --color-brand-black: var(--zy-bg);
+  --color-brand-card: var(--zy-surface);
+  --color-brand-card-hover: var(--zy-surface-hover);
+  --color-brand-border: var(--zy-border);
+  --color-brand-blue: var(--zy-blue);
+  --color-brand-blue-hover: var(--zy-blue-hover);
+  --color-brand-text: var(--zy-fg-soft);
+  --color-brand-muted: var(--zy-muted);
+  --color-brand-dim: var(--zy-dim);
+
+  --color-zy-bg: var(--zy-bg);
+  --color-zy-bg-elevated: var(--zy-bg-elevated);
+  --color-zy-card: var(--zy-card);
+  --color-zy-card-alt: var(--zy-card-alt);
+  --color-zy-card-hover: var(--zy-card-hover);
+  --color-zy-surface: var(--zy-surface);
+  --color-zy-surface-alt: var(--zy-surface-alt);
+  --color-zy-surface-hover: var(--zy-surface-hover);
+  --color-zy-control: var(--zy-control);
+  --color-zy-control-hover: var(--zy-control-hover);
+  --color-zy-control-active: var(--zy-control-active);
+  --color-zy-accent-soft: var(--zy-accent-soft);
+  --color-zy-benefits-bg: var(--zy-benefits-bg);
+  --color-zy-benefits-border: var(--zy-benefits-border);
+  --color-zy-logo-plate: var(--zy-logo-plate);
+
+  --color-zy-border-subtle: var(--zy-border-subtle);
+  --color-zy-border: var(--zy-border);
+  --color-zy-border-card: var(--zy-border-card);
+  --color-zy-border-strong: var(--zy-border-strong);
+
+  --color-zy-fg: var(--zy-fg);
+  --color-zy-fg-soft: var(--zy-fg-soft);
+  --color-zy-fg-secondary: var(--zy-fg-secondary);
+  --color-zy-fg-hero-sub: var(--zy-fg-hero-sub);
+  --color-zy-muted: var(--zy-muted);
+  --color-zy-dim: var(--zy-dim);
+  --color-zy-crosshair: var(--zy-crosshair);
+
+  --color-zy-blue: var(--zy-blue);
+  --color-zy-blue-hover: var(--zy-blue-hover);
+
+  --color-zy-error-bg: var(--zy-error-bg);
+  --color-zy-error-border: var(--zy-error-border);
+  --color-zy-error-divider: var(--zy-error-divider);
+  --color-zy-error-fg: var(--zy-error-fg);
+  --color-zy-error-text: var(--zy-error-text);
+
+  --color-zy-warm-bg: var(--zy-warm-bg);
+  --color-zy-warm-bar: var(--zy-warm-bar);
+  --color-zy-warm-card: var(--zy-warm-card);
+  --color-zy-warm-badge: var(--zy-warm-badge);
+  --color-zy-warm-active: var(--zy-warm-active);
+  --color-zy-warm-border: var(--zy-warm-border);
+  --color-zy-warm-border-subtle: var(--zy-warm-border-subtle);
+  --color-zy-warm-border-hover: var(--zy-warm-border-hover);
+  --color-zy-warm-fg: var(--zy-warm-fg);
+  --color-zy-warm-muted: var(--zy-warm-muted);
+  --color-zy-warm-dim: var(--zy-warm-dim);
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #060709;
+  background-color: var(--zy-bg);
+  color: var(--zy-fg-soft);
 }
 
 body {
-  background-color: #060709;
-  color: #f4f5f8;
+  background-color: var(--zy-bg);
+  color: var(--zy-fg-soft);
   overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Accessible focus visible outlines */
 :focus-visible {
-  outline: 2px solid #0a5cff;
+  outline: 2px solid var(--zy-blue);
   outline-offset: 2px;
 }
 

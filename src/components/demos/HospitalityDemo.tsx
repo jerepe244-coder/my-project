@@ -119,24 +119,24 @@ export const HospitalityDemo: React.FC = () => {
   };
 
   return (
-    <div className="rounded-2xl border border-[#1e232d] bg-[#0d0f14] overflow-hidden text-white font-sans">
+    <div className="rounded-2xl border border-zy-border bg-zy-card overflow-hidden text-zy-fg font-sans shadow-sm">
       {/* Demo Header Bar with clear disclaimer */}
-      <div className="bg-[#12161f] px-5 py-3 border-b border-[#1e232d] flex items-center justify-between text-xs font-mono">
-        <div className="flex items-center space-x-2 text-[#0a5cff]">
+      <div className="bg-zy-surface px-5 py-3 border-b border-zy-border flex items-center justify-between text-xs font-mono">
+        <div className="flex items-center space-x-2 text-zy-blue">
           <Sparkles size={14} />
           <span className="font-semibold uppercase tracking-wider">
             {language === 'es' ? 'DEMO INTERACTIVA' : 'INTERACTIVE DEMO'}
           </span>
-          <span className="text-[#515768]">| AURA SANCTUARY</span>
+          <span className="text-zy-dim">| AURA SANCTUARY</span>
         </div>
-        <span className="inline-flex items-center px-2 py-0.5 rounded bg-[#1f2633] text-[#8b92a5] text-[10px]">
+        <span className="inline-flex items-center px-2 py-0.5 rounded bg-zy-control text-zy-muted text-[10px] border border-zy-border-subtle">
           {language === 'es' ? 'Simulación conceptual sin cobros' : 'Conceptual simulation only'}
         </span>
       </div>
 
       <div className="p-6 md:p-8">
         {/* Suite Selector Tabs */}
-        <div className="flex flex-wrap gap-2 pb-6 border-b border-[#1a1f29]">
+        <div className="flex flex-wrap gap-2 pb-6 border-b border-zy-border-subtle">
           {suites.map((suite, idx) => (
             <button
               key={suite.id}
@@ -150,8 +150,8 @@ export const HospitalityDemo: React.FC = () => {
               }}
               className={`px-4 py-2 rounded-lg text-xs font-mono transition-all ${
                 selectedSuite === idx
-                  ? 'bg-[#0a5cff] text-white font-semibold shadow-[0_0_15px_rgba(10,92,255,0.4)]'
-                  : 'bg-[#151922] text-[#8b92a5] hover:text-white hover:bg-[#1a202c]'
+                  ? 'bg-zy-blue text-white font-semibold shadow-[0_0_15px_rgba(10,92,255,0.4)]'
+                  : 'bg-zy-surface text-zy-muted hover:text-zy-fg hover:bg-zy-surface-hover border border-zy-border-subtle'
               }`}
             >
               {suite.name[language]}
@@ -163,7 +163,7 @@ export const HospitalityDemo: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-6">
           <div className="lg:col-span-2 space-y-6">
             {/* Suite Photographic Showcase */}
-            <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-[#1e232d] bg-[#090b0f] shadow-xl">
+            <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-zy-border bg-[#090b0f] shadow-lg">
               <Image
                 key={current.image}
                 src={current.image}
@@ -177,7 +177,7 @@ export const HospitalityDemo: React.FC = () => {
                 <span className="px-2.5 py-1 rounded-md bg-[#0a0c10]/80 backdrop-blur-md border border-white/10 font-mono text-[10px] text-[#cbd4e6] tracking-wider uppercase">
                   {current.elevation}
                 </span>
-                <span className="px-2.5 py-1 rounded-md bg-[#0a5cff]/20 backdrop-blur-md border border-[#0a5cff]/40 font-mono text-[10px] text-white font-semibold">
+                <span className="px-2.5 py-1 rounded-md bg-zy-blue/25 backdrop-blur-md border border-zy-blue/50 font-mono text-[10px] text-white font-semibold">
                   {current.area}
                 </span>
               </div>
@@ -195,27 +195,27 @@ export const HospitalityDemo: React.FC = () => {
 
             <div>
               <div className="flex flex-wrap items-baseline gap-3">
-                <h4 className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-white">
+                <h4 className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-zy-fg">
                   {current.name[language]}
                 </h4>
-                <span className="font-mono text-xs text-[#0a5cff] border border-[#0a5cff]/30 px-2 py-0.5 rounded">
+                <span className="font-mono text-xs text-zy-blue border border-zy-blue/30 px-2 py-0.5 rounded">
                   {current.area}
                 </span>
               </div>
-              <p className="text-xs text-[#8b92a5] font-mono mt-1.5">
+              <p className="text-xs text-zy-muted font-mono mt-1.5">
                 {language === 'es' ? 'Orientación:' : 'View:'} {current.view[language]}
               </p>
             </div>
 
             {/* Amenity checklist */}
             <div className="space-y-3">
-              <p className="text-xs font-mono uppercase tracking-wider text-[#8b92a5]">
+              <p className="text-xs font-mono uppercase tracking-wider text-zy-muted">
                 // {language === 'es' ? 'Comodidades de la suite' : 'Curated amenities'}
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-[#cbd4e6]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-zy-fg-secondary">
                 {current.amenities.map((item, i) => (
-                  <div key={i} className="flex items-center space-x-2.5 bg-[#12151d] p-3 rounded-lg border border-[#1a1f29]">
-                    <Check size={14} className="text-[#0a5cff] shrink-0" />
+                  <div key={i} className="flex items-center space-x-2.5 bg-zy-surface p-3 rounded-lg border border-zy-border-card">
+                    <Check size={14} className="text-zy-blue shrink-0" />
                     <span>{item[language]}</span>
                   </div>
                 ))}
@@ -224,19 +224,19 @@ export const HospitalityDemo: React.FC = () => {
           </div>
 
           {/* Pricing & Reservation Simulator Column */}
-          <div className="bg-[#12161f] p-5 rounded-xl border border-[#1e232d] flex flex-col justify-between space-y-5">
+          <div className="bg-zy-surface p-5 rounded-xl border border-zy-border flex flex-col justify-between space-y-5">
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#515768]">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-zy-dim">
                 {language === 'es' ? 'Tarifa base estimada' : 'Estimated base rate'}
               </span>
               <div className="flex items-baseline space-x-1 mt-1">
-                <span className="text-3xl font-bold text-white font-sans">${current.baseRate}</span>
-                <span className="text-xs text-[#8b92a5] font-mono">/ {language === 'es' ? 'noche' : 'night'}</span>
+                <span className="text-3xl font-bold text-zy-fg font-sans">${current.baseRate}</span>
+                <span className="text-xs text-zy-muted font-mono">/ {language === 'es' ? 'noche' : 'night'}</span>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-[#1a1f29] space-y-3 text-xs">
+              <div className="mt-4 pt-4 border-t border-zy-border-card space-y-3 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="flex items-center space-x-1.5 text-[#8b92a5]">
+                  <span className="flex items-center space-x-1.5 text-zy-muted">
                     <Calendar size={13} />
                     <span>{language === 'es' ? 'Noches:' : 'Nights:'}</span>
                   </span>
@@ -249,11 +249,11 @@ export const HospitalityDemo: React.FC = () => {
                         setNights((prev) => Math.max(1, prev - 1));
                         setDemoSubmitted(false);
                       }}
-                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c] disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="w-6 h-6 rounded bg-zy-control border border-zy-border text-zy-fg flex items-center justify-center font-mono hover:bg-zy-control-hover disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       -
                     </button>
-                    <span className="font-mono text-white font-semibold w-4 text-center">{nights}</span>
+                    <span className="font-mono text-zy-fg font-semibold w-4 text-center">{nights}</span>
                     <button
                       type="button"
                       aria-label={language === 'es' ? 'Aumentar noches' : 'Increase nights'}
@@ -261,7 +261,7 @@ export const HospitalityDemo: React.FC = () => {
                         setNights((prev) => prev + 1);
                         setDemoSubmitted(false);
                       }}
-                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c]"
+                      className="w-6 h-6 rounded bg-zy-control border border-zy-border text-zy-fg flex items-center justify-center font-mono hover:bg-zy-control-hover"
                     >
                       +
                     </button>
@@ -269,11 +269,11 @@ export const HospitalityDemo: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="flex items-center space-x-1.5 text-[#8b92a5]">
+                  <span className="flex items-center space-x-1.5 text-zy-muted">
                     <Users size={13} />
                     <span>
                       {language === 'es' ? 'Adultos:' : 'Adults:'}{' '}
-                      <span className="text-[10px] font-mono text-[#515768]">
+                      <span className="text-[10px] font-mono text-zy-dim">
                         ({language === 'es' ? `máx. ${maxAdults}` : `max. ${maxAdults}`})
                       </span>
                     </span>
@@ -287,11 +287,11 @@ export const HospitalityDemo: React.FC = () => {
                         setGuests((prev) => Math.max(minAdults, prev - 1));
                         setDemoSubmitted(false);
                       }}
-                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c] disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="w-6 h-6 rounded bg-zy-control border border-zy-border text-zy-fg flex items-center justify-center font-mono hover:bg-zy-control-hover disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       -
                     </button>
-                    <span className="font-mono text-white font-semibold w-4 text-center">{activeAdults}</span>
+                    <span className="font-mono text-zy-fg font-semibold w-4 text-center">{activeAdults}</span>
                     <button
                       type="button"
                       disabled={activeAdults >= maxAdults}
@@ -300,7 +300,7 @@ export const HospitalityDemo: React.FC = () => {
                         setGuests((prev) => Math.min(maxAdults, prev + 1));
                         setDemoSubmitted(false);
                       }}
-                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c] disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="w-6 h-6 rounded bg-zy-control border border-zy-border text-zy-fg flex items-center justify-center font-mono hover:bg-zy-control-hover disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       +
                     </button>
@@ -309,8 +309,8 @@ export const HospitalityDemo: React.FC = () => {
               </div>
 
               {/* Optional Extras Selector */}
-              <div className="mt-4 pt-4 border-t border-[#1a1f29] space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#515768] block">
+              <div className="mt-4 pt-4 border-t border-zy-border-card space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-zy-dim block">
                   {language === 'es' ? 'Extras opcionales (demo)' : 'Optional extras (demo)'}
                 </span>
 
@@ -320,16 +320,16 @@ export const HospitalityDemo: React.FC = () => {
                   onClick={() => toggleExtra('breakfast')}
                   className={`w-full p-2.5 rounded-lg border text-left transition-all flex items-center justify-between gap-2 text-xs ${
                     extras.breakfast
-                      ? 'bg-[#151d2b] border-[#0a5cff] text-white'
-                      : 'bg-[#0e1118] border-[#1a1f29] text-[#8b92a5] hover:border-[#252c3c] hover:text-white'
+                      ? 'bg-zy-accent-soft border-zy-blue text-zy-fg'
+                      : 'bg-zy-card border-zy-border-card text-zy-muted hover:border-zy-border-strong hover:text-zy-fg'
                   }`}
                 >
                   <div className="flex items-center space-x-2 min-w-0">
                     <span
                       className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
                         extras.breakfast
-                          ? 'bg-[#0a5cff] border-[#0a5cff] text-white'
-                          : 'border-[#2b3344] bg-[#12161f]'
+                          ? 'bg-zy-blue border-zy-blue text-white'
+                          : 'border-zy-border-strong bg-zy-surface'
                       }`}
                     >
                       {extras.breakfast && <Check size={11} />}
@@ -338,13 +338,13 @@ export const HospitalityDemo: React.FC = () => {
                       <span className="font-medium block truncate">
                         {language === 'es' ? 'Desayuno' : 'Breakfast'}
                       </span>
-                      <span className="text-[10px] font-mono text-[#8b92a5] block">
+                      <span className="text-[10px] font-mono text-zy-muted block">
                         ${EXTRA_RATES.breakfastPerAdultNight}{' '}
                         {language === 'es' ? '/ adulto · noche' : '/ adult · night'}
                       </span>
                     </div>
                   </div>
-                  <span className="font-mono text-[11px] text-[#cbd4e6] shrink-0">
+                  <span className="font-mono text-[11px] text-zy-fg-secondary shrink-0">
                     +${EXTRA_RATES.breakfastPerAdultNight * activeAdults * nights}
                   </span>
                 </button>
@@ -355,16 +355,16 @@ export const HospitalityDemo: React.FC = () => {
                   onClick={() => toggleExtra('spa')}
                   className={`w-full p-2.5 rounded-lg border text-left transition-all flex items-center justify-between gap-2 text-xs ${
                     extras.spa
-                      ? 'bg-[#151d2b] border-[#0a5cff] text-white'
-                      : 'bg-[#0e1118] border-[#1a1f29] text-[#8b92a5] hover:border-[#252c3c] hover:text-white'
+                      ? 'bg-zy-accent-soft border-zy-blue text-zy-fg'
+                      : 'bg-zy-card border-zy-border-card text-zy-muted hover:border-zy-border-strong hover:text-zy-fg'
                   }`}
                 >
                   <div className="flex items-center space-x-2 min-w-0">
                     <span
                       className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
                         extras.spa
-                          ? 'bg-[#0a5cff] border-[#0a5cff] text-white'
-                          : 'border-[#2b3344] bg-[#12161f]'
+                          ? 'bg-zy-blue border-zy-blue text-white'
+                          : 'border-zy-border-strong bg-zy-surface'
                       }`}
                     >
                       {extras.spa && <Check size={11} />}
@@ -373,13 +373,13 @@ export const HospitalityDemo: React.FC = () => {
                       <span className="font-medium block truncate">
                         {language === 'es' ? 'Spa termal' : 'Thermal spa'}
                       </span>
-                      <span className="text-[10px] font-mono text-[#8b92a5] block">
+                      <span className="text-[10px] font-mono text-zy-muted block">
                         ${EXTRA_RATES.spaPerAdultStay}{' '}
                         {language === 'es' ? '/ adulto · estadía' : '/ adult · stay'}
                       </span>
                     </div>
                   </div>
-                  <span className="font-mono text-[11px] text-[#cbd4e6] shrink-0">
+                  <span className="font-mono text-[11px] text-zy-fg-secondary shrink-0">
                     +${EXTRA_RATES.spaPerAdultStay * activeAdults}
                   </span>
                 </button>
@@ -387,21 +387,21 @@ export const HospitalityDemo: React.FC = () => {
             </div>
 
             {/* Dynamic Summary & Breakdown */}
-            <div className="pt-4 border-t border-[#1a1f29] space-y-3">
-              <div className="p-3 rounded-lg bg-[#0e1118] border border-[#1a1f29] text-[11px] font-mono space-y-1.5">
+            <div className="pt-4 border-t border-zy-border-card space-y-3">
+              <div className="p-3 rounded-lg bg-zy-card border border-zy-border-card text-[11px] font-mono space-y-1.5">
                 <div className="flex justify-between gap-2">
-                  <span className="text-[#8b92a5]">{language === 'es' ? 'Suite:' : 'Suite:'}</span>
-                  <span className="text-white font-semibold text-right">{current.name[language]}</span>
+                  <span className="text-zy-muted">{language === 'es' ? 'Suite:' : 'Suite:'}</span>
+                  <span className="text-zy-fg font-semibold text-right">{current.name[language]}</span>
                 </div>
                 <div className="flex justify-between gap-2">
-                  <span className="text-[#8b92a5]">{language === 'es' ? 'Huéspedes:' : 'Guests:'}</span>
-                  <span className="text-white text-right">
+                  <span className="text-zy-muted">{language === 'es' ? 'Huéspedes:' : 'Guests:'}</span>
+                  <span className="text-zy-fg text-right">
                     {adultsLabel} · {nightsLabel}
                   </span>
                 </div>
                 <div className="flex justify-between gap-2">
-                  <span className="text-[#8b92a5]">{language === 'es' ? 'Extras:' : 'Extras:'}</span>
-                  <span className="text-[#cbd4e6] text-right">
+                  <span className="text-zy-muted">{language === 'es' ? 'Extras:' : 'Extras:'}</span>
+                  <span className="text-zy-fg-secondary text-right">
                     {selectedExtrasLabels.length > 0
                       ? selectedExtrasLabels.join(', ')
                       : language === 'es'
@@ -410,41 +410,41 @@ export const HospitalityDemo: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="pt-1.5 mt-1.5 border-t border-[#1a1f29] space-y-1">
-                  <div className="flex justify-between text-[#8b92a5]">
+                <div className="pt-1.5 mt-1.5 border-t border-zy-border-subtle space-y-1">
+                  <div className="flex justify-between text-zy-muted">
                     <span>
                       {language === 'es' ? 'Suite' : 'Suite'} (${current.baseRate} × {nights}n)
                     </span>
-                    <span className="text-[#cbd4e6]">${suiteSubtotal} USD</span>
+                    <span className="text-zy-fg-secondary">${suiteSubtotal} USD</span>
                   </div>
                   {extras.breakfast && (
-                    <div className="flex justify-between text-[#8b92a5]">
+                    <div className="flex justify-between text-zy-muted">
                       <span>
                         {language === 'es' ? 'Desayuno' : 'Breakfast'} (${EXTRA_RATES.breakfastPerAdultNight} × {activeAdults} × {nights}n)
                       </span>
-                      <span className="text-[#cbd4e6]">+${breakfastSubtotal} USD</span>
+                      <span className="text-zy-fg-secondary">+${breakfastSubtotal} USD</span>
                     </div>
                   )}
                   {extras.spa && (
-                    <div className="flex justify-between text-[#8b92a5]">
+                    <div className="flex justify-between text-zy-muted">
                       <span>
                         {language === 'es' ? 'Spa termal' : 'Thermal spa'} (${EXTRA_RATES.spaPerAdultStay} × {activeAdults})
                       </span>
-                      <span className="text-[#cbd4e6]">+${spaSubtotal} USD</span>
+                      <span className="text-zy-fg-secondary">+${spaSubtotal} USD</span>
                     </div>
                   )}
                 </div>
               </div>
 
               <div className="flex justify-between items-baseline">
-                <span className="text-xs text-[#8b92a5]">{language === 'es' ? 'Total estimado:' : 'Estimated total:'}</span>
-                <span className="text-xl font-bold text-white font-sans">${totalPrice} USD</span>
+                <span className="text-xs text-zy-muted">{language === 'es' ? 'Total estimado:' : 'Estimated total:'}</span>
+                <span className="text-xl font-bold text-zy-fg font-sans">${totalPrice} USD</span>
               </div>
 
               <button
                 type="button"
                 onClick={() => setShowDrawer(true)}
-                className="w-full py-2.5 rounded-lg bg-[#0a5cff] hover:bg-[#2672ff] text-white text-xs font-medium font-sans transition-all shadow-[0_0_15px_rgba(10,92,255,0.3)]"
+                className="w-full py-2.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-medium font-sans transition-all shadow-[0_0_15px_rgba(10,92,255,0.3)]"
               >
                 {language === 'es' ? 'Probar solicitud de reserva ↗' : 'Test reservation request ↗'}
               </button>
@@ -458,44 +458,45 @@ export const HospitalityDemo: React.FC = () => {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          style={{ backgroundColor: 'var(--zy-modal-backdrop)' }}
+          className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm p-4"
         >
-          <div className="bg-[#10131a] border border-[#252c3b] rounded-2xl max-w-md w-full p-6 text-white relative shadow-2xl">
+          <div className="bg-zy-card border border-zy-border rounded-2xl max-w-md w-full p-6 text-zy-fg relative shadow-2xl">
             <button
               type="button"
               onClick={() => setShowDrawer(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-full text-[#8b92a5] hover:text-white hover:bg-[#1a202c]"
+              className="absolute top-4 right-4 p-1.5 rounded-full text-zy-muted hover:text-zy-fg hover:bg-zy-control"
             >
               <X size={16} />
             </button>
 
-            <div className="flex items-center space-x-2 text-[#0a5cff] text-xs font-mono mb-2">
+            <div className="flex items-center space-x-2 text-zy-blue text-xs font-mono mb-2">
               <Info size={14} />
               <span>{language === 'es' ? 'SIMULADOR DE DEMOSTRACIÓN' : 'DEMO SIMULATOR'}</span>
             </div>
 
             {!demoSubmitted ? (
               <form onSubmit={handleBookingSim} className="space-y-4">
-                <h3 className="text-xl font-bold font-sans">
+                <h3 className="text-xl font-bold font-sans text-zy-fg">
                   {language === 'es' ? 'Solicitar estadía en' : 'Inquire stay at'} {current.name[language]}
                 </h3>
 
-                <div className="p-3 bg-[#151922] rounded-lg border border-[#1e2430] text-xs font-mono space-y-1.5">
+                <div className="p-3 bg-zy-surface rounded-lg border border-zy-border text-xs font-mono space-y-1.5">
                   <div className="flex justify-between">
-                    <span className="text-[#8b92a5]">{language === 'es' ? 'Suite:' : 'Suite:'}</span>
-                    <span className="text-white font-semibold">{current.name[language]}</span>
+                    <span className="text-zy-muted">{language === 'es' ? 'Suite:' : 'Suite:'}</span>
+                    <span className="text-zy-fg font-semibold">{current.name[language]}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#8b92a5]">{language === 'es' ? 'Duración:' : 'Length:'}</span>
-                    <span>{nightsLabel}</span>
+                    <span className="text-zy-muted">{language === 'es' ? 'Duración:' : 'Length:'}</span>
+                    <span className="text-zy-fg">{nightsLabel}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#8b92a5]">{language === 'es' ? 'Huéspedes:' : 'Guests:'}</span>
-                    <span>{adultsLabel}</span>
+                    <span className="text-zy-muted">{language === 'es' ? 'Huéspedes:' : 'Guests:'}</span>
+                    <span className="text-zy-fg">{adultsLabel}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#8b92a5]">{language === 'es' ? 'Extras:' : 'Extras:'}</span>
-                    <span>
+                    <span className="text-zy-muted">{language === 'es' ? 'Extras:' : 'Extras:'}</span>
+                    <span className="text-zy-fg">
                       {selectedExtrasLabels.length > 0
                         ? selectedExtrasLabels.join(', ')
                         : language === 'es'
@@ -503,49 +504,49 @@ export const HospitalityDemo: React.FC = () => {
                           : 'None'}
                     </span>
                   </div>
-                  <div className="pt-1.5 border-t border-[#202735] space-y-1 text-[11px]">
-                    <div className="flex justify-between text-[#8b92a5]">
+                  <div className="pt-1.5 border-t border-zy-border space-y-1 text-[11px]">
+                    <div className="flex justify-between text-zy-muted">
                       <span>
                         {language === 'es' ? 'Alojamiento' : 'Stay'} (${current.baseRate} × {nights}n)
                       </span>
-                      <span className="text-[#cbd4e6]">${suiteSubtotal} USD</span>
+                      <span className="text-zy-fg-secondary">${suiteSubtotal} USD</span>
                     </div>
                     {extras.breakfast && (
-                      <div className="flex justify-between text-[#8b92a5]">
+                      <div className="flex justify-between text-zy-muted">
                         <span>
                           {language === 'es' ? 'Desayuno' : 'Breakfast'} (${EXTRA_RATES.breakfastPerAdultNight} × {activeAdults} × {nights}n)
                         </span>
-                        <span className="text-[#cbd4e6]">+${breakfastSubtotal} USD</span>
+                        <span className="text-zy-fg-secondary">+${breakfastSubtotal} USD</span>
                       </div>
                     )}
                     {extras.spa && (
-                      <div className="flex justify-between text-[#8b92a5]">
+                      <div className="flex justify-between text-zy-muted">
                         <span>
                           {language === 'es' ? 'Spa termal' : 'Thermal spa'} (${EXTRA_RATES.spaPerAdultStay} × {activeAdults})
                         </span>
-                        <span className="text-[#cbd4e6]">+${spaSubtotal} USD</span>
+                        <span className="text-zy-fg-secondary">+${spaSubtotal} USD</span>
                       </div>
                     )}
                   </div>
-                  <div className="flex justify-between text-[#0a5cff] font-semibold pt-1.5 border-t border-[#202735]">
+                  <div className="flex justify-between text-zy-blue font-semibold pt-1.5 border-t border-zy-border">
                     <span>{language === 'es' ? 'Total estimado:' : 'Estimated total:'}</span>
                     <span>${totalPrice} USD</span>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-mono text-[#cbd4e6]">
+                  <label className="text-xs font-mono text-zy-fg-secondary">
                     {language === 'es' ? 'Nombre simulado:' : 'Mock guest name:'}
                   </label>
                   <input
                     type="text"
                     required
                     defaultValue="Alex Mercer"
-                    className="w-full px-3 py-2 bg-[#0a0c10] border border-[#1e2430] rounded-lg text-xs text-white focus:outline-none focus:border-[#0a5cff]"
+                    className="w-full px-3 py-2 bg-zy-surface border border-zy-border rounded-lg text-xs text-zy-fg focus:outline-none focus:border-zy-blue"
                   />
                 </div>
 
-                <p className="text-[11px] text-[#8b92a5] leading-relaxed">
+                <p className="text-[11px] text-zy-muted leading-relaxed">
                   {language === 'es'
                     ? 'Esta es una simulación visual creada por ZYRVAE para demostrar flujos de reserva boutique. No se realizará ningún cobro ni reserva real.'
                     : 'This is a visual concept simulation built by ZYRVAE to showcase boutique reservation flows. No real reservation or payment will occur.'}
@@ -553,20 +554,20 @@ export const HospitalityDemo: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 rounded-lg bg-[#0a5cff] hover:bg-[#2672ff] text-white text-xs font-medium font-sans transition-all"
+                  className="w-full py-2.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-medium font-sans transition-all"
                 >
                   {language === 'es' ? 'Completar simulación de consulta' : 'Complete inquiry simulation'}
                 </button>
               </form>
             ) : (
               <div className="text-center py-6 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-[#0a5cff]/20 text-[#0a5cff] flex items-center justify-center mx-auto border border-[#0a5cff]/40">
+                <div className="w-12 h-12 rounded-full bg-zy-blue/20 text-zy-blue flex items-center justify-center mx-auto border border-zy-blue/40">
                   <Check size={24} />
                 </div>
-                <h3 className="text-lg font-bold font-sans">
+                <h3 className="text-lg font-bold font-sans text-zy-fg">
                   {language === 'es' ? 'Simulación completada con éxito' : 'Simulation completed successfully'}
                 </h3>
-                <p className="text-xs text-[#8b92a5] leading-relaxed">
+                <p className="text-xs text-zy-muted leading-relaxed">
                   {language === 'es'
                     ? 'En un entorno de producción, esta acción generaría una reserva en tu PMS hotelero o despacharía un brief prioritario a tu conserjería.'
                     : 'In production, this interaction hooks directly into your hotel PMS or dispatches a priority concierge notification.'}
@@ -574,7 +575,7 @@ export const HospitalityDemo: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowDrawer(false)}
-                  className="px-4 py-2 rounded-lg bg-[#1a202c] hover:bg-[#242c3c] text-xs font-mono text-white"
+                  className="px-4 py-2 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-xs font-mono text-zy-fg"
                 >
                   {language === 'es' ? 'Cerrar demostración' : 'Close demo'}
                 </button>

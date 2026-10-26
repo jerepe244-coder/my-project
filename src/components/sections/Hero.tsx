@@ -18,26 +18,26 @@ export const Hero: React.FC = () => {
       aria-label="ZYRVAE Hero Section"
     >
       {/* Subtle architectural perimeter crosshairs and framing (pure lines, no blur balls) */}
-      <div className="absolute top-28 left-4 sm:left-8 font-mono text-[10px] text-[#2c3340] select-none pointer-events-none" aria-hidden="true">+</div>
-      <div className="absolute top-28 right-4 sm:right-8 font-mono text-[10px] text-[#2c3340] select-none pointer-events-none" aria-hidden="true">+</div>
+      <div className="absolute top-28 left-4 sm:left-8 font-mono text-[10px] text-zy-crosshair select-none pointer-events-none" aria-hidden="true">+</div>
+      <div className="absolute top-28 right-4 sm:right-8 font-mono text-[10px] text-zy-crosshair select-none pointer-events-none" aria-hidden="true">+</div>
 
       {/* Top Technical Metadata Bar */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-wrap items-center justify-between gap-3 pb-6 sm:pb-8 border-b border-[#161a22] text-[11px] font-mono text-[#8b92a5] uppercase tracking-wider"
+        className="flex flex-wrap items-center justify-between gap-3 pb-6 sm:pb-8 border-b border-zy-border-subtle text-[11px] font-mono text-zy-muted uppercase tracking-wider"
       >
         <div className="flex items-center space-x-3">
-          <span className="text-white font-semibold tracking-widest">// ZYRVAE</span>
-          <span className="text-[#323946]">/</span>
-          <span className="text-[#8b92a5]">{t.badge}</span>
+          <span className="text-zy-fg font-semibold tracking-widest">// ZYRVAE</span>
+          <span className="text-zy-border-strong">/</span>
+          <span className="text-zy-muted">{t.badge}</span>
         </div>
 
-        <div className="flex items-center space-x-4 text-[#515768]">
+        <div className="flex items-center space-x-4 text-zy-dim">
           <span className="hidden sm:inline">BUENOS AIRES [34°36′S 58°22′W] // GLOBAL</span>
-          <span className="inline-flex items-center space-x-1.5 text-[#0a5cff]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0a5cff]" />
+          <span className="inline-flex items-center space-x-1.5 text-zy-blue">
+            <span className="w-1.5 h-1.5 rounded-full bg-zy-blue" />
             <span className="text-[10px] tracking-widest uppercase">AVAILABLE 2025</span>
           </span>
         </div>
@@ -55,19 +55,19 @@ export const Hero: React.FC = () => {
             className="flex lg:hidden items-center space-x-3.5 pb-2"
           >
             <SymbolLogo size={42} animate={true} showPlate={true} />
-            <div className="font-mono text-[10px] uppercase tracking-widest text-[#8b92a5] border-l border-[#1e232d] pl-3 py-1">
-              <span className="text-white block font-semibold">STUDIO MONOGRAM</span>
-              <span className="text-[#515768]">SYSTEM 01 // BESPOKE WEB</span>
+            <div className="font-mono text-[10px] uppercase tracking-widest text-zy-muted border-l border-zy-border pl-3 py-1">
+              <span className="text-zy-fg block font-semibold">STUDIO MONOGRAM</span>
+              <span className="text-zy-dim">SYSTEM 01 // BESPOKE WEB</span>
             </div>
           </motion.div>
 
           {/* Monumental Headline: Pure, disciplined contrast — NO generic text gradient */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-sans font-bold tracking-tight text-white leading-[0.98] sm:leading-[0.96]">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-sans font-bold tracking-tight text-zy-fg leading-[0.98] sm:leading-[0.96]">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="block text-white"
+              className="block text-zy-fg"
             >
               {t.headlinePart1}
             </motion.span>
@@ -75,10 +75,10 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="block text-[#d0d7e6]"
+              className="block text-zy-fg-hero-sub"
             >
               {t.headlinePart2.replace('.', '')}
-              <span className="text-[#0a5cff]">.</span>
+              <span className="text-zy-blue">.</span>
             </motion.span>
           </h1>
 
@@ -87,7 +87,7 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base sm:text-lg lg:text-xl text-[#8b92a5] font-sans max-w-2xl leading-relaxed font-normal"
+            className="text-base sm:text-lg lg:text-xl text-zy-muted font-sans max-w-2xl leading-relaxed font-normal"
           >
             {t.subhead}
           </motion.p>
@@ -101,14 +101,14 @@ export const Hero: React.FC = () => {
           >
             <Link
               href="/#contact"
-              className="inline-flex items-center space-x-2 px-6 sm:px-7 py-3.5 rounded-lg bg-[#0a5cff] hover:bg-[#1f6bff] text-white text-xs sm:text-sm font-mono tracking-wider transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] focus-visible:ring-[#0a5cff]"
+              className="inline-flex items-center space-x-2 px-6 sm:px-7 py-3.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white text-xs sm:text-sm font-mono tracking-wider transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
             >
               <span>{t.ctaPrimary}</span>
             </Link>
 
             <Link
               href="/#work"
-              className="inline-flex items-center space-x-2 px-5 sm:px-6 py-3.5 rounded-lg bg-[#0c0e12] hover:bg-[#141720] border border-[#1e232d] hover:border-[#2f3747] text-[#cbd4e6] hover:text-white text-xs sm:text-sm font-mono tracking-wider transition-all duration-150 outline-none focus-visible:ring-1 focus-visible:ring-[#0a5cff]"
+              className="inline-flex items-center space-x-2 px-5 sm:px-6 py-3.5 rounded-lg bg-zy-card hover:bg-zy-card-hover border border-zy-border hover:border-zy-border-strong text-zy-fg-secondary hover:text-zy-fg text-xs sm:text-sm font-mono tracking-wider transition-all duration-150 outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
             >
               <span>{t.ctaSecondary}</span>
             </Link>
@@ -120,24 +120,24 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden lg:flex lg:col-span-4 flex-col items-center justify-center relative p-8 rounded-2xl bg-[#090b0e] border border-[#181c24]"
+          className="hidden lg:flex lg:col-span-4 flex-col items-center justify-center relative p-8 rounded-2xl bg-zy-bg-elevated border border-zy-border-card shadow-sm"
         >
           {/* Subtle architectural hairline grid inside card */}
-          <div className="w-full flex items-center justify-between pb-6 border-b border-[#141820] font-mono text-[10px] text-[#515768] uppercase tracking-widest">
+          <div className="w-full flex items-center justify-between pb-6 border-b border-zy-border-subtle font-mono text-[10px] text-zy-dim uppercase tracking-widest">
             <span>SPEC: GEOMETRIC MONOGRAM</span>
-            <span className="text-[#0a5cff]">AXIS // 48PX</span>
+            <span className="text-zy-blue">AXIS // 48PX</span>
           </div>
 
           <div className="py-10 flex items-center justify-center relative">
             {/* Subtle hairline framing circle */}
-            <div className="absolute w-44 h-44 rounded-full border border-[#181d26] pointer-events-none" />
-            <div className="absolute w-56 h-56 rounded-full border border-[#141720] border-dashed pointer-events-none" />
+            <div className="absolute w-44 h-44 rounded-full border border-zy-border pointer-events-none" />
+            <div className="absolute w-56 h-56 rounded-full border border-zy-border-subtle border-dashed pointer-events-none" />
             <SymbolLogo size={112} animate={true} showPlate={false} />
           </div>
 
-          <div className="w-full pt-6 border-t border-[#141820] flex items-center justify-between font-mono text-[10px] text-[#515768]">
+          <div className="w-full pt-6 border-t border-zy-border-subtle flex items-center justify-between font-mono text-[10px] text-zy-dim">
             <span>ZYRVAE ARCHIVE</span>
-            <span className="text-[#cbd4e6]">EDITION 2025.1</span>
+            <span className="text-zy-fg-secondary">EDITION 2025.1</span>
           </div>
         </motion.div>
       </div>
@@ -147,19 +147,19 @@ export const Hero: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.65 }}
-        className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs font-mono text-[#515768] border-t border-[#161a22] gap-4"
+        className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs font-mono text-zy-dim border-t border-zy-border-subtle gap-4"
       >
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <span>// 001. PRACTICE</span>
-          <span className="text-[#cbd4e6]">DIGITAL DESIGN &amp; FRONTEND ENGINEERING</span>
+          <span className="text-zy-fg-secondary">DIGITAL DESIGN &amp; FRONTEND ENGINEERING</span>
         </div>
 
         <Link
           href="/#work"
-          className="inline-flex items-center space-x-2 text-[#8b92a5] hover:text-white transition-colors"
+          className="inline-flex items-center space-x-2 text-zy-muted hover:text-zy-fg transition-colors"
         >
           <span>{t.scrollPrompt}</span>
-          <ArrowDown size={13} className="text-[#0a5cff]" />
+          <ArrowDown size={13} className="text-zy-blue" />
         </Link>
       </motion.div>
     </section>

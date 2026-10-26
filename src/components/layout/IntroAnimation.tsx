@@ -54,7 +54,7 @@ export const IntroAnimation: React.FC = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           onClick={handleDismiss}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#060709] cursor-pointer select-none"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-zy-bg cursor-pointer select-none"
           aria-live="polite"
           aria-label="Cargando ZYRVAE Digital Studio"
         >
@@ -72,9 +72,9 @@ export const IntroAnimation: React.FC = () => {
 
           <motion.p
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
+            animate={{ opacity: 0.6 }}
             transition={{ delay: 0.6 }}
-            className="absolute bottom-8 font-mono text-[10px] tracking-widest text-[#8b92a5] uppercase"
+            className="absolute bottom-8 font-mono text-[10px] tracking-widest text-zy-muted uppercase"
           >
             [ ESC // TAP TO ENTER ]
           </motion.p>

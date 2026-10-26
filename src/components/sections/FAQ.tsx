@@ -19,7 +19,7 @@ export const FAQ: React.FC = () => {
   return (
     <section
       id="faq"
-      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-[#161a22]"
+      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
       aria-label="Frequently Asked Questions"
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
@@ -31,23 +31,23 @@ export const FAQ: React.FC = () => {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="lg:col-span-4 space-y-4"
         >
-          <span className="font-mono text-xs uppercase tracking-widest text-[#0a5cff]">
+          <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
             {t.label}
           </span>
-          <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg">
             {t.title}
           </h2>
-          <p className="text-sm text-[#8b92a5] font-sans leading-relaxed">
+          <p className="text-sm text-zy-muted font-sans leading-relaxed">
             {t.subtitle}
           </p>
 
           <div className="pt-4 sm:pt-6">
-            <p className="font-mono text-xs text-[#515768] uppercase">
+            <p className="font-mono text-xs text-zy-dim uppercase">
               {t.moreQuestions}
             </p>
             <a
               href="mailto:zyrvae.co@gmail.com"
-              className="inline-block mt-1 font-mono text-xs text-[#cbd4e6] hover:text-[#0a5cff] transition-colors"
+              className="inline-block mt-1 font-mono text-xs text-zy-fg-secondary hover:text-zy-blue transition-colors"
             >
               {t.contactUs}
             </a>
@@ -60,7 +60,7 @@ export const FAQ: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-8 divide-y divide-[#1e232d] border-t border-b border-[#1e232d]"
+          className="lg:col-span-8 divide-y divide-zy-border border-t border-b border-zy-border"
         >
           {faqItems.map((item, idx) => {
             const isOpen = openIndex === idx;
@@ -76,14 +76,14 @@ export const FAQ: React.FC = () => {
                     aria-expanded={isOpen}
                     aria-controls={contentId}
                     onClick={() => toggleItem(idx)}
-                    className="w-full flex items-center justify-between text-left group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#0a5cff] rounded p-1"
+                    className="w-full flex items-center justify-between text-left group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue rounded p-1"
                   >
-                    <span className="text-base sm:text-lg font-sans font-semibold text-white group-hover:text-[#cbd4e6] transition-colors pr-4">
+                    <span className="text-base sm:text-lg font-sans font-semibold text-zy-fg group-hover:text-zy-blue transition-colors pr-4">
                       {item.question[language]}
                     </span>
                     <span
-                      className={`p-1.5 rounded-lg bg-[#101318] border border-[#1e232d] text-[#8b92a5] group-hover:text-white transition-all duration-200 shrink-0 ${
-                        isOpen ? 'rotate-180 bg-[#161c26] text-[#0a5cff] border-[#0a5cff]/40' : ''
+                      className={`p-1.5 rounded-lg bg-zy-surface border border-zy-border text-zy-muted group-hover:text-zy-fg transition-all duration-200 shrink-0 ${
+                        isOpen ? 'rotate-180 bg-zy-accent-soft text-zy-blue border-zy-blue/40' : ''
                       }`}
                     >
                       <ChevronDown size={15} />
@@ -103,7 +103,7 @@ export const FAQ: React.FC = () => {
                       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="pt-3 pb-2 text-xs sm:text-sm text-[#8b92a5] font-sans leading-relaxed pl-1">
+                      <div className="pt-3 pb-2 text-xs sm:text-sm text-zy-muted font-sans leading-relaxed pl-1">
                         <p>{item.answer[language]}</p>
                       </div>
                     </motion.div>

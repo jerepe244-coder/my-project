@@ -11,6 +11,13 @@ export const translations = {
       close: 'Cerrar',
       skipToContent: 'Saltar al contenido principal',
     },
+    theme: {
+      label: 'Selector de tema de color',
+      dark: 'Oscuro',
+      light: 'Claro',
+      switchToDark: 'Activar modo oscuro',
+      switchToLight: 'Activar modo claro',
+    },
     hero: {
       badge: 'Estudio Digital Independiente',
       headlinePart1: 'Digital,',
@@ -207,6 +214,13 @@ export const translations = {
       menu: 'Menu',
       close: 'Close',
       skipToContent: 'Skip to main content',
+    },
+    theme: {
+      label: 'Color theme selector',
+      dark: 'Dark',
+      light: 'Light',
+      switchToDark: 'Switch to dark mode',
+      switchToLight: 'Switch to light mode',
     },
     hero: {
       badge: 'Independent Digital Studio',

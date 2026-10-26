@@ -260,31 +260,31 @@ export const EcommerceDemo: React.FC = () => {
   const isFreeShipping = cartSubtotal >= freeShippingThreshold;
 
   return (
-    <div className="rounded-2xl border border-[#1e232d] bg-[#090b0e] overflow-hidden text-white font-sans relative">
+    <div className="rounded-2xl border border-zy-border bg-zy-card overflow-hidden text-zy-fg font-sans relative shadow-sm">
       {/* Top Demo Bar */}
-      <div className="bg-[#101319] px-4 sm:px-6 py-3 border-b border-[#1e232d] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-        <div className="flex items-center space-x-2 text-[#0a5cff]">
+      <div className="bg-zy-surface px-4 sm:px-6 py-3 border-b border-zy-border flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+        <div className="flex items-center space-x-2 text-zy-blue">
           <Sparkles size={14} />
           <span className="font-semibold uppercase tracking-wider">
             {language === 'es' ? 'DEMO INTERACTIVA' : 'INTERACTIVE DEMO'}
           </span>
-          <span className="text-[#8b92a5]">| SŌMA FORMULATIONS</span>
+          <span className="text-zy-muted">| SŌMA FORMULATIONS</span>
         </div>
 
         <div className="flex items-center space-x-3">
           <button
             onClick={() => setIsCartOpen(!isCartOpen)}
-            className="inline-flex items-center space-x-2 px-3 py-1 rounded bg-[#161c28] hover:bg-[#1f283a] border border-[#2b3548] text-white transition-colors"
+            className="inline-flex items-center space-x-2 px-3 py-1 rounded bg-zy-control hover:bg-zy-control-hover border border-zy-border text-zy-fg transition-colors"
             aria-label="Abrir carrito simulado"
           >
-            <ShoppingBag size={13} className="text-[#0a5cff]" />
+            <ShoppingBag size={13} className="text-zy-blue" />
             <span className="text-[11px] font-medium">{language === 'es' ? 'Bolsa' : 'Cart'}</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-[#0a5cff] text-[10px] text-white font-bold">
+            <span className="px-1.5 py-0.2 rounded-full bg-zy-blue text-[10px] text-white font-bold">
               {cartCount}
             </span>
           </button>
 
-          <span className="inline-flex items-center px-2 py-0.5 rounded bg-[#161922] text-[#9ba3b8] text-[10px] hidden sm:inline-flex">
+          <span className="inline-flex items-center px-2 py-0.5 rounded bg-zy-control text-zy-muted border border-zy-border-subtle text-[10px] hidden sm:inline-flex">
             {language === 'es' ? 'Simulación conceptual de e-commerce' : 'Conceptual e-commerce simulation'}
           </span>
         </div>
@@ -295,7 +295,7 @@ export const EcommerceDemo: React.FC = () => {
         {/* Left Column: Product Specimen Showcase & Selector */}
         <div className="lg:col-span-7 space-y-6">
           {/* Product tabs */}
-          <div className="flex flex-wrap gap-2 p-1 bg-[#0e1116] border border-[#1a1f29] rounded-lg">
+          <div className="flex flex-wrap gap-2 p-1 bg-zy-surface border border-zy-border-card rounded-lg">
             {products.map((p, idx) => (
               <button
                 key={p.id}
@@ -306,32 +306,32 @@ export const EcommerceDemo: React.FC = () => {
                 }}
                 className={`px-3 py-1.5 rounded-md text-xs font-mono transition-all text-left flex-1 min-w-[130px] ${
                   activeProductIdx === idx
-                    ? 'bg-[#1a2232] text-white border border-[#2f3d57]'
-                    : 'text-[#8b92a5] hover:text-white'
+                    ? 'bg-zy-control-active text-zy-fg border border-zy-border shadow-sm'
+                    : 'text-zy-muted hover:text-zy-fg'
                 }`}
               >
-                <span className="text-[10px] text-[#9ba3b8] block">{p.code}</span>
+                <span className="text-[10px] text-zy-dim block">{p.code}</span>
                 <span className="font-semibold block truncate">{p.title[language]}</span>
               </button>
             ))}
           </div>
 
           {/* Product Hero Visual Card */}
-          <div className="relative rounded-xl bg-gradient-to-br from-[#0d1016] via-[#080a0e] to-[#060709] border border-[#1e232d] p-4 sm:p-6 flex flex-col justify-between overflow-hidden">
+          <div className="relative rounded-xl bg-zy-surface-alt border border-zy-border p-4 sm:p-6 flex flex-col justify-between overflow-hidden">
             {/* Architectural Grid and Specimen Label */}
-            <div className="flex justify-between items-start text-xs font-mono text-[#8b92a5] z-10">
+            <div className="flex justify-between items-start text-xs font-mono text-zy-muted z-10">
               <div>
-                <span className="text-[#0a5cff] font-semibold block">{product.code}</span>
-                <span className="text-[11px] text-[#9ba3b8]">{product.category[language]}</span>
+                <span className="text-zy-blue font-semibold block">{product.code}</span>
+                <span className="text-[11px] text-zy-muted">{product.category[language]}</span>
               </div>
               <div className="text-right">
-                <span className="text-[10px] block uppercase text-[#8b92a5]">// SPECIMEN</span>
-                <span className="text-white font-mono text-sm font-semibold">${currentPrice} USD</span>
+                <span className="text-[10px] block uppercase text-zy-dim">// SPECIMEN</span>
+                <span className="text-zy-fg font-mono text-sm font-semibold">${currentPrice} USD</span>
               </div>
             </div>
 
             {/* Differentiated Studio Product Photography Stage */}
-            <div className="relative my-3 sm:my-4 aspect-[4/3] sm:aspect-[16/10] w-full rounded-lg bg-[#07090b] border border-[#171c26] overflow-hidden flex items-center justify-center">
+            <div className="relative my-3 sm:my-4 aspect-[4/3] sm:aspect-[16/10] w-full rounded-lg bg-[#07090b] border border-zy-border overflow-hidden flex items-center justify-center">
               <div
                 className={`relative w-full h-full transition-transform duration-500 ease-out ${
                   selectedSizeIdx === 1 ? 'scale-100' : 'scale-[0.94]'
@@ -368,7 +368,7 @@ export const EcommerceDemo: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedVesselIdx(isRefillSelected ? 0 : 1)}
-                  className="group/vessel flex items-center space-x-2 p-1.5 rounded-md bg-[#0b0e14]/90 hover:bg-[#141a26] backdrop-blur-md border border-[#232b3a] hover:border-[#0a5cff] transition-all text-left shrink-0"
+                  className="group/vessel flex items-center space-x-2 p-1.5 rounded-md bg-[#0b0e14]/90 hover:bg-[#141a26] backdrop-blur-md border border-[#232b3a] hover:border-zy-blue transition-all text-left shrink-0"
                   title={
                     isRefillSelected
                       ? language === 'es'
@@ -393,7 +393,7 @@ export const EcommerceDemo: React.FC = () => {
                     />
                   </div>
                   <div className="hidden sm:block pr-1 font-mono">
-                    <span className="block text-[9px] uppercase text-[#8b92a5] group-hover/vessel:text-[#0a5cff] transition-colors">
+                    <span className="block text-[9px] uppercase text-[#8b92a5] group-hover/vessel:text-zy-blue transition-colors">
                       {isRefillSelected
                         ? language === 'es'
                           ? 'Ver Vidrio'
@@ -411,39 +411,39 @@ export const EcommerceDemo: React.FC = () => {
             </div>
 
             {/* Actives Footer in Card */}
-            <div className="grid grid-cols-3 gap-2 pt-3 border-t border-[#1a1f29] text-[10px] font-mono z-10">
+            <div className="grid grid-cols-3 gap-2 pt-3 border-t border-zy-border-card text-[10px] font-mono z-10">
               {product.actives.map((act, i) => (
                 <div key={i} className="text-center sm:text-left">
-                  <span className="text-[#8b92a5] block truncate">{act.name}</span>
-                  <span className="text-[#cbd4e6] font-semibold">{act.conc}</span>
+                  <span className="text-zy-muted block truncate">{act.name}</span>
+                  <span className="text-zy-fg-secondary font-semibold">{act.conc}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Sensory Profile Accordion */}
-          <div className="p-4 rounded-xl bg-[#0e1117] border border-[#1a202c] space-y-3 text-xs">
-            <span className="font-mono text-[10px] text-[#0a5cff] uppercase tracking-wider block">
+          <div className="p-4 rounded-xl bg-zy-surface border border-zy-border-card space-y-3 text-xs">
+            <span className="font-mono text-[10px] text-zy-blue uppercase tracking-wider block">
               // {language === 'es' ? 'Perfil Sensorial & Origen Botánico' : 'Sensory Profile & Botanical Origin'}
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-sans">
               <div>
-                <span className="text-[#8b92a5] text-[11px] block font-mono">
+                <span className="text-zy-muted text-[11px] block font-mono">
                   {language === 'es' ? 'Textura' : 'Texture'}
                 </span>
-                <p className="text-[#cbd4e6] mt-0.5">{product.sensory.texture[language]}</p>
+                <p className="text-zy-fg-secondary mt-0.5">{product.sensory.texture[language]}</p>
               </div>
               <div>
-                <span className="text-[#8b92a5] text-[11px] block font-mono">
+                <span className="text-zy-muted text-[11px] block font-mono">
                   {language === 'es' ? 'Aroma' : 'Aroma'}
                 </span>
-                <p className="text-[#cbd4e6] mt-0.5">{product.sensory.aroma[language]}</p>
+                <p className="text-zy-fg-secondary mt-0.5">{product.sensory.aroma[language]}</p>
               </div>
               <div>
-                <span className="text-[#8b92a5] text-[11px] block font-mono">
+                <span className="text-zy-muted text-[11px] block font-mono">
                   {language === 'es' ? 'Origen' : 'Origin'}
                 </span>
-                <p className="text-[#cbd4e6] mt-0.5">{product.sensory.origin[language]}</p>
+                <p className="text-zy-fg-secondary mt-0.5">{product.sensory.origin[language]}</p>
               </div>
             </div>
           </div>
@@ -452,10 +452,10 @@ export const EcommerceDemo: React.FC = () => {
         {/* Right Column: Customization & Cart Checkout Simulator */}
         <div className="lg:col-span-5 space-y-6">
           <div className="space-y-2">
-            <h3 className="text-xl sm:text-2xl font-sans font-bold text-white">
+            <h3 className="text-xl sm:text-2xl font-sans font-bold text-zy-fg">
               {product.title[language]}
             </h3>
-            <p className="text-xs sm:text-sm text-[#8b92a5] font-sans leading-relaxed">
+            <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed">
               {product.tagline[language]}
             </p>
           </div>
@@ -463,10 +463,10 @@ export const EcommerceDemo: React.FC = () => {
           {/* Variant Selector 1: Volume */}
           <div className="space-y-2.5">
             <div className="flex justify-between items-baseline text-xs font-mono">
-              <span className="text-[#8b92a5] uppercase">
+              <span className="text-zy-muted uppercase">
                 // {language === 'es' ? 'Seleccionar Volumen' : 'Select Volume'}
               </span>
-              <span className="text-white font-medium">{currentSize}</span>
+              <span className="text-zy-fg font-medium">{currentSize}</span>
             </div>
             <div className="grid grid-cols-2 gap-2 font-mono text-xs">
               {product.sizes.map((s, idx) => (
@@ -475,12 +475,12 @@ export const EcommerceDemo: React.FC = () => {
                   onClick={() => setSelectedSizeIdx(idx)}
                   className={`p-3 rounded-lg border text-left transition-all ${
                     selectedSizeIdx === idx
-                      ? 'bg-[#182131] border-[#0a5cff] text-white shadow-[0_0_12px_rgba(10,92,255,0.2)]'
-                      : 'bg-[#0e1116] border-[#1a1f29] text-[#8b92a5] hover:border-[#2b3548]'
+                      ? 'bg-zy-accent-soft border-zy-blue text-zy-fg shadow-[0_0_12px_rgba(10,92,255,0.15)]'
+                      : 'bg-zy-surface border-zy-border-card text-zy-muted hover:border-zy-border-strong'
                   }`}
                 >
                   <span className="font-semibold block">{s}</span>
-                  <span className="text-[10px] text-[#8b92a5] block mt-0.5">
+                  <span className="text-[10px] text-zy-muted block mt-0.5">
                     {idx === 0 ? (language === 'es' ? 'Tamaño estudio' : 'Studio size') : (language === 'es' ? 'Formato extendido' : 'Extended supply')}
                   </span>
                 </button>
@@ -491,10 +491,10 @@ export const EcommerceDemo: React.FC = () => {
           {/* Variant Selector 2: Vessel & Sustainability */}
           <div className="space-y-2.5">
             <div className="flex justify-between items-baseline text-xs font-mono">
-              <span className="text-[#8b92a5] uppercase">
+              <span className="text-zy-muted uppercase">
                 // {language === 'es' ? 'Tipo de Envase' : 'Vessel Type'}
               </span>
-              <span className="text-white font-medium">{currentVessel.name[language]}</span>
+              <span className="text-zy-fg font-medium">{currentVessel.name[language]}</span>
             </div>
             <div className="space-y-2 font-mono text-xs">
               {product.vessels.map((v, idx) => (
@@ -503,18 +503,18 @@ export const EcommerceDemo: React.FC = () => {
                   onClick={() => setSelectedVesselIdx(idx)}
                   className={`w-full p-3 rounded-lg border text-left flex items-center justify-between transition-all ${
                     selectedVesselIdx === idx
-                      ? 'bg-[#182131] border-[#0a5cff] text-white'
-                      : 'bg-[#0e1116] border-[#1a1f29] text-[#8b92a5] hover:border-[#2b3548]'
+                      ? 'bg-zy-accent-soft border-zy-blue text-zy-fg'
+                      : 'bg-zy-surface border-zy-border-card text-zy-muted hover:border-zy-border-strong'
                   }`}
                 >
                   <div>
                     <span className="font-medium block">{v.name[language]}</span>
-                    <span className="text-[10px] text-[#8b92a5] block">
+                    <span className="text-[10px] text-zy-muted block">
                       {v.id === 'glass' ? (language === 'es' ? 'Protección fotónica completa' : 'Full photonic light seal') : (language === 'es' ? 'Menor huella de carbono (-$8)' : 'Eco lower carbon footprint (-$8)')}
                     </span>
                   </div>
                   {v.delta !== 0 && (
-                    <span className="text-[11px] text-[#0a5cff] font-semibold">{v.delta < 0 ? `-$${Math.abs(v.delta)}` : `+$${v.delta}`}</span>
+                    <span className="text-[11px] text-zy-blue font-semibold">{v.delta < 0 ? `-$${Math.abs(v.delta)}` : `+$${v.delta}`}</span>
                   )}
                 </button>
               ))}
@@ -523,14 +523,14 @@ export const EcommerceDemo: React.FC = () => {
 
           {/* Add to Cart CTA */}
           <div className="pt-2 space-y-3">
-            <div className="flex items-baseline justify-between text-xs font-mono border-t border-[#1a1f29] pt-4">
-              <span className="text-[#8b92a5] uppercase">{language === 'es' ? 'Total Ficha' : 'Item Total'}:</span>
-              <span className="text-xl font-bold text-white">${currentPrice} USD</span>
+            <div className="flex items-baseline justify-between text-xs font-mono border-t border-zy-border-card pt-4">
+              <span className="text-zy-muted uppercase">{language === 'es' ? 'Total Ficha' : 'Item Total'}:</span>
+              <span className="text-xl font-bold text-zy-fg">${currentPrice} USD</span>
             </div>
 
             <button
               onClick={handleAddToCart}
-              className="w-full py-3.5 px-4 rounded-xl bg-[#0a5cff] hover:bg-[#2672ff] active:scale-[0.99] text-white text-xs font-mono font-semibold uppercase tracking-wider flex items-center justify-center space-x-2 transition-all shadow-[0_0_20px_rgba(10,92,255,0.35)]"
+              className="w-full py-3.5 px-4 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.99] text-white text-xs font-mono font-semibold uppercase tracking-wider flex items-center justify-center space-x-2 transition-all shadow-[0_0_20px_rgba(10,92,255,0.35)]"
             >
               {addedNotice ? (
                 <>
@@ -548,8 +548,8 @@ export const EcommerceDemo: React.FC = () => {
           </div>
 
           {/* Environmental Guarantees */}
-          <div className="p-3 bg-[#0c0e12] border border-[#161b24] rounded-lg flex items-center space-x-3 text-[11px] text-[#8b92a5] font-mono">
-            <Leaf size={14} className="text-[#0a5cff] shrink-0" />
+          <div className="p-3 bg-zy-surface border border-zy-border-subtle rounded-lg flex items-center space-x-3 text-[11px] text-zy-muted font-mono">
+            <Leaf size={14} className="text-zy-blue shrink-0" />
             <span>
               {language === 'es'
                 ? 'Embalaje 100% libre de plásticos. Envíos carbono neutrales.'
@@ -561,20 +561,23 @@ export const EcommerceDemo: React.FC = () => {
 
       {/* Cart Drawer Overlay & Panel */}
       {isCartOpen && (
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm z-30 flex justify-end">
-          <div className="w-full sm:w-[380px] bg-[#0c0e13] border-l border-[#1e232d] h-full flex flex-col justify-between p-6 overflow-y-auto">
+        <div
+          style={{ backgroundColor: 'var(--zy-modal-backdrop)' }}
+          className="absolute inset-0 backdrop-blur-sm z-30 flex justify-end"
+        >
+          <div className="w-full sm:w-[380px] bg-zy-card border-l border-zy-border h-full flex flex-col justify-between p-6 overflow-y-auto">
             {/* Drawer Header */}
             <div>
-              <div className="flex items-center justify-between pb-4 border-b border-[#1a1f29]">
+              <div className="flex items-center justify-between pb-4 border-b border-zy-border-card">
                 <div className="flex items-center space-x-2">
-                  <ShoppingBag size={16} className="text-[#0a5cff]" />
-                  <h4 className="font-mono text-xs uppercase tracking-wider text-white">
+                  <ShoppingBag size={16} className="text-zy-blue" />
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-zy-fg">
                     {language === 'es' ? 'Tu Bolsa de Compra' : 'Your Shopping Bag'} ({cartCount})
                   </h4>
                 </div>
                 <button
                   onClick={() => setIsCartOpen(false)}
-                  className="p-1 rounded text-[#8b92a5] hover:text-white transition-colors"
+                  className="p-1 rounded text-zy-muted hover:text-zy-fg transition-colors"
                   aria-label="Cerrar bolsa"
                 >
                   <X size={18} />
@@ -584,16 +587,16 @@ export const EcommerceDemo: React.FC = () => {
               {/* Items List */}
               <div className="py-4 space-y-4 max-h-[46vh] overflow-y-auto">
                 {cart.length === 0 ? (
-                  <div className="py-12 text-center text-xs font-mono text-[#8b92a5]">
+                  <div className="py-12 text-center text-xs font-mono text-zy-muted">
                     {language === 'es' ? 'Tu bolsa está vacía.' : 'Your bag is empty.'}
                   </div>
                 ) : (
                   cart.map((item) => (
                     <div
                       key={item.id}
-                      className="p-3 rounded-lg bg-[#11141b] border border-[#1d232e] flex items-start justify-between gap-3 text-xs"
+                      className="p-3 rounded-lg bg-zy-surface border border-zy-border flex items-start justify-between gap-3 text-xs"
                     >
-                      <div className="relative w-12 h-12 rounded-md overflow-hidden bg-[#07090b] border border-[#1e2533] shrink-0">
+                      <div className="relative w-12 h-12 rounded-md overflow-hidden bg-[#07090b] border border-zy-border shrink-0">
                         <Image
                           src={getCartItemImage(item)}
                           alt={`${item.title[language]} — ${item.size}`}
@@ -604,13 +607,13 @@ export const EcommerceDemo: React.FC = () => {
                       </div>
 
                       <div className="space-y-1 flex-1 min-w-0">
-                        <span className="font-sans font-bold text-white block truncate">
+                        <span className="font-sans font-bold text-zy-fg block truncate">
                           {item.title[language]}
                         </span>
-                        <span className="text-[10px] font-mono text-[#8b92a5] block">
+                        <span className="text-[10px] font-mono text-zy-muted block">
                           {item.size} · {item.vessel}
                         </span>
-                        <span className="text-xs font-mono text-[#cbd4e6] font-medium block">
+                        <span className="text-xs font-mono text-zy-fg-secondary font-medium block">
                           ${item.unitPrice} USD
                         </span>
                       </div>
@@ -618,22 +621,22 @@ export const EcommerceDemo: React.FC = () => {
                       <div className="flex flex-col items-end space-y-2">
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="text-[#8b92a5] hover:text-red-400 p-0.5"
+                          className="text-zy-muted hover:text-red-500 p-0.5"
                           title="Eliminar"
                         >
                           <Trash2 size={13} />
                         </button>
-                        <div className="flex items-center space-x-1.5 bg-[#090b0e] border border-[#202735] px-1.5 py-0.5 rounded">
+                        <div className="flex items-center space-x-1.5 bg-zy-card border border-zy-border px-1.5 py-0.5 rounded">
                           <button
                             onClick={() => updateQuantity(item.id, -1)}
-                            className="text-[#8b92a5] hover:text-white"
+                            className="text-zy-muted hover:text-zy-fg"
                           >
                             <Minus size={11} />
                           </button>
-                          <span className="font-mono text-xs px-1 text-white">{item.quantity}</span>
+                          <span className="font-mono text-xs px-1 text-zy-fg">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.id, 1)}
-                            className="text-[#8b92a5] hover:text-white"
+                            className="text-zy-muted hover:text-zy-fg"
                           >
                             <Plus size={11} />
                           </button>
@@ -646,19 +649,19 @@ export const EcommerceDemo: React.FC = () => {
             </div>
 
             {/* Drawer Checkout Footer */}
-            <div className="pt-4 border-t border-[#1a1f29] space-y-3">
+            <div className="pt-4 border-t border-zy-border-card space-y-3">
               <div className="space-y-1.5 text-xs font-mono">
-                <div className="flex justify-between text-[#8b92a5]">
+                <div className="flex justify-between text-zy-muted">
                   <span>{language === 'es' ? 'Subtotal' : 'Subtotal'}</span>
-                  <span>${cartSubtotal} USD</span>
+                  <span className="text-zy-fg">${cartSubtotal} USD</span>
                 </div>
-                <div className="flex justify-between text-[#8b92a5]">
+                <div className="flex justify-between text-zy-muted">
                   <span>{language === 'es' ? 'Envío Sustentable' : 'Eco Shipping'}</span>
-                  <span className={isFreeShipping ? 'text-[#0a5cff]' : 'text-white'}>
+                  <span className={isFreeShipping ? 'text-zy-blue font-semibold' : 'text-zy-fg'}>
                     {isFreeShipping ? (language === 'es' ? 'Bonificado' : 'Complimentary') : '$15 USD'}
                   </span>
                 </div>
-                <div className="flex justify-between text-sm font-bold text-white pt-2 border-t border-[#161a22]">
+                <div className="flex justify-between text-sm font-bold text-zy-fg pt-2 border-t border-zy-border-subtle">
                   <span>{language === 'es' ? 'Total Estimado' : 'Estimated Total'}</span>
                   <span>${isFreeShipping ? cartSubtotal : cartSubtotal + 15} USD</span>
                 </div>
@@ -670,13 +673,13 @@ export const EcommerceDemo: React.FC = () => {
                   setIsCartOpen(false);
                   setCheckoutModalOpen(true);
                 }}
-                className="w-full py-3 rounded-xl bg-[#0a5cff] hover:bg-[#2672ff] disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-mono font-semibold uppercase tracking-wider flex items-center justify-center space-x-2 transition-all shadow-[0_0_15px_rgba(10,92,255,0.3)]"
+                className="w-full py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-mono font-semibold uppercase tracking-wider flex items-center justify-center space-x-2 transition-all shadow-[0_0_15px_rgba(10,92,255,0.3)]"
               >
                 <span>{language === 'es' ? 'SIMULAR CHECKOUT' : 'PROCEED TO MOCK CHECKOUT'}</span>
                 <ArrowRight size={14} />
               </button>
 
-              <p className="text-[10px] text-center text-[#8b92a5] font-mono">
+              <p className="text-[10px] text-center text-zy-muted font-mono">
                 {language === 'es'
                   ? 'Entorno de demostración: no se cobrará importe real.'
                   : 'Demonstration environment: no real charge will be incurred.'}
@@ -688,44 +691,47 @@ export const EcommerceDemo: React.FC = () => {
 
       {/* Checkout Simulator Modal */}
       {checkoutModalOpen && (
-        <div className="absolute inset-0 bg-black/85 backdrop-blur-md z-40 flex items-center justify-center p-4">
-          <div className="max-w-md w-full bg-[#0d1016] border border-[#232b3b] rounded-2xl p-6 sm:p-8 space-y-6 text-center shadow-2xl">
-            <div className="w-12 h-12 mx-auto rounded-full bg-[#0a5cff]/10 border border-[#0a5cff]/30 flex items-center justify-center text-[#0a5cff]">
+        <div
+          style={{ backgroundColor: 'var(--zy-modal-backdrop)' }}
+          className="absolute inset-0 backdrop-blur-md z-40 flex items-center justify-center p-4"
+        >
+          <div className="max-w-md w-full bg-zy-card border border-zy-border rounded-2xl p-6 sm:p-8 space-y-6 text-center shadow-2xl">
+            <div className="w-12 h-12 mx-auto rounded-full bg-zy-blue/10 border border-zy-blue/30 flex items-center justify-center text-zy-blue">
               <ShieldCheck size={24} />
             </div>
 
             <div className="space-y-2">
-              <span className="font-mono text-[10px] text-[#0a5cff] uppercase tracking-widest block">
+              <span className="font-mono text-[10px] text-zy-blue uppercase tracking-widest block">
                 // {language === 'es' ? 'SIMULACIÓN COMPLETADA CON ÉXITO' : 'SIMULATION COMPLETED'}
               </span>
-              <h3 className="text-xl font-sans font-bold text-white">
+              <h3 className="text-xl font-sans font-bold text-zy-fg">
                 {language === 'es' ? 'Orden de Prueba SŌMA-9842' : 'Test Order SŌMA-9842'}
               </h3>
-              <p className="text-xs text-[#8b92a5] font-sans leading-relaxed">
+              <p className="text-xs text-zy-muted font-sans leading-relaxed">
                 {language === 'es'
                   ? 'Esta demostración valida la arquitectura de variantes, estados de carrito, microinteracciones reactivas y cálculo de envíos sin requerir pasarelas de pago reales.'
                   : 'This demonstration validates variant architecture, cart state persistence, reactive microinteractions, and shipping calculus without executing real payments.'}
               </p>
             </div>
 
-            <div className="p-3.5 bg-[#12161f] border border-[#1b2230] rounded-xl text-left space-y-1.5 font-mono text-xs">
-              <div className="flex justify-between text-[#8b92a5]">
+            <div className="p-3.5 bg-zy-surface border border-zy-border rounded-xl text-left space-y-1.5 font-mono text-xs">
+              <div className="flex justify-between text-zy-muted">
                 <span>{language === 'es' ? 'Artículos' : 'Units'}:</span>
-                <span className="text-white">{cartCount}</span>
+                <span className="text-zy-fg">{cartCount}</span>
               </div>
-              <div className="flex justify-between text-[#8b92a5]">
+              <div className="flex justify-between text-zy-muted">
                 <span>{language === 'es' ? 'Total simulado' : 'Mock total'}:</span>
-                <span className="text-[#0a5cff] font-bold">${isFreeShipping ? cartSubtotal : cartSubtotal + 15} USD</span>
+                <span className="text-zy-blue font-bold">${isFreeShipping ? cartSubtotal : cartSubtotal + 15} USD</span>
               </div>
-              <div className="flex justify-between text-[#8b92a5]">
+              <div className="flex justify-between text-zy-muted">
                 <span>{language === 'es' ? 'Estado' : 'Status'}:</span>
-                <span className="text-emerald-400">DEMO VERIFIED</span>
+                <span className="text-emerald-500 font-semibold">DEMO VERIFIED</span>
               </div>
             </div>
 
             <button
               onClick={() => setCheckoutModalOpen(false)}
-              className="w-full py-2.5 rounded-lg bg-[#182131] hover:bg-[#202b3f] border border-[#2f3d57] text-white text-xs font-mono font-medium transition-colors"
+              className="w-full py-2.5 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-zy-fg text-xs font-mono font-medium transition-colors"
             >
               {language === 'es' ? 'Regresar a la demostración' : 'Return to demonstration'}
             </button>

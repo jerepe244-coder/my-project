@@ -30,7 +30,7 @@ export const SymbolLogo: React.FC<SymbolLogoProps> = ({
         xmlns="http://www.w3.org/2000/svg"
         className="overflow-visible"
       >
-        {/* Background architectural dark plate (optional) */}
+        {/* Background architectural plate (optional) */}
         {showPlate && (
           <rect
             x="2"
@@ -38,8 +38,8 @@ export const SymbolLogo: React.FC<SymbolLogoProps> = ({
             width="44"
             height="44"
             rx="8"
-            fill="#0e1014"
-            stroke="#1e232d"
+            fill="var(--zy-logo-plate)"
+            stroke="var(--zy-border)"
             strokeWidth="1.25"
           />
         )}
@@ -50,7 +50,7 @@ export const SymbolLogo: React.FC<SymbolLogoProps> = ({
           y1="14"
           x2="37"
           y2="14"
-          stroke="#f4f5f8"
+          stroke="var(--zy-fg-soft)"
           strokeWidth="2.5"
           strokeLinecap="square"
           initial={animate ? { pathLength: 0 } : false}
@@ -64,7 +64,7 @@ export const SymbolLogo: React.FC<SymbolLogoProps> = ({
           y1="14"
           x2="11"
           y2="34"
-          stroke="#f4f5f8"
+          stroke="var(--zy-fg-soft)"
           strokeWidth="2.5"
           strokeLinecap="square"
           initial={animate ? { pathLength: 0 } : false}
@@ -78,7 +78,7 @@ export const SymbolLogo: React.FC<SymbolLogoProps> = ({
           y1="34"
           x2="37"
           y2="34"
-          stroke="#f4f5f8"
+          stroke="var(--zy-fg-soft)"
           strokeWidth="2.5"
           strokeLinecap="square"
           initial={animate ? { pathLength: 0 } : false}
@@ -92,7 +92,7 @@ export const SymbolLogo: React.FC<SymbolLogoProps> = ({
           y1="14"
           x2="11"
           y2="21"
-          stroke="#0a5cff"
+          stroke="var(--zy-blue)"
           strokeWidth="2.5"
           strokeLinecap="square"
           initial={animate ? { pathLength: 0 } : false}
@@ -105,7 +105,7 @@ export const SymbolLogo: React.FC<SymbolLogoProps> = ({
           cx="28"
           cy="24"
           r="2.25"
-          fill="#0a5cff"
+          fill="var(--zy-blue)"
           initial={animate ? { scale: 0, opacity: 0 } : false}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.45 }}

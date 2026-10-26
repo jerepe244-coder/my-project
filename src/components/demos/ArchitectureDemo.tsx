@@ -49,36 +49,36 @@ export const ArchitectureDemo: React.FC = () => {
   };
 
   return (
-    <div className="rounded-2xl border border-[#1e232d] bg-[#090b0e] overflow-hidden text-white font-sans">
+    <div className="rounded-2xl border border-zy-border bg-zy-card overflow-hidden text-zy-fg font-sans shadow-sm">
       {/* Top Demo Bar */}
-      <div className="bg-[#0f1217] px-5 py-3 border-b border-[#1e232d] flex items-center justify-between text-xs font-mono">
-        <div className="flex items-center space-x-2 text-[#0a5cff]">
+      <div className="bg-zy-surface px-5 py-3 border-b border-zy-border flex items-center justify-between text-xs font-mono">
+        <div className="flex items-center space-x-2 text-zy-blue">
           <Sparkles size={14} />
           <span className="font-semibold uppercase tracking-wider">
             {language === 'es' ? 'DEMO INTERACTIVA' : 'INTERACTIVE DEMO'}
           </span>
-          <span className="text-[#515768]">| VECTRA ARCHITECTS</span>
+          <span className="text-zy-dim">| VECTRA ARCHITECTS</span>
         </div>
-        <span className="inline-flex items-center px-2 py-0.5 rounded bg-[#191f2b] text-[#8b92a5] text-[10px]">
+        <span className="inline-flex items-center px-2 py-0.5 rounded bg-zy-control text-zy-muted border border-zy-border-subtle text-[10px]">
           {language === 'es' ? 'Explorador espacial y de materiales' : 'Spatial & tectonic visualizer'}
         </span>
       </div>
 
       <div className="p-6 md:p-8 space-y-6">
         {/* View Switcher Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#161a22]">
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-zy-border-subtle">
           <div className="flex items-center space-x-2">
-            <span className="text-xs font-mono text-[#515768] uppercase">
+            <span className="text-xs font-mono text-zy-dim uppercase">
               {language === 'es' ? 'Vista técnica:' : 'Drafting view:'}
             </span>
-            <div className="inline-flex rounded-lg bg-[#11141b] p-1 border border-[#1e232d]">
+            <div className="inline-flex rounded-lg bg-zy-surface p-1 border border-zy-border">
               <button
                 type="button"
                 onClick={() => setActiveView('axonometric')}
                 className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
                   activeView === 'axonometric'
-                    ? 'bg-[#0a5cff] text-white font-semibold'
-                    : 'text-[#8b92a5] hover:text-white'
+                    ? 'bg-zy-blue text-white font-semibold'
+                    : 'text-zy-muted hover:text-zy-fg'
                 }`}
               >
                 <Box size={13} />
@@ -90,8 +90,8 @@ export const ArchitectureDemo: React.FC = () => {
                 onClick={() => setActiveView('section')}
                 className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
                   activeView === 'section'
-                    ? 'bg-[#0a5cff] text-white font-semibold'
-                    : 'text-[#8b92a5] hover:text-white'
+                    ? 'bg-zy-blue text-white font-semibold'
+                    : 'text-zy-muted hover:text-zy-fg'
                 }`}
               >
                 <Layers size={13} />
@@ -103,8 +103,8 @@ export const ArchitectureDemo: React.FC = () => {
                 onClick={() => setActiveView('materials')}
                 className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
                   activeView === 'materials'
-                    ? 'bg-[#0a5cff] text-white font-semibold'
-                    : 'text-[#8b92a5] hover:text-white'
+                    ? 'bg-zy-blue text-white font-semibold'
+                    : 'text-zy-muted hover:text-zy-fg'
                 }`}
               >
                 <Compass size={13} />
@@ -116,9 +116,9 @@ export const ArchitectureDemo: React.FC = () => {
           <button
             type="button"
             onClick={handleDownloadDemo}
-            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#141820] hover:bg-[#1b2230] border border-[#1e232d] text-xs font-mono text-[#cbd4e6] hover:text-white transition-colors"
+            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-xs font-mono text-zy-fg-secondary hover:text-zy-fg transition-colors"
           >
-            <Download size={13} className="text-[#0a5cff]" />
+            <Download size={13} className="text-zy-blue" />
             <span>
               {downloadSuccess
                 ? language === 'es' ? '✓ Ficha generada' : '✓ Spec sheet generated'
@@ -128,23 +128,23 @@ export const ArchitectureDemo: React.FC = () => {
         </div>
 
         {/* View Dynamic Canvas */}
-        <div className="bg-[#0b0e12] rounded-xl border border-[#191e28] p-6 relative min-h-[320px] flex items-center justify-center">
+        <div className="bg-zy-surface rounded-xl border border-zy-border p-6 relative min-h-[320px] flex items-center justify-center">
           {activeView === 'axonometric' && (
             <div className="w-full flex flex-col items-center space-y-4">
-              <div className="w-full max-w-lg aspect-video rounded-lg overflow-hidden border border-[#212735] bg-[#08090c] p-4 flex flex-col justify-between">
-                <div className="flex justify-between text-[11px] font-mono text-[#515768]">
+              <div className="w-full max-w-lg aspect-video rounded-lg overflow-hidden border border-zy-border bg-zy-card p-4 flex flex-col justify-between shadow-sm">
+                <div className="flex justify-between text-[11px] font-mono text-zy-dim">
                   <span>AXIS: X: 30° / Y: 15°</span>
-                  <span className="text-[#0a5cff]">DATUM +112.4M</span>
+                  <span className="text-zy-blue">DATUM +112.4M</span>
                 </div>
                 {/* SVG Mini Graphic */}
-                <svg viewBox="0 0 300 160" className="w-full h-32 stroke-[#cbd4e6] fill-none">
-                  <polygon points="150,20 230,60 150,100 70,60" stroke="#0a5cff" strokeWidth="1.5" />
-                  <polygon points="70,60 150,100 150,150 70,110" stroke="#3d495f" strokeWidth="1.5" fill="#141820" />
-                  <polygon points="230,60 150,100 150,150 230,110" stroke="#2c3545" strokeWidth="1.5" fill="#0d1015" />
-                  <line x1="70" y1="60" x2="70" y2="110" stroke="#0a5cff" strokeWidth="1.5" />
-                  <line x1="150" y1="20" x2="150" y2="100" stroke="#4a5568" strokeDasharray="3,3" />
+                <svg viewBox="0 0 300 160" className="w-full h-32 fill-none">
+                  <polygon points="150,20 230,60 150,100 70,60" stroke="var(--zy-blue)" strokeWidth="1.5" />
+                  <polygon points="70,60 150,100 150,150 70,110" stroke="var(--zy-border-strong)" strokeWidth="1.5" fill="var(--zy-surface)" />
+                  <polygon points="230,60 150,100 150,150 230,110" stroke="var(--zy-border)" strokeWidth="1.5" fill="var(--zy-card-alt)" />
+                  <line x1="70" y1="60" x2="70" y2="110" stroke="var(--zy-blue)" strokeWidth="1.5" />
+                  <line x1="150" y1="20" x2="150" y2="100" stroke="var(--zy-dim)" strokeDasharray="3,3" />
                 </svg>
-                <div className="text-center font-mono text-[10px] text-[#8b92a5]">
+                <div className="text-center font-mono text-[10px] text-zy-muted">
                   {language === 'es' ? 'Volumetría exterior del Monolito Cívico' : 'Civic Monolith volumetric massing study'}
                 </div>
               </div>
@@ -153,26 +153,26 @@ export const ArchitectureDemo: React.FC = () => {
 
           {activeView === 'section' && (
             <div className="w-full space-y-4">
-              <div className="flex justify-between items-center text-xs font-mono text-[#8b92a5]">
+              <div className="flex justify-between items-center text-xs font-mono text-zy-muted">
                 <span>{language === 'es' ? 'CORTE TRANSVERSAL ESTE-OESTE' : 'EAST-WEST TRANSVERSE SECTION'}</span>
-                <span className="text-[#0a5cff]">ESCALA 1:100</span>
+                <span className="text-zy-blue">ESCALA 1:100</span>
               </div>
-              <div className="p-4 bg-[#08090c] rounded border border-[#1e232d] font-mono text-xs space-y-2 text-[#cbd4e6]">
-                <div className="flex justify-between py-1 border-b border-[#161a22]">
+              <div className="p-4 bg-zy-card rounded border border-zy-border font-mono text-xs space-y-2 text-zy-fg-secondary">
+                <div className="flex justify-between py-1 border-b border-zy-border-subtle">
                   <span>NIVEL 04 (+14.40M)</span>
-                  <span className="text-[#8b92a5]">{language === 'es' ? 'Atrio cenital y mirador acústico' : 'Zenith atrium & acoustic observatory'}</span>
+                  <span className="text-zy-muted">{language === 'es' ? 'Atrio cenital y mirador acústico' : 'Zenith atrium & acoustic observatory'}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-[#161a22]">
+                <div className="flex justify-between py-1 border-b border-zy-border-subtle">
                   <span>NIVEL 03 (+10.80M)</span>
-                  <span className="text-[#8b92a5]">{language === 'es' ? 'Salas de investigación y mediateca' : 'Research archives & reading rooms'}</span>
+                  <span className="text-zy-muted">{language === 'es' ? 'Salas de investigación y mediateca' : 'Research archives & reading rooms'}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-[#161a22]">
+                <div className="flex justify-between py-1 border-b border-zy-border-subtle">
                   <span>NIVEL 02 (+7.20M)</span>
-                  <span className="text-[#8b92a5]">{language === 'es' ? 'Galería de exhibición continua' : 'Continuous exhibition hall'}</span>
+                  <span className="text-zy-muted">{language === 'es' ? 'Galería de exhibición continua' : 'Continuous exhibition hall'}</span>
                 </div>
                 <div className="flex justify-between py-1">
                   <span>NIVEL 01 (±0.00M)</span>
-                  <span className="text-[#8b92a5]">{language === 'es' ? 'Pórtico cívico y plaza cubierta' : 'Civic colonnade & covered plaza'}</span>
+                  <span className="text-zy-muted">{language === 'es' ? 'Pórtico cívico y plaza cubierta' : 'Civic colonnade & covered plaza'}</span>
                 </div>
               </div>
             </div>
@@ -188,8 +188,8 @@ export const ArchitectureDemo: React.FC = () => {
                     onClick={() => setActiveMaterial(mat)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
                       activeMaterial === mat
-                        ? 'bg-[#0a5cff] text-white font-semibold'
-                        : 'bg-[#12161f] text-[#8b92a5] hover:text-white'
+                        ? 'bg-zy-blue text-white font-semibold'
+                        : 'bg-zy-card border border-zy-border text-zy-muted hover:text-zy-fg'
                     }`}
                   >
                     {materials[mat].code}
@@ -197,32 +197,32 @@ export const ArchitectureDemo: React.FC = () => {
                 ))}
               </div>
 
-              <div className="p-4 bg-[#08090c] rounded-xl border border-[#1e232d] space-y-3">
-                <div className="flex items-baseline justify-between border-b border-[#161a22] pb-2">
-                  <h6 className="font-sans font-bold text-white text-base">
+              <div className="p-4 bg-zy-card rounded-xl border border-zy-border space-y-3">
+                <div className="flex items-baseline justify-between border-b border-zy-border-subtle pb-2">
+                  <h6 className="font-sans font-bold text-zy-fg text-base">
                     {materials[activeMaterial].name[language]}
                   </h6>
-                  <span className="font-mono text-xs text-[#0a5cff]">
+                  <span className="font-mono text-xs text-zy-blue">
                     {materials[activeMaterial].code}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-                  <div className="p-2 bg-[#10131a] rounded">
-                    <span className="text-[#515768] block">{language === 'es' ? 'Densidad:' : 'Density:'}</span>
-                    <span className="text-white">{materials[activeMaterial].properties.density}</span>
+                  <div className="p-2 bg-zy-surface rounded">
+                    <span className="text-zy-dim block">{language === 'es' ? 'Densidad:' : 'Density:'}</span>
+                    <span className="text-zy-fg">{materials[activeMaterial].properties.density}</span>
                   </div>
-                  <div className="p-2 bg-[#10131a] rounded">
-                    <span className="text-[#515768] block">{language === 'es' ? 'Comportamiento acústico:' : 'Acoustics:'}</span>
-                    <span className="text-white">{materials[activeMaterial].properties.acoustic}</span>
+                  <div className="p-2 bg-zy-surface rounded">
+                    <span className="text-zy-dim block">{language === 'es' ? 'Comportamiento acústico:' : 'Acoustics:'}</span>
+                    <span className="text-zy-fg">{materials[activeMaterial].properties.acoustic}</span>
                   </div>
-                  <div className="p-2 bg-[#10131a] rounded sm:col-span-2">
-                    <span className="text-[#515768] block">{language === 'es' ? 'Tratamiento superficial:' : 'Surface finish:'}</span>
-                    <span className="text-white">{materials[activeMaterial].properties.finish[language]}</span>
+                  <div className="p-2 bg-zy-surface rounded sm:col-span-2">
+                    <span className="text-zy-dim block">{language === 'es' ? 'Tratamiento superficial:' : 'Surface finish:'}</span>
+                    <span className="text-zy-fg">{materials[activeMaterial].properties.finish[language]}</span>
                   </div>
-                  <div className="p-2 bg-[#10131a] rounded sm:col-span-2">
-                    <span className="text-[#515768] block">{language === 'es' ? 'Criterio sostenible:' : 'Sustainability:'}</span>
-                    <span className="text-[#0a5cff]">{materials[activeMaterial].properties.sustainability[language]}</span>
+                  <div className="p-2 bg-zy-surface rounded sm:col-span-2">
+                    <span className="text-zy-dim block">{language === 'es' ? 'Criterio sostenible:' : 'Sustainability:'}</span>
+                    <span className="text-zy-blue">{materials[activeMaterial].properties.sustainability[language]}</span>
                   </div>
                 </div>
               </div>

@@ -227,24 +227,24 @@ export const ContactForm: React.FC = () => {
   return (
     <section
       id="contact"
-      className="py-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-20 border-t border-[#161a22]"
+      className="py-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
       aria-label="Start a Project Brief"
     >
       {/* Header */}
       <div className="mb-14 text-center max-w-2xl mx-auto">
-        <span className="font-mono text-xs uppercase tracking-widest text-[#0a5cff]">
+        <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
           {t.label}
         </span>
-        <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-white mt-2">
+        <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
           {t.title}
         </h2>
-        <p className="text-sm sm:text-base text-[#8b92a5] font-sans mt-3">
+        <p className="text-sm sm:text-base text-zy-muted font-sans mt-3">
           {t.subtitle}
         </p>
       </div>
 
       {/* Main Form Container */}
-      <div className="bg-[#0c0d10] border border-[#1e232d] rounded-2xl p-6 sm:p-10 shadow-2xl relative">
+      <div className="bg-zy-card border border-zy-border rounded-2xl p-6 sm:p-10 shadow-xl relative">
         {/* Anti-spam honeypot */}
         <input
           type="text"
@@ -260,21 +260,21 @@ export const ContactForm: React.FC = () => {
         {/* Success Confirmation View */}
         {submitSuccess ? (
           <div className="py-12 text-center max-w-lg mx-auto space-y-6">
-            <div className="w-16 h-16 rounded-full bg-[#0a5cff]/20 text-[#0a5cff] flex items-center justify-center mx-auto border border-[#0a5cff]/40 shadow-[0_0_30px_rgba(10,92,255,0.3)]">
+            <div className="w-16 h-16 rounded-full bg-zy-blue/20 text-zy-blue flex items-center justify-center mx-auto border border-zy-blue/40 shadow-[0_0_30px_rgba(10,92,255,0.3)]">
               <Check size={32} />
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-2xl sm:text-3xl font-sans font-bold text-white">
+              <h3 className="text-2xl sm:text-3xl font-sans font-bold text-zy-fg">
                 {t.success.title}
               </h3>
-              <p className="text-sm text-[#8b92a5] font-sans leading-relaxed">
+              <p className="text-sm text-zy-muted font-sans leading-relaxed">
                 {t.success.subtitle}
               </p>
             </div>
 
-            <div className="p-4 bg-[#12151b] rounded-xl border border-[#1e232d] text-xs font-mono text-[#cbd4e6]">
-              <span className="text-[#0a5cff] font-semibold block mb-1">
+            <div className="p-4 bg-zy-surface rounded-xl border border-zy-border text-xs font-mono text-zy-fg-secondary">
+              <span className="text-zy-blue font-semibold block mb-1">
                 // {t.success.detailsSummary}
               </span>
               <span>{formData.name} — {formData.brand} ({formData.email})</span>
@@ -286,7 +286,7 @@ export const ContactForm: React.FC = () => {
                 setSubmitSuccess(false);
                 setStep(1);
               }}
-              className="text-xs font-mono text-[#8b92a5] hover:text-white underline"
+              className="text-xs font-mono text-zy-muted hover:text-zy-fg underline"
             >
               {t.success.restart}
             </button>
@@ -294,23 +294,23 @@ export const ContactForm: React.FC = () => {
         ) : (
           <div>
             {/* Step Progress Indicator Bar */}
-            <div className="mb-10 pb-6 border-b border-[#181d26]">
-              <div className="flex items-center justify-between text-xs font-mono text-[#8b92a5] mb-3">
-                <span className="text-white font-semibold">
+            <div className="mb-10 pb-6 border-b border-zy-border-card">
+              <div className="flex items-center justify-between text-xs font-mono text-zy-muted mb-3">
+                <span className="text-zy-fg font-semibold">
                   {step === 1 && t.step1Title}
                   {step === 2 && t.step2Title}
                   {step === 3 && t.step3Title}
                   {step === 4 && t.stepReviewTitle}
                 </span>
-                <span className="text-[#0a5cff]">
+                <span className="text-zy-blue">
                   {language === 'es' ? `Etapa 0${step} de 04` : `Stage 0${step} of 04`}
                 </span>
               </div>
 
               {/* Progress track */}
-              <div className="w-full h-1.5 bg-[#141820] rounded-full overflow-hidden">
+              <div className="w-full h-1.5 bg-zy-surface rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#0a5cff] transition-all duration-300 ease-out"
+                  className="h-full bg-zy-blue transition-all duration-300 ease-out"
                   style={{ width: `${(step / 4) * 100}%` }}
                 />
               </div>
@@ -318,19 +318,19 @@ export const ContactForm: React.FC = () => {
 
             {/* Error Banner if any */}
             {submitError && (
-              <div className="mb-8 p-5 bg-[#171114] border border-[#ff4444]/40 rounded-xl space-y-3 text-xs">
-                <div className="flex items-start space-x-3 text-[#ff8888]">
+              <div className="mb-8 p-5 bg-zy-error-bg border border-zy-error-border rounded-xl space-y-3 text-xs">
+                <div className="flex items-start space-x-3 text-zy-error-fg">
                   <AlertCircle size={18} className="shrink-0 mt-0.5" />
                   <div className="space-y-1">
                     <span className="font-mono font-semibold block">
                       {language === 'es' ? 'AVISO DEL SISTEMA DE ENVÍO' : 'DISPATCH STATUS NOTICE'}
                     </span>
-                    <p className="text-[#e2e8f0] leading-relaxed">{submitError.message}</p>
+                    <p className="text-zy-error-text leading-relaxed">{submitError.message}</p>
                   </div>
                 </div>
 
                 {/* Direct Email Fallback buttons preserving user inputs */}
-                <div className="pt-3 border-t border-[#2a1a1f] flex flex-wrap gap-3">
+                <div className="pt-3 border-t border-zy-error-divider flex flex-wrap gap-3">
                   <a
                     href={`mailto:zyrvae.co@gmail.com?subject=${encodeURIComponent(
                       `[Brief Proyecto] ${formData.brand} — ${formData.name}`
@@ -338,7 +338,7 @@ export const ContactForm: React.FC = () => {
                       submitError.briefText ||
                         `Nombre: ${formData.name}\nEmail: ${formData.email}\nMarca: ${formData.brand}\nPaís: ${formData.country}\nTipo: ${formData.projectType}\nObjetivo: ${formData.mainGoal}\nDescripción:\n${formData.projectDescription}`
                     )}`}
-                    className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-[#0a5cff] hover:bg-[#2672ff] text-white font-mono text-xs transition-colors"
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white font-mono text-xs transition-colors"
                   >
                     <Mail size={13} />
                     <span>
@@ -352,7 +352,7 @@ export const ContactForm: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleCopyBrief(submitError.briefText!)}
-                      className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-[#1a1f2c] hover:bg-[#242b3d] border border-[#2a3449] text-white font-mono text-xs transition-colors"
+                      className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-zy-fg font-mono text-xs transition-colors"
                     >
                       <Copy size={13} />
                       <span>
@@ -371,12 +371,12 @@ export const ContactForm: React.FC = () => {
               {/* STEP 1: Essential Info */}
               {step === 1 && (
                 <div className="space-y-6">
-                  <p className="text-xs text-[#8b92a5] font-mono mb-4">{t.step1Desc}</p>
+                  <p className="text-xs text-zy-muted font-mono mb-4">{t.step1Desc}</p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {/* Full Name */}
                     <div className="space-y-2">
-                      <label htmlFor="form-name" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-name" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.name}
                       </label>
                       <input
@@ -388,14 +388,14 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.namePlaceholder}
                         aria-invalid={!!errors.name}
                         aria-describedby={errors.name ? 'err-name' : undefined}
-                        className={`w-full px-4 py-3 bg-[#101216] border rounded-xl text-sm text-white placeholder-[#515768] outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.name
-                            ? 'border-[#ff4444] focus:ring-1 focus:ring-[#ff4444]'
-                            : 'border-[#1e232d] focus:border-[#0a5cff]'
+                            ? 'border-red-500 focus:ring-1 focus:ring-red-500'
+                            : 'border-zy-border focus:border-zy-blue'
                         }`}
                       />
                       {errors.name && (
-                        <p id="err-name" className="text-[11px] text-[#ff6666] font-mono">
+                        <p id="err-name" className="text-[11px] text-red-500 font-mono">
                           {errors.name}
                         </p>
                       )}
@@ -403,7 +403,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Email */}
                     <div className="space-y-2">
-                      <label htmlFor="form-email" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-email" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.email}
                       </label>
                       <input
@@ -415,14 +415,14 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.emailPlaceholder}
                         aria-invalid={!!errors.email}
                         aria-describedby={errors.email ? 'err-email' : undefined}
-                        className={`w-full px-4 py-3 bg-[#101216] border rounded-xl text-sm text-white placeholder-[#515768] outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.email
-                            ? 'border-[#ff4444] focus:ring-1 focus:ring-[#ff4444]'
-                            : 'border-[#1e232d] focus:border-[#0a5cff]'
+                            ? 'border-red-500 focus:ring-1 focus:ring-red-500'
+                            : 'border-zy-border focus:border-zy-blue'
                         }`}
                       />
                       {errors.email && (
-                        <p id="err-email" className="text-[11px] text-[#ff6666] font-mono">
+                        <p id="err-email" className="text-[11px] text-red-500 font-mono">
                           {errors.email}
                         </p>
                       )}
@@ -430,7 +430,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Brand / Company */}
                     <div className="space-y-2">
-                      <label htmlFor="form-brand" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-brand" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.brand}
                       </label>
                       <input
@@ -442,14 +442,14 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.brandPlaceholder}
                         aria-invalid={!!errors.brand}
                         aria-describedby={errors.brand ? 'err-brand' : undefined}
-                        className={`w-full px-4 py-3 bg-[#101216] border rounded-xl text-sm text-white placeholder-[#515768] outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.brand
-                            ? 'border-[#ff4444] focus:ring-1 focus:ring-[#ff4444]'
-                            : 'border-[#1e232d] focus:border-[#0a5cff]'
+                            ? 'border-red-500 focus:ring-1 focus:ring-red-500'
+                            : 'border-zy-border focus:border-zy-blue'
                         }`}
                       />
                       {errors.brand && (
-                        <p id="err-brand" className="text-[11px] text-[#ff6666] font-mono">
+                        <p id="err-brand" className="text-[11px] text-red-500 font-mono">
                           {errors.brand}
                         </p>
                       )}
@@ -457,7 +457,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Country */}
                     <div className="space-y-2">
-                      <label htmlFor="form-country" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-country" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.country}
                       </label>
                       <input
@@ -469,14 +469,14 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.countryPlaceholder}
                         aria-invalid={!!errors.country}
                         aria-describedby={errors.country ? 'err-country' : undefined}
-                        className={`w-full px-4 py-3 bg-[#101216] border rounded-xl text-sm text-white placeholder-[#515768] outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.country
-                            ? 'border-[#ff4444] focus:ring-1 focus:ring-[#ff4444]'
-                            : 'border-[#1e232d] focus:border-[#0a5cff]'
+                            ? 'border-red-500 focus:ring-1 focus:ring-red-500'
+                            : 'border-zy-border focus:border-zy-blue'
                         }`}
                       />
                       {errors.country && (
-                        <p id="err-country" className="text-[11px] text-[#ff6666] font-mono">
+                        <p id="err-country" className="text-[11px] text-red-500 font-mono">
                           {errors.country}
                         </p>
                       )}
@@ -488,12 +488,12 @@ export const ContactForm: React.FC = () => {
               {/* STEP 2: Project Details (Adaptive) */}
               {step === 2 && (
                 <div className="space-y-6">
-                  <p className="text-xs text-[#8b92a5] font-mono mb-4">{t.step2Desc}</p>
+                  <p className="text-xs text-zy-muted font-mono mb-4">{t.step2Desc}</p>
 
                   <div className="space-y-6">
                     {/* Project Type */}
                     <div className="space-y-2">
-                      <label htmlFor="form-projectType" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-projectType" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.projectType}
                       </label>
                       <select
@@ -501,7 +501,7 @@ export const ContactForm: React.FC = () => {
                         name="projectType"
                         value={formData.projectType}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-[#101216] border border-[#1e232d] rounded-xl text-sm text-white focus:border-[#0a5cff] outline-none"
+                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-xl text-sm text-zy-fg focus:border-zy-blue outline-none"
                       >
                         <option value="hospitality">{t.fields.projectTypeOptions.hospitality}</option>
                         <option value="gastronomy">{t.fields.projectTypeOptions.gastronomy}</option>
@@ -515,7 +515,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Main Goal */}
                     <div className="space-y-2">
-                      <label htmlFor="form-mainGoal" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-mainGoal" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.mainGoal}
                       </label>
                       <input
@@ -527,14 +527,14 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.mainGoalPlaceholder}
                         aria-invalid={!!errors.mainGoal}
                         aria-describedby={errors.mainGoal ? 'err-mainGoal' : undefined}
-                        className={`w-full px-4 py-3 bg-[#101216] border rounded-xl text-sm text-white placeholder-[#515768] outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.mainGoal
-                            ? 'border-[#ff4444] focus:ring-1 focus:ring-[#ff4444]'
-                            : 'border-[#1e232d] focus:border-[#0a5cff]'
+                            ? 'border-red-500 focus:ring-1 focus:ring-red-500'
+                            : 'border-zy-border focus:border-zy-blue'
                         }`}
                       />
                       {errors.mainGoal && (
-                        <p id="err-mainGoal" className="text-[11px] text-[#ff6666] font-mono">
+                        <p id="err-mainGoal" className="text-[11px] text-red-500 font-mono">
                           {errors.mainGoal}
                         </p>
                       )}
@@ -542,7 +542,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Target Audience */}
                     <div className="space-y-2">
-                      <label htmlFor="form-targetAudience" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-targetAudience" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.targetAudience}
                       </label>
                       <input
@@ -552,13 +552,13 @@ export const ContactForm: React.FC = () => {
                         value={formData.targetAudience}
                         onChange={handleInputChange}
                         placeholder={t.fields.targetAudiencePlaceholder}
-                        className="w-full px-4 py-3 bg-[#101216] border border-[#1e232d] rounded-xl text-sm text-white placeholder-[#515768] outline-none focus:border-[#0a5cff]"
+                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none focus:border-zy-blue"
                       />
                     </div>
 
                     {/* Adaptive Features (changes dynamically!) */}
                     <div className="space-y-2.5">
-                      <label className="block text-xs font-mono text-[#cbd4e6]">
+                      <label className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.features}
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -573,16 +573,16 @@ export const ContactForm: React.FC = () => {
                               onClick={() => toggleFeature(label)}
                               className={`p-3 rounded-xl border text-left text-xs font-mono transition-all flex items-center justify-between ${
                                 selected
-                                  ? 'bg-[#0f172a] border-[#0a5cff] text-white shadow-sm'
-                                  : 'bg-[#101216] border-[#1e232d] text-[#8b92a5] hover:text-white hover:border-[#2a303d]'
+                                  ? 'bg-zy-accent-soft border-zy-blue text-zy-fg font-semibold shadow-sm'
+                                  : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg hover:border-zy-border-strong'
                               }`}
                             >
                               <span>{label}</span>
                               <div
                                 className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 ml-2 ${
                                   selected
-                                    ? 'bg-[#0a5cff] border-[#0a5cff] text-white'
-                                    : 'border-[#2a303d]'
+                                    ? 'bg-zy-blue border-zy-blue text-white'
+                                    : 'border-zy-border-strong'
                                 }`}
                               >
                                 {selected && <Check size={11} />}
@@ -595,7 +595,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Project Description */}
                     <div className="space-y-2">
-                      <label htmlFor="form-description" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-description" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.projectDescription}
                       </label>
                       <textarea
@@ -607,14 +607,14 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.projectDescriptionPlaceholder}
                         aria-invalid={!!errors.projectDescription}
                         aria-describedby={errors.projectDescription ? 'err-desc' : undefined}
-                        className={`w-full px-4 py-3 bg-[#101216] border rounded-xl text-sm text-white placeholder-[#515768] outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.projectDescription
-                            ? 'border-[#ff4444] focus:ring-1 focus:ring-[#ff4444]'
-                            : 'border-[#1e232d] focus:border-[#0a5cff]'
+                            ? 'border-red-500 focus:ring-1 focus:ring-red-500'
+                            : 'border-zy-border focus:border-zy-blue'
                         }`}
                       />
                       {errors.projectDescription && (
-                        <p id="err-desc" className="text-[11px] text-[#ff6666] font-mono">
+                        <p id="err-desc" className="text-[11px] text-red-500 font-mono">
                           {errors.projectDescription}
                         </p>
                       )}
@@ -622,7 +622,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* References */}
                     <div className="space-y-2">
-                      <label htmlFor="form-references" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-references" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.references}
                       </label>
                       <input
@@ -632,7 +632,7 @@ export const ContactForm: React.FC = () => {
                         value={formData.references}
                         onChange={handleInputChange}
                         placeholder={t.fields.referencesPlaceholder}
-                        className="w-full px-4 py-3 bg-[#101216] border border-[#1e232d] rounded-xl text-sm text-white placeholder-[#515768] outline-none focus:border-[#0a5cff]"
+                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none focus:border-zy-blue"
                       />
                     </div>
                   </div>
@@ -642,12 +642,12 @@ export const ContactForm: React.FC = () => {
               {/* STEP 3: Scope and Budget */}
               {step === 3 && (
                 <div className="space-y-6">
-                  <p className="text-xs text-[#8b92a5] font-mono mb-4">{t.step3Desc}</p>
+                  <p className="text-xs text-zy-muted font-mono mb-4">{t.step3Desc}</p>
 
                   <div className="space-y-6">
                     {/* Budget Range Radio Brackets */}
                     <div className="space-y-2">
-                      <label className="block text-xs font-mono text-[#cbd4e6]">
+                      <label className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.budgetRange}
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -660,14 +660,14 @@ export const ContactForm: React.FC = () => {
                               onClick={() => setFormData((p) => ({ ...p, budgetRange: key }))}
                               className={`p-3.5 rounded-xl border text-left text-xs font-mono transition-all flex items-center justify-between ${
                                 isChecked
-                                  ? 'bg-[#0f172a] border-[#0a5cff] text-white font-semibold'
-                                  : 'bg-[#101216] border-[#1e232d] text-[#8b92a5] hover:text-white'
+                                  ? 'bg-zy-accent-soft border-zy-blue text-zy-fg font-semibold'
+                                  : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg'
                               }`}
                             >
                               <span>{label}</span>
                               <div
                                 className={`w-3.5 h-3.5 rounded-full border ${
-                                  isChecked ? 'border-[#0a5cff] bg-[#0a5cff]' : 'border-[#2a303d]'
+                                  isChecked ? 'border-zy-blue bg-zy-blue' : 'border-zy-border-strong'
                                 }`}
                               />
                             </button>
@@ -678,7 +678,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Timeline Radio */}
                     <div className="space-y-2">
-                      <label className="block text-xs font-mono text-[#cbd4e6]">
+                      <label className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.timeline}
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -691,14 +691,14 @@ export const ContactForm: React.FC = () => {
                               onClick={() => setFormData((p) => ({ ...p, timeline: key }))}
                               className={`p-3.5 rounded-xl border text-left text-xs font-mono transition-all flex items-center justify-between ${
                                 isChecked
-                                  ? 'bg-[#0f172a] border-[#0a5cff] text-white font-semibold'
-                                  : 'bg-[#101216] border-[#1e232d] text-[#8b92a5] hover:text-white'
+                                  ? 'bg-zy-accent-soft border-zy-blue text-zy-fg font-semibold'
+                                  : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg'
                               }`}
                             >
                               <span>{label}</span>
                               <div
                                 className={`w-3.5 h-3.5 rounded-full border ${
-                                  isChecked ? 'border-[#0a5cff] bg-[#0a5cff]' : 'border-[#2a303d]'
+                                  isChecked ? 'border-zy-blue bg-zy-blue' : 'border-zy-border-strong'
                                 }`}
                               />
                             </button>
@@ -709,7 +709,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Additional Notes */}
                     <div className="space-y-2">
-                      <label htmlFor="form-notes" className="block text-xs font-mono text-[#cbd4e6]">
+                      <label htmlFor="form-notes" className="block text-xs font-mono text-zy-fg-secondary">
                         {t.fields.additionalNotes}
                       </label>
                       <textarea
@@ -719,7 +719,7 @@ export const ContactForm: React.FC = () => {
                         value={formData.additionalNotes}
                         onChange={handleInputChange}
                         placeholder={t.fields.additionalNotesPlaceholder}
-                        className="w-full px-4 py-3 bg-[#101216] border border-[#1e232d] rounded-xl text-sm text-white placeholder-[#515768] outline-none focus:border-[#0a5cff]"
+                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none focus:border-zy-blue"
                       />
                     </div>
                   </div>
@@ -729,22 +729,22 @@ export const ContactForm: React.FC = () => {
               {/* STEP 4: Review Before Submission */}
               {step === 4 && (
                 <div className="space-y-6">
-                  <p className="text-xs text-[#8b92a5] font-mono mb-4">{t.stepReviewDesc}</p>
+                  <p className="text-xs text-zy-muted font-mono mb-4">{t.stepReviewDesc}</p>
 
                   <div className="space-y-4">
                     {/* Section 1 Review */}
-                    <div className="p-4 bg-[#101216] rounded-xl border border-[#1e232d] flex justify-between items-start">
+                    <div className="p-4 bg-zy-surface rounded-xl border border-zy-border flex justify-between items-start">
                       <div className="text-xs space-y-1">
-                        <span className="font-mono text-[#0a5cff] font-semibold block">
+                        <span className="font-mono text-zy-blue font-semibold block">
                           01. {language === 'es' ? 'Contacto' : 'Contact'}
                         </span>
-                        <p className="text-white font-sans font-medium">{formData.name} — {formData.brand}</p>
-                        <p className="text-[#8b92a5] font-mono">{formData.email} | {formData.country}</p>
+                        <p className="text-zy-fg font-sans font-medium">{formData.name} — {formData.brand}</p>
+                        <p className="text-zy-muted font-mono">{formData.email} | {formData.country}</p>
                       </div>
                       <button
                         type="button"
                         onClick={() => setStep(1)}
-                        className="text-xs font-mono text-[#8b92a5] hover:text-[#0a5cff] inline-flex items-center space-x-1"
+                        className="text-xs font-mono text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1"
                       >
                         <Edit2 size={12} />
                         <span>{t.buttons.edit}</span>
@@ -752,18 +752,18 @@ export const ContactForm: React.FC = () => {
                     </div>
 
                     {/* Section 2 Review */}
-                    <div className="p-4 bg-[#101216] rounded-xl border border-[#1e232d] flex justify-between items-start">
+                    <div className="p-4 bg-zy-surface rounded-xl border border-zy-border flex justify-between items-start">
                       <div className="text-xs space-y-1 max-w-lg">
-                        <span className="font-mono text-[#0a5cff] font-semibold block">
+                        <span className="font-mono text-zy-blue font-semibold block">
                           02. {language === 'es' ? 'Proyecto' : 'Project'}
                         </span>
-                        <p className="text-white font-sans font-medium uppercase font-mono">{formData.projectType}</p>
-                        <p className="text-[#cbd4e6] font-sans">{formData.mainGoal}</p>
-                        <p className="text-[#8b92a5] line-clamp-2">{formData.projectDescription}</p>
+                        <p className="text-zy-fg font-medium uppercase font-mono">{formData.projectType}</p>
+                        <p className="text-zy-fg-secondary font-sans">{formData.mainGoal}</p>
+                        <p className="text-zy-muted line-clamp-2">{formData.projectDescription}</p>
                         {formData.features.length > 0 && (
                           <div className="flex flex-wrap gap-1 pt-1">
                             {formData.features.map((f, i) => (
-                              <span key={i} className="text-[10px] font-mono bg-[#161a24] text-[#cbd4e6] px-2 py-0.5 rounded">
+                              <span key={i} className="text-[10px] font-mono bg-zy-card border border-zy-border text-zy-fg-secondary px-2 py-0.5 rounded">
                                 {f}
                               </span>
                             ))}
@@ -773,7 +773,7 @@ export const ContactForm: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setStep(2)}
-                        className="text-xs font-mono text-[#8b92a5] hover:text-[#0a5cff] inline-flex items-center space-x-1 shrink-0 ml-2"
+                        className="text-xs font-mono text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1 shrink-0 ml-2"
                       >
                         <Edit2 size={12} />
                         <span>{t.buttons.edit}</span>
@@ -781,22 +781,22 @@ export const ContactForm: React.FC = () => {
                     </div>
 
                     {/* Section 3 Review */}
-                    <div className="p-4 bg-[#101216] rounded-xl border border-[#1e232d] flex justify-between items-start">
+                    <div className="p-4 bg-zy-surface rounded-xl border border-zy-border flex justify-between items-start">
                       <div className="text-xs space-y-1">
-                        <span className="font-mono text-[#0a5cff] font-semibold block">
+                        <span className="font-mono text-zy-blue font-semibold block">
                           03. {language === 'es' ? 'Alcance' : 'Scope'}
                         </span>
-                        <p className="text-white font-mono">
+                        <p className="text-zy-fg font-mono">
                           {language === 'es' ? 'Inversión:' : 'Budget:'} {formData.budgetRange}
                         </p>
-                        <p className="text-[#8b92a5] font-mono">
+                        <p className="text-zy-muted font-mono">
                           {language === 'es' ? 'Plazo:' : 'Timeline:'} {formData.timeline}
                         </p>
                       </div>
                       <button
                         type="button"
                         onClick={() => setStep(3)}
-                        className="text-xs font-mono text-[#8b92a5] hover:text-[#0a5cff] inline-flex items-center space-x-1"
+                        className="text-xs font-mono text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1"
                       >
                         <Edit2 size={12} />
                         <span>{t.buttons.edit}</span>
@@ -807,13 +807,13 @@ export const ContactForm: React.FC = () => {
               )}
 
               {/* Navigation & Submission Controls */}
-              <div className="mt-10 pt-6 border-t border-[#181d26] flex items-center justify-between">
+              <div className="mt-10 pt-6 border-t border-zy-border-card flex items-center justify-between">
                 {step > 1 ? (
                   <button
                     type="button"
                     onClick={prevStep}
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-[#101216] hover:bg-[#151922] border border-[#1e232d] text-xs font-mono text-[#8b92a5] hover:text-white transition-colors"
+                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-zy-surface hover:bg-zy-surface-hover border border-zy-border text-xs font-mono text-zy-muted hover:text-zy-fg transition-colors"
                   >
                     <ArrowLeft size={13} />
                     <span>{t.buttons.back}</span>
@@ -826,7 +826,7 @@ export const ContactForm: React.FC = () => {
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-full bg-[#0a5cff] hover:bg-[#2672ff] text-white text-xs font-medium font-sans tracking-wide transition-all shadow-[0_0_15px_rgba(10,92,255,0.35)]"
+                    className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-full bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-medium font-sans tracking-wide transition-all shadow-[0_0_15px_rgba(10,92,255,0.35)]"
                   >
                     <span>{t.buttons.next}</span>
                     <ArrowRight size={14} />
@@ -835,7 +835,7 @@ export const ContactForm: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-full bg-[#0a5cff] hover:bg-[#2672ff] disabled:bg-[#1a202c] text-white text-xs font-medium font-sans tracking-wide transition-all shadow-[0_0_20px_rgba(10,92,255,0.4)] disabled:opacity-50"
+                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-full bg-zy-blue hover:bg-zy-blue-hover disabled:bg-zy-control text-white text-xs font-medium font-sans tracking-wide transition-all shadow-[0_0_20px_rgba(10,92,255,0.4)] disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
