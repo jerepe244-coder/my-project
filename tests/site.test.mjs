@@ -112,4 +112,38 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     const headerTsx = fs.readFileSync(path.join(process.cwd(), 'src', 'components', 'layout', 'Header.tsx'), 'utf-8');
     assert.ok(headerTsx.includes('<ThemeToggle'), 'Header.tsx must render ThemeToggle selector');
   });
+
+  test('AURA Sanctuary web experience preserves suites, images, rates, and hotel sections', async () => {
+    const { AURA_SUITES } = await import('../src/components/demos/HospitalityDemo.tsx');
+    assert.equal(AURA_SUITES.length, 3, 'AURA Sanctuary must define 3 suites');
+    assert.deepEqual(
+      AURA_SUITES.map((s) => s.baseRate),
+      [480, 390, 620],
+      'AURA suite nightly rates must remain 480, 390, 620'
+    );
+    assert.deepEqual(
+      AURA_SUITES.map((s) => s.image),
+      [
+        '/images/aura-suite-panoramic.webp',
+        '/images/aura-suite-forest.webp',
+        '/images/aura-suite-monolith.webp',
+      ],
+      'AURA suite images must remain intact'
+    );
+    for (const suite of AURA_SUITES) {
+      const imgDiskPath = path.join(process.cwd(), 'public', suite.image.replace(/^\//, ''));
+      assert.ok(fs.existsSync(imgDiskPath), `Suite image ${suite.image} must exist on disk`);
+    }
+
+    const caseStudyTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'CaseStudyClient.tsx'),
+      'utf-8'
+    );
+    for (const sectionId of ['aura-hero', 'aura-suites', 'aura-experiences', 'aura-booking', 'aura-info']) {
+      assert.ok(
+        caseStudyTsx.includes(`id="${sectionId}"`),
+        `CaseStudyClient.tsx must include #${sectionId} hotel section`
+      );
+    }
+  });
 });
