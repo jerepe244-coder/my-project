@@ -12,6 +12,7 @@ import { GastronomyDemo } from '@/components/demos/GastronomyDemo';
 import { KonRestaurantExperience } from '@/components/case-study/KonRestaurantExperience';
 import { ArchitectureDemo } from '@/components/demos/ArchitectureDemo';
 import { MonolithArchitectureExperience } from '@/components/case-study/MonolithArchitectureExperience';
+import { SomaCommerceExperience } from '@/components/case-study/SomaCommerceExperience';
 import { EcommerceDemo } from '@/components/demos/EcommerceDemo';
 import {
   ArrowLeft,
@@ -599,6 +600,11 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
   const isMonolith = project.slug === 'vectra-architects';
   if (isMonolith) {
     return <MonolithArchitectureExperience project={project} />;
+  }
+
+  const isSoma = project.slug === 'soma-formulations';
+  if (isSoma) {
+    return <SomaCommerceExperience project={project} />;
   }
 
   const renderDemo = () => {

@@ -271,11 +271,12 @@ export const projects: ProjectDetail[] = [
     isConcept: true,
     year: '2025',
     featured: false,
-    coverImage: '/images/soma-cover.webp',
+    coverImage: '/images/soma-hero-editorial.webp',
     galleryImages: [
-      '/images/soma-cover.webp',
-      '/images/soma-detail-1.webp',
-      '/images/soma-detail-2.webp',
+      '/images/soma-hero-editorial.webp',
+      '/images/soma-product-01.webp',
+      '/images/soma-product-02.webp',
+      '/images/soma-product-03.webp',
     ],
     clientContext: {
       es: 'Concepto desarrollado para una marca de cosmética bioactiva y cuidado celular de autor. Busca trascender las tiendas online convencionales saturadas de pop-ups y agresividad promocional, creando un catálogo táctil de ritmo editorial con foco en ingredientes puros y formulación científica.',

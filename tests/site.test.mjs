@@ -293,4 +293,68 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       );
     }
   });
+
+  test('SŌMA Formulations luxury e-commerce experience defines products, images, variants, and store sections', async () => {
+    const {
+      SOMA_PRODUCTS,
+      SOMA_STUDIO_META,
+    } = await import('../src/data/commerce.ts');
+
+    assert.equal(SOMA_STUDIO_META.name, 'SŌMA FORMULATIONS', 'Must preserve brand name');
+    assert.equal(SOMA_STUDIO_META.pillars.length, 4, 'Must define 4 formulation pillars');
+    assert.equal(SOMA_PRODUCTS.length, 6, 'Must define 6 cellular skincare products');
+
+    // Verify all images referenced by SŌMA exist on disk and are optimized WebPs
+    const requiredSomaImages = [
+      '/images/soma-hero-editorial.webp',
+      '/images/soma-product-01.webp',
+      '/images/soma-product-02.webp',
+      '/images/soma-product-03.webp',
+      '/images/soma-product-04.webp',
+      '/images/soma-product-05.webp',
+      '/images/soma-product-06.webp',
+      '/images/soma-lifestyle-ritual.webp',
+      '/images/soma-botanical-lab.webp',
+      '/images/soma-vessel-miron.webp',
+    ];
+
+    for (const imgPath of requiredSomaImages) {
+      const diskPath = path.join(process.cwd(), 'public', imgPath.replace(/^\//, ''));
+      assert.ok(fs.existsSync(diskPath), `SŌMA image asset missing on disk: ${imgPath}`);
+      const stats = fs.statSync(diskPath);
+      assert.ok(stats.size > 20000, `SŌMA image asset is too small: ${imgPath}`);
+    }
+
+    // Verify each product has bilingual details, pricing, variants, and actives
+    for (const prod of SOMA_PRODUCTS) {
+      assert.ok(prod.title.es && prod.title.en, `Product ${prod.id} missing bilingual title`);
+      assert.ok(prod.tagline.es && prod.tagline.en, `Product ${prod.id} missing tagline`);
+      assert.ok(prod.description.es && prod.description.en, `Product ${prod.id} missing description`);
+      assert.ok(prod.basePrice > 0, `Product ${prod.id} base price must be positive`);
+      assert.ok(prod.sizes.length >= 2, `Product ${prod.id} must have at least 2 size variants`);
+      assert.ok(prod.vessels.length >= 2, `Product ${prod.id} must offer glass and refill vessels`);
+      assert.ok(prod.actives.length >= 2, `Product ${prod.id} must declare active ingredients`);
+      assert.ok(prod.sensory.texture.es && prod.sensory.texture.en, `Product ${prod.id} missing texture`);
+      assert.ok(prod.sensory.origin.es && prod.sensory.origin.en, `Product ${prod.id} missing origin`);
+    }
+
+    // Verify store sections in SomaCommerceExperience.tsx
+    const somaComponentTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'SomaCommerceExperience.tsx'),
+      'utf-8'
+    );
+    for (const sectionId of [
+      'soma-hero',
+      'soma-philosophy',
+      'soma-catalog',
+      'soma-science',
+      'soma-rituals',
+      'soma-footer',
+    ]) {
+      assert.ok(
+        somaComponentTsx.includes(`id="${sectionId}"`),
+        `SomaCommerceExperience.tsx must include #${sectionId} store section`
+      );
+    }
+  });
 });
