@@ -87,6 +87,13 @@ export const ContactForm: React.FC = () => {
           { id: 'high-res-gallery', label: { es: 'Galería editorial de alta resolución', en: 'High-res editorial spatial gallery' } },
           { id: 'spec-sheet-download', label: { es: 'Descarga de fichas de proyecto', en: 'Project spec-sheet downloads' } },
         ];
+      case 'ecommerce':
+        return [
+          { id: 'reactive-catalog', label: { es: 'Catálogo reactivo con variantes y filtros', en: 'Reactive catalog with variants & filters' } },
+          { id: 'cart-drawer', label: { es: 'Carrito y flujo de checkout a medida', en: 'Bespoke cart drawer & checkout flow' } },
+          { id: 'product-specs', label: { es: 'Fichas editoriales e ingredientes/especificaciones', en: 'Editorial product & formula spec sheets' } },
+          { id: 'payment-logistics', label: { es: 'Integración de pasarelas y logística', en: 'Payment gateway & shipping integration' } },
+        ];
       default:
         return [
           { id: 'bespoke-interactions', label: { es: 'Microinteracciones personalizadas', en: 'Custom micro-interactions' } },
@@ -294,25 +301,29 @@ export const ContactForm: React.FC = () => {
         ) : (
           <div>
             {/* Step Progress Indicator Bar */}
-            <div className="mb-10 pb-6 border-b border-zy-border-card">
-              <div className="flex items-center justify-between text-xs font-mono text-zy-muted mb-3">
+            <div className="mb-10 pb-6 border-b border-zy-border-card space-y-4">
+              <div className="flex items-center justify-between text-xs font-mono text-zy-muted">
                 <span className="text-zy-fg font-semibold">
                   {step === 1 && t.step1Title}
                   {step === 2 && t.step2Title}
                   {step === 3 && t.step3Title}
                   {step === 4 && t.stepReviewTitle}
                 </span>
-                <span className="text-zy-blue">
-                  {language === 'es' ? `Etapa 0${step} de 04` : `Stage 0${step} of 04`}
+                <span className="text-zy-blue font-semibold">
+                  {language === 'es' ? `ETAPA 0${step} // 04` : `STAGE 0${step} // 04`}
                 </span>
               </div>
 
-              {/* Progress track */}
-              <div className="w-full h-1.5 bg-zy-surface rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-zy-blue transition-all duration-300 ease-out"
-                  style={{ width: `${(step / 4) * 100}%` }}
-                />
+              {/* Architectural 4-stage visual track */}
+              <div className="grid grid-cols-4 gap-2" aria-hidden="true">
+                {[1, 2, 3, 4].map((s) => (
+                  <div
+                    key={s}
+                    className={`h-1.5 rounded-full transition-colors duration-300 ${
+                      s <= step ? 'bg-zy-blue' : 'bg-zy-surface border border-zy-border-subtle'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
 
@@ -757,7 +768,11 @@ export const ContactForm: React.FC = () => {
                         <span className="font-mono text-zy-blue font-semibold block">
                           02. {language === 'es' ? 'Proyecto' : 'Project'}
                         </span>
-                        <p className="text-zy-fg font-medium uppercase font-mono">{formData.projectType}</p>
+                        <p className="text-zy-fg font-medium font-mono">
+                          {t.fields.projectTypeOptions[
+                            formData.projectType as keyof typeof t.fields.projectTypeOptions
+                          ] || formData.projectType}
+                        </p>
                         <p className="text-zy-fg-secondary font-sans">{formData.mainGoal}</p>
                         <p className="text-zy-muted line-clamp-2">{formData.projectDescription}</p>
                         {formData.features.length > 0 && (
@@ -787,10 +802,16 @@ export const ContactForm: React.FC = () => {
                           03. {language === 'es' ? 'Alcance' : 'Scope'}
                         </span>
                         <p className="text-zy-fg font-mono">
-                          {language === 'es' ? 'Inversión:' : 'Budget:'} {formData.budgetRange}
+                          {language === 'es' ? 'Inversión:' : 'Budget:'}{' '}
+                          {t.fields.budgetOptions[
+                            formData.budgetRange as keyof typeof t.fields.budgetOptions
+                          ] || formData.budgetRange}
                         </p>
                         <p className="text-zy-muted font-mono">
-                          {language === 'es' ? 'Plazo:' : 'Timeline:'} {formData.timeline}
+                          {language === 'es' ? 'Plazo:' : 'Timeline:'}{' '}
+                          {t.fields.timelineOptions[
+                            formData.timeline as keyof typeof t.fields.timelineOptions
+                          ] || formData.timeline}
                         </p>
                       </div>
                       <button
@@ -813,20 +834,24 @@ export const ContactForm: React.FC = () => {
                     type="button"
                     onClick={prevStep}
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-zy-surface hover:bg-zy-surface-hover border border-zy-border text-xs font-mono text-zy-muted hover:text-zy-fg transition-colors"
+                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-zy-surface hover:bg-zy-surface-hover border border-zy-border text-xs font-mono text-zy-muted hover:text-zy-fg transition-colors"
                   >
                     <ArrowLeft size={13} />
                     <span>{t.buttons.back}</span>
                   </button>
                 ) : (
-                  <div />
+                  <div className="text-[11px] font-mono text-zy-dim hidden sm:block">
+                    {language === 'es'
+                      ? '// CONFIDENCIALIDAD GARANTIZADA'
+                      : '// STRICT CONFIDENTIALITY'}
+                  </div>
                 )}
 
                 {step < 4 ? (
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-full bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-medium font-sans tracking-wide transition-all shadow-[0_0_15px_rgba(10,92,255,0.35)]"
+                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-mono font-medium tracking-wider transition-all shadow-[0_0_18px_rgba(10,92,255,0.3)]"
                   >
                     <span>{t.buttons.next}</span>
                     <ArrowRight size={14} />
@@ -835,7 +860,7 @@ export const ContactForm: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-full bg-zy-blue hover:bg-zy-blue-hover disabled:bg-zy-control text-white text-xs font-medium font-sans tracking-wide transition-all shadow-[0_0_20px_rgba(10,92,255,0.4)] disabled:opacity-50"
+                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover disabled:bg-zy-control text-white text-xs font-mono font-medium tracking-wider transition-all shadow-[0_0_20px_rgba(10,92,255,0.38)] disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
@@ -854,6 +879,22 @@ export const ContactForm: React.FC = () => {
             </form>
           </div>
         )}
+      </div>
+
+      {/* Direct Email Alternative Bar */}
+      <div className="mt-6 px-4 py-3.5 rounded-xl bg-zy-bg-elevated border border-zy-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-mono text-zy-dim">
+        <span>
+          {language === 'es'
+            ? '¿Preferís escribirnos directamente sin completar el brief?'
+            : 'Prefer to write directly without filling out the progressive brief?'}
+        </span>
+        <a
+          href="mailto:zyrvae.co@gmail.com"
+          className="inline-flex items-center space-x-1.5 text-zy-fg-secondary hover:text-zy-blue transition-colors font-medium"
+        >
+          <Mail size={13} className="text-zy-blue" />
+          <span>zyrvae.co@gmail.com ↗</span>
+        </a>
       </div>
     </section>
   );

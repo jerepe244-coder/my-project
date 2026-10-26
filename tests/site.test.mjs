@@ -357,4 +357,31 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       );
     }
   });
+
+  test('Home page sections, geometric monogram blueprint, portfolio demo links, and reduced-motion support', () => {
+    const heroTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Hero.tsx'),
+      'utf-8'
+    );
+    assert.ok(heroTsx.includes('showBlueprint={true}'), 'Hero must render geometric monogram with blueprint framing');
+    assert.ok(heroTsx.includes('useReducedMotion'), 'Hero must respect prefers-reduced-motion');
+    for (const slug of ['aura-sanctuary', 'kon-atelier', 'vectra-architects', 'soma-formulations']) {
+      assert.ok(heroTsx.includes(slug), `Hero specimen index must link to ${slug}`);
+    }
+
+    const portfolioTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Portfolio.tsx'),
+      'utf-8'
+    );
+    for (const anchor of ['aura-booking', 'kon-menu', 'monolith-study', 'soma-catalog']) {
+      assert.ok(
+        portfolioTsx.includes(anchor),
+        `Portfolio must provide direct functional link to interactive demo anchor #${anchor}`
+      );
+    }
+    assert.ok(
+      portfolioTsx.includes('expandedSpecSlug'),
+      'Portfolio must allow inspecting case study specifications and context'
+    );
+  });
 });

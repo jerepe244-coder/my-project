@@ -8,24 +8,19 @@ export const CustomCursor: React.FC = () => {
   const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [cursorText, setCursorText] = useState('');
-  const [isEnabled, setIsEnabled] = useState(false);
 
   const springConfig = { damping: 28, stiffness: 350, mass: 0.5 };
   const cursorX = useSpring(-100, springConfig);
   const cursorY = useSpring(-100, springConfig);
 
   useEffect(() => {
-    // Only enable on desktop with fine pointer and no reduced-motion preference
     if (typeof window === 'undefined') return;
     const finePointer = window.matchMedia('(pointer: fine)').matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!finePointer || reducedMotion) {
-      setIsEnabled(false);
       return;
     }
-
-    setIsEnabled(true);
 
     const handleMouseMove = (e: MouseEvent) => {
       cursorX.set(e.clientX);
@@ -56,7 +51,7 @@ export const CustomCursor: React.FC = () => {
     };
   }, [cursorX, cursorY, language]);
 
-  if (!isEnabled || !isVisible) return null;
+  if (!isVisible) return null;
 
   return (
     <motion.div

@@ -15,13 +15,15 @@ export const IntroAnimation: React.FC = () => {
       const seen = sessionStorage.getItem('zyrvae_intro_seen');
 
       if (!seen && !reducedMotion) {
-        setShowIntro(true);
         sessionStorage.setItem('zyrvae_intro_seen', 'true');
+        const rafId = window.requestAnimationFrame(() => {
+          setShowIntro(true);
+        });
 
-        // Concise 1.2s total presentation to keep it crisp and respectful of user time
+        // Concise 1.15s total presentation to keep it crisp and respectful of user time
         const timer = setTimeout(() => {
           setShowIntro(false);
-        }, 1200);
+        }, 1150);
 
         const handleKeyDown = (e: KeyboardEvent) => {
           if (e.key === 'Escape') {
@@ -32,12 +34,13 @@ export const IntroAnimation: React.FC = () => {
         window.addEventListener('keydown', handleKeyDown);
 
         return () => {
+          window.cancelAnimationFrame(rafId);
           clearTimeout(timer);
           window.removeEventListener('keydown', handleKeyDown);
         };
       }
     } catch {
-      setShowIntro(false);
+      // Ignore storage access errors
     }
   }, []);
 
@@ -52,18 +55,18 @@ export const IntroAnimation: React.FC = () => {
           key="intro-curtain"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
           onClick={handleDismiss}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-zy-bg cursor-pointer select-none"
           aria-live="polite"
           aria-label="Cargando ZYRVAE Digital Studio"
         >
           <div className="flex flex-col items-center space-y-5">
-            <SymbolLogo size={56} animate={true} showPlate={false} />
+            <SymbolLogo size={60} animate={true} showPlate={false} showBlueprint={true} />
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.42, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
               className="text-center"
             >
               <Wordmark showDescriptor={true} className="items-center" />
@@ -73,7 +76,7 @@ export const IntroAnimation: React.FC = () => {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.6 }}
-            transition={{ delay: 0.6 }}
+            transition={{ delay: 0.55 }}
             className="absolute bottom-8 font-mono text-[10px] tracking-widest text-zy-muted uppercase"
           >
             [ ESC // TAP TO ENTER ]

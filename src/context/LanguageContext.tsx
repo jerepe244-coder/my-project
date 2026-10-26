@@ -1,7 +1,10 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useSyncExternalStore } from 'react';
 import { Language } from '@/types';
+
+const LANG_STORAGE_KEY = 'zyrvae_lang';
+const LANG_CHANGE_EVENT = 'zyrvae-lang-change';
 
 interface LanguageContextType {
   language: Language;
@@ -12,39 +15,90 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+let memoryLang: Language | null = null;
+let isClientHydrated = false;
+
+function resolveClientLanguage(): Language {
+  if (typeof window === 'undefined' || !isClientHydrated) return 'es';
+  try {
+    const saved = localStorage.getItem(LANG_STORAGE_KEY);
+    if (saved === 'es' || saved === 'en') {
+      memoryLang = saved;
+      return saved;
+    }
+    if (memoryLang === 'es' || memoryLang === 'en') {
+      return memoryLang;
+    }
+    const browserLang = navigator.language.toLowerCase();
+    if (browserLang.startsWith('en')) {
+      return 'en';
+    }
+  } catch {
+    if (memoryLang) return memoryLang;
+  }
+  return 'es';
+}
+
+function subscribeToLanguage(onStoreChange: () => void): () => void {
+  if (typeof window === 'undefined') return () => {};
+
+  let rafId: number | null = null;
+  if (!isClientHydrated) {
+    rafId = window.requestAnimationFrame(() => {
+      isClientHydrated = true;
+      onStoreChange();
+    });
+  }
+
+  const handleCustomChange = () => onStoreChange();
+  const handleStorage = (e: StorageEvent) => {
+    if (e.key === LANG_STORAGE_KEY) {
+      if (e.newValue === 'es' || e.newValue === 'en') {
+        memoryLang = e.newValue;
+      } else {
+        memoryLang = null;
+      }
+      onStoreChange();
+    }
+  };
+
+  window.addEventListener(LANG_CHANGE_EVENT, handleCustomChange);
+  window.addEventListener('storage', handleStorage);
+
+  return () => {
+    if (rafId !== null) window.cancelAnimationFrame(rafId);
+    window.removeEventListener(LANG_CHANGE_EVENT, handleCustomChange);
+    window.removeEventListener('storage', handleStorage);
+  };
+}
+
+function getServerLanguageSnapshot(): Language {
+  return 'es';
+}
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('es');
-  const [isLoaded, setIsLoaded] = useState(false);
+  const language = useSyncExternalStore(
+    subscribeToLanguage,
+    resolveClientLanguage,
+    getServerLanguageSnapshot
+  );
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('zyrvae_lang');
-      if (saved === 'es' || saved === 'en') {
-        setLanguageState(saved);
-      } else {
-        // Initial detection from browser language
-        const browserLang = navigator.language.toLowerCase();
-        if (browserLang.startsWith('en')) {
-          setLanguageState('en');
-        } else {
-          setLanguageState('es');
-        }
-      }
-    } catch {
-      // Fallback to es
-      setLanguageState('es');
-    } finally {
-      setIsLoaded(true);
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = language;
     }
-  }, []);
+  }, [language]);
 
   const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
+    memoryLang = lang;
     try {
-      localStorage.setItem('zyrvae_lang', lang);
+      localStorage.setItem(LANG_STORAGE_KEY, lang);
       document.documentElement.lang = lang;
     } catch {
       // Storage unavailable
+    }
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event(LANG_CHANGE_EVENT));
     }
   };
 
@@ -53,7 +107,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, isLoaded }}>
+    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, isLoaded: true }}>
       {children}
     </LanguageContext.Provider>
   );

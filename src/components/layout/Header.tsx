@@ -19,6 +19,7 @@ export const Header: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
 
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
@@ -29,20 +30,19 @@ export const Header: React.FC = () => {
 
       if (!ticking.current) {
         window.requestAnimationFrame(() => {
-          // If close to top, show header and don't compact heavily
           if (currentScrollY < 60) {
             setIsVisible(true);
             setIsScrolled(false);
+            if (currentScrollY < 200) {
+              setActiveSection('');
+            }
           } else {
             setIsScrolled(true);
 
-            // Threshold hysteresis to avoid flicker: require at least 10px scroll delta
             const delta = currentScrollY - lastScrollY.current;
             if (delta > 15) {
-              // Scrolling down
               setIsVisible(false);
             } else if (delta < -15) {
-              // Scrolling up
               setIsVisible(true);
             }
           }
@@ -57,6 +57,32 @@ export const Header: React.FC = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Track active section on Home page
+  useEffect(() => {
+    if (pathname !== '/') return;
+
+    const sectionIds = ['work', 'services', 'process', 'studio', 'faq', 'contact'];
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (elements.length === 0 || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: '-25% 0px -55% 0px', threshold: 0.05 }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [pathname]);
 
   // Lock background scroll only when mobile menu is open
   useEffect(() => {
@@ -78,11 +104,11 @@ export const Header: React.FC = () => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { href: '/#work', label: t.work },
-    { href: '/#services', label: t.services },
-    { href: '/#process', label: t.process },
-    { href: '/#studio', label: t.studio },
-    { href: '/#faq', label: t.faq },
+    { id: 'work', href: '/#work', label: t.work },
+    { id: 'services', href: '/#services', label: t.services },
+    { id: 'process', href: '/#process', label: t.process },
+    { id: 'studio', href: '/#studio', label: t.studio },
+    { id: 'faq', href: '/#faq', label: t.faq },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -92,7 +118,8 @@ export const Header: React.FC = () => {
       const element = document.getElementById(targetId);
       if (element) {
         e.preventDefault();
-        element.scrollIntoView({ behavior: 'smooth' });
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        element.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
       }
     }
   };
@@ -138,17 +165,25 @@ export const Header: React.FC = () => {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-6 lg:space-x-7" aria-label="Main Navigation">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className="text-xs font-sans font-medium text-zy-muted hover:text-zy-fg transition-colors duration-200 outline-none focus-visible:text-zy-fg focus-visible:ring-1 focus-visible:ring-zy-blue rounded px-1"
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <nav className="hidden md:flex items-center space-x-5 lg:space-x-7" aria-label="Main Navigation">
+              {navLinks.map((link) => {
+                const isActive = pathname === '/' && activeSection === link.id;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                    className={`inline-flex items-center space-x-1.5 text-xs font-sans font-medium transition-colors duration-200 outline-none focus-visible:text-zy-fg focus-visible:ring-1 focus-visible:ring-zy-blue rounded px-1.5 py-1 ${
+                      isActive ? 'text-zy-fg font-semibold' : 'text-zy-muted hover:text-zy-fg'
+                    }`}
+                  >
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-zy-blue" aria-hidden="true" />
+                    )}
+                    <span>{link.label}</span>
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Right Controls: Theme, Language & CTA */}
@@ -191,18 +226,18 @@ export const Header: React.FC = () => {
           aria-modal="true"
           aria-label="Mobile Navigation"
           style={{ backgroundColor: 'var(--zy-drawer-bg)' }}
-          className="fixed inset-0 z-30 md:hidden backdrop-blur-xl flex flex-col justify-between pt-24 pb-12 px-6"
+          className="fixed inset-0 z-30 md:hidden backdrop-blur-xl flex flex-col justify-between pt-24 pb-12 px-6 overflow-y-auto"
         >
-          <nav className="flex flex-col space-y-5" aria-label="Mobile Menu">
+          <nav className="flex flex-col space-y-4" aria-label="Mobile Menu">
             {navLinks.map((link, idx) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                className="flex items-center justify-between text-2xl font-sans font-medium text-zy-fg-soft hover:text-zy-blue transition-colors py-2 border-b border-zy-border-subtle"
+                className="flex items-center justify-between text-2xl font-sans font-medium text-zy-fg-soft hover:text-zy-blue transition-colors py-2.5 border-b border-zy-border-subtle"
               >
                 <span>{link.label}</span>
-                <span className="font-mono text-xs text-zy-dim">0{idx + 1}</span>
+                <span className="font-mono text-xs text-zy-blue">0{idx + 1}</span>
               </Link>
             ))}
           </nav>
@@ -216,7 +251,7 @@ export const Header: React.FC = () => {
             <Link
               href="/#contact"
               onClick={(e) => handleLinkClick(e, '/#contact')}
-              className="flex items-center justify-center space-x-2 w-full py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-sm font-medium tracking-wide shadow-[0_0_20px_rgba(10,92,255,0.4)]"
+              className="flex items-center justify-center space-x-2 w-full py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-sm font-mono font-medium tracking-wider shadow-[0_0_20px_rgba(10,92,255,0.35)]"
             >
               <span>{t.cta}</span>
               <ArrowUpRight size={16} />

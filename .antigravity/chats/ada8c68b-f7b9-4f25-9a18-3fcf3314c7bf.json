@@ -400,6 +400,18 @@
       "created_at": "2026-10-26T04:11:25.935Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "98131d2b-230e-4428-87af-4a811b86a690",
+      "role": "user",
+      "content": "ZYRVAE — FASE 6: REFINAMIENTO FINAL DE LA HOME\n\nRealizá la pasada final de dirección de arte, experiencia y calidad sobre la página principal de ZYRVAE. Inspeccioná primero la implementación actual y trabajá sobre ella, sin reconstruir el proyecto desde cero.\n\nObjetivo\n\nConseguir que la home esté a la altura visual de las demos aprobadas: sofisticada, distintiva, editorial y técnicamente sólida. Debe transmitir profesionalismo, precisión y confianza, además de convertir visitas en consultas comerciales.\n\nPrioridades\n\n1. Hero: perfeccioná la composición, el titular monumental, la jerarquía tipográfica y el símbolo geométrico de ZYRVAE. Conservá la identidad oscura con azul eléctrico controlado y blanco frío.\n2. Dirección visual: revisá todas las secciones buscando oportunidades concretas de mejorar composición, espaciado, contraste, tipografía e imágenes. Evitá elementos genéricos y decoración innecesaria.\n3. Portfolio: asegurá que los proyectos destacados tengan presencia visual, contexto claro y navegación funcional hacia sus demos y casos de estudio.\n4. Movimiento: pulí las animaciones existentes para que sean cinematográficas, precisas y breves. Conservá la entrada de marca si ya funciona; respetá prefers-reduced-motion.\n5. Conversión: verificá que los servicios, el proceso y los CTA expliquen claramente qué ofrece ZYRVAE y cómo iniciar un proyecto.\n6. Responsive y calidad: revisá escritorio, tablet y móvil; navegación, selector ES/EN, tema claro/oscuro, accesibilidad, rendimiento y enlaces.\n\nRestricciones\n\n* No modifiques ni rompas las demos aprobadas de AURA, Gastronomía, Arquitectura y SŌMA.\n* No cambies el posicionamiento ni la identidad de ZYRVAE.\n* No inventes clientes, testimonios, métricas, premios ni resultados.\n* No agregues efectos llamativos que perjudiquen la legibilidad o el rendimiento.\n* No cambies la configuración de Vercel ni crees otro proyecto.\n* No declares una funcionalidad verificada si no la probaste.\n\nVerificación y entrega\n\nEjecutá las comprobaciones disponibles, corregí los errores encontrados y verificá que las rutas existentes sigan funcionando. Al finalizar, informá los cambios realizados, las pruebas ejecutadas y cualquier pendiente real.\n\nTomá las decisiones visuales y técnicas por tu cuenta. Priorizá impacto visual, identidad propia, claridad comercial, accesibilidad y rendimiento. No te limites a describir mejoras: implementalas en el proyecto existente.",
+      "status": "pending",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-10-26T04:36:11.746Z",
+      "sender": "ios",
+      "is_cancelled": false
     }
   ]
 }
