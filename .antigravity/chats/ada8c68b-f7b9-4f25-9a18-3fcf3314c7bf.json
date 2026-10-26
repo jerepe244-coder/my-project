@@ -256,6 +256,30 @@
       "created_at": "2026-10-26T00:39:14.723Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "7e357613-4c9b-4c2b-a450-2f58962247e9",
+      "role": "user",
+      "content": "Mejorá la funcionalidad de AURA Sanctuary (/case-study/aura-sanctuary) sin modificar su estética.\n\nPrimero inspeccioná el selector de suites y el simulador existentes. Reutilizá su lógica y componentes; no dupliques funcionalidades.\n\nImplementá:\n\n* Huéspedes: selector de adultos con límites razonables y capacidad de la suite si está definida.\n* Suite: conectá la selección existente con el resumen y el cálculo del precio.\n* Extras: desayuno y spa opcionales, con precios demostrativos claros y reglas de cálculo consistentes.\n* Resumen dinámico: suite, adultos, extras, desglose y total actualizado automáticamente.\n\nReutilizá las fechas y duración existentes. No agregues calendario nuevo ni inventes noches, capacidades o tarifas reales.\n\nLímites: no cambies diseño, textos ajenos a esta función, animaciones ni otras páginas. No agregues pagos, disponibilidad real ni funciones extra. No hagas commits, pushes ni despliegues.\n\nVerificación: probá los cálculos, límites, selección de extras, versión móvil y ES/EN cuando sea posible. Al finalizar, informá archivos modificados, reglas de precios, pruebas ejecutadas y pendientes reales. No afirmes pruebas que no realizaste.",
+      "status": "cancelled",
+      "model": "gemini-4-argon-medium",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-10-26T01:05:40.547Z",
+      "sender": "ios",
+      "is_cancelled": true
+    },
+    {
+      "id": "546b1cb0-ce57-49d0-908f-58b7688d6668",
+      "role": "user",
+      "content": "Mejorá la funcionalidad de AURA Sanctuary (/case-study/aura-sanctuary) sin modificar su estética.\n\nPrimero inspeccioná el selector de suites y el simulador existentes. Reutilizá su lógica y componentes; no dupliques funcionalidades.\n\nImplementá:\n\n* Huéspedes: selector de adultos con límites razonables y capacidad de la suite si está definida.\n* Suite: conectá la selección existente con el resumen y el cálculo del precio.\n* Extras: desayuno y spa opcionales, con precios demostrativos claros y reglas de cálculo consistentes.\n* Resumen dinámico: suite, adultos, extras, desglose y total actualizado automáticamente.\n\nReutilizá las fechas y duración existentes. No agregues calendario nuevo ni inventes noches, capacidades o tarifas reales.\n\nLímites: no cambies diseño, textos ajenos a esta función, animaciones ni otras páginas. No agregues pagos, disponibilidad real ni funciones extra. No hagas commits, pushes ni despliegues.\n\nVerificación: probá los cálculos, límites, selección de extras, versión móvil y ES/EN cuando sea posible. Al finalizar, informá archivos modificados, reglas de precios, pruebas ejecutadas y pendientes reales. No afirmes pruebas que no realizaste.",
+      "status": "pending",
+      "model": "gemini-4-argon-medium",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-10-26T01:13:51.243Z",
+      "sender": "ios",
+      "is_cancelled": false
     }
   ]
 }

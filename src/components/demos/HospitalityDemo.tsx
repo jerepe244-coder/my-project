@@ -10,9 +10,21 @@ export const HospitalityDemo: React.FC = () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [nights, setNights] = useState(3);
   const [guests, setGuests] = useState(2);
+  const [extras, setExtras] = useState<{ breakfast: boolean; spa: boolean }>({
+    breakfast: false,
+    spa: false,
+  });
   const [demoSubmitted, setDemoSubmitted] = useState(false);
 
-  const suites = [
+  const suites: {
+    id: string;
+    name: { es: string; en: string };
+    area: string;
+    view: { es: string; en: string };
+    baseRate: number;
+    capacity?: number;
+    amenities: { es: string; en: string }[];
+  }[] = [
     {
       id: 'panoramic',
       name: { es: 'Refugio Panorámico', en: 'Panoramic Shelter' },
@@ -54,8 +66,43 @@ export const HospitalityDemo: React.FC = () => {
     },
   ];
 
-  const current = suites[selectedSuite];
-  const totalPrice = current.baseRate * nights;
+  const EXTRA_RATES = {
+    breakfastPerAdultNight: 35,
+    spaPerAdultStay: 85,
+  };
+
+  const current = suites[selectedSuite] ?? suites[0];
+  const minAdults = 1;
+  const maxAdults = current.capacity ?? 4;
+  const activeAdults = Math.min(Math.max(guests, minAdults), maxAdults);
+
+  const suiteSubtotal = current.baseRate * nights;
+  const breakfastSubtotal = extras.breakfast
+    ? EXTRA_RATES.breakfastPerAdultNight * activeAdults * nights
+    : 0;
+  const spaSubtotal = extras.spa ? EXTRA_RATES.spaPerAdultStay * activeAdults : 0;
+  const extrasSubtotal = breakfastSubtotal + spaSubtotal;
+  const totalPrice = suiteSubtotal + extrasSubtotal;
+
+  const toggleExtra = (key: 'breakfast' | 'spa') => {
+    setExtras((prev) => ({ ...prev, [key]: !prev[key] }));
+    setDemoSubmitted(false);
+  };
+
+  const selectedExtrasLabels = [
+    extras.breakfast ? (language === 'es' ? 'Desayuno' : 'Breakfast') : null,
+    extras.spa ? 'Spa' : null,
+  ].filter(Boolean) as string[];
+
+  const adultsLabel =
+    language === 'es'
+      ? `${activeAdults} ${activeAdults === 1 ? 'adulto' : 'adultos'}`
+      : `${activeAdults} ${activeAdults === 1 ? 'adult' : 'adults'}`;
+
+  const nightsLabel =
+    language === 'es'
+      ? `${nights} ${nights === 1 ? 'noche' : 'noches'}`
+      : `${nights} ${nights === 1 ? 'night' : 'nights'}`;
 
   const handleBookingSim = (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,7 +133,10 @@ export const HospitalityDemo: React.FC = () => {
               key={suite.id}
               type="button"
               onClick={() => {
+                const nextSuite = suites[idx] ?? suites[0];
+                const nextMax = nextSuite.capacity ?? 4;
                 setSelectedSuite(idx);
+                setGuests((prev) => Math.min(Math.max(prev, minAdults), nextMax));
                 setDemoSubmitted(false);
               }}
               className={`px-4 py-2 rounded-lg text-xs font-mono transition-all ${
@@ -153,15 +203,24 @@ export const HospitalityDemo: React.FC = () => {
                   <div className="flex items-center space-x-2">
                     <button
                       type="button"
-                      onClick={() => setNights(Math.max(1, nights - 1))}
-                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c]"
+                      disabled={nights <= 1}
+                      aria-label={language === 'es' ? 'Disminuir noches' : 'Decrease nights'}
+                      onClick={() => {
+                        setNights((prev) => Math.max(1, prev - 1));
+                        setDemoSubmitted(false);
+                      }}
+                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c] disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       -
                     </button>
-                    <span className="font-mono text-white font-semibold">{nights}</span>
+                    <span className="font-mono text-white font-semibold w-4 text-center">{nights}</span>
                     <button
                       type="button"
-                      onClick={() => setNights(nights + 1)}
+                      aria-label={language === 'es' ? 'Aumentar noches' : 'Increase nights'}
+                      onClick={() => {
+                        setNights((prev) => prev + 1);
+                        setDemoSubmitted(false);
+                      }}
                       className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c]"
                     >
                       +
@@ -172,31 +231,172 @@ export const HospitalityDemo: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <span className="flex items-center space-x-1.5 text-[#8b92a5]">
                     <Users size={13} />
-                    <span>{language === 'es' ? 'Huéspedes:' : 'Guests:'}</span>
+                    <span>
+                      {language === 'es' ? 'Adultos:' : 'Adults:'}{' '}
+                      <span className="text-[10px] font-mono text-[#515768]">
+                        ({language === 'es' ? `máx. ${maxAdults}` : `max. ${maxAdults}`})
+                      </span>
+                    </span>
                   </span>
                   <div className="flex items-center space-x-2">
                     <button
                       type="button"
-                      onClick={() => setGuests(Math.max(1, guests - 1))}
-                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c]"
+                      disabled={activeAdults <= minAdults}
+                      aria-label={language === 'es' ? 'Disminuir adultos' : 'Decrease adults'}
+                      onClick={() => {
+                        setGuests((prev) => Math.max(minAdults, prev - 1));
+                        setDemoSubmitted(false);
+                      }}
+                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c] disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       -
                     </button>
-                    <span className="font-mono text-white font-semibold">{guests}</span>
+                    <span className="font-mono text-white font-semibold w-4 text-center">{activeAdults}</span>
                     <button
                       type="button"
-                      onClick={() => setGuests(Math.min(4, guests + 1))}
-                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c]"
+                      disabled={activeAdults >= maxAdults}
+                      aria-label={language === 'es' ? 'Aumentar adultos' : 'Increase adults'}
+                      onClick={() => {
+                        setGuests((prev) => Math.min(maxAdults, prev + 1));
+                        setDemoSubmitted(false);
+                      }}
+                      className="w-6 h-6 rounded bg-[#1c222e] text-white flex items-center justify-center font-mono hover:bg-[#252c3c] disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       +
                     </button>
                   </div>
                 </div>
               </div>
+
+              {/* Optional Extras Selector */}
+              <div className="mt-4 pt-4 border-t border-[#1a1f29] space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#515768] block">
+                  {language === 'es' ? 'Extras opcionales (demo)' : 'Optional extras (demo)'}
+                </span>
+
+                <button
+                  type="button"
+                  aria-pressed={extras.breakfast}
+                  onClick={() => toggleExtra('breakfast')}
+                  className={`w-full p-2.5 rounded-lg border text-left transition-all flex items-center justify-between gap-2 text-xs ${
+                    extras.breakfast
+                      ? 'bg-[#151d2b] border-[#0a5cff] text-white'
+                      : 'bg-[#0e1118] border-[#1a1f29] text-[#8b92a5] hover:border-[#252c3c] hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2 min-w-0">
+                    <span
+                      className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
+                        extras.breakfast
+                          ? 'bg-[#0a5cff] border-[#0a5cff] text-white'
+                          : 'border-[#2b3344] bg-[#12161f]'
+                      }`}
+                    >
+                      {extras.breakfast && <Check size={11} />}
+                    </span>
+                    <div className="truncate">
+                      <span className="font-medium block truncate">
+                        {language === 'es' ? 'Desayuno' : 'Breakfast'}
+                      </span>
+                      <span className="text-[10px] font-mono text-[#8b92a5] block">
+                        ${EXTRA_RATES.breakfastPerAdultNight}{' '}
+                        {language === 'es' ? '/ adulto · noche' : '/ adult · night'}
+                      </span>
+                    </div>
+                  </div>
+                  <span className="font-mono text-[11px] text-[#cbd4e6] shrink-0">
+                    +${EXTRA_RATES.breakfastPerAdultNight * activeAdults * nights}
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  aria-pressed={extras.spa}
+                  onClick={() => toggleExtra('spa')}
+                  className={`w-full p-2.5 rounded-lg border text-left transition-all flex items-center justify-between gap-2 text-xs ${
+                    extras.spa
+                      ? 'bg-[#151d2b] border-[#0a5cff] text-white'
+                      : 'bg-[#0e1118] border-[#1a1f29] text-[#8b92a5] hover:border-[#252c3c] hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2 min-w-0">
+                    <span
+                      className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
+                        extras.spa
+                          ? 'bg-[#0a5cff] border-[#0a5cff] text-white'
+                          : 'border-[#2b3344] bg-[#12161f]'
+                      }`}
+                    >
+                      {extras.spa && <Check size={11} />}
+                    </span>
+                    <div className="truncate">
+                      <span className="font-medium block truncate">
+                        {language === 'es' ? 'Spa termal' : 'Thermal spa'}
+                      </span>
+                      <span className="text-[10px] font-mono text-[#8b92a5] block">
+                        ${EXTRA_RATES.spaPerAdultStay}{' '}
+                        {language === 'es' ? '/ adulto · estadía' : '/ adult · stay'}
+                      </span>
+                    </div>
+                  </div>
+                  <span className="font-mono text-[11px] text-[#cbd4e6] shrink-0">
+                    +${EXTRA_RATES.spaPerAdultStay * activeAdults}
+                  </span>
+                </button>
+              </div>
             </div>
 
-            <div className="pt-4 border-t border-[#1a1f29]">
-              <div className="flex justify-between items-baseline mb-3">
+            {/* Dynamic Summary & Breakdown */}
+            <div className="pt-4 border-t border-[#1a1f29] space-y-3">
+              <div className="p-3 rounded-lg bg-[#0e1118] border border-[#1a1f29] text-[11px] font-mono space-y-1.5">
+                <div className="flex justify-between gap-2">
+                  <span className="text-[#8b92a5]">{language === 'es' ? 'Suite:' : 'Suite:'}</span>
+                  <span className="text-white font-semibold text-right">{current.name[language]}</span>
+                </div>
+                <div className="flex justify-between gap-2">
+                  <span className="text-[#8b92a5]">{language === 'es' ? 'Huéspedes:' : 'Guests:'}</span>
+                  <span className="text-white text-right">
+                    {adultsLabel} · {nightsLabel}
+                  </span>
+                </div>
+                <div className="flex justify-between gap-2">
+                  <span className="text-[#8b92a5]">{language === 'es' ? 'Extras:' : 'Extras:'}</span>
+                  <span className="text-[#cbd4e6] text-right">
+                    {selectedExtrasLabels.length > 0
+                      ? selectedExtrasLabels.join(', ')
+                      : language === 'es'
+                        ? 'Ninguno'
+                        : 'None'}
+                  </span>
+                </div>
+
+                <div className="pt-1.5 mt-1.5 border-t border-[#1a1f29] space-y-1">
+                  <div className="flex justify-between text-[#8b92a5]">
+                    <span>
+                      {language === 'es' ? 'Suite' : 'Suite'} (${current.baseRate} × {nights}n)
+                    </span>
+                    <span className="text-[#cbd4e6]">${suiteSubtotal} USD</span>
+                  </div>
+                  {extras.breakfast && (
+                    <div className="flex justify-between text-[#8b92a5]">
+                      <span>
+                        {language === 'es' ? 'Desayuno' : 'Breakfast'} (${EXTRA_RATES.breakfastPerAdultNight} × {activeAdults} × {nights}n)
+                      </span>
+                      <span className="text-[#cbd4e6]">+${breakfastSubtotal} USD</span>
+                    </div>
+                  )}
+                  {extras.spa && (
+                    <div className="flex justify-between text-[#8b92a5]">
+                      <span>
+                        {language === 'es' ? 'Spa termal' : 'Thermal spa'} (${EXTRA_RATES.spaPerAdultStay} × {activeAdults})
+                      </span>
+                      <span className="text-[#cbd4e6]">+${spaSubtotal} USD</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-between items-baseline">
                 <span className="text-xs text-[#8b92a5]">{language === 'es' ? 'Total estimado:' : 'Estimated total:'}</span>
                 <span className="text-xl font-bold text-white font-sans">${totalPrice} USD</span>
               </div>
@@ -240,17 +440,55 @@ export const HospitalityDemo: React.FC = () => {
                   {language === 'es' ? 'Solicitar estadía en' : 'Inquire stay at'} {current.name[language]}
                 </h3>
 
-                <div className="p-3 bg-[#151922] rounded-lg border border-[#1e2430] text-xs font-mono space-y-1">
+                <div className="p-3 bg-[#151922] rounded-lg border border-[#1e2430] text-xs font-mono space-y-1.5">
+                  <div className="flex justify-between">
+                    <span className="text-[#8b92a5]">{language === 'es' ? 'Suite:' : 'Suite:'}</span>
+                    <span className="text-white font-semibold">{current.name[language]}</span>
+                  </div>
                   <div className="flex justify-between">
                     <span className="text-[#8b92a5]">{language === 'es' ? 'Duración:' : 'Length:'}</span>
-                    <span>{nights} {language === 'es' ? 'noches' : 'nights'}</span>
+                    <span>{nightsLabel}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#8b92a5]">{language === 'es' ? 'Huéspedes:' : 'Guests:'}</span>
-                    <span>{guests}</span>
+                    <span>{adultsLabel}</span>
                   </div>
-                  <div className="flex justify-between text-[#0a5cff] font-semibold pt-1 border-t border-[#202735]">
-                    <span>{language === 'es' ? 'Presupuesto base:' : 'Base budget:'}</span>
+                  <div className="flex justify-between">
+                    <span className="text-[#8b92a5]">{language === 'es' ? 'Extras:' : 'Extras:'}</span>
+                    <span>
+                      {selectedExtrasLabels.length > 0
+                        ? selectedExtrasLabels.join(', ')
+                        : language === 'es'
+                          ? 'Ninguno'
+                          : 'None'}
+                    </span>
+                  </div>
+                  <div className="pt-1.5 border-t border-[#202735] space-y-1 text-[11px]">
+                    <div className="flex justify-between text-[#8b92a5]">
+                      <span>
+                        {language === 'es' ? 'Alojamiento' : 'Stay'} (${current.baseRate} × {nights}n)
+                      </span>
+                      <span className="text-[#cbd4e6]">${suiteSubtotal} USD</span>
+                    </div>
+                    {extras.breakfast && (
+                      <div className="flex justify-between text-[#8b92a5]">
+                        <span>
+                          {language === 'es' ? 'Desayuno' : 'Breakfast'} (${EXTRA_RATES.breakfastPerAdultNight} × {activeAdults} × {nights}n)
+                        </span>
+                        <span className="text-[#cbd4e6]">+${breakfastSubtotal} USD</span>
+                      </div>
+                    )}
+                    {extras.spa && (
+                      <div className="flex justify-between text-[#8b92a5]">
+                        <span>
+                          {language === 'es' ? 'Spa termal' : 'Thermal spa'} (${EXTRA_RATES.spaPerAdultStay} × {activeAdults})
+                        </span>
+                        <span className="text-[#cbd4e6]">+${spaSubtotal} USD</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex justify-between text-[#0a5cff] font-semibold pt-1.5 border-t border-[#202735]">
+                    <span>{language === 'es' ? 'Total estimado:' : 'Estimated total:'}</span>
                     <span>${totalPrice} USD</span>
                   </div>
                 </div>
