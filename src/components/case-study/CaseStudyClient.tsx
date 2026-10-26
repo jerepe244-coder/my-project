@@ -19,6 +19,24 @@ interface CaseStudyClientProps {
 export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => {
   const { language } = useLanguage();
   const t = translations[language].caseStudy;
+  const isAura = project.slug === 'aura-sanctuary';
+
+  const auraGalleryCaptions = [
+    {
+      index: '01 // SPA & MATERIALITY',
+      title: {
+        es: 'Termas minerales de basalto y cedro natural',
+        en: 'Basalt mineral thermal bath & natural cedar',
+      },
+    },
+    {
+      index: '02 // SENSORY RITUAL',
+      title: {
+        es: 'Gastronomía botánica de estación en suite',
+        en: 'Seasonal botanical gastronomy in suite',
+      },
+    },
+  ];
 
   const renderDemo = () => {
     switch (project.demoType) {
@@ -50,51 +68,96 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
         </div>
 
         {/* Case Study Header & Honest Concept Notice */}
-        <header className="space-y-6">
+        <header className={isAura ? 'space-y-7' : 'space-y-6'}>
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#101216] border border-[#1e232d] text-xs font-mono text-[#cbd4e6]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#0a5cff]" />
             <span>{t.conceptNotice}</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-sans font-bold tracking-tight text-white">
+          <h1
+            className={
+              isAura
+                ? 'text-4xl sm:text-6xl lg:text-[4rem] font-sans font-bold tracking-[-0.03em] leading-[1.06] text-white'
+                : 'text-4xl sm:text-6xl font-sans font-bold tracking-tight text-white'
+            }
+          >
             {project.title}
           </h1>
 
-          <p className="text-lg sm:text-2xl text-[#cbd4e6] font-sans leading-relaxed">
+          <p
+            className={
+              isAura
+                ? 'text-lg sm:text-2xl text-[#cbd4e6] font-sans leading-relaxed max-w-3xl font-normal'
+                : 'text-lg sm:text-2xl text-[#cbd4e6] font-sans leading-relaxed'
+            }
+          >
             {project.tagline[language]}
           </p>
 
           {/* Metadata Grid */}
           <div className="pt-6 border-t border-[#161a22] grid grid-cols-2 sm:grid-cols-4 gap-6 font-mono text-xs">
             <div>
-              <span className="text-[#515768] block uppercase">// {t.clientLabel}</span>
-              <span className="text-white mt-1 block">ZYRVAE Lab</span>
+              <span className={`${isAura ? 'text-[#8b92a5]' : 'text-[#515768]'} block uppercase`}>// {t.clientLabel}</span>
+              <span className="text-white mt-1.5 block font-medium">ZYRVAE Lab</span>
             </div>
             <div>
-              <span className="text-[#515768] block uppercase">// {t.categoryLabel}</span>
-              <span className="text-white mt-1 block">{project.categoryLabel[language]}</span>
+              <span className={`${isAura ? 'text-[#8b92a5]' : 'text-[#515768]'} block uppercase`}>// {t.categoryLabel}</span>
+              <span className="text-white mt-1.5 block font-medium">{project.categoryLabel[language]}</span>
             </div>
             <div>
-              <span className="text-[#515768] block uppercase">// {t.yearLabel}</span>
-              <span className="text-white mt-1 block">{project.year}</span>
+              <span className={`${isAura ? 'text-[#8b92a5]' : 'text-[#515768]'} block uppercase`}>// {t.yearLabel}</span>
+              <span className="text-white mt-1.5 block font-medium">{project.year}</span>
             </div>
             <div>
-              <span className="text-[#515768] block uppercase">// STATUS</span>
-              <span className="text-[#0a5cff] mt-1 block">CONCEPT</span>
+              <span className={`${isAura ? 'text-[#8b92a5]' : 'text-[#515768]'} block uppercase`}>// STATUS</span>
+              <span className="text-[#0a5cff] mt-1.5 block font-semibold">CONCEPT</span>
             </div>
           </div>
         </header>
 
         {/* Primary Visual Cover Asset */}
-        <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#1e232d] bg-[#0c0d10] shadow-2xl">
-          <Image
-            src={project.coverImage}
-            alt={project.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+        <figure className="space-y-3">
+          <div
+            className={
+              isAura
+                ? 'relative aspect-[4/3] sm:aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#1e232d] bg-[#0c0d10] shadow-[0_28px_70px_-15px_rgba(0,0,0,0.85)]'
+                : 'relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#1e232d] bg-[#0c0d10] shadow-2xl'
+            }
+          >
+            <Image
+              src={project.coverImage}
+              alt={project.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              className={
+                isAura
+                  ? 'object-cover object-center transition-transform duration-700 ease-out hover:scale-[1.015]'
+                  : 'object-cover'
+              }
+              priority
+            />
+            {isAura && (
+              <>
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#060709]/80 via-[#060709]/15 to-transparent" />
+                <div className="pointer-events-none absolute bottom-0 inset-x-0 p-5 sm:p-8 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+                  <div className="space-y-1">
+                    <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-[#cbd4e6]/90 block">
+                      // {language === 'es' ? 'ARQUITECTURA DE ALTA MONTAÑA · PATAGONIA ANDINA' : 'HIGH-ALTITUDE ARCHITECTURE · ANDEAN PATAGONIA'}
+                    </span>
+                    <p className="text-xs sm:text-sm text-white/90 font-sans max-w-xl">
+                      {language === 'es'
+                        ? 'Pabellón principal en voladizo de basalto oscuro y cedro carbonizado sobre el valle glaciar.'
+                        : 'Main cantilevered pavilion crafted from dark basalt and charred cedar overlooking the glacial valley.'}
+                    </p>
+                  </div>
+                  <span className="self-start sm:self-auto px-2.5 py-1 rounded-md bg-[#0a0c10]/80 backdrop-blur-md border border-white/10 font-mono text-[10px] text-[#cbd4e6] tracking-wider uppercase">
+                    41°08&apos;S · 71°18&apos;W // 1,640 M
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
+        </figure>
 
         {/* Section 01: Client Context & Design Goal */}
         <section className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-8 border-t border-[#161a22]">
@@ -103,8 +166,16 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
               {t.objectiveTitle}
             </h2>
           </div>
-          <div className="md:col-span-8 space-y-6 text-sm sm:text-base text-[#8b92a5] font-sans leading-relaxed">
-            <p className="text-white font-medium">{project.designGoal[language]}</p>
+          <div
+            className={
+              isAura
+                ? 'md:col-span-8 space-y-6 text-sm sm:text-base text-[#9ba3b8] font-sans leading-relaxed max-w-2xl'
+                : 'md:col-span-8 space-y-6 text-sm sm:text-base text-[#8b92a5] font-sans leading-relaxed'
+            }
+          >
+            <p className={isAura ? 'text-white font-medium text-base sm:text-lg leading-relaxed' : 'text-white font-medium'}>
+              {project.designGoal[language]}
+            </p>
             <p>{project.clientContext[language]}</p>
           </div>
         </section>
@@ -129,17 +200,40 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
         </section>
 
         {/* Detail Images Carousel / Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {project.galleryImages.slice(1).map((img, i) => (
-            <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden border border-[#1e232d] bg-[#0b0d10]">
-              <Image
-                src={img}
-                alt={`${project.title} detail ${i + 1}`}
-                fill
-                className="object-cover"
-              />
-            </div>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+          {project.galleryImages.slice(1).map((img, i) => {
+            const caption = isAura ? auraGalleryCaptions[i] : null;
+            return (
+              <figure key={i} className="group space-y-3">
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-[#1e232d] bg-[#0b0d10] shadow-xl">
+                  <Image
+                    src={img}
+                    alt={caption ? caption.title[language] : `${project.title} detail ${i + 1}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className={
+                      isAura
+                        ? 'object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]'
+                        : 'object-cover'
+                    }
+                  />
+                  {isAura && (
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#060709]/65 via-transparent to-transparent" />
+                  )}
+                </div>
+                {caption && (
+                  <figcaption className="flex items-baseline justify-between gap-4 px-1 pt-0.5">
+                    <span className="font-mono text-[10px] tracking-widest uppercase text-[#8b92a5]">
+                      {caption.index}
+                    </span>
+                    <span className="text-xs text-[#cbd4e6] font-sans text-right">
+                      {caption.title[language]}
+                    </span>
+                  </figcaption>
+                )}
+              </figure>
+            );
+          })}
         </div>
 
         {/* Section 03 & 04: Interactions & Engineered Features */}

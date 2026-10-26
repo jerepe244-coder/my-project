@@ -280,6 +280,30 @@
       "created_at": "2026-10-26T01:13:51.243Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "4081f4f8-2f03-4ccd-8c1a-930d203fc4c3",
+      "role": "agent",
+      "content": "Se mejoró la funcionalidad del simulador de **AURA Sanctuary** (`/case-study/aura-sanctuary`) reutilizando el selector de suites, el control de duración (`nights`), el selector de huéspedes (`guests`) y el modal de reserva existentes, manteniendo intacta su estética.\n\n### 1. Archivos modificados\n- [HospitalityDemo.tsx](https://github.com/jerepe244-coder/my-project/blob/main/src/components/demos/HospitalityDemo.tsx): componente [`HospitalityDemo`](https://github.com/jerepe244-coder/my-project/blob/main/src/components/demos/HospitalityDemo.tsx#L7-L548).\n\n### 2. Reglas de precios y límites implementados\n- **Límites de huéspedes (adultos) y duración**:\n  - **Adultos**: mínimo `1`, máximo según la capacidad definida de la suite (`suite.capacity`) o `4` por defecto al no haber capacidades específicas declaradas en los datos originales (con botones `-`/`+` deshabilitados al alcanzar los extremos y ajuste automático al cambiar de suite).\n  - **Noches**: reutiliza la duración existente (por defecto `3` noches, mínimo `1` noche con botón `-` deshabilitado en el límite inferior).\n- **Cálculo de alojamiento (Suite)**:\n  - `Subtotal suite = baseRate × nights`\n    - *Refugio Panorámico / Panoramic Shelter*: `$480 USD × noches`\n    - *Suite del Bosque / Forest Suite*: `$390 USD × noches`\n    - *Cabaña Monolito / Monolith Cabin*: `$620 USD × noches`\n- **Extras opcionales (precios demostrativos)**:\n  - **Desayuno / Breakfast**: `$35 USD` por adulto por noche (`$35 × adultos × noches`).\n  - **Spa termal / Thermal spa**: `$85 USD` por adulto por estadía (`$85 × adultos`).\n- **Total estimado**:\n  - `Total = Subtotal suite + Subtotal desayuno (si activo) + Subtotal spa (si activo)`\n  - El resumen dinámico (suite, adultos, duración, extras seleccionados, desglose por ítem y total) se actualiza en tiempo real tanto en la columna del simulador como en el modal de solicitud de reserva.\n\n### 3. Pruebas ejecutadas\n- **Suite de tests y linter del proyecto**:\n  - `npm test` (6/6 pruebas aprobadas).\n  - `npm run lint` (sin errores ni advertencias en [HospitalityDemo.tsx](https://github.com/jerepe244-coder/my-project/blob/main/src/components/demos/HospitalityDemo.tsx)).\n  - `npm run build` (compilación estática y de tipos de Next.js exitosa).\n- **Verificación funcional e interactiva (Chrome Headless sobre `/case-study/aura-sanctuary`)**:\n  - **Cálculos**: validación de tarifa base inicial (`$480 × 3n = $1440 USD`), cambio a *Suite del Bosque* (`$390 × 3n = $1170 USD`), activación de *Desayuno* (`+$35 × 2 × 3n = +$210 USD` → `$1380 USD`) y activación de *Spa termal* (`+$85 × 2 = +$170 USD` → `$1550 USD`).\n  - **Límites**: verificación de estado `disabled` en adultos al llegar a `1` y `4`, y en noches al llegar a `1`.\n  - **Sincronización con el modal**: comprobación de suite, duración, adultos, extras, desglose y total dentro del diálogo de reserva simulada.\n  - **Idiomas (ES/EN)**: cambio en vivo a inglés verificando etiquetas traducidas (*Forest Suite*, `2 adults · 3 nights`, `Breakfast, Spa`) y conservación del cálculo (`$1550 USD`).\n  - **Versión móvil**: comprobación en viewport móvil (`375×812`) sin desbordamiento horizontal (`scrollWidth <= clientWidth`).\n\n### 4. Pendientes reales\n- Ninguno dentro del alcance solicitado.",
+      "status": "completed",
+      "model": "gemini-4-argon-medium",
+      "client_type": "gemini-bridge",
+      "parent_message_id": "546b1cb0-ce57-49d0-908f-58b7688d6668",
+      "created_at": "2026-10-26T01:15:29.301Z",
+      "sender": "macOS",
+      "is_cancelled": false
+    },
+    {
+      "id": "310e6299-ee9f-4306-985a-cbde4da83b42",
+      "role": "user",
+      "content": "AURA Sanctuary — segunda etapa: imágenes y estética\n\nLa funcionalidad ya está implementada y funciona correctamente. Ahora mejorá exclusivamente la calidad visual de /case-study/aura-sanctuary.\n\n* Reemplazá imágenes faltantes, genéricas o poco coherentes por fotografías de alta calidad, relevantes y consistentes con un hotel boutique de lujo en plena naturaleza.\n* Mejorá la composición, jerarquía visual, espaciado, tipografía, proporciones y presentación de las imágenes, respetando la identidad actual de AURA.\n* Priorizá una experiencia cinematográfica, sofisticada, inmersiva y realista; evitá efectos decorativos excesivos.\n* Verificá que las imágenes carguen correctamente, tengan recortes adecuados y se adapten a móvil y escritorio.\n* No modifiques la lógica del simulador, los precios, los selectores, el resumen ni el modal de reserva. No alteres otras páginas ni agregues funcionalidades.\n* Al terminar, verificá visualmente la página y reportá los archivos modificados, el origen de las imágenes y las pruebas realizadas. No hagas commits, push ni deploy.\n\nPrimero inspeccioná la implementación actual y después ejecutá los cambios.",
+      "status": "pending",
+      "model": "gemini-4-argon-medium",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-10-26T01:17:14.494Z",
+      "sender": "ios",
+      "is_cancelled": false
     }
   ]
 }

@@ -16,11 +16,11 @@ export const projects: ProjectDetail[] = [
     isConcept: true,
     year: '2025',
     featured: true,
-    coverImage: '/images/aura-cover.svg',
+    coverImage: '/images/aura-cover.webp',
     galleryImages: [
-      '/images/aura-cover.svg',
-      '/images/aura-detail-1.svg',
-      '/images/aura-detail-2.svg',
+      '/images/aura-cover.webp',
+      '/images/aura-detail-1.webp',
+      '/images/aura-detail-2.webp',
     ],
     clientContext: {
       es: 'Concepto desarrollado para un refugio boutique hipotético situado en un entorno natural andino. Busca desmarcarse de las plataformas de reserva impersonales, posicionando la exclusividad y el silencio como el principal lujo.',

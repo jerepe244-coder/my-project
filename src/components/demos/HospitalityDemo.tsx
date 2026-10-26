@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { Calendar, Users, Check, Sparkles, X, Info } from 'lucide-react';
 
@@ -20,6 +21,8 @@ export const HospitalityDemo: React.FC = () => {
     id: string;
     name: { es: string; en: string };
     area: string;
+    elevation: string;
+    image: string;
     view: { es: string; en: string };
     baseRate: number;
     capacity?: number;
@@ -29,6 +32,8 @@ export const HospitalityDemo: React.FC = () => {
       id: 'panoramic',
       name: { es: 'Refugio Panorámico', en: 'Panoramic Shelter' },
       area: '84 m²',
+      elevation: '1,680 m · Sector Norte',
+      image: '/images/aura-suite-panoramic.webp',
       view: { es: 'Horizonte alpino y glaciar', en: 'Alpine horizon & glacier' },
       baseRate: 480,
       amenities: [
@@ -42,6 +47,8 @@ export const HospitalityDemo: React.FC = () => {
       id: 'forest',
       name: { es: 'Suite del Bosque', en: 'Forest Suite' },
       area: '68 m²',
+      elevation: '1,540 m · Dosel de Alerces',
+      image: '/images/aura-suite-forest.webp',
       view: { es: 'Canopia de alerces nativos', en: 'Native larch canopy' },
       baseRate: 390,
       amenities: [
@@ -55,6 +62,8 @@ export const HospitalityDemo: React.FC = () => {
       id: 'monolith',
       name: { es: 'Cabaña Monolito', en: 'Monolith Cabin' },
       area: '110 m²',
+      elevation: '1,790 m · Filo Sur',
+      image: '/images/aura-suite-monolith.webp',
       view: { es: 'Macizo rocoso y valle sur', en: 'Rock massif & southern valley' },
       baseRate: 620,
       amenities: [
@@ -153,28 +162,59 @@ export const HospitalityDemo: React.FC = () => {
         {/* Selected Suite Detailed Inspector */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-6">
           <div className="lg:col-span-2 space-y-6">
+            {/* Suite Photographic Showcase */}
+            <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-[#1e232d] bg-[#090b0f] shadow-xl">
+              <Image
+                key={current.image}
+                src={current.image}
+                alt={current.name[language]}
+                fill
+                sizes="(max-width: 1024px) 100vw, 640px"
+                className="object-cover object-center transition-all duration-500"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#090b0f]/85 via-[#090b0f]/20 to-transparent" />
+              <div className="pointer-events-none absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2">
+                <span className="px-2.5 py-1 rounded-md bg-[#0a0c10]/80 backdrop-blur-md border border-white/10 font-mono text-[10px] text-[#cbd4e6] tracking-wider uppercase">
+                  {current.elevation}
+                </span>
+                <span className="px-2.5 py-1 rounded-md bg-[#0a5cff]/20 backdrop-blur-md border border-[#0a5cff]/40 font-mono text-[10px] text-white font-semibold">
+                  {current.area}
+                </span>
+              </div>
+              <div className="pointer-events-none absolute bottom-3.5 left-4 right-4 flex items-end justify-between gap-3">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#9ba3b8] block">
+                    {language === 'es' ? 'Orientación panorámica' : 'Panoramic orientation'}
+                  </span>
+                  <p className="text-xs sm:text-sm font-medium text-white font-sans">
+                    {current.view[language]}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div>
-              <div className="flex items-baseline space-x-3">
-                <h4 className="text-2xl font-bold font-sans text-white">
+              <div className="flex flex-wrap items-baseline gap-3">
+                <h4 className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-white">
                   {current.name[language]}
                 </h4>
                 <span className="font-mono text-xs text-[#0a5cff] border border-[#0a5cff]/30 px-2 py-0.5 rounded">
                   {current.area}
                 </span>
               </div>
-              <p className="text-xs text-[#8b92a5] font-mono mt-1">
+              <p className="text-xs text-[#8b92a5] font-mono mt-1.5">
                 {language === 'es' ? 'Orientación:' : 'View:'} {current.view[language]}
               </p>
             </div>
 
             {/* Amenity checklist */}
-            <div className="space-y-2.5">
-              <p className="text-xs font-mono uppercase tracking-wider text-[#515768]">
+            <div className="space-y-3">
+              <p className="text-xs font-mono uppercase tracking-wider text-[#8b92a5]">
                 // {language === 'es' ? 'Comodidades de la suite' : 'Curated amenities'}
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#cbd4e6]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-[#cbd4e6]">
                 {current.amenities.map((item, i) => (
-                  <div key={i} className="flex items-center space-x-2 bg-[#12151d] p-2.5 rounded-lg border border-[#1a1f29]">
+                  <div key={i} className="flex items-center space-x-2.5 bg-[#12151d] p-3 rounded-lg border border-[#1a1f29]">
                     <Check size={14} className="text-[#0a5cff] shrink-0" />
                     <span>{item[language]}</span>
                   </div>
