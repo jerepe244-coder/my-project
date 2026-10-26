@@ -11,6 +11,7 @@ import { HospitalityDemo, AURA_SUITES } from '@/components/demos/HospitalityDemo
 import { GastronomyDemo } from '@/components/demos/GastronomyDemo';
 import { KonRestaurantExperience } from '@/components/case-study/KonRestaurantExperience';
 import { ArchitectureDemo } from '@/components/demos/ArchitectureDemo';
+import { MonolithArchitectureExperience } from '@/components/case-study/MonolithArchitectureExperience';
 import { EcommerceDemo } from '@/components/demos/EcommerceDemo';
 import {
   ArrowLeft,
@@ -593,6 +594,11 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
   const isKon = project.slug === 'kon-atelier';
   if (isKon) {
     return <KonRestaurantExperience project={project} />;
+  }
+
+  const isMonolith = project.slug === 'vectra-architects';
+  if (isMonolith) {
+    return <MonolithArchitectureExperience project={project} />;
   }
 
   const renderDemo = () => {

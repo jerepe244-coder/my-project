@@ -364,6 +364,18 @@
       "created_at": "2026-10-26T03:06:57.559Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "32a7b961-e3ac-4886-8436-e5823445f855",
+      "role": "user",
+      "content": "ZYRVAE — FASE 4: ARQUITECTURA\n\nTransformá la demo actual en un sitio premium y funcional para un estudio de arquitectura conceptual. Debe sentirse como una web profesional real, no como una herramienta.\n\nDirección artística: MONOLITH STUDIO\n\nEstudio conceptual de arquitectura contemporánea especializado en volúmenes puros, hormigón visto, piedra natural, madera y relación entre luz, espacio y paisaje.\n\n* Paleta: blanco caliza, arena, gris cemento, negro carbón y tonos tierra.\n* Tipografía: sans serif suiza para titulares y monoespaciada para numeración y metadatos.\n* Composición: editorial, inspirada en revistas de arquitectura; grandes espacios negativos, líneas finas, márgenes amplios y numeración técnica.\n* Estética: minimalista, material y sofisticada. Sin neones, gradientes decorativos, glassmorphism ni efectos tecnológicos genéricos.\n* Temas: modo claro como protagonista; modo oscuro con carbón y tonos cálidos, conservando la misma identidad.\n\nImágenes — prioridad máxima\n\nMejorá activamente la estética y los recursos visuales. Incorporá fotografías arquitectónicas realistas, cinematográficas y de alta calidad para hero, proyectos, interiores, exteriores, materiales y galerías.\n\nBuscá casas de hormigón integradas en paisajes, residencias minimalistas, patios escultóricos, interiores con luz natural, escaleras monumentales y detalles constructivos. Priorizá sombras cuidadas, texturas minerales y vegetación controlada.\n\nGenerá imágenes originales o usá fuentes legítimas. Evitá renders genéricos, edificios futuristas irreales, placeholders, fotografías repetidas y enlaces frágiles. Optimizá formatos, dimensiones y carga.\n\nEstructura y funcionalidad\n\n* Header minimalista e identidad del estudio.\n* Hero fotográfico a gran escala con el titular “Spaces shaped by light.”\n* Presentación breve de la filosofía arquitectónica.\n* Portfolio visual de proyectos residenciales, culturales y comerciales.\n* Filtros funcionales cuando corresponda.\n* Casos de estudio con imágenes, concepto, materiales y decisiones espaciales.\n* Galería editorial, CTA de contacto y footer.\n\nLas imágenes deben protagonizar la experiencia. Evitá textos extensos y tarjetas genéricas. Identificá los proyectos como Concept Project; no inventes clientes, obras construidas, premios, testimonios ni métricas.\n\nRequisitos técnicos\n\n* Mantener ES/EN, Dark/Light, rutas y navegación existentes.\n* Responsive para móvil y escritorio, accesibilidad por teclado, foco visible, buen contraste y prefers-reduced-motion.\n* No modificar AURA, Gastronomía, SŌMA ni otras secciones.\n* No crear otro proyecto de Vercel ni alterar la publicación.\n\nVerificación\n\nEjecutá tests, lint y build. Comprobá imágenes, filtros, navegación, idiomas, temas y responsive; corregí errores. Informá cambios, fuentes de imágenes, pruebas realizadas y pendientes, diferenciando lo verificado de lo no probado.\n\nTomá las decisiones técnicas y visuales por tu cuenta. Prioridad: identidad arquitectónica distintiva, imágenes excelentes y una experiencia real, rápida y funcional.",
+      "status": "pending",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-10-26T03:52:20.929Z",
+      "sender": "ios",
+      "is_cancelled": false
     }
   ]
 }

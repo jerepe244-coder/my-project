@@ -213,4 +213,84 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       );
     }
   });
+
+  test('MONOLITH Studio architecture web experience defines projects, materials, gallery, and studio sections', async () => {
+    const {
+      MONOLITH_STUDIO_META,
+      MONOLITH_PILLARS,
+      MONOLITH_PROJECTS,
+      MONOLITH_MATERIALS,
+      MONOLITH_GALLERY,
+    } = await import('../src/data/architecture.ts');
+
+    assert.equal(MONOLITH_STUDIO_META.heroTitle, 'Spaces shaped by light.', 'Must preserve canonical hero headline');
+    assert.equal(MONOLITH_PILLARS.length, 4, 'Must define 4 tectonic philosophy pillars');
+    assert.equal(MONOLITH_PROJECTS.length, 6, 'Must define 6 concept architectural projects');
+    assert.equal(MONOLITH_MATERIALS.length, 4, 'Must define 4 tectonic materials');
+    assert.equal(MONOLITH_GALLERY.length, 8, 'Must define 8 architectural gallery frames');
+
+    // Verify all images referenced by MONOLITH exist on disk and are optimized WebPs
+    const requiredMonolithImages = [
+      '/images/monolith-hero.webp',
+      '/images/monolith-project-1.webp',
+      '/images/monolith-project-2.webp',
+      '/images/monolith-project-3.webp',
+      '/images/monolith-project-4.webp',
+      '/images/monolith-project-5.webp',
+      '/images/monolith-project-6.webp',
+      '/images/monolith-interior-light.webp',
+      '/images/monolith-staircase.webp',
+      '/images/monolith-courtyard.webp',
+      '/images/monolith-detail-concrete.webp',
+      '/images/monolith-detail-stone.webp',
+      '/images/monolith-detail-wood.webp',
+      '/images/monolith-gallery-1.webp',
+      '/images/monolith-gallery-2.webp',
+      '/images/monolith-gallery-3.webp',
+      '/images/monolith-gallery-4.webp',
+    ];
+
+    for (const imgPath of requiredMonolithImages) {
+      const diskPath = path.join(process.cwd(), 'public', imgPath.replace(/^\//, ''));
+      assert.ok(fs.existsSync(diskPath), `MONOLITH image asset missing on disk: ${imgPath}`);
+      const stats = fs.statSync(diskPath);
+      assert.ok(stats.size > 20000, `MONOLITH image asset is too small: ${imgPath}`);
+    }
+
+    // Verify each project has bilingual details & spatial decisions
+    for (const proj of MONOLITH_PROJECTS) {
+      assert.ok(proj.title.es && proj.title.en, `Project ${proj.id} missing bilingual title`);
+      assert.ok(proj.subtitle.es && proj.subtitle.en, `Project ${proj.id} missing bilingual subtitle`);
+      assert.ok(proj.concept.es && proj.concept.en, `Project ${proj.id} missing concept`);
+      assert.ok(proj.spatialDecisions.length >= 3, `Project ${proj.id} must have at least 3 spatial decisions`);
+      assert.ok(proj.specifications.length >= 3, `Project ${proj.id} must have specifications`);
+    }
+
+    // Verify each material has bilingual finish and properties
+    for (const mat of MONOLITH_MATERIALS) {
+      assert.ok(mat.name.es && mat.name.en, `Material ${mat.id} missing bilingual name`);
+      assert.ok(mat.properties.finish.es && mat.properties.finish.en, `Material ${mat.id} missing finish`);
+      assert.ok(mat.properties.sustainability.es && mat.properties.sustainability.en, `Material ${mat.id} missing sustainability`);
+    }
+
+    // Verify studio sections in MonolithArchitectureExperience.tsx
+    const monolithComponentTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'MonolithArchitectureExperience.tsx'),
+      'utf-8'
+    );
+    for (const sectionId of [
+      'monolith-hero',
+      'monolith-philosophy',
+      'monolith-works',
+      'monolith-study',
+      'monolith-tectonics',
+      'monolith-gallery',
+      'monolith-contact',
+    ]) {
+      assert.ok(
+        monolithComponentTsx.includes(`id="${sectionId}"`),
+        `MonolithArchitectureExperience.tsx must include #${sectionId} studio section`
+      );
+    }
+  });
 });

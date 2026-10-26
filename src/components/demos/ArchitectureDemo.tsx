@@ -57,7 +57,7 @@ export const ArchitectureDemo: React.FC = () => {
           <span className="font-semibold uppercase tracking-wider">
             {language === 'es' ? 'DEMO INTERACTIVA' : 'INTERACTIVE DEMO'}
           </span>
-          <span className="text-zy-dim">| VECTRA ARCHITECTS</span>
+          <span className="text-zy-dim">| MONOLITH STUDIO</span>
         </div>
         <span className="inline-flex items-center px-2 py-0.5 rounded bg-zy-control text-zy-muted border border-zy-border-subtle text-[10px]">
           {language === 'es' ? 'Explorador espacial y de materiales' : 'Spatial & tectonic visualizer'}
