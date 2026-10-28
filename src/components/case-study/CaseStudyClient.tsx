@@ -597,7 +597,7 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
     return <KonRestaurantExperience project={project} />;
   }
 
-  const isMonolith = project.slug === 'vectra-architects';
+  const isMonolith = project.slug === 'vectra-architects' || project.slug === 'monolith-studio';
   if (isMonolith) {
     return <MonolithArchitectureExperience project={project} />;
   }

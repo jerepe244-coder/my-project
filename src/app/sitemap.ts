@@ -19,5 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     ...caseStudyUrls,
+    {
+      url: `${baseUrl}/case-study/monolith-studio`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
   ];
 }

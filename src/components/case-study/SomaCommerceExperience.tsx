@@ -352,7 +352,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="font-mono text-xs text-[#d8a45f] tracking-widest uppercase flex items-center space-x-2"
+                className="font-mono text-xs text-[#8f520a] dark:text-[#d8a45f] tracking-widest uppercase flex items-center space-x-2"
               >
                 <span>SŌMA FORMULATIONS</span>
                 <span>—</span>
@@ -418,7 +418,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
               </div>
 
               <div className="flex items-center space-x-2 text-white">
-                <Truck size={13} className="text-[#d8a45f]" />
+                <Truck size={13} className="text-[#8f520a] dark:text-[#d8a45f]" />
                 <span>
                   {language === 'es'
                     ? 'Envío neutro en carbono sin cargo en pedidos sobre $120 USD'
@@ -467,7 +467,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                 <div className="space-y-4">
                   <div className="flex items-center justify-between font-mono text-xs text-zy-dim border-b border-zy-border-subtle pb-2">
                     <span className="text-zy-blue font-semibold">{pillar.code}</span>
-                    <Sparkles size={13} className="text-[#d8a45f]" />
+                    <Sparkles size={13} className="text-[#8f520a] dark:text-[#d8a45f]" />
                   </div>
 
                   <h3 className="text-lg font-sans font-bold text-zy-fg">
@@ -755,7 +755,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                   <span className="text-zy-dim block uppercase text-[10px]">
                     {language === 'es' ? 'Luz Visible (400-700nm)' : 'Visible Light (400-700nm)'}
                   </span>
-                  <span className="text-rose-500 font-bold block text-sm">0% Paso (Bloqueo Total)</span>
+                  <span className="text-rose-700 dark:text-rose-400 font-bold block text-sm">0% Paso (Bloqueo Total)</span>
                   <p className="text-zy-muted text-[11px] font-sans">
                     {language === 'es' ? 'Evita la oxidación de lípidos' : 'Prevents lipid photo-oxidation'}
                   </p>
@@ -765,7 +765,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                   <span className="text-zy-dim block uppercase text-[10px]">
                     {language === 'es' ? 'Espectro Violeta (380-420nm)' : 'Violet Spectrum (380-420nm)'}
                   </span>
-                  <span className="text-purple-400 font-bold block text-sm">25-45% Transmisión</span>
+                  <span className="text-purple-700 dark:text-purple-400 font-bold block text-sm">25-45% Transmisión</span>
                   <p className="text-zy-muted text-[11px] font-sans">
                     {language === 'es' ? 'Preserva la energía celular' : 'Sustains vital bio-frequency'}
                   </p>
@@ -775,7 +775,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                   <span className="text-zy-dim block uppercase text-[10px]">
                     {language === 'es' ? 'Infrarrojo Cercano (>750nm)' : 'Near Infrared (>750nm)'}
                   </span>
-                  <span className="text-emerald-400 font-bold block text-sm">60-70% Transmisión</span>
+                  <span className="text-emerald-700 dark:text-emerald-400 font-bold block text-sm">60-70% Transmisión</span>
                   <p className="text-zy-muted text-[11px] font-sans">
                     {language === 'es' ? 'Estabilidad por 24+ meses' : '24+ month bio-stability'}
                   </p>
@@ -786,7 +786,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
               <div className="p-5 bg-zy-surface rounded-xl border border-zy-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center space-x-2 text-zy-fg font-semibold text-sm">
-                    <Leaf size={16} className="text-emerald-400" />
+                    <Leaf size={16} className="text-emerald-700 dark:text-emerald-400" />
                     <span>{language === 'es' ? 'Iniciativa Circular de Recargas' : 'Circular Refill Initiative'}</span>
                   </div>
                   <p className="text-xs text-zy-muted font-sans leading-relaxed">
@@ -893,7 +893,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                       {rit.title[language]}
                     </h3>
 
-                    <p className="font-mono text-xs text-[#d8a45f]">
+                    <p className="font-mono text-xs text-[#8f520a] dark:text-[#d8a45f]">
                       {rit.product}
                     </p>
 
@@ -1134,7 +1134,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                           <div className="text-[11px] font-mono text-zy-muted space-x-2">
                             <span>{item.size}</span>
                             <span>·</span>
-                            <span className={item.vesselId === 'refill' ? 'text-emerald-400 font-semibold' : ''}>
+                            <span className={item.vesselId === 'refill' ? 'text-emerald-700 dark:text-emerald-400 font-semibold' : ''}>
                               {item.vesselId === 'refill' ? 'Eco-Pouch' : 'Miron Glass'}
                             </span>
                           </div>
@@ -1183,7 +1183,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                         <span>{language === 'es' ? 'Envío neutro en carbono:' : 'Carbon-neutral shipping:'}</span>
                         <span className="text-zy-fg">
                           {isFreeShipping ? (
-                            <span className="text-emerald-400 font-bold">{language === 'es' ? 'GRATIS' : 'FREE'}</span>
+                            <span className="text-emerald-700 dark:text-emerald-400 font-bold">{language === 'es' ? 'GRATIS' : 'FREE'}</span>
                           ) : (
                             `$${shippingCost} USD`
                           )}
@@ -1191,7 +1191,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                       </div>
 
                       {discountApplied && (
-                        <div className="flex justify-between text-emerald-400">
+                        <div className="flex justify-between text-emerald-700 dark:text-emerald-400">
                           <span>{language === 'es' ? 'Descuento ZYRVAE (10%):' : 'ZYRVAE Promo (10%):'}</span>
                           <span>-${discountAmount} USD</span>
                         </div>
@@ -1307,7 +1307,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                       </span>
                     </div>
 
-                    <span className="text-xs font-mono text-emerald-400">
+                    <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400">
                       {inspectProduct.vessels[modalVesselIdx].id === 'refill'
                         ? language === 'es' ? '✓ Incluye descuento de recarga (-$8)' : '✓ Includes eco-refill savings (-$8)'
                         : 'Miron Biophotonic Glass'}
@@ -1378,7 +1378,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                           className="p-2.5 rounded bg-zy-surface border border-zy-border-subtle flex justify-between items-center"
                         >
                           <span className="font-semibold text-zy-fg">{act.name}</span>
-                          <span className="text-[#d8a45f] font-bold">{act.concentration}</span>
+                          <span className="text-[#8f520a] dark:text-[#d8a45f] font-bold">{act.concentration}</span>
                         </div>
                       ))}
                     </div>
@@ -1621,7 +1621,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                       </button>
                     </div>
                     {discountApplied && (
-                      <span className="text-[11px] font-mono text-emerald-400 block">
+                      <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400 block">
                         {language === 'es' ? '✓ Descuento del 10% aplicado' : '✓ 10% demo discount applied'}
                       </span>
                     )}
@@ -1654,7 +1654,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                       <span>{isFreeShipping ? 'GRATIS' : `$${shippingCost} USD`}</span>
                     </div>
                     {discountApplied && (
-                      <div className="flex justify-between text-emerald-400">
+                      <div className="flex justify-between text-emerald-700 dark:text-emerald-400">
                         <span>{language === 'es' ? 'Descuento 10%:' : 'Promo 10%:'}</span>
                         <span>-${discountAmount} USD</span>
                       </div>

@@ -172,7 +172,7 @@ export const GastronomyDemo: React.FC = () => {
 
                 {pairingActive && (
                   <div className="md:text-right shrink-0 max-w-xs pl-8 md:pl-0 pt-1 md:pt-0 border-t md:border-t-0 border-zy-warm-border-subtle">
-                    <span className="text-[10px] font-mono uppercase text-[#d49b57] tracking-wider block">
+                    <span className="text-[10px] font-mono uppercase text-[#945610] dark:text-[#d49b57] tracking-wider block">
                       // {language === 'es' ? 'Armonía sugerida' : 'Wine pairing'}
                     </span>
                     <span className="text-xs text-zy-warm-fg font-mono">

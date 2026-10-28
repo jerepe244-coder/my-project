@@ -7,15 +7,28 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+const SLUG_ALIASES: Record<string, string> = {
+  'monolith-studio': 'vectra-architects',
+};
+
+function resolveProject(slug: string) {
+  const targetSlug = SLUG_ALIASES[slug] || slug;
+  return projects.find((p) => p.slug === targetSlug);
+}
+
 export async function generateStaticParams() {
-  return projects.map((p) => ({
+  const baseParams = projects.map((p) => ({
     slug: p.slug,
   }));
+  return [
+    ...baseParams,
+    { slug: 'monolith-studio' },
+  ];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = resolveProject(slug);
 
   if (!project) {
     return {
@@ -43,7 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CaseStudyPage({ params }: PageProps) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = resolveProject(slug);
 
   if (!project) {
     notFound();

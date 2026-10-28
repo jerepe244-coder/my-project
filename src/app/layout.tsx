@@ -72,8 +72,8 @@ export const metadata: Metadata = {
     siteName: 'ZYRVAE Digital Studio',
     images: [
       {
-        url: '/images/aura-cover.svg',
-        width: 1200,
+        url: '/images/aura-cover.webp',
+        width: 1280,
         height: 800,
         alt: 'ZYRVAE Digital Studio',
       },
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
     title: 'ZYRVAE — Digital Studio',
     description:
       'Estudio digital independiente. Diseño y desarrollo web con criterio y rigor técnico.',
-    images: ['/images/aura-cover.svg'],
+    images: ['/images/aura-cover.webp'],
   },
   icons: {
     icon: [

@@ -184,7 +184,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
           {/* Badge & Quick CTA */}
           <div className="flex items-center space-x-2.5">
             <span className="hidden lg:inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-zy-warm-bar border border-zy-warm-border text-[10px] font-mono text-zy-warm-muted">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#d49b57]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#945610] dark:bg-[#d49b57]" />
               <span>{language === 'es' ? 'Proyecto conceptual' : 'Concept project'}</span>
             </span>
 
@@ -314,7 +314,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
             {/* Three Conceptual Pillars */}
             <div className="space-y-4 pt-2">
               <div className="p-4 rounded-xl bg-zy-warm-card border border-zy-warm-border flex items-start space-x-3.5">
-                <Flame size={18} className="text-[#d49b57] shrink-0 mt-0.5" />
+                <Flame size={18} className="text-[#945610] dark:text-[#d49b57] shrink-0 mt-0.5" />
                 <div>
                   <h3 className="text-xs font-mono font-semibold uppercase text-zy-warm-fg">
                     {language === 'es' ? 'Fuego de Quebracho & Rescoldo' : 'Hardwood Embers & Resinous Smoke'}
@@ -342,7 +342,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
               </div>
 
               <div className="p-4 rounded-xl bg-zy-warm-card border border-zy-warm-border flex items-start space-x-3.5">
-                <Wine size={18} className="text-[#d49b57] shrink-0 mt-0.5" />
+                <Wine size={18} className="text-[#945610] dark:text-[#d49b57] shrink-0 mt-0.5" />
                 <div>
                   <h3 className="text-xs font-mono font-semibold uppercase text-zy-warm-fg">
                     {language === 'es' ? 'Fermentos Vivos & Cava Biológica' : 'Wild Ferments & Living Cellar'}
@@ -567,7 +567,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                         {dish.title[language]}
                       </h3>
                       {dish.isSignature && (
-                        <span className="px-2 py-0.5 rounded bg-[#d49b57]/20 text-[#d49b57] text-[10px] font-mono font-medium uppercase">
+                        <span className="px-2 py-0.5 rounded bg-[#945610]/15 dark:bg-[#d49b57]/20 text-[#945610] dark:text-[#d49b57] text-[10px] font-mono font-medium uppercase">
                           {language === 'es' ? 'Plato Insignia' : 'Signature'}
                         </span>
                       )}
@@ -605,7 +605,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
 
                   {pairingActive && (
                     <div className="md:text-right max-w-xs pl-4 md:pl-0">
-                      <span className="text-[10px] font-mono uppercase text-[#d49b57] tracking-wider block">
+                      <span className="text-[10px] font-mono uppercase text-[#945610] dark:text-[#d49b57] tracking-wider block">
                         // {language === 'es' ? 'Armonía sugerida' : 'Wine harmony'}
                       </span>
                       <span className="text-xs text-zy-warm-fg font-mono leading-tight block">
@@ -639,7 +639,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
       >
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-8 border-b border-zy-warm-border">
           <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-[#d49b57]">
+            <span className="font-mono text-xs uppercase tracking-widest text-[#945610] dark:text-[#d49b57]">
               {language === 'es' ? '03 // CREACIONES EMBLEMÁTICAS' : '03 // SIGNATURE DISHES'}
             </span>
             <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-warm-fg mt-2">
@@ -691,7 +691,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
               </div>
 
               <div className="px-5 pb-5 pt-2 border-t border-zy-warm-border-subtle flex items-center justify-between text-xs font-mono">
-                <span className="text-[#d49b57] font-semibold">${dish.price} USD</span>
+                <span className="text-[#945610] dark:text-[#d49b57] font-semibold">${dish.price} USD</span>
                 <span className="inline-flex items-center space-x-1 text-zy-blue group-hover:underline">
                   <span>{language === 'es' ? 'Ficha técnica' : 'Inspect'}</span>
                   <ChevronRight size={13} />
@@ -753,7 +753,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                       {space.title[language]}
                     </h3>
                   </div>
-                  <span className="text-xs font-mono uppercase tracking-wider text-[#d49b57] block">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#945610] dark:text-[#d49b57] block">
                     {space.subtitle[language]}
                   </span>
                   <p className="text-xs sm:text-sm text-zy-warm-muted font-sans leading-relaxed pt-1">
@@ -796,7 +796,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
             {/* Form Left Side */}
             <div className="lg:col-span-7 space-y-6">
               <div>
-                <span className="font-mono text-xs uppercase tracking-widest text-[#d49b57]">
+                <span className="font-mono text-xs uppercase tracking-widest text-[#945610] dark:text-[#d49b57]">
                   {language === 'es' ? '05 // SOLICITUD DE MESA' : '05 // TABLE REQUEST'}
                 </span>
                 <h3 className="text-2xl sm:text-4xl font-sans font-bold text-zy-warm-fg mt-1">
@@ -1196,7 +1196,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
       >
         <div className="p-8 sm:p-12 rounded-3xl bg-zy-warm-card border border-zy-warm-border flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-sm">
           <div className="space-y-2 max-w-xl">
-            <span className="font-mono text-xs text-[#d49b57] uppercase tracking-widest">
+            <span className="font-mono text-xs text-[#945610] dark:text-[#d49b57] uppercase tracking-widest">
               KÔN ATELIER // GASTRONOMÍA & FUEGO
             </span>
             <h3 className="text-2xl sm:text-4xl font-sans font-bold text-zy-warm-fg">
@@ -1306,7 +1306,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                   </div>
 
                   <div>
-                    <span className="text-[10px] text-[#d49b57] uppercase block">
+                    <span className="text-[10px] text-[#945610] dark:text-[#d49b57] uppercase block">
                       // {language === 'es' ? 'Maridaje de Sommelier' : 'Sommelier Pairing'}
                     </span>
                     <span className="text-zy-warm-fg font-medium mt-0.5 block">
