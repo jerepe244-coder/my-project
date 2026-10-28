@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { SymbolLogo } from '@/components/ui/SymbolLogo';
-import { ArrowDown, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const { language } = useLanguage();
@@ -22,272 +22,155 @@ export const Hero: React.FC = () => {
     { label: '04 / SŌMA', slug: 'soma-formulations', domain: 'Commerce' },
   ];
 
-  const pillars =
-    language === 'es'
-      ? [
-          { code: '01', label: 'Dirección de Arte & Sistemas Visuales' },
-          { code: '02', label: 'Ingeniería Frontend (Next.js / TS)' },
-          { code: '03', label: 'Experiencias & Demos Interactivas' },
-          { code: '04', label: 'Arquitectura Orientada a Conversión' },
-        ]
-      : [
-          { code: '01', label: 'Art Direction & Visual Systems' },
-          { code: '02', label: 'Frontend Engineering (Next.js / TS)' },
-          { code: '03', label: 'Interactive Demos & Simulators' },
-          { code: '04', label: 'Conversion-Focused Architecture' },
-        ];
-
   return (
     <section
-      className="relative min-h-[88svh] sm:min-h-[92svh] flex flex-col justify-between pt-20 sm:pt-28 lg:pt-32 pb-8 sm:pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
-      aria-label="ZYRVAE Hero Section"
+      className="relative min-h-[96svh] sm:min-h-[100svh] w-full flex flex-col justify-between pt-24 sm:pt-28 pb-8 sm:pb-12 px-5 sm:px-8 lg:px-12 max-w-[1720px] mx-auto select-none"
+      aria-label="ZYRVAE Hero — The Name as a Monument"
     >
-      {/* Subtle architectural perimeter crosshairs (pure structural marks, no decorative blur blobs) */}
-      <div
-        className="hidden sm:block absolute top-28 left-4 sm:left-6 lg:left-8 font-mono text-[10px] text-zy-crosshair select-none pointer-events-none"
-        aria-hidden="true"
-      >
-        +
-      </div>
-      <div
-        className="hidden sm:block absolute top-28 right-4 sm:right-6 lg:right-8 font-mono text-[10px] text-zy-crosshair select-none pointer-events-none"
-        aria-hidden="true"
-      >
-        +
-      </div>
-
-      {/* Top Technical Metadata Bar */}
+      {/* Top Architectural Metadata & Direct Concept Navigation */}
       <motion.div
         initial={prefersReducedMotion ? false : { opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: easeOutExpo }}
-        className="flex flex-wrap items-center justify-between gap-3 pb-5 sm:pb-6 border-b border-zy-border-subtle text-[11px] font-mono text-zy-muted uppercase tracking-wider"
+        transition={{ duration: 0.6, ease: easeOutExpo }}
+        className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-zy-border-subtle font-mono text-[11px] uppercase tracking-wider text-zy-muted"
       >
-        <div className="flex items-center space-x-2.5 sm:space-x-3">
-          <span className="text-zy-fg font-semibold tracking-widest">// ZYRVAE</span>
-          <span className="text-zy-border-strong">/</span>
-          <span className="text-zy-muted">{t.badge}</span>
+        {/* Monogram Specimen + Studio Datum */}
+        <div className="flex items-center space-x-3.5">
+          <SymbolLogo size={32} animate={true} showPlate={false} showBlueprint={true} />
+          <div className="flex items-center space-x-2.5">
+            <span className="text-zy-fg font-semibold tracking-widest">ZYRVAE</span>
+            <span className="text-zy-border-strong">/</span>
+            <span className="text-zy-dim hidden sm:inline">BUENOS AIRES [34°36′S 58°22′W]</span>
+            <span className="text-zy-border-strong hidden sm:inline">/</span>
+            <span className="text-zy-blue font-medium">{t.badge}</span>
+          </div>
         </div>
 
-        <div className="flex items-center space-x-4 text-zy-dim">
-          <span className="hidden md:inline">BUENOS AIRES [34°36′S 58°22′W] // GLOBAL</span>
+        {/* 4 Case Studies Index + Availability Action */}
+        <div className="flex items-center flex-wrap gap-2 sm:gap-3 text-zy-dim">
+          <nav
+            aria-label="Concept demo shortcuts"
+            className="hidden md:flex items-center space-x-1.5 bg-zy-surface/60 border border-zy-border-subtle rounded-full px-2 py-1"
+          >
+            {demoShortcuts.map((demo) => (
+              <Link
+                key={demo.slug}
+                href={`/case-study/${demo.slug}`}
+                className="px-2.5 py-0.5 rounded-full hover:bg-zy-card hover:text-zy-fg text-zy-muted text-[10px] tracking-widest transition-colors inline-flex items-center space-x-1"
+              >
+                <span>{demo.label}</span>
+                <ArrowUpRight size={10} className="text-zy-blue opacity-75" />
+              </Link>
+            ))}
+          </nav>
+
           <Link
             href="/#contact"
-            className="inline-flex items-center space-x-2 px-2.5 py-1 rounded-full bg-zy-surface border border-zy-border hover:border-zy-blue/50 text-zy-fg-secondary hover:text-zy-fg transition-colors"
+            className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zy-surface border border-zy-border hover:border-zy-blue/60 text-zy-fg-secondary hover:text-zy-fg transition-colors"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-zy-blue" />
+            <span className="w-1.5 h-1.5 rounded-full bg-zy-blue animate-pulse" />
             <span className="text-[10px] tracking-widest uppercase">
-              {language === 'es' ? 'DISPONIBLE PARA PROYECTOS' : 'AVAILABLE FOR PROJECTS'}
+              {language === 'es' ? 'DISPONIBLE // Q2-Q3' : 'AVAILABLE // Q2-Q3'}
             </span>
           </Link>
         </div>
       </motion.div>
 
-      {/* Main Architectural Hero Body */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center my-auto py-8 sm:py-12">
-        {/* Left Col: Monumental Editorial Typography & Commercial Proposition */}
-        <div className="lg:col-span-7 xl:col-span-8 space-y-6 sm:space-y-8">
-          {/* Mobile Identity Anchor: Prominent geometric monogram specimen on smaller viewports */}
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.45, delay: 0.04, ease: easeOutExpo }}
-            className="flex lg:hidden items-center justify-between p-3.5 rounded-xl bg-zy-bg-elevated border border-zy-border-card"
-          >
-            <div className="flex items-center space-x-3.5">
-              <SymbolLogo size={44} animate={true} showPlate={true} showBlueprint={true} />
-              <div className="font-mono text-[10px] uppercase tracking-widest text-zy-muted border-l border-zy-border pl-3 py-0.5">
-                <span className="text-zy-fg block font-semibold">ZYRVAE // MONOGRAM</span>
-                <span className="text-zy-dim">
-                  {language === 'es' ? 'DISEÑO & INGENIERÍA WEB' : 'WEB DESIGN & ENGINEERING'}
-                </span>
-              </div>
-            </div>
-            <span className="font-mono text-[10px] text-zy-blue uppercase tracking-widest pr-1">
-              [48×48]
-            </span>
-          </motion.div>
-
-          {/* Editorial Kicker */}
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.06, ease: easeOutExpo }}
-            className="hidden sm:inline-flex items-center space-x-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-zy-dim"
-          >
-            <span className="text-zy-blue font-semibold">00 //</span>
-            <span>
-              {language === 'es'
-                ? 'DIRECCIÓN DE ARTE, DISEÑO INTERACTIVO E INGENIERÍA FRONTEND'
-                : 'ART DIRECTION, INTERACTIVE DESIGN & FRONTEND ENGINEERING'}
-            </span>
-          </motion.div>
-
-          {/* Monumental Headline: Pure, disciplined contrast */}
-          <h1 className="text-[2.65rem] sm:text-5xl md:text-6xl lg:text-[5.2rem] xl:text-[5.9rem] font-sans font-bold tracking-[-0.035em] text-zy-fg leading-[0.98] sm:leading-[0.93] text-balance">
-            <motion.span
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.08, ease: easeOutExpo }}
-              className="block text-zy-fg"
-            >
-              {t.headlinePart1}
-            </motion.span>
-            <motion.span
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.18, ease: easeOutExpo }}
-              className="block text-zy-fg-hero-sub mt-1 sm:mt-0"
-            >
-              {t.headlinePart2.replace('.', '')}
-              <span className="text-zy-blue">.</span>
-            </motion.span>
-          </h1>
-
-          {/* Supporting Copy: Architectural editorial density & commercial clarity */}
-          <motion.p
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.28, ease: easeOutExpo }}
-            className="text-base sm:text-lg lg:text-xl text-zy-fg-secondary/90 font-sans max-w-2xl leading-relaxed font-normal"
-          >
-            {t.subhead}
-          </motion.p>
-
-          {/* Action CTAs + Direct Collaboration Guarantee */}
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.38, ease: easeOutExpo }}
-            className="space-y-4 pt-1"
-          >
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <Link
-                href="/#contact"
-                className="group inline-flex items-center space-x-2.5 px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs sm:text-sm font-mono font-medium tracking-wider transition-[background-color,transform] duration-150 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
-              >
-                <span>{t.ctaPrimary}</span>
-              </Link>
-
-              <Link
-                href="/#work"
-                className="inline-flex items-center space-x-2 px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl bg-zy-card hover:bg-zy-card-hover active:scale-[0.98] border border-zy-border hover:border-zy-border-strong text-zy-fg-secondary hover:text-zy-fg text-xs sm:text-sm font-mono tracking-wider transition-[background-color,border-color,transform] duration-150 outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-              >
-                <span>{t.ctaSecondary}</span>
-              </Link>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[11px] font-mono text-zy-dim pt-1">
-              <span className="inline-flex items-center space-x-1.5 text-zy-muted">
-                <ShieldCheck size={13} className="text-zy-blue shrink-0" />
-                <span>
-                  {language === 'es'
-                    ? 'Trato directo sin intermediarios'
-                    : 'Direct founder-to-studio collaboration'}
-                </span>
-              </span>
-              <span className="hidden sm:inline text-zy-border-strong">·</span>
-              <span>
-                {language === 'es'
-                  ? 'Alcance y entregables definidos antes de iniciar'
-                  : 'Defined scope & deliverables before kickoff'}
-              </span>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Right Col: Architectural Geometric Specimen Module (Desktop) */}
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: easeOutExpo }}
-          className="hidden lg:flex lg:col-span-5 xl:col-span-4 flex-col justify-between relative p-6 xl:p-7 rounded-2xl bg-zy-bg-elevated border border-zy-border-card shadow-sm"
+      {/* Monumental Stacked Headline: "ZYR" / "VAE." */}
+      <div className="my-auto py-8 sm:py-12 lg:py-16">
+        <h1
+          className="font-monument font-medium text-left tracking-[-0.055em] leading-[0.82] select-none text-balance"
+          aria-label="ZYRVAE — Digital Studio"
         >
-          {/* Specimen Header */}
-          <div className="w-full flex items-center justify-between pb-4 border-b border-zy-border-subtle font-mono text-[10px] text-zy-dim uppercase tracking-widest">
-            <span className="text-zy-fg-secondary font-medium">SPEC // ZYRVAE MONOGRAM</span>
-            <span className="text-zy-blue">GRID 48×48 [1:1]</span>
+          {/* Line 1: Light Ink (White in dark, jet in light) */}
+          <div className="overflow-hidden block">
+            <motion.span
+              initial={prefersReducedMotion ? false : { y: '102%' }}
+              animate={{ y: '0%' }}
+              transition={{ duration: 0.9, ease: easeOutExpo }}
+              className="block text-[23vw] sm:text-[18vw] lg:text-[16.5vw] xl:text-[210px] text-zy-fg font-medium tracking-[-0.06em]"
+            >
+              ZYR
+            </motion.span>
           </div>
 
-          {/* Geometric Monogram Stage with Precision Construction Frame */}
-          <div className="py-9 flex items-center justify-center relative my-2 bg-zy-card/60 rounded-xl border border-zy-border-subtle overflow-hidden">
-            {/* Corner coordinate readouts inside stage */}
-            <span className="absolute top-2.5 left-3 font-mono text-[9px] text-zy-dim uppercase tracking-widest">
-              ORIGIN [11,14]
-            </span>
-            <span className="absolute top-2.5 right-3 font-mono text-[9px] text-zy-blue uppercase tracking-widest">
-              DATUM [28,24]
-            </span>
-            <span className="absolute bottom-2.5 left-3 font-mono text-[9px] text-zy-dim uppercase tracking-widest">
-              VECTOR Z-01
-            </span>
-            <span className="absolute bottom-2.5 right-3 font-mono text-[9px] text-zy-dim uppercase tracking-widest">
-              #0A5CFF
-            </span>
-
-            {/* Subtle hairline framing rings */}
-            <div className="absolute w-40 h-40 rounded-full border border-zy-border pointer-events-none" />
-            <div className="absolute w-52 h-52 rounded-full border border-zy-border-subtle border-dashed pointer-events-none" />
-
-            <SymbolLogo size={118} animate={true} showPlate={false} showBlueprint={true} />
+          {/* Line 2: Dark Ink / Secondary Graphite Tone with Electric Blue Period */}
+          <div className="overflow-hidden block -mt-[1.5vw] sm:-mt-[2vw]">
+            <motion.span
+              initial={prefersReducedMotion ? false : { y: '102%' }}
+              animate={{ y: '0%' }}
+              transition={{ duration: 0.9, delay: 0.11, ease: easeOutExpo }}
+              className="block text-[23vw] sm:text-[18vw] lg:text-[16.5vw] xl:text-[210px] text-zy-dim font-medium tracking-[-0.06em]"
+            >
+              VAE<span className="text-zy-blue">.</span>
+            </motion.span>
           </div>
-
-          {/* Direct Demo Index inside Specimen Module */}
-          <div className="space-y-2.5 pt-3 border-t border-zy-border-subtle">
-            <div className="flex items-center justify-between font-mono text-[10px] text-zy-dim uppercase tracking-wider">
-              <span>
-                {language === 'es' ? '// CASOS DEMO INTERACTIVOS' : '// LIVE INTERACTIVE DEMOS'}
-              </span>
-              <span className="text-zy-fg-secondary">04 SYSTEMS</span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              {demoShortcuts.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/case-study/${item.slug}`}
-                  className="group flex items-center justify-between px-3 py-2 rounded-lg bg-zy-card hover:bg-zy-card-hover border border-zy-border-subtle hover:border-zy-blue/50 transition-all text-[11px] font-mono"
-                >
-                  <div className="truncate pr-1">
-                    <span className="text-zy-fg group-hover:text-zy-blue font-semibold block truncate transition-colors">
-                      {item.label}
-                    </span>
-                    <span className="text-[9px] text-zy-dim block truncate">{item.domain}</span>
-                  </div>
-                  <ArrowUpRight
-                    size={12}
-                    className="text-zy-dim group-hover:text-zy-blue shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+        </h1>
       </div>
 
-      {/* Bottom Architectural Capabilities Strip & Scroll Prompt */}
+      {/* Bottom Grid: Supporting Sentence in Columns 9-12 & Strategic Anchors */}
       <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.65, delay: 0.48 }}
-        className="pt-6 sm:pt-7 border-t border-zy-border-subtle flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-xs font-mono"
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.35, ease: easeOutExpo }}
+        className="pt-6 border-t border-zy-border-subtle grid grid-cols-1 md:grid-cols-12 gap-6 items-end"
       >
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 flex-grow">
-          {pillars.map((pillar) => (
-            <div key={pillar.code} className="flex items-start space-x-2">
-              <span className="text-zy-blue font-semibold text-[11px] shrink-0">{pillar.code} //</span>
-              <span className="text-xs text-zy-muted font-sans leading-snug">{pillar.label}</span>
-            </div>
-          ))}
+        {/* Left / Bottom-Left: Technical Datum & Specimen Details */}
+        <div className="md:col-span-6 lg:col-span-7 space-y-3">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11px] text-zy-dim uppercase tracking-wider">
+            <span className="text-zy-blue font-semibold">00 // EDITORIAL PROPOSITION</span>
+            <span>·</span>
+            <span className="text-zy-muted">
+              {language === 'es'
+                ? 'DIRECCIÓN DE ARTE & INGENIERÍA FRONTEND'
+                : 'ART DIRECTION & FRONTEND ENGINEERING'}
+            </span>
+          </div>
+
+          <div className="hidden sm:flex items-center space-x-6 pt-1 font-mono text-[11px] text-zy-dim">
+            <Link
+              href="/#work"
+              className="inline-flex items-center space-x-2 text-zy-fg-secondary hover:text-zy-blue transition-colors group"
+            >
+              <span>{t.scrollPrompt}</span>
+              <ArrowDown size={13} className="text-zy-blue transition-transform group-hover:translate-y-0.5" />
+            </Link>
+
+            <span className="text-zy-border-strong">/</span>
+
+            <span>BUENOS AIRES // GLOBAL</span>
+
+            <span className="text-zy-border-strong">/</span>
+
+            <span>NEXT.JS · TYPESCRIPT</span>
+          </div>
         </div>
 
-        <Link
-          href="/#work"
-          className="inline-flex items-center space-x-2 text-zy-fg-secondary hover:text-zy-blue transition-colors shrink-0 self-start lg:self-center py-1"
-        >
-          <span>{t.scrollPrompt}</span>
-          <ArrowDown size={13} className="text-zy-blue" />
-        </Link>
+        {/* Right / Columns 8-12: Supporting Sentence & Primary Action */}
+        <div className="md:col-span-6 lg:col-span-5 md:text-right space-y-4">
+          <p className="text-base sm:text-lg text-zy-fg-secondary font-sans leading-snug md:ml-auto max-w-[34ch] font-normal">
+            {t.subhead}
+          </p>
+
+          <div className="flex flex-wrap items-center md:justify-end gap-4 pt-1">
+            <Link
+              href="/#contact"
+              className="inline-flex items-center space-x-1.5 text-xs font-mono uppercase tracking-wider text-zy-fg hover:text-zy-blue underline underline-offset-8 decoration-zy-blue/60 transition-colors"
+            >
+              <span>{t.ctaPrimary}</span>
+              <ArrowUpRight size={13} className="text-zy-blue" />
+            </Link>
+
+            <span className="text-zy-border-strong">·</span>
+
+            <Link
+              href="/#work"
+              className="text-xs font-mono uppercase tracking-wider text-zy-dim hover:text-zy-fg transition-colors"
+            >
+              {t.ctaSecondary}
+            </Link>
+          </div>
+        </div>
       </motion.div>
     </section>
   );

@@ -234,24 +234,91 @@ export const ContactForm: React.FC = () => {
   return (
     <section
       id="contact"
-      className="py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
-      aria-label="Start a Project Brief"
+      className="py-20 sm:py-28 lg:py-36 px-5 sm:px-8 lg:px-12 max-w-[1720px] mx-auto scroll-mt-20 border-t border-zy-border-subtle"
+      aria-label="Contact ZYRVAE — Address in Display Rows & Project Brief"
     >
-      {/* Header */}
-      <div className="mb-12 sm:mb-14 text-center max-w-2xl mx-auto">
-        <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold">
-          {t.label}
+      {/* Top Section Label */}
+      <div className="mb-8 border-b border-zy-border-subtle pb-4">
+        <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold block">
+          // {t.label}
         </span>
-        <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
-          {t.title}
-        </h2>
-        <p className="text-sm sm:text-base text-zy-muted font-sans mt-3">
-          {t.subtitle}
-        </p>
+      </div>
+
+      {/* Taste Blueprint: Address in Display Rows */}
+      <div className="divide-y divide-zy-border-subtle border-y border-zy-border-subtle mb-16 sm:mb-24">
+        {/* Row 1: Studio Name */}
+        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between group">
+          <span className="text-3xl sm:text-5xl lg:text-7xl font-sans font-medium tracking-tight text-zy-fg">
+            ZYRVAE DIGITAL STUDIO
+          </span>
+          <span className="font-mono text-xs text-zy-blue uppercase tracking-widest hidden sm:inline">
+            [BUENOS AIRES]
+          </span>
+        </div>
+
+        {/* Row 2: Direct Email Link */}
+        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between group">
+          <a
+            href="mailto:zyrvae.co@gmail.com"
+            className="text-2xl sm:text-4xl lg:text-6xl font-sans font-normal tracking-tight text-zy-muted hover:text-zy-blue transition-colors flex items-center space-x-3"
+          >
+            <span>zyrvae.co@gmail.com</span>
+            <ArrowRight size={24} className="text-zy-blue shrink-0 hidden sm:inline" />
+          </a>
+          <span className="font-mono text-xs text-zy-dim uppercase tracking-widest hidden sm:inline">
+            // DIRECT INBOX
+          </span>
+        </div>
+
+        {/* Row 3: Operating Model */}
+        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between">
+          <span className="text-2xl sm:text-4xl lg:text-5xl font-sans font-normal tracking-tight text-zy-fg-secondary">
+            {language === 'es'
+              ? 'TRATO DIRECTO DE FUNDADOR A FUNDADOR'
+              : 'FOUNDER-TO-FOUNDER COLLABORATION'}
+          </span>
+          <span className="font-mono text-xs text-zy-dim uppercase tracking-widest hidden sm:inline">
+            NO MIDDLEMEN
+          </span>
+        </div>
+
+        {/* Row 4: Response Time SLA */}
+        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between">
+          <span className="text-xl sm:text-3xl lg:text-4xl font-sans font-normal text-zy-dim">
+            {language === 'es'
+              ? 'RESPUESTA Y CALENDARIZACIÓN EN MENOS DE 24 HORAS'
+              : 'INITIAL RESPONSE & SCOPING WITHIN 24 HOURS'}
+          </span>
+          <span className="font-mono text-xs text-zy-blue uppercase tracking-widest hidden sm:inline">
+            UTC-3 // GLOBAL
+          </span>
+        </div>
+
+        {/* Row 5: Action Trigger Row */}
+        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between bg-zy-surface/40 px-2 sm:px-4">
+          <div className="space-y-1">
+            <span className="font-mono text-xs text-zy-blue uppercase tracking-widest block font-semibold">
+              // {language === 'es' ? 'BRIEF PROGRESIVO' : 'PROGRESSIVE BRIEF'}
+            </span>
+            <span className="text-xl sm:text-3xl font-sans font-medium text-zy-fg block">
+              {language === 'es'
+                ? 'INICIAR FICHA DE PROYECTO [4 ETAPAS]'
+                : 'START PROJECT BRIEF [4 STAGES]'}
+            </span>
+          </div>
+
+          <a
+            href="#brief-form"
+            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-zy-blue hover:bg-zy-blue-hover active:scale-95 text-white flex items-center justify-center transition-transform shrink-0 ml-4 shadow-sm"
+            aria-label="Ir al brief de proyecto"
+          >
+            <ArrowRight size={22} />
+          </a>
+        </div>
       </div>
 
       {/* Main Form Container */}
-      <div className="bg-zy-card border border-zy-border rounded-2xl p-6 sm:p-10 relative">
+      <div id="brief-form" className="bg-zy-card border border-zy-border p-6 sm:p-10 lg:p-12 relative max-w-4xl mx-auto scroll-mt-28">
         {/* Anti-spam honeypot */}
         <input
           type="text"

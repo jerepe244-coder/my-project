@@ -140,7 +140,7 @@ export const Header: React.FC = () => {
           isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2">
+        <div className="max-w-[1720px] mx-auto px-5 sm:px-8 lg:px-12 pt-4 pb-2">
           <div
             style={{
               backgroundColor: isScrolled ? 'var(--zy-header-scrolled)' : 'var(--zy-header-top)',

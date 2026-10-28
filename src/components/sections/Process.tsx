@@ -14,6 +14,29 @@ export const Process: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const [activeStageId, setActiveStageId] = useState<string>(processStages[0].id);
 
+  const runInPhrases: Record<string, { es: string; en: string }> = {
+    discovery: {
+      es: 'En la primera semana:',
+      en: 'On the first week:',
+    },
+    'art-direction': {
+      es: 'En el sprint de arte:',
+      en: 'In the design sprint:',
+    },
+    development: {
+      es: 'Durante el desarrollo:',
+      en: 'Through engineering:',
+    },
+    'testing-demos': {
+      es: 'En la fase interactiva:',
+      en: 'In interactive testing:',
+    },
+    launch: {
+      es: 'Al pase a producción:',
+      en: 'At production handover:',
+    },
+  };
+
   const handleStageSelect = (id: string) => {
     setActiveStageId(id);
     const el = document.getElementById(`process-stage-${id}`);
@@ -22,50 +45,62 @@ export const Process: React.FC = () => {
     }
   };
 
+  // Falling diagonal layout on 12-column grid
+  const getStageLayoutClass = (idx: number) => {
+    switch (idx % 5) {
+      case 0:
+        return 'lg:col-span-8 lg:col-start-1';
+      case 1:
+        return 'lg:col-span-8 lg:col-start-5';
+      case 2:
+        return 'lg:col-span-8 lg:col-start-2';
+      case 3:
+        return 'lg:col-span-8 lg:col-start-4';
+      case 4:
+        return 'lg:col-span-8 lg:col-start-1';
+      default:
+        return 'lg:col-span-8 lg:col-start-1';
+    }
+  };
+
   return (
     <section
       id="process"
-      className="py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
-      aria-label="Approach and Methodology"
+      className="py-20 sm:py-28 lg:py-36 px-5 sm:px-8 lg:px-12 max-w-[1720px] mx-auto scroll-mt-20 border-t border-zy-border-subtle"
+      aria-label="Approach and Methodology — Falling Diagonal Stages"
     >
-      {/* Header */}
+      {/* Section Header */}
       <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 sm:mb-14 gap-6"
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 sm:mb-24 gap-6 border-b border-zy-border-subtle pb-6"
       >
-        <div className="max-w-3xl">
-          <div className="flex items-center space-x-3">
-            <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold">
-              {t.label}
-            </span>
-            <span className="text-zy-border-strong font-mono text-xs">//</span>
-            <span className="font-mono text-[11px] uppercase tracking-wider text-zy-dim">
-              {language === 'es' ? '05 FASES ESTRUCTURADAS' : '05 STRUCTURED PHASES'}
-            </span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2.5">
-            {t.title}
+        <div>
+          <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold block mb-2">
+            // {t.label}
+          </span>
+          <h2 className="text-4xl sm:text-6xl font-sans font-medium tracking-tight text-zy-fg">
+            {language === 'es' ? 'PROCESO' : 'PROCESS'}
           </h2>
-          <p className="text-sm sm:text-base text-zy-muted font-sans mt-3.5 leading-relaxed">
+          <p className="text-sm sm:text-base text-zy-muted font-sans mt-2 max-w-xl">
             {t.subtitle}
           </p>
         </div>
 
         <div className="font-mono text-xs text-zy-dim uppercase tracking-wider self-start lg:self-end">
           {language === 'es'
-            ? '// COMUNICACIÓN DIRECTA · SIN INTERMEDIARIOS'
+            ? '// COLABORACIÓN DIRECTA · SIN INTERMEDIARIOS'
             : '// DIRECT COLLABORATION · ZERO MIDDLEMEN'}
         </div>
       </motion.div>
 
-      {/* Architectural 5-Phase Overview Matrix */}
+      {/* Stage Fast Switcher Bar */}
       <div
-        className="mb-8 sm:mb-12 flex sm:grid sm:grid-cols-5 gap-2 p-1.5 sm:p-2 rounded-xl bg-zy-bg-elevated border border-zy-border-card overflow-x-auto"
+        className="mb-14 sm:mb-20 flex sm:grid sm:grid-cols-5 gap-2 p-1.5 bg-zy-surface border border-zy-border rounded-lg overflow-x-auto"
         role="navigation"
-        aria-label={language === 'es' ? 'Índice de etapas del proceso' : 'Process stage index'}
+        aria-label="Process stage index"
       >
         {processStages.map((stage) => {
           const isSelected = activeStageId === stage.id;
@@ -74,20 +109,18 @@ export const Process: React.FC = () => {
               key={stage.id}
               type="button"
               onClick={() => handleStageSelect(stage.id)}
-              className={`p-2.5 sm:p-3 rounded-lg text-left transition-all border shrink-0 sm:shrink min-w-[140px] sm:min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue active:scale-[0.98] ${
+              className={`p-2.5 sm:p-3 text-left transition-colors border shrink-0 sm:shrink min-w-[140px] sm:min-w-0 ${
                 isSelected
-                  ? 'bg-zy-card border-zy-blue/50 shadow-sm'
-                  : 'bg-transparent border-transparent hover:bg-zy-surface/60'
+                  ? 'bg-zy-card border-zy-blue/60 text-zy-fg shadow-xs'
+                  : 'bg-transparent border-transparent hover:bg-zy-surface text-zy-muted hover:text-zy-fg'
               }`}
             >
-              <span
-                className={`block font-mono text-[10px] uppercase tracking-wider ${
-                  isSelected ? 'text-zy-blue font-semibold' : 'text-zy-dim'
-                }`}
-              >
+              <span className={`block font-mono text-[10px] uppercase tracking-wider ${
+                isSelected ? 'text-zy-blue font-semibold' : 'text-zy-dim'
+              }`}>
                 {t.stageLabel} {stage.number}
               </span>
-              <span className="block font-sans text-xs sm:text-sm font-semibold text-zy-fg mt-0.5 sm:mt-1 truncate">
+              <span className="block font-sans text-xs sm:text-sm font-medium truncate mt-0.5">
                 {stage.name[language]}
               </span>
             </button>
@@ -95,86 +128,68 @@ export const Process: React.FC = () => {
         })}
       </div>
 
-      {/* Vertical Editorial Timeline with progressive entry */}
-      <div className="relative border-l border-zy-border ml-3 sm:ml-8 pl-5 sm:pl-12 space-y-6 sm:space-y-10">
+      {/* Stages down a falling diagonal grid (Taste: how-it-works-photographs-down-a-diagonal) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-16 sm:gap-y-24 items-start">
         {processStages.map((stage, idx) => {
           const isSelected = activeStageId === stage.id;
+          const colClass = getStageLayoutClass(idx);
+          const runIn = runInPhrases[stage.id]?.[language] || '';
 
           return (
             <motion.div
               id={`process-stage-${stage.id}`}
               key={stage.id}
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.45, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
               onMouseEnter={() => setActiveStageId(stage.id)}
-              className="relative group scroll-mt-28"
+              className={`${colClass} group scroll-mt-28`}
             >
-              {/* Timeline Marker Dot */}
               <div
-                className={`absolute -left-[27px] sm:-left-[55px] top-6 w-3.5 h-3.5 rounded-full border-2 transition-colors duration-200 ${
-                  isSelected
-                    ? 'bg-zy-blue border-zy-blue'
-                    : 'bg-zy-bg border-zy-border group-hover:border-zy-blue group-hover:bg-zy-blue'
-                }`}
-              />
-
-              {/* Stage Content Card */}
-              <div
-                className={`bg-zy-card border rounded-xl p-5 sm:p-8 transition-all duration-200 shadow-sm ${
-                  isSelected
-                    ? 'border-zy-border-strong'
-                    : 'border-zy-border-card hover:border-zy-border-strong'
+                className={`p-6 sm:p-8 border bg-zy-card transition-colors ${
+                  isSelected ? 'border-zy-border-strong' : 'border-zy-border-subtle hover:border-zy-border'
                 }`}
               >
                 {/* Stage Header */}
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-zy-border-subtle pb-4">
+                <div className="flex items-baseline justify-between border-b border-zy-border-subtle pb-4 mb-5">
                   <div className="flex items-baseline space-x-3">
-                    <span className="font-mono text-xs text-zy-blue font-semibold">
+                    <span className="font-mono text-sm text-zy-blue font-semibold">
                       // {stage.number}
                     </span>
-                    <h3 className="text-xl sm:text-2xl font-sans font-bold text-zy-fg">
+                    <h3 className="text-xl sm:text-2xl font-sans font-medium text-zy-fg">
                       {stage.name[language]}
                     </h3>
                   </div>
-                  <span className="font-mono text-[11px] text-zy-dim uppercase tracking-wider">
-                    {t.stageLabel} {stage.number} // 05
+                  <span className="font-mono text-[11px] text-zy-dim uppercase">
+                    STAGE 0{idx + 1}/05
                   </span>
                 </div>
 
-                {/* Stage Body */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 mt-5 sm:mt-6">
-                  {/* Objective & Work Done */}
-                  <div className="md:col-span-7 space-y-4">
-                    <div>
-                      <h4 className="font-mono text-[11px] text-zy-dim uppercase tracking-wider mb-1">
-                        {t.objectiveLabel}
-                      </h4>
-                      <p className="text-sm sm:text-base font-sans font-medium text-zy-fg-soft leading-relaxed">
-                        {stage.objective[language]}
-                      </p>
-                    </div>
+                {/* Stage Body with bold run-in phrase */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                  <div className="md:col-span-7 space-y-3">
+                    <p className="text-base font-sans text-zy-fg leading-relaxed">
+                      <strong className="text-zy-blue font-mono font-medium block text-xs uppercase tracking-wider mb-1">
+                        {runIn}
+                      </strong>
+                      {stage.objective[language]}
+                    </p>
 
-                    <div>
-                      <h4 className="font-mono text-[11px] text-zy-dim uppercase tracking-wider mb-1">
-                        {language === 'es' ? 'Trabajo ejecutado' : 'Work performed'}
-                      </h4>
-                      <p className="text-sm text-zy-muted font-sans leading-relaxed">
-                        {stage.work[language]}
-                      </p>
-                    </div>
+                    <p className="text-sm text-zy-muted font-sans leading-relaxed">
+                      {stage.work[language]}
+                    </p>
                   </div>
 
-                  {/* Key Deliverables */}
-                  <div className="md:col-span-5 bg-zy-surface-alt p-4 sm:p-5 rounded-xl border border-zy-border space-y-3">
-                    <h4 className="font-mono text-xs text-zy-blue uppercase tracking-wider font-semibold">
+                  {/* Deliverables module */}
+                  <div className="md:col-span-5 bg-zy-surface p-4 border border-zy-border-subtle space-y-2.5">
+                    <span className="font-mono text-xs text-zy-blue uppercase tracking-wider font-semibold block">
                       // {t.deliverablesLabel}
-                    </h4>
-                    <ul className="space-y-2 text-sm text-zy-fg-secondary font-sans">
+                    </span>
+                    <ul className="space-y-1.5 text-xs text-zy-fg-secondary font-sans">
                       {stage.deliverables[language].map((deliv, i) => (
-                        <li key={i} className="flex items-start space-x-2.5 leading-relaxed">
-                          <Check size={14} className="text-zy-blue shrink-0 mt-0.5" />
+                        <li key={i} className="flex items-start space-x-2 leading-relaxed">
+                          <Check size={12} className="text-zy-blue shrink-0 mt-0.5" />
                           <span>{deliv}</span>
                         </li>
                       ))}
@@ -187,32 +202,24 @@ export const Process: React.FC = () => {
         })}
       </div>
 
-      {/* Bottom Note & Stage 01 Kickoff CTA */}
-      <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="mt-12 ml-3 sm:ml-8 pl-5 sm:pl-12 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-zy-border-subtle"
-      >
-        <p className="text-xs font-mono text-zy-dim max-w-2xl">
+      {/* Bottom CTA Row */}
+      <div className="mt-16 pt-6 border-t border-zy-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-zy-dim">
+        <p className="max-w-xl">
           {language === 'es'
-            ? '* Los plazos de entrega y entregables específicos se acuerdan de acuerdo con la escala y complejidad técnica de cada proyecto.'
-            : '* Exact delivery milestones and specific assets are scheduled according to individual project scale and engineering requirements.'}
+            ? '* Cada hito y entregable se calendariza de mutuo acuerdo según la escala y complejidad del proyecto.'
+            : '* Milestones and assets are scheduled based on project scale and architectural requirements.'}
         </p>
 
         <Link
           href="/#contact"
-          className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-zy-surface hover:bg-zy-surface-hover border border-zy-border hover:border-zy-blue/50 text-xs font-mono text-zy-fg hover:text-zy-blue transition-colors shrink-0 self-start sm:self-center"
+          className="inline-flex items-center space-x-1.5 text-zy-fg hover:text-zy-blue underline underline-offset-4 decoration-zy-blue transition-colors self-start sm:self-center"
         >
           <span>
-            {language === 'es'
-              ? 'Iniciar Etapa 01 — Discovery'
-              : 'Begin Stage 01 — Discovery'}
+            {language === 'es' ? 'Iniciar Etapa 01 — Discovery' : 'Begin Stage 01 — Discovery'}
           </span>
-          <ArrowUpRight size={14} className="text-zy-blue" />
+          <ArrowUpRight size={13} className="text-zy-blue" />
         </Link>
-      </motion.div>
+      </div>
     </section>
   );
 };

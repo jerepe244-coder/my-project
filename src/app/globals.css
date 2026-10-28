@@ -208,13 +208,30 @@ html {
   scroll-behavior: smooth;
   background-color: var(--zy-bg);
   color: var(--zy-fg-soft);
+  font-family: 'Hanken Grotesk', var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background-color: var(--zy-bg);
   color: var(--zy-fg-soft);
+  font-family: 'Hanken Grotesk', var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Monumental Display Typography (Taste: name-as-monument) */
+.font-monument {
+  font-family: 'Hanken Grotesk', var(--font-geist-sans), sans-serif;
+  letter-spacing: -0.055em;
+  line-height: 0.82;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+.text-balance {
+  text-wrap: balance;
 }
 
 /* Accessible focus visible outlines */

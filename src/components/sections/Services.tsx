@@ -56,96 +56,95 @@ export const Services: React.FC = () => {
   return (
     <section
       id="services"
-      className="py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
-      aria-label="Capabilities & Services"
+      className="py-20 sm:py-28 lg:py-36 px-5 sm:px-8 lg:px-12 max-w-[1720px] mx-auto scroll-mt-20 border-t border-zy-border-subtle"
+      aria-label="Capabilities & Services — Line-up at one type size"
     >
-      {/* Header with progressive reveal */}
+      {/* Section Header */}
       <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 sm:mb-20 gap-6"
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 sm:mb-20 gap-6 border-b border-zy-border-subtle pb-6"
       >
-        <div className="max-w-3xl">
-          <div className="flex items-center space-x-3">
-            <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold">
-              {t.label}
-            </span>
-            <span className="text-zy-border-strong font-mono text-xs">//</span>
-            <span className="font-mono text-[11px] uppercase tracking-wider text-zy-dim">
-              {language === 'es' ? '05 ÁREAS DE PRÁCTICA' : '05 PRACTICE AREAS'}
-            </span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2.5">
-            {t.title}
+        <div>
+          <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold block mb-2">
+            // {t.label}
+          </span>
+          <h2 className="text-4xl sm:text-6xl font-sans font-medium tracking-tight text-zy-fg">
+            {language === 'es' ? 'SERVICIOS' : 'SERVICES'}
           </h2>
-          <p className="text-sm sm:text-base text-zy-muted font-sans mt-3.5 leading-relaxed">
+          <p className="text-sm sm:text-base text-zy-muted font-sans mt-2 max-w-xl">
             {t.subtitle}
           </p>
         </div>
 
         <Link
           href="/#contact"
-          className="inline-flex items-center space-x-2 px-5 py-3 rounded-xl bg-zy-card hover:bg-zy-card-hover border border-zy-border hover:border-zy-blue/50 text-xs font-mono text-zy-fg transition-all self-start lg:self-end shrink-0"
+          className="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-zy-fg hover:text-zy-blue underline underline-offset-4 decoration-zy-blue self-start lg:self-end"
         >
           <span>{t.cta}</span>
+          <ArrowUpRight size={13} className="text-zy-blue" />
         </Link>
       </motion.div>
 
-      {/* Editorial Numbered Index with staggered scroll motion */}
-      <div className="divide-y divide-zy-border border-t border-b border-zy-border">
+      {/* Sticky Table Strip (Taste: list-lineup-one-size) */}
+      <div className="sticky top-16 z-20 py-2.5 px-4 bg-zy-bg/95 backdrop-blur-md border-y border-zy-border flex items-center justify-between font-mono text-[11px] text-zy-blue uppercase tracking-widest">
+        <span>// {language === 'es' ? 'PRÁCTICA & CAPACIDADES TÉCNICAS' : 'PRACTICE & TECHNICAL CAPABILITIES'}</span>
+        <span className="text-zy-dim">05 AREAS</span>
+      </div>
+
+      {/* Disciplined Four-Column Table Line-Up */}
+      <div className="divide-y divide-zy-border-subtle border-b border-zy-border-subtle">
         {services.map((service, idx) => {
           const isHovered = hoveredService === service.id;
 
           return (
             <motion.div
               key={service.id}
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.45, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
-              className={`relative py-8 sm:py-10 transition-colors duration-200 group ${
-                isHovered ? 'bg-zy-surface/65' : 'bg-transparent'
+              className={`relative py-8 sm:py-10 transition-colors duration-150 group ${
+                isHovered ? 'bg-zy-surface/50' : 'bg-transparent'
               }`}
             >
-              {/* Subtle vertical active accent indicator */}
+              {/* Electric blue hairline active bar */}
               <div
-                className={`absolute left-0 top-0 bottom-0 w-0.5 bg-zy-blue transition-opacity duration-200 ${
+                className={`absolute left-0 top-0 bottom-0 w-1 bg-zy-blue transition-opacity duration-150 ${
                   isHovered ? 'opacity-100' : 'opacity-0'
                 }`}
                 aria-hidden="true"
               />
 
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-start px-3 sm:px-6">
-                {/* Number */}
-                <div className="md:col-span-2 font-mono text-xs sm:text-sm text-zy-dim group-hover:text-zy-blue transition-colors pt-1">
-                  <span className="font-semibold">// {service.number}</span>
-                  <span className="block text-[10px] text-zy-dim mt-1 uppercase tracking-widest hidden md:block">
-                    CAPABILITY
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start px-2 sm:px-6">
+                {/* Col 1: Number & Title at clamp(20px, 2.3vw, 32px), weight 500, tight tracking */}
+                <div className="md:col-span-5 space-y-1">
+                  <span className="font-mono text-xs text-zy-blue font-semibold block">
+                    {service.number} //
                   </span>
-                </div>
-
-                {/* Title */}
-                <div className="md:col-span-4">
-                  <h3 className="text-xl sm:text-2xl lg:text-[1.65rem] font-sans font-bold text-zy-fg group-hover:text-zy-blue transition-colors leading-snug">
+                  <h3 className="text-xl sm:text-2xl lg:text-[1.75rem] font-sans font-medium text-zy-fg group-hover:text-zy-blue transition-colors tracking-tight leading-snug">
                     {service.title[language]}
                   </h3>
                 </div>
 
-                {/* Description & Tags */}
-                <div className="md:col-span-5 space-y-4">
-                  <p className="text-sm sm:text-base text-zy-muted leading-relaxed font-sans">
+                {/* Col 2 (at ~33%): Strategic description */}
+                <div className="md:col-span-4">
+                  <p className="text-sm sm:text-base text-zy-muted font-sans leading-relaxed">
                     {service.description[language]}
                   </p>
+                </div>
 
-                  <div className="flex flex-wrap gap-2 pt-0.5">
+                {/* Col 3 (at ~66%): Deliverable tags */}
+                <div className="md:col-span-2 space-y-1.5 pt-1">
+                  <div className="flex flex-wrap gap-1.5">
                     {service.tags.map((tag, i) => (
                       <span
                         key={i}
-                        className="font-mono text-[11px] text-zy-fg-secondary bg-zy-card border border-zy-border px-2.5 py-1 rounded-md"
+                        className="font-mono text-[11px] text-zy-fg-secondary bg-zy-surface border border-zy-border px-2 py-0.5 rounded-sm"
                       >
                         {tag[language]}
                       </span>
@@ -153,19 +152,16 @@ export const Services: React.FC = () => {
                   </div>
                 </div>
 
-                {/* CTA Link Arrow */}
-                <div className="md:col-span-1 flex md:justify-end pt-2 md:pt-0">
+                {/* Col 4: Action link right-aligned */}
+                <div className="md:col-span-1 flex md:justify-end pt-1">
                   <Link
                     href="/#contact"
-                    className="inline-flex items-center space-x-1.5 md:space-x-0 p-2.5 rounded-lg bg-zy-control hover:bg-zy-blue border border-zy-border hover:border-zy-blue text-zy-muted hover:text-white active:scale-[0.98] transition-all duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
+                    className="p-2 rounded-sm border border-transparent group-hover:border-zy-border text-zy-dim group-hover:text-zy-blue transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
                     aria-label={`${
-                      language === 'es' ? 'Consultar por' : 'Inquire about'
+                      language === 'es' ? 'Consultar' : 'Inquire'
                     } ${service.title[language]}`}
                   >
-                    <span className="md:hidden font-mono text-xs">
-                      {language === 'es' ? 'Solicitar propuesta' : 'Request proposal'}
-                    </span>
-                    <ArrowUpRight size={16} />
+                    <ArrowUpRight size={18} />
                   </Link>
                 </div>
               </div>
@@ -174,35 +170,31 @@ export const Services: React.FC = () => {
         })}
       </div>
 
-      {/* Architectural Baseline Guarantees Grid */}
+      {/* Engineering Baseline Standards Row */}
       <motion.div
         initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.15 }}
-        className="mt-12 p-6 sm:p-8 rounded-2xl bg-zy-bg-elevated border border-zy-border-card"
+        transition={{ duration: 0.5 }}
+        className="mt-14 p-6 sm:p-8 bg-zy-card border border-zy-border"
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 mb-6 border-b border-zy-border-subtle">
-          <span className="font-mono text-xs text-zy-blue uppercase tracking-wider font-semibold">
-            {language === 'es'
-              ? '// ESTÁNDARES TÉCNICOS EN CADA PROYECTO'
-              : '// ENGINEERING BASELINE INCLUDED IN EVERY PROJECT'}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-6 border-b border-zy-border-subtle font-mono text-xs">
+          <span className="text-zy-blue uppercase tracking-wider font-semibold">
+            // {language === 'es' ? 'ESTÁNDARES EN CADA ENTREGA' : 'BASELINE IN EVERY DELIVERY'}
           </span>
-          <span className="font-mono text-[11px] text-zy-dim uppercase">
-            {language === 'es'
-              ? 'ALCANCE DEFINIDO ANTES DE IMPLEMENTAR'
-              : 'SCOPE DEFINED BEFORE IMPLEMENTATION'}
+          <span className="text-zy-dim uppercase">
+            {language === 'es' ? 'DEFINIDOS ANTES DE INICIAR' : 'DEFINED BEFORE KICKOFF'}
           </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {baselineStandards.map((std, i) => (
-            <div key={i} className="space-y-2">
-              <div className="flex items-center space-x-2 text-xs font-sans font-bold text-zy-fg">
-                <Check size={14} className="text-zy-blue shrink-0" />
+            <div key={i} className="space-y-1.5">
+              <div className="flex items-center space-x-2 text-xs font-mono font-medium text-zy-fg">
+                <Check size={13} className="text-zy-blue shrink-0" />
                 <span>{std.title}</span>
               </div>
-              <p className="text-sm text-zy-muted font-sans leading-relaxed pl-5">
+              <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed pl-5">
                 {std.desc}
               </p>
             </div>
