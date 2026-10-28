@@ -25,7 +25,7 @@ export const Process: React.FC = () => {
   return (
     <section
       id="process"
-      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
+      className="py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
       aria-label="Approach and Methodology"
     >
       {/* Header */}
@@ -63,7 +63,7 @@ export const Process: React.FC = () => {
 
       {/* Architectural 5-Phase Overview Matrix */}
       <div
-        className="mb-12 grid grid-cols-2 sm:grid-cols-5 gap-2 p-2 rounded-xl bg-zy-bg-elevated border border-zy-border-card"
+        className="mb-8 sm:mb-12 flex sm:grid sm:grid-cols-5 gap-2 p-1.5 sm:p-2 rounded-xl bg-zy-bg-elevated border border-zy-border-card overflow-x-auto"
         role="navigation"
         aria-label={language === 'es' ? 'Índice de etapas del proceso' : 'Process stage index'}
       >
@@ -74,7 +74,7 @@ export const Process: React.FC = () => {
               key={stage.id}
               type="button"
               onClick={() => handleStageSelect(stage.id)}
-              className={`p-3 rounded-lg text-left transition-all border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue ${
+              className={`p-2.5 sm:p-3 rounded-lg text-left transition-all border shrink-0 sm:shrink min-w-[140px] sm:min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue active:scale-[0.98] ${
                 isSelected
                   ? 'bg-zy-card border-zy-blue/50 shadow-sm'
                   : 'bg-transparent border-transparent hover:bg-zy-surface/60'
@@ -87,7 +87,7 @@ export const Process: React.FC = () => {
               >
                 {t.stageLabel} {stage.number}
               </span>
-              <span className="block font-sans text-xs sm:text-sm font-semibold text-zy-fg mt-1 truncate">
+              <span className="block font-sans text-xs sm:text-sm font-semibold text-zy-fg mt-0.5 sm:mt-1 truncate">
                 {stage.name[language]}
               </span>
             </button>
@@ -96,7 +96,7 @@ export const Process: React.FC = () => {
       </div>
 
       {/* Vertical Editorial Timeline with progressive entry */}
-      <div className="relative border-l border-zy-border ml-3 sm:ml-8 pl-5 sm:pl-12 space-y-8 sm:space-y-10">
+      <div className="relative border-l border-zy-border ml-3 sm:ml-8 pl-5 sm:pl-12 space-y-6 sm:space-y-10">
         {processStages.map((stage, idx) => {
           const isSelected = activeStageId === stage.id;
 
@@ -122,7 +122,7 @@ export const Process: React.FC = () => {
 
               {/* Stage Content Card */}
               <div
-                className={`bg-zy-card border rounded-xl p-6 sm:p-8 transition-all duration-200 shadow-sm ${
+                className={`bg-zy-card border rounded-xl p-5 sm:p-8 transition-all duration-200 shadow-sm ${
                   isSelected
                     ? 'border-zy-border-strong'
                     : 'border-zy-border-card hover:border-zy-border-strong'
@@ -144,7 +144,7 @@ export const Process: React.FC = () => {
                 </div>
 
                 {/* Stage Body */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 mt-5 sm:mt-6">
                   {/* Objective & Work Done */}
                   <div className="md:col-span-7 space-y-4">
                     <div>
@@ -160,7 +160,7 @@ export const Process: React.FC = () => {
                       <h4 className="font-mono text-[11px] text-zy-dim uppercase tracking-wider mb-1">
                         {language === 'es' ? 'Trabajo ejecutado' : 'Work performed'}
                       </h4>
-                      <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed">
+                      <p className="text-sm text-zy-muted font-sans leading-relaxed">
                         {stage.work[language]}
                       </p>
                     </div>
@@ -171,7 +171,7 @@ export const Process: React.FC = () => {
                     <h4 className="font-mono text-xs text-zy-blue uppercase tracking-wider font-semibold">
                       // {t.deliverablesLabel}
                     </h4>
-                    <ul className="space-y-2.5 text-xs text-zy-fg-secondary font-sans">
+                    <ul className="space-y-2 text-sm text-zy-fg-secondary font-sans">
                       {stage.deliverables[language].map((deliv, i) => (
                         <li key={i} className="flex items-start space-x-2.5 leading-relaxed">
                           <Check size={14} className="text-zy-blue shrink-0 mt-0.5" />

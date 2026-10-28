@@ -85,7 +85,7 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
     ];
 
     return (
-      <div className="min-h-screen bg-zy-bg text-zy-fg pt-20 pb-20">
+      <div className="min-h-screen min-h-svh bg-zy-bg text-zy-fg pt-16 sm:pt-20 pb-16 sm:pb-20">
         {/* 1. HOTEL HEADER: AURA Identity, In-Page Navigation & Booking CTA */}
         <div className="sticky top-16 z-30 bg-zy-bg/90 backdrop-blur-md border-b border-zy-border-subtle transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
@@ -167,10 +167,10 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
         {/* 2. CINEMATIC HERO */}
         <section
           id="aura-hero"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6"
           aria-label="AURA Sanctuary Hero"
         >
-          <div className="relative min-h-[68vh] sm:min-h-[76vh] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-zy-border bg-[#080a0e] shadow-2xl flex flex-col justify-between p-6 sm:p-12 lg:p-16">
+          <div className="relative min-h-[64svh] sm:min-h-[72svh] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-zy-border bg-[#080a0e] flex flex-col justify-between p-6 sm:p-12 lg:p-16">
             <Image
               src={project.coverImage}
               alt={project.title}
@@ -200,12 +200,12 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
             </div>
 
             {/* Bottom Hero Editorial Headline & CTAs */}
-            <div className="relative z-10 max-w-3xl space-y-5 pt-24">
+            <div className="relative z-10 max-w-3xl space-y-5 pt-16 sm:pt-24">
               <motion.h1
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl sm:text-6xl lg:text-7xl font-sans font-bold tracking-[-0.03em] leading-[1.02] text-white"
+                className="text-4xl sm:text-6xl lg:text-7xl font-sans font-bold tracking-[-0.03em] leading-[1.02] text-white text-balance"
               >
                 {project.title}
               </motion.h1>
@@ -214,7 +214,7 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="text-base sm:text-xl text-[#e2e8f0] font-sans leading-relaxed max-w-2xl"
+                className="text-base sm:text-xl text-[#e2e8f0] font-sans leading-relaxed max-w-2xl font-normal"
               >
                 {language === 'es'
                   ? 'Arquitectura silenciosa en basalto y cedro natural sobre el valle glaciar. Tres refugios privados diseñados para la pausa contemplativa.'
@@ -230,7 +230,7 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
                 <a
                   href="#aura-suites"
                   onClick={(e) => scrollToSection(e, 'aura-suites')}
-                  className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs sm:text-sm font-mono tracking-wider transition-all shadow-[0_0_24px_rgba(10,92,255,0.4)]"
+                  className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs sm:text-sm font-mono tracking-wider transition-all"
                 >
                   <span>{language === 'es' ? 'Explorar suites' : 'Explore suites'}</span>
                   <ArrowDown size={14} />
@@ -239,7 +239,7 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
                 <a
                   href="#aura-booking"
                   onClick={(e) => scrollToSection(e, 'aura-booking')}
-                  className="inline-flex items-center space-x-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-mono tracking-wider transition-all"
+                  className="inline-flex items-center space-x-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-[0.98] backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-mono tracking-wider transition-all"
                 >
                   <span>{language === 'es' ? 'Planificar estadía' : 'Plan your stay'}</span>
                 </a>
@@ -256,10 +256,10 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-10 border-b border-zy-border-subtle">
             <div>
-              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
+              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold">
                 {language === 'es' ? '01 // ALOJAMIENTO PRIVADO' : '01 // PRIVATE ACCOMMODATIONS'}
               </span>
-              <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2 text-balance">
                 {language === 'es' ? 'Tres refugios en la montaña.' : 'Three mountain shelters.'}
               </h2>
             </div>
@@ -382,10 +382,10 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-10 border-b border-zy-border-subtle">
             <div>
-              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
+              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold">
                 {language === 'es' ? '02 // BIENESTAR & ENTORNO' : '02 // WELLNESS & NATURE'}
               </span>
-              <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2 text-balance">
                 {language === 'es' ? 'Materia, agua termal y calma.' : 'Stone, thermal water & stillness.'}
               </h2>
             </div>
@@ -437,10 +437,10 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-8">
             <div>
-              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
+              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold">
                 {language === 'es' ? '03 // PLANIFICAR ESTADÍA' : '03 // PLAN YOUR STAY'}
               </span>
-              <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2 text-balance">
                 {language === 'es' ? 'Personalizá tu reserva.' : 'Customize your stay.'}
               </h2>
             </div>
@@ -623,7 +623,7 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
   };
 
   return (
-    <div className="min-h-screen bg-zy-bg text-zy-fg pt-28 pb-20">
+    <div className="min-h-screen min-h-svh bg-zy-bg text-zy-fg pt-20 sm:pt-28 pb-16 sm:pb-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Back Link */}
         <div>

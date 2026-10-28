@@ -102,7 +102,7 @@ export const Portfolio: React.FC = () => {
   return (
     <section
       id="work"
-      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
+      className="py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
       aria-label="Selected Work & Case Studies"
     >
       {/* Section Header */}
@@ -334,7 +334,7 @@ export const Portfolio: React.FC = () => {
                       </div>
 
                       {/* Strategic Context Summary */}
-                      <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed">
+                      <p className="text-sm text-zy-muted font-sans leading-relaxed">
                         {project.designGoal[language]}
                       </p>
 
@@ -367,7 +367,7 @@ export const Portfolio: React.FC = () => {
                         {/* Primary Link: Full Live Experience */}
                         <Link
                           href={`/case-study/${project.slug}`}
-                          className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-mono font-medium tracking-wider transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
+                          className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs font-mono font-medium tracking-wider transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
                         >
                           <span>{t.viewProject}</span>
                         </Link>
@@ -375,7 +375,7 @@ export const Portfolio: React.FC = () => {
                         {/* Secondary Functional Link: Jump straight to Interactive Simulator */}
                         <Link
                           href={demoHref}
-                          className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-lg bg-zy-surface hover:bg-zy-surface-hover border border-zy-border hover:border-zy-blue/50 text-xs font-mono text-zy-fg-secondary hover:text-zy-blue transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
+                          className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-lg bg-zy-surface hover:bg-zy-surface-hover active:scale-[0.98] border border-zy-border hover:border-zy-blue/50 text-xs font-mono text-zy-fg-secondary hover:text-zy-blue transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
                         >
                           <Sparkles size={13} className="text-zy-blue shrink-0" />
                           <span>{t.tryDemo}</span>

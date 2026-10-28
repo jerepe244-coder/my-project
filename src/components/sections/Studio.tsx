@@ -31,7 +31,7 @@ export const Studio: React.FC = () => {
   return (
     <section
       id="studio"
-      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
+      className="py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
       aria-label="About the Studio"
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
@@ -121,7 +121,7 @@ export const Studio: React.FC = () => {
                   <h3 className="text-base font-sans font-bold text-zy-fg leading-snug">
                     {principle.title}
                   </h3>
-                  <p className="text-xs text-zy-muted font-sans leading-relaxed">
+                  <p className="text-sm text-zy-muted font-sans leading-relaxed">
                     {principle.desc}
                   </p>
                 </div>

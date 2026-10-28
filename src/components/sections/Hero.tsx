@@ -39,7 +39,7 @@ export const Hero: React.FC = () => {
 
   return (
     <section
-      className="relative min-h-[93vh] flex flex-col justify-between pt-24 sm:pt-32 pb-10 sm:pb-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+      className="relative min-h-[88svh] sm:min-h-[92svh] flex flex-col justify-between pt-20 sm:pt-28 lg:pt-32 pb-8 sm:pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
       aria-label="ZYRVAE Hero Section"
     >
       {/* Subtle architectural perimeter crosshairs (pure structural marks, no decorative blur blobs) */}
@@ -124,7 +124,7 @@ export const Hero: React.FC = () => {
           </motion.div>
 
           {/* Monumental Headline: Pure, disciplined contrast */}
-          <h1 className="text-[2.85rem] sm:text-6xl md:text-7xl lg:text-[5.35rem] xl:text-[6.1rem] font-sans font-bold tracking-[-0.035em] text-zy-fg leading-[0.95] sm:leading-[0.93]">
+          <h1 className="text-[2.65rem] sm:text-5xl md:text-6xl lg:text-[5.2rem] xl:text-[5.9rem] font-sans font-bold tracking-[-0.035em] text-zy-fg leading-[0.98] sm:leading-[0.93] text-balance">
             <motion.span
               initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -164,14 +164,14 @@ export const Hero: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <Link
                 href="/#contact"
-                className="group inline-flex items-center space-x-2.5 px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs sm:text-sm font-mono font-medium tracking-wider transition-all duration-150 shadow-[0_0_24px_rgba(10,92,255,0.28)] outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
+                className="group inline-flex items-center space-x-2.5 px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs sm:text-sm font-mono font-medium tracking-wider transition-[background-color,transform] duration-150 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
               >
                 <span>{t.ctaPrimary}</span>
               </Link>
 
               <Link
                 href="/#work"
-                className="inline-flex items-center space-x-2 px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl bg-zy-card hover:bg-zy-card-hover border border-zy-border hover:border-zy-border-strong text-zy-fg-secondary hover:text-zy-fg text-xs sm:text-sm font-mono tracking-wider transition-all duration-150 outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
+                className="inline-flex items-center space-x-2 px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl bg-zy-card hover:bg-zy-card-hover active:scale-[0.98] border border-zy-border hover:border-zy-border-strong text-zy-fg-secondary hover:text-zy-fg text-xs sm:text-sm font-mono tracking-wider transition-[background-color,border-color,transform] duration-150 outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
               >
                 <span>{t.ctaSecondary}</span>
               </Link>
@@ -275,8 +275,8 @@ export const Hero: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 flex-grow">
           {pillars.map((pillar) => (
             <div key={pillar.code} className="flex items-start space-x-2">
-              <span className="text-zy-blue font-semibold text-[11px]">{pillar.code} //</span>
-              <span className="text-[11px] text-zy-muted leading-snug">{pillar.label}</span>
+              <span className="text-zy-blue font-semibold text-[11px] shrink-0">{pillar.code} //</span>
+              <span className="text-xs text-zy-muted font-sans leading-snug">{pillar.label}</span>
             </div>
           ))}
         </div>

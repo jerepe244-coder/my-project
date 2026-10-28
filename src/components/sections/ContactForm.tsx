@@ -234,12 +234,12 @@ export const ContactForm: React.FC = () => {
   return (
     <section
       id="contact"
-      className="py-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
+      className="py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
       aria-label="Start a Project Brief"
     >
       {/* Header */}
-      <div className="mb-14 text-center max-w-2xl mx-auto">
-        <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
+      <div className="mb-12 sm:mb-14 text-center max-w-2xl mx-auto">
+        <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold">
           {t.label}
         </span>
         <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
@@ -251,7 +251,7 @@ export const ContactForm: React.FC = () => {
       </div>
 
       {/* Main Form Container */}
-      <div className="bg-zy-card border border-zy-border rounded-2xl p-6 sm:p-10 shadow-xl relative">
+      <div className="bg-zy-card border border-zy-border rounded-2xl p-6 sm:p-10 relative">
         {/* Anti-spam honeypot */}
         <input
           type="text"
@@ -834,7 +834,7 @@ export const ContactForm: React.FC = () => {
                     type="button"
                     onClick={prevStep}
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-zy-surface hover:bg-zy-surface-hover border border-zy-border text-xs font-mono text-zy-muted hover:text-zy-fg transition-colors"
+                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-zy-surface hover:bg-zy-surface-hover active:scale-[0.98] border border-zy-border text-xs font-mono text-zy-muted hover:text-zy-fg transition-all"
                   >
                     <ArrowLeft size={13} />
                     <span>{t.buttons.back}</span>
@@ -851,7 +851,7 @@ export const ContactForm: React.FC = () => {
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-mono font-medium tracking-wider transition-all shadow-[0_0_18px_rgba(10,92,255,0.3)]"
+                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs font-mono font-medium tracking-wider transition-all"
                   >
                     <span>{t.buttons.next}</span>
                     <ArrowRight size={14} />
@@ -860,7 +860,7 @@ export const ContactForm: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover disabled:bg-zy-control text-white text-xs font-mono font-medium tracking-wider transition-all shadow-[0_0_20px_rgba(10,92,255,0.38)] disabled:opacity-50"
+                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] disabled:bg-zy-control text-white text-xs font-mono font-medium tracking-wider transition-all disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>

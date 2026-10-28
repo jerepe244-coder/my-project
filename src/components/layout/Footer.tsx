@@ -23,19 +23,19 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="relative bg-zy-bg border-t border-zy-border-subtle pt-20 pb-12 overflow-hidden">
+    <footer className="relative bg-zy-bg border-t border-zy-border-subtle pt-14 sm:pt-20 pb-10 sm:pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Top Closing Statement / Banner */}
-        <div className="pb-16 border-b border-zy-border-subtle">
+        <div className="pb-12 sm:pb-16 border-b border-zy-border-subtle">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div className="max-w-2xl">
               <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold">
                 // {t.closing.ctaTitle}
               </span>
-              <h2 className="text-4xl sm:text-6xl font-sans font-bold tracking-tight text-zy-fg mt-3">
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-sans font-bold tracking-tight text-zy-fg mt-3 text-balance">
                 {t.closing.ctaAction}
               </h2>
-              <p className="text-sm sm:text-base text-zy-muted mt-4 font-sans max-w-xl leading-relaxed">
+              <p className="text-sm sm:text-base text-zy-muted mt-3 sm:mt-4 font-sans max-w-xl leading-relaxed">
                 {t.closing.copy}
               </p>
             </div>
@@ -43,14 +43,14 @@ export const Footer: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3.5">
               <Link
                 href="/#contact"
-                className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs sm:text-sm font-mono tracking-wider transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
+                className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs sm:text-sm font-mono tracking-wider transition-all outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
               >
                 <span>{t.closing.button}</span>
               </Link>
 
               <a
                 href="mailto:zyrvae.co@gmail.com"
-                className="inline-flex items-center space-x-2 px-5 py-3.5 rounded-xl bg-zy-card hover:bg-zy-surface-hover border border-zy-border text-zy-fg-secondary hover:text-zy-fg text-xs sm:text-sm font-mono transition-colors outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
+                className="inline-flex items-center space-x-2 px-5 py-3.5 rounded-xl bg-zy-card hover:bg-zy-surface-hover active:scale-[0.98] border border-zy-border text-zy-fg-secondary hover:text-zy-fg text-xs sm:text-sm font-mono transition-all outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
               >
                 <Mail size={15} className="text-zy-blue" />
                 <span>zyrvae.co@gmail.com</span>

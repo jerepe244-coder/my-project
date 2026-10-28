@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { motion, useSpring } from 'motion/react';
+import { motion, useSpring, AnimatePresence } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
 
 export const CustomCursor: React.FC = () => {
@@ -51,27 +51,28 @@ export const CustomCursor: React.FC = () => {
     };
   }, [cursorX, cursorY, language]);
 
-  if (!isVisible) return null;
-
   return (
-    <motion.div
-      aria-hidden="true"
-      className="fixed top-0 left-0 pointer-events-none z-50 flex items-center justify-center"
-      style={{
-        x: cursorX,
-        y: cursorY,
-        translateX: '-50%',
-        translateY: '-50%',
-      }}
-    >
-      <motion.div
-        initial={{ scale: 0.5, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.5, opacity: 0 }}
-        className="px-3.5 py-1.5 rounded-full bg-zy-blue text-white text-[11px] font-mono tracking-wider font-semibold shadow-[0_0_24px_rgba(10,92,255,0.45)] border border-white/20 select-none whitespace-nowrap"
-      >
-        {cursorText}
-      </motion.div>
-    </motion.div>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          aria-hidden="true"
+          className="fixed top-0 left-0 pointer-events-none z-50 flex items-center justify-center"
+          style={{
+            x: cursorX,
+            y: cursorY,
+            translateX: '-50%',
+            translateY: '-50%',
+          }}
+          initial={{ scale: 0.92, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0, transition: { duration: 0.15, ease: 'easeOut' } }}
+          transition={{ duration: 0.18, ease: 'easeOut' }}
+        >
+          <div className="px-3 py-1 rounded-full bg-zy-blue text-white text-[11px] font-mono tracking-wider font-semibold border border-white/20 select-none whitespace-nowrap shadow-md">
+            {cursorText}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

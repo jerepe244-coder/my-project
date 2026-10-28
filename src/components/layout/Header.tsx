@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'motion/react';
 import { SymbolLogo } from '@/components/ui/SymbolLogo';
 import { Wordmark } from '@/components/ui/Wordmark';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
@@ -145,7 +146,7 @@ export const Header: React.FC = () => {
               backgroundColor: isScrolled ? 'var(--zy-header-scrolled)' : 'var(--zy-header-top)',
               boxShadow: isScrolled ? 'var(--zy-header-shadow)' : 'none',
             }}
-            className={`flex items-center justify-between px-4 sm:px-6 py-2.5 rounded-full transition-all duration-300 border ${
+            className={`flex items-center justify-between px-4 sm:px-6 py-2.5 rounded-full transition-[background-color,border-color,box-shadow] duration-200 ease-out border ${
               isScrolled
                 ? 'backdrop-blur-md border-zy-border'
                 : 'backdrop-blur-sm border-transparent'
@@ -154,7 +155,7 @@ export const Header: React.FC = () => {
             {/* Brand Logo & Wordmark */}
             <Link
               href="/"
-              className="flex items-center space-x-3 group outline-none focus-visible:ring-2 focus-visible:ring-zy-blue rounded-lg p-1"
+              className="flex items-center space-x-3 group outline-none focus-visible:ring-2 focus-visible:ring-zy-blue rounded-lg p-1 active:scale-[0.98] transition-transform duration-100"
               aria-label="ZYRVAE Digital Studio Home"
             >
               <SymbolLogo
@@ -173,7 +174,7 @@ export const Header: React.FC = () => {
                     key={link.href}
                     href={link.href}
                     onClick={(e) => handleLinkClick(e, link.href)}
-                    className={`inline-flex items-center space-x-1.5 text-xs font-sans font-medium transition-colors duration-200 outline-none focus-visible:text-zy-fg focus-visible:ring-1 focus-visible:ring-zy-blue rounded px-1.5 py-1 ${
+                    className={`inline-flex items-center space-x-1.5 text-xs font-sans font-medium transition-colors duration-150 outline-none focus-visible:text-zy-fg focus-visible:ring-1 focus-visible:ring-zy-blue rounded px-1.5 py-1 ${
                       isActive ? 'text-zy-fg font-semibold' : 'text-zy-muted hover:text-zy-fg'
                     }`}
                   >
@@ -194,7 +195,7 @@ export const Header: React.FC = () => {
               <Link
                 href="/#contact"
                 onClick={(e) => handleLinkClick(e, '/#contact')}
-                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-mono tracking-wider transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
+                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs font-mono tracking-wider transition-all duration-150 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
               >
                 <span>{t.cta}</span>
               </Link>
@@ -210,7 +211,7 @@ export const Header: React.FC = () => {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-expanded={mobileMenuOpen}
                 aria-label={mobileMenuOpen ? t.close : t.menu}
-                className="p-2 text-zy-muted hover:text-zy-fg rounded-full bg-zy-control border border-zy-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
+                className="p-2 text-zy-muted hover:text-zy-fg active:scale-[0.95] rounded-full bg-zy-control border border-zy-border transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
               >
                 {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
               </button>
@@ -219,50 +220,56 @@ export const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Mobile Drawer Overlay */}
-      {mobileMenuOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile Navigation"
-          style={{ backgroundColor: 'var(--zy-drawer-bg)' }}
-          className="fixed inset-0 z-30 md:hidden backdrop-blur-xl flex flex-col justify-between pt-24 pb-12 px-6 overflow-y-auto"
-        >
-          <nav className="flex flex-col space-y-4" aria-label="Mobile Menu">
-            {navLinks.map((link, idx) => (
+      {/* Mobile Drawer Overlay with smooth motion */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile Navigation"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            style={{ backgroundColor: 'var(--zy-drawer-bg)' }}
+            className="fixed inset-0 z-30 md:hidden backdrop-blur-xl flex flex-col justify-between pt-24 pb-12 px-6 overflow-y-auto"
+          >
+            <nav className="flex flex-col space-y-3" aria-label="Mobile Menu">
+              {navLinks.map((link, idx) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  className="flex items-center justify-between text-2xl font-sans font-medium text-zy-fg-soft hover:text-zy-blue transition-colors py-3 border-b border-zy-border-subtle"
+                >
+                  <span>{link.label}</span>
+                  <span className="font-mono text-xs text-zy-blue">0{idx + 1}</span>
+                </Link>
+              ))}
+            </nav>
+
+            <div className="flex flex-col space-y-4 pt-6">
+              <div className="flex items-center justify-between py-3 px-4 rounded-xl bg-zy-surface border border-zy-border">
+                <ThemeToggle showLabels={true} />
+                <LanguageSwitcher />
+              </div>
+
               <Link
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className="flex items-center justify-between text-2xl font-sans font-medium text-zy-fg-soft hover:text-zy-blue transition-colors py-2.5 border-b border-zy-border-subtle"
+                href="/#contact"
+                onClick={(e) => handleLinkClick(e, '/#contact')}
+                className="flex items-center justify-center space-x-2 w-full py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-sm font-mono font-medium tracking-wider transition-all"
               >
-                <span>{link.label}</span>
-                <span className="font-mono text-xs text-zy-blue">0{idx + 1}</span>
+                <span>{t.cta}</span>
+                <ArrowUpRight size={16} />
               </Link>
-            ))}
-          </nav>
 
-          <div className="flex flex-col space-y-4 pt-6">
-            <div className="flex items-center justify-between py-3 px-4 rounded-xl bg-zy-surface border border-zy-border">
-              <ThemeToggle showLabels={true} />
-              <LanguageSwitcher />
+              <p className="font-mono text-[11px] text-center text-zy-dim">
+                ZYRVAE DIGITAL STUDIO — BUENOS AIRES // GLOBAL
+              </p>
             </div>
-
-            <Link
-              href="/#contact"
-              onClick={(e) => handleLinkClick(e, '/#contact')}
-              className="flex items-center justify-center space-x-2 w-full py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-sm font-mono font-medium tracking-wider shadow-[0_0_20px_rgba(10,92,255,0.35)]"
-            >
-              <span>{t.cta}</span>
-              <ArrowUpRight size={16} />
-            </Link>
-
-            <p className="font-mono text-[11px] text-center text-zy-dim">
-              ZYRVAE DIGITAL STUDIO — BUENOS AIRES // GLOBAL
-            </p>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

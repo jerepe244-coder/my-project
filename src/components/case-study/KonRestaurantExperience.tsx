@@ -101,7 +101,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
   };
 
   return (
-    <div className="min-h-screen bg-zy-warm-bg text-zy-warm-fg transition-colors">
+    <div className="min-h-screen min-h-svh bg-zy-warm-bg text-zy-warm-fg transition-colors">
       {/* 1. RESTAURANT HEADER: KÔN Identity, In-Page Navigation & Demonstration CTA */}
       <header
         role="banner"
@@ -205,7 +205,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 scroll-mt-24"
         aria-label="KÔN Atelier Hero"
       >
-        <div className="relative min-h-[70vh] sm:min-h-[78vh] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-zy-warm-border bg-[#0a0907] shadow-2xl flex flex-col justify-between p-6 sm:p-12 lg:p-16">
+        <div className="relative min-h-[64svh] sm:min-h-[74svh] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-zy-warm-border bg-[#0a0907] flex flex-col justify-between p-6 sm:p-12 lg:p-16">
           <Image
             src={project.coverImage || '/images/kon-hero.webp'}
             alt="KÔN Atelier - Avant-garde seasonal gastronomy dish with hearth fire glow"
@@ -246,7 +246,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
               <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#d49b57]">
                 ATELIER CULINARIO
               </span>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-sans font-bold tracking-[-0.03em] leading-[1.02] text-white">
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-sans font-bold tracking-[-0.03em] leading-[1.02] text-white text-balance">
                 {project.title}
               </h1>
             </motion.div>
@@ -392,7 +392,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
             <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
               {language === 'es' ? '02 // PROPUESTA GASTRONÓMICA' : '02 // CULINARY PROPOSAL'}
             </span>
-            <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-warm-fg mt-2">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-tight text-zy-warm-fg mt-2 text-balance">
               {language === 'es' ? 'Menú de Estación & Maridajes' : 'Seasonal Menu & Cellar Pairings'}
             </h2>
           </div>
@@ -642,7 +642,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
             <span className="font-mono text-xs uppercase tracking-widest text-[#945610] dark:text-[#d49b57]">
               {language === 'es' ? '03 // CREACIONES EMBLEMÁTICAS' : '03 // SIGNATURE DISHES'}
             </span>
-            <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-warm-fg mt-2">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-tight text-zy-warm-fg mt-2 text-balance">
               {language === 'es' ? 'Cuatro momentos de la degustación' : 'Four movements from the tasting'}
             </h2>
           </div>
@@ -799,7 +799,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                 <span className="font-mono text-xs uppercase tracking-widest text-[#945610] dark:text-[#d49b57]">
                   {language === 'es' ? '05 // SOLICITUD DE MESA' : '05 // TABLE REQUEST'}
                 </span>
-                <h3 className="text-2xl sm:text-4xl font-sans font-bold text-zy-warm-fg mt-1">
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-bold text-zy-warm-fg mt-1 text-balance">
                   {language === 'es' ? 'Configurá tu experiencia en mesa' : 'Customize your table experience'}
                 </h3>
                 <p className="text-xs sm:text-sm text-zy-warm-muted mt-2">

@@ -112,7 +112,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   };
 
   return (
-    <div className="min-h-screen bg-zy-bg text-zy-fg transition-colors duration-200">
+    <div className="min-h-screen min-h-svh bg-zy-bg text-zy-fg transition-colors duration-200">
       {/* 1. STUDIO MINIMALIST HEADER & ANCHOR NAVIGATION */}
       <header className="sticky top-16 z-30 bg-zy-bg/95 backdrop-blur-md border-b border-zy-border-subtle transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
@@ -203,7 +203,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
         {/* 2. HERO FOTOGRÁFICO A GRAN ESCALA: "Spaces shaped by light." */}
         <section
           id="monolith-hero"
-          className="relative min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-between overflow-hidden border-b border-zy-border-subtle"
+          className="relative min-h-[80svh] sm:min-h-[85svh] flex flex-col justify-between overflow-hidden border-b border-zy-border-subtle"
           aria-label="Monolith Studio Hero"
         >
           {/* Monumental Architectural Photographic Backdrop */}
@@ -221,10 +221,10 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
           </div>
 
           {/* Top Hero Coordinate & Datum Bar */}
-          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14">
+          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
             <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[#cbd4e6]">
               <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded bg-[#0b0e14]/75 backdrop-blur-md border border-white/15">
-                <span className="w-1.5 h-1.5 rounded-full bg-zy-blue animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-zy-blue" />
                 <span className="tracking-wider uppercase">
                   {language === 'es' ? 'ESTUDIO DE ARQUITECTURA CONCEPTUAL' : 'CONCEPTUAL ARCHITECTURE STUDIO'}
                 </span>
@@ -236,7 +236,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
           </div>
 
           {/* Hero Center Editorial Typography */}
-          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
             <div className="max-w-4xl space-y-6">
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
@@ -253,7 +253,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
-                className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-sans font-bold tracking-tight text-white leading-[1.05]"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-sans font-bold tracking-tight text-white leading-[1.05] text-balance"
               >
                 Spaces shaped by light.
               </motion.h1>
@@ -272,7 +272,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
           {/* Bottom Hero Anchor Bar */}
           <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12 border-t border-white/10">
             <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-mono text-[#a6b1c6]">
-              <div className="flex items-center space-x-4">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
                 <span>VOLUMEN PURO</span>
                 <span className="text-white/40">/</span>
                 <span>HORMIGÓN VISTO</span>
@@ -552,7 +552,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
               <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
                 {language === 'es' ? '02 // PROYECTOS CONCEPTUALES' : '02 // CONCEPT PROJECTS'}
               </span>
-              <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2 text-balance">
                 {language === 'es' ? 'Obras seleccionadas.' : 'Selected works.'}
               </h2>
               <p className="text-sm sm:text-base text-zy-muted font-sans max-w-xl mt-3">
@@ -1153,7 +1153,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
                   {language === 'es' ? '05 // REGISTRO EDITORIAL' : '05 // EDITORIAL MONOGRAPH'}
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2 text-balance">
                   {language === 'es' ? 'Atmósferas y sombras.' : 'Atmospheres & shadow.'}
                 </h2>
                 <p className="text-sm sm:text-base text-zy-muted font-sans max-w-xl mt-3">

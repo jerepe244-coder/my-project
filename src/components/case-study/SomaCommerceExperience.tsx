@@ -209,7 +209,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
   };
 
   return (
-    <div className="min-h-screen bg-zy-bg text-zy-fg transition-colors duration-200">
+    <div className="min-h-screen min-h-svh bg-zy-bg text-zy-fg transition-colors duration-200">
       {/* 1. STORE HEADER & IDENTITY */}
       <header className="sticky top-16 z-30 bg-zy-bg/95 backdrop-blur-md border-b border-zy-border-subtle transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
@@ -314,7 +314,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
         {/* 2. HERO EDITORIAL A GRAN ESCALA */}
         <section
           id="soma-hero"
-          className="relative min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-between overflow-hidden border-b border-zy-border-subtle"
+          className="relative min-h-[80svh] sm:min-h-[85svh] flex flex-col justify-between overflow-hidden border-b border-zy-border-subtle"
           aria-label="SOMA Hero"
         >
           {/* Photographic Background Asset */}
@@ -363,7 +363,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
-                className="text-4xl sm:text-6xl md:text-7xl font-sans font-bold tracking-tight text-white leading-[1.08]"
+                className="text-3xl sm:text-5xl lg:text-6xl font-sans font-bold tracking-tight text-white leading-[1.08] text-balance"
               >
                 {language === 'es'
                   ? 'Biotecnología celular & rituales puros.'
@@ -407,7 +407,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
           {/* Bottom Hero Anchor Bar */}
           <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12 border-t border-white/10">
             <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-mono text-[#a6b1c6]">
-              <div className="flex items-center space-x-4">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
                 <span>FITOPÉPTIDOS</span>
                 <span className="text-white/40">/</span>
                 <span>CERAMIDAS PURAS</span>
@@ -1228,9 +1228,10 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
         {inspectProduct && (
           <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-label={inspectProduct.title[language]}>
             <motion.div
-              initial={{ scale: 0.95, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
+              initial={{ scale: 0.96, y: 12, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.98, y: 8, opacity: 0 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
               className="bg-zy-card border border-zy-border rounded-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 space-y-6 shadow-2xl text-zy-fg"
             >
               <div className="flex items-start justify-between border-b border-zy-border-subtle pb-4">
@@ -1452,9 +1453,10 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
         {checkoutOpen && (
           <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-label="Demo Checkout">
             <motion.div
-              initial={{ scale: 0.95, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
+              initial={{ scale: 0.96, y: 12, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.98, y: 8, opacity: 0 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
               className="bg-zy-card border border-zy-border rounded-2xl max-w-2xl w-full overflow-hidden p-6 sm:p-8 space-y-6 shadow-2xl text-zy-fg"
             >
               {checkoutStep === 1 && (

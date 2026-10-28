@@ -21,7 +21,7 @@ export const FAQ: React.FC = () => {
   return (
     <section
       id="faq"
-      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
+      className="py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
       aria-label="Frequently Asked Questions"
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
@@ -134,7 +134,7 @@ export const FAQ: React.FC = () => {
                       transition={{ duration: prefersReducedMotion ? 0.01 : 0.26, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="pt-3.5 pb-2 text-xs sm:text-sm text-zy-muted font-sans leading-relaxed pl-8 sm:pl-9 pr-4">
+                      <div className="pt-3.5 pb-2 text-sm sm:text-base text-zy-muted font-sans leading-relaxed pl-8 sm:pl-9 pr-4">
                         <p>{item.answer[language]}</p>
                       </div>
                     </motion.div>

@@ -503,7 +503,7 @@ export const HospitalityDemo: React.FC<HospitalityDemoProps> = ({
               <button
                 type="button"
                 onClick={() => setShowDrawer(true)}
-                className="w-full py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-medium font-sans transition-all shadow-[0_0_15px_rgba(10,92,255,0.3)]"
+                className="w-full py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs font-medium font-sans transition-all"
               >
                 {language === 'es' ? 'Solicitar reserva de estadía ↗' : 'Request stay reservation ↗'}
               </button>

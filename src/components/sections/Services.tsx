@@ -56,7 +56,7 @@ export const Services: React.FC = () => {
   return (
     <section
       id="services"
-      className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
+      className="py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 border-t border-zy-border-subtle"
       aria-label="Capabilities & Services"
     >
       {/* Header with progressive reveal */}
@@ -137,7 +137,7 @@ export const Services: React.FC = () => {
 
                 {/* Description & Tags */}
                 <div className="md:col-span-5 space-y-4">
-                  <p className="text-xs sm:text-sm text-zy-muted leading-relaxed font-sans">
+                  <p className="text-sm sm:text-base text-zy-muted leading-relaxed font-sans">
                     {service.description[language]}
                   </p>
 
@@ -157,7 +157,7 @@ export const Services: React.FC = () => {
                 <div className="md:col-span-1 flex md:justify-end pt-2 md:pt-0">
                   <Link
                     href="/#contact"
-                    className="inline-flex items-center space-x-1.5 md:space-x-0 p-2.5 rounded-lg bg-zy-control border border-zy-border text-zy-muted group-hover:text-white group-hover:bg-zy-blue group-hover:border-zy-blue transition-all shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
+                    className="inline-flex items-center space-x-1.5 md:space-x-0 p-2.5 rounded-lg bg-zy-control hover:bg-zy-blue border border-zy-border hover:border-zy-blue text-zy-muted hover:text-white active:scale-[0.98] transition-all duration-150 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
                     aria-label={`${
                       language === 'es' ? 'Consultar por' : 'Inquire about'
                     } ${service.title[language]}`}
@@ -202,7 +202,7 @@ export const Services: React.FC = () => {
                 <Check size={14} className="text-zy-blue shrink-0" />
                 <span>{std.title}</span>
               </div>
-              <p className="text-xs text-zy-muted font-sans leading-relaxed pl-5">
+              <p className="text-sm text-zy-muted font-sans leading-relaxed pl-5">
                 {std.desc}
               </p>
             </div>
