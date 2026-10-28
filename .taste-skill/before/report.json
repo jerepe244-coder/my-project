@@ -1,0 +1,3401 @@
+{
+ "url": "http://localhost:3100",
+ "at": "2026-10-28T16:47:49.675Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.34,
+    0.58,
+    0.78,
+    0.56,
+    0.21,
+    0.31,
+    0.67,
+    0.63,
+    0.39,
+    0.25,
+    0.24,
+    0.36
+   ],
+   "motion": {
+    "elements": 54,
+    "css": 0,
+    "transitions": 15,
+    "scripted": 39,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 11021,
+     "screens": 12.2,
+     "words": 1611,
+     "img": 16,
+     "video": 0,
+     "canvas": 0,
+     "svg": 74,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "image?url=%2Fimages%2Faura-cover.webp&w=1080&q=7",
+      "image?url=%2Fimages%2Fkon-hero.webp&w=750&q=75",
+      "image?url=%2Fimages%2Fmonolith-hero.webp&w=750&q",
+      "image?url=%2Fimages%2Fsoma-hero-editorial.webp&w"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Digital, with intention.",
+     "words": 3,
+     "chars": 24,
+     "lines": 2,
+     "size": 94.4,
+     "vw": 6.6,
+     "font": "-apple-system",
+     "weight": 700,
+     "tracking": -0.035,
+     "leading": 0.93,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.55,
+     "top": 281,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Digital, with intention.",
+     "words": 3,
+     "lines": 2,
+     "size": 94.4,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "Digital, with intention.",
+      "words": 3,
+      "chars": 24,
+      "lines": 2,
+      "size": 94.4,
+      "vw": 6.6,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 0.93,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.55,
+      "top": 281,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Digital projects & concepts.",
+      "words": 4,
+      "chars": 28,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 968,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "AURA Sanctuary",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.31,
+      "top": 1255,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "KÔN Atelier",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 2184,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "MONOLITH Studio",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.36,
+      "top": 2184,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "SŌMA Formulations",
+      "words": 2,
+      "chars": 17,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.31,
+      "top": 2747,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Services focused on commercial objectives.",
+      "words": 5,
+      "chars": 42,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.53,
+      "top": 3466,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "A deliberate, transparent process.",
+      "words": 4,
+      "chars": 34,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.53,
+      "top": 5392,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Independent by design. International in outlook.",
+      "words": 6,
+      "chars": 48,
+      "lines": 3,
+      "size": 48,
+      "vw": 3.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.33,
+      "top": 7671,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Clarity from day one.",
+      "words": 4,
+      "chars": 21,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.26,
+      "top": 8476,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Let’s discuss your next website.",
+      "words": 5,
+      "chars": 32,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.47,
+      "top": 9498,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Let’s talk.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 60,
+      "vw": 4.2,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 10495,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 3,
+     "over2Lines": 1,
+     "statements": 0,
+     "centered": 1,
+     "medianWords": 4,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.65,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.35,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      9,
+      10,
+      11,
+      12,
+      14,
+      16,
+      18,
+      20,
+      24,
+      26,
+      30,
+      48,
+      60,
+      94
+     ],
+     "sizeCount": 14,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 16,
+      "leading": 1.63,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 7
+     },
+     "measureChars": 77,
+     "max": {
+      "size": 94.4,
+      "vw": 6.6,
+      "font": "-apple-system",
+      "text": "Digital,"
+     },
+     "monoShare": 0.35,
+     "monoProseShare": 0.35,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "Dark",
+      "/",
+      "Light",
+      "ES",
+      "/",
+      "EN"
+     ],
+     "microLabels": 69,
+     "microLabelShare": 0.112,
+     "microSamples": [
+      "// ZYRVAE",
+      "/",
+      "Independent Digital Studio",
+      "BUENOS AIRES [34°36′S 58°22′W] // GLOBAL",
+      "00 //",
+      "ART DIRECTION, INTERACTIVE DESIGN & FRON"
+     ],
+     "upperShare": 0.16,
+     "centerShare": 0.04,
+     "smallText": 161
+    },
+    "eyebrows": [
+     {
+      "text": "04 INTERACTIVE EXPERIENCES",
+      "above": "Digital projects & concepts.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 942
+     },
+     {
+      "text": "Hospitality / Boutique Retreat",
+      "above": "AURA Sanctuary",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 1210
+     },
+     {
+      "text": "Gastronomy / Culinary Atelier",
+      "above": "KÔN Atelier",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 2139
+     },
+     {
+      "text": "Architecture / Spatial Practice",
+      "above": "MONOLITH Studio",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 2139
+     },
+     {
+      "text": "Beauty & Commerce / Cellular Care",
+      "above": "SŌMA Formulations",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 2702
+     },
+     {
+      "text": "05 PRACTICE AREAS",
+      "above": "Services focused on commercial objective",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 3439
+     },
+     {
+      "text": "05 STRUCTURED PHASES",
+      "above": "A deliberate, transparent process.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 5366
+     },
+     {
+      "text": "IDENTITY & ETHOS",
+      "above": "Independent by design. International in ",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 7630
+     },
+     {
+      "text": "06 / Start a Project",
+      "above": "Let’s discuss your next website.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 9473
+     }
+    ],
+    "numbered": [
+     {
+      "text": "01 / AURA",
+      "size": 11,
+      "top": 549
+     },
+     {
+      "text": "02 / KÔN",
+      "size": 11,
+      "top": 549
+     },
+     {
+      "text": "03 / MONOLITH",
+      "size": 11,
+      "top": 605
+     },
+     {
+      "text": "04 / SŌMA",
+      "size": 11,
+      "top": 605
+     },
+     {
+      "text": "01 / Selected Work",
+      "size": 12,
+      "top": 942
+     },
+     {
+      "text": "02 / Capabilities",
+      "size": 12,
+      "top": 3440
+     },
+     {
+      "text": "03 / Approach",
+      "size": 12,
+      "top": 5366
+     },
+     {
+      "text": "04 / About the Studio",
+      "size": 12,
+      "top": 7631
+     },
+     {
+      "text": "05 / Frequently Asked Question",
+      "size": 12,
+      "top": 8459
+     },
+     {
+      "text": "06 / Start a Project",
+      "size": 12,
+      "top": 9473
+     },
+     {
+      "text": "01. Essential details",
+      "size": 12,
+      "top": 9751
+     },
+     {
+      "text": "01. AURA Sanctuary",
+      "size": 12,
+      "top": 10742
+     }
+    ],
+    "color": {
+     "bodyBg": "#f6f8fb",
+     "bodyBgHsl": {
+      "h": 216,
+      "s": 0.38,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 1177,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#f6f8fb",
+       "top": 10378,
+       "hsl": {
+        "h": 216,
+        "s": 0.38,
+        "l": 0.97
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#4a556b",
+       "share": 0.41
+      },
+      {
+       "color": "#263042",
+       "share": 0.19
+      },
+      {
+       "color": "#0b0e14",
+       "share": 0.13
+      },
+      {
+       "color": "#5e6a82",
+       "share": 0.12
+      },
+      {
+       "color": "#0a5cff",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#0a5cff",
+      "hsl": {
+       "h": 220,
+       "s": 1,
+       "l": 0.52
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 34,
+     "inHero": 7,
+     "radius": 8,
+     "height": 30,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 29,
+     "upper": 0,
+     "heroLabels": [
+      "Start a project ↗",
+      "Start a project ↗",
+      "Explore case studies ↓",
+      "01 / AURA Hospitality",
+      "02 / KÔN Gastronomy"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 17,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.hidden.lg:flex → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "button.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "article.lg:col-span-12.group → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 4,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)"
+     ],
+     "gradientText": 0,
+     "hairlines": 49,
+     "hairlineSamples": [
+      "div.flex.flex-wrap 1216px",
+      "div.w-full.flex 315px",
+      "div.space-y-2.5.pt-3 315px",
+      "div.pt-6.sm:pt-7 1216px",
+      "section#work.py-14.sm:py-20 1280px"
+     ],
+     "outlinedBoxes": 28,
+     "dashed": 1,
+     "blurred": 17,
+     "roundedBoxes": 28,
+     "boxRadius": 12,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 5,
+       "iconTopped": true,
+       "rounded": false,
+       "top": 829
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 7877
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 84,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 11021,
+    "margins": {
+     "left": 112,
+     "right": 112
+    },
+    "sections": [
+     {
+      "sel": "section.relative.min-h-[88svh]",
+      "tag": "section",
+      "top": 0,
+      "height": 829,
+      "words": 126,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Digital,",
+       "size": 94,
+       "tag": "h1"
+      },
+      "left": 112,
+      "right": 123,
+      "textLeft": 112,
+      "textRight": 123,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.flex.flex-col",
+      "tag": "div",
+      "top": 942,
+      "height": 172,
+      "words": 34,
+      "media": 0,
+      "middle": 32,
+      "heading": {
+       "text": "Digital projects & concepts.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 112,
+      "right": 204,
+      "textLeft": 112,
+      "textRight": 243,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.grid.grid-cols-1",
+      "tag": "div",
+      "top": 1177,
+      "height": 2037,
+      "words": 355,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "AURA Sanctuary",
+       "size": 30,
+       "tag": "h3"
+      },
+      "left": 113,
+      "right": 113,
+      "textLeft": 140,
+      "textRight": 140,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.flex.flex-col",
+      "tag": "div",
+      "top": 3439,
+      "height": 163,
+      "words": 32,
+      "media": 0,
+      "middle": 304,
+      "heading": {
+       "text": "Services focused on commercial objectives.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 112,
+      "right": 133,
+      "textLeft": 112,
+      "textRight": 133,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.divide-y.divide-zy-border",
+      "tag": "div",
+      "top": 3682,
+      "height": 1191,
+      "words": 187,
+      "media": 0,
+      "middle": 129,
+      "heading": {
+       "text": "Web Design & Art Direction",
+       "size": 26,
+       "tag": "h3"
+      },
+      "left": 136,
+      "right": 244,
+      "textLeft": 136,
+      "textRight": 244,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.mt-12.p-6",
+      "tag": "div",
+      "top": 4921,
+      "height": 220,
+      "words": 68,
+      "media": 0,
+      "middle": 70,
+      "heading": null,
+      "left": 145,
+      "right": 145,
+      "textLeft": 145,
+      "textRight": 145,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#process.py-14.sm:py-20",
+      "tag": "section",
+      "top": 5253,
+      "height": 2265,
+      "words": 409,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "A deliberate, transparent process.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 112,
+      "right": 112,
+      "textLeft": 112,
+      "textRight": 112,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#studio.py-14.sm:py-20",
+      "tag": "section",
+      "top": 7517,
+      "height": 822,
+      "words": 198,
+      "media": 0,
+      "middle": 73,
+      "heading": {
+       "text": "Independent by design. International in outlook.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 112,
+      "right": 114,
+      "textLeft": 112,
+      "textRight": 114,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#faq.py-14.sm:py-20",
+      "tag": "section",
+      "top": 8339,
+      "height": 1014,
+      "words": 163,
+      "media": 0,
+      "middle": 54,
+      "heading": {
+       "text": "Clarity from day one.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 112,
+      "right": 112,
+      "textLeft": 112,
+      "textRight": 157,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#contact.py-14.sm:py-20",
+      "tag": "section",
+      "top": 9353,
+      "height": 1025,
+      "words": 74,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Let’s discuss your next website.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 257,
+      "right": 257,
+      "textLeft": 257,
+      "textRight": 257,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.relative.bg-zy-bg",
+      "tag": "footer",
+      "top": 10378,
+      "height": 643,
+      "words": 92,
+      "media": 0,
+      "middle": 99,
+      "heading": {
+       "text": "Let’s talk.",
+       "size": 60,
+       "tag": "h2"
+      },
+      "left": 112,
+      "right": 112,
+      "textLeft": 112,
+      "textRight": 133,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Digital, with intention.",
+      "size": 94,
+      "top": 281,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 112,
+      "n": 12
+     },
+     {
+      "x": 226,
+      "n": 10
+     },
+     {
+      "x": 587,
+      "n": 8
+     },
+     {
+      "x": 853,
+      "n": 6
+     },
+     {
+      "x": 274,
+      "n": 5
+     },
+     {
+      "x": 335,
+      "n": 5
+     },
+     {
+      "x": 732,
+      "n": 5
+     },
+     {
+      "x": 145,
+      "n": 3
+     },
+     {
+      "x": 660,
+      "n": 3
+     },
+     {
+      "x": 773,
+      "n": 3
+     },
+     {
+      "x": 639,
+      "n": 2
+     },
+     {
+      "x": 896,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 71,
+    "bodySize": 14,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.13,
+    "voidBox": {
+     "x": 0,
+     "y": 780,
+     "w": 1440,
+     "h": 120
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.32,
+    0.84,
+    0.86,
+    0.86,
+    0.79,
+    0.27,
+    0.23,
+    0.43,
+    0.72,
+    0.66,
+    0.59,
+    0.48
+   ],
+   "motion": {
+    "elements": 53,
+    "css": 0,
+    "transitions": 14,
+    "scripted": 39,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 14683,
+     "screens": 14.3,
+     "words": 1583,
+     "img": 16,
+     "video": 0,
+     "canvas": 0,
+     "svg": 74,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "image?url=%2Fimages%2Faura-cover.webp&w=828&q=75",
+      "image?url=%2Fimages%2Fkon-hero.webp&w=828&q=75",
+      "image?url=%2Fimages%2Fmonolith-hero.webp&w=828&q",
+      "image?url=%2Fimages%2Fsoma-hero-editorial.webp&w"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Digital, with intention.",
+     "words": 3,
+     "chars": 24,
+     "lines": 2,
+     "size": 60,
+     "vw": 7.8,
+     "font": "-apple-system",
+     "weight": 700,
+     "tracking": -0.035,
+     "leading": 0.93,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.94,
+     "top": 407,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Digital, with intention.",
+     "words": 3,
+     "lines": 2,
+     "size": 60,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "Digital, with intention.",
+      "words": 3,
+      "chars": 24,
+      "lines": 2,
+      "size": 60,
+      "vw": 7.8,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 0.93,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 407,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Digital projects & concepts.",
+      "words": 4,
+      "chars": 28,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 1050,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "AURA Sanctuary",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 1853,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "KÔN Atelier",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 2784,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "MONOLITH Studio",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 3714,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "SŌMA Formulations",
+      "words": 2,
+      "chars": 17,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.85,
+      "top": 4693,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Services focused on commercial objectives.",
+      "words": 5,
+      "chars": 42,
+      "lines": 2,
+      "size": 48,
+      "vw": 6.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 5244,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "A deliberate, transparent process.",
+      "words": 4,
+      "chars": 34,
+      "lines": 2,
+      "size": 48,
+      "vw": 6.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 7727,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Independent by design. International in outlook.",
+      "words": 6,
+      "chars": 48,
+      "lines": 2,
+      "size": 48,
+      "vw": 6.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 10451,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Clarity from day one.",
+      "words": 4,
+      "chars": 21,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 11635,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Let’s discuss your next website.",
+      "words": 5,
+      "chars": 32,
+      "lines": 2,
+      "size": 48,
+      "vw": 6.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 12964,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Let’s talk.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 13929,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 1,
+     "medianWords": 4,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.66,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.34,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      9,
+      10,
+      11,
+      12,
+      14,
+      16,
+      18,
+      24,
+      30,
+      48,
+      60
+     ],
+     "sizeCount": 11,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 16,
+      "leading": 1.63,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 7
+     },
+     "measureChars": 80,
+     "max": {
+      "size": 60,
+      "vw": 7.8,
+      "font": "-apple-system",
+      "text": "Digital,"
+     },
+     "monoShare": 0.34,
+     "monoProseShare": 0.34,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "/",
+      "ES",
+      "/",
+      "EN",
+      "Start a project ↗",
+      "+"
+     ],
+     "microLabels": 64,
+     "microLabelShare": 0.107,
+     "microSamples": [
+      "// ZYRVAE",
+      "/",
+      "Independent Digital Studio",
+      "BUENOS AIRES [34°36′S 58°22′W] // GLOBAL",
+      "ZYRVAE // MONOGRAM",
+      "WEB DESIGN & ENGINEERING"
+     ],
+     "upperShare": 0.15,
+     "centerShare": 0.04,
+     "smallText": 156
+    },
+    "eyebrows": [
+     {
+      "text": "04 INTERACTIVE EXPERIENCES",
+      "above": "Digital projects & concepts.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 1023
+     },
+     {
+      "text": "Hospitality / Boutique Retreat",
+      "above": "AURA Sanctuary",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 1808
+     },
+     {
+      "text": "Gastronomy / Culinary Atelier",
+      "above": "KÔN Atelier",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 2739
+     },
+     {
+      "text": "Architecture / Spatial Practice",
+      "above": "MONOLITH Studio",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 3669
+     },
+     {
+      "text": "Beauty & Commerce / Cellular Care",
+      "above": "SŌMA Formulations",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 4648
+     },
+     {
+      "text": "05 PRACTICE AREAS",
+      "above": "Services focused on commercial objective",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 5217
+     },
+     {
+      "text": "05 STRUCTURED PHASES",
+      "above": "A deliberate, transparent process.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 7700
+     },
+     {
+      "text": "IDENTITY & ETHOS",
+      "above": "Independent by design. International in ",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 10411
+     },
+     {
+      "text": "05 / Frequently Asked Questions",
+      "above": "Clarity from day one.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 11618
+     },
+     {
+      "text": "06 / Start a Project",
+      "above": "Let’s discuss your next website.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 12939
+     }
+    ],
+    "numbered": [
+     {
+      "text": "01 / Selected Work",
+      "size": 12,
+      "top": 1023
+     },
+     {
+      "text": "02 / Capabilities",
+      "size": 12,
+      "top": 5218
+     },
+     {
+      "text": "03 / Approach",
+      "size": 12,
+      "top": 7701
+     },
+     {
+      "text": "04 / About the Studio",
+      "size": 12,
+      "top": 10411
+     },
+     {
+      "text": "05 / Frequently Asked Question",
+      "size": 12,
+      "top": 11618
+     },
+     {
+      "text": "06 / Start a Project",
+      "size": 12,
+      "top": 12939
+     },
+     {
+      "text": "01. Essential details",
+      "size": 12,
+      "top": 13217
+     },
+     {
+      "text": "01. AURA Sanctuary",
+      "size": 12,
+      "top": 14430
+     },
+     {
+      "text": "02. KÔN Atelier",
+      "size": 12,
+      "top": 14456
+     },
+     {
+      "text": "03. MONOLITH Studio",
+      "size": 12,
+      "top": 14482
+     },
+     {
+      "text": "04. SŌMA Formulations",
+      "size": 12,
+      "top": 14508
+     }
+    ],
+    "color": {
+     "bodyBg": "#f6f8fb",
+     "bodyBgHsl": {
+      "h": 216,
+      "s": 0.38,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 1327,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#07080a",
+       "top": 1328,
+       "hsl": {
+        "h": 220,
+        "s": 0.18,
+        "l": 0.03
+       }
+      },
+      {
+       "color": "#f6f8fb",
+       "top": 13812,
+       "hsl": {
+        "h": 216,
+        "s": 0.38,
+        "l": 0.97
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#4a556b",
+       "share": 0.41
+      },
+      {
+       "color": "#263042",
+       "share": 0.19
+      },
+      {
+       "color": "#0b0e14",
+       "share": 0.13
+      },
+      {
+       "color": "#5e6a82",
+       "share": 0.12
+      },
+      {
+       "color": "#0a5cff",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#0a5cff",
+      "hsl": {
+       "h": 220,
+       "s": 1,
+       "l": 0.52
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 30,
+     "inHero": 3,
+     "radius": 8,
+     "height": 30,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 25,
+     "upper": 0,
+     "heroLabels": [
+      "Start a project ↗",
+      "Start a project ↗",
+      "Explore case studies ↓"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 16,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "button.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "article.lg:col-span-12.group → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "article.lg:col-span-6.group → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 4,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)"
+     ],
+     "gradientText": 0,
+     "hairlines": 47,
+     "hairlineSamples": [
+      "div.flex.flex-wrap 720px",
+      "div.pt-6.sm:pt-7 720px",
+      "section#work.py-14.sm:py-20 768px",
+      "div.flex.flex-col 720px",
+      "div.flex.items-center 654px"
+     ],
+     "outlinedBoxes": 23,
+     "dashed": 0,
+     "blurred": 17,
+     "roundedBoxes": 24,
+     "boxRadius": 12,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 11099
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 106,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 14683,
+    "margins": {
+     "left": 24,
+     "right": 25
+    },
+    "sections": [
+     {
+      "sel": "section.relative.min-h-[88svh]",
+      "tag": "section",
+      "top": 0,
+      "height": 942,
+      "words": 98,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Digital,",
+       "size": 60,
+       "tag": "h1"
+      },
+      "left": 24,
+      "right": 34,
+      "textLeft": 24,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.flex.flex-col",
+      "tag": "div",
+      "top": 1023,
+      "height": 240,
+      "words": 34,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Digital projects & concepts.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 61,
+      "textLeft": 24,
+      "textRight": 100,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.grid.grid-cols-1",
+      "tag": "div",
+      "top": 1327,
+      "height": 3730,
+      "words": 355,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "AURA Sanctuary",
+       "size": 30,
+       "tag": "h3"
+      },
+      "left": 25,
+      "right": 25,
+      "textLeft": 52,
+      "textRight": 52,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.flex.flex-col",
+      "tag": "div",
+      "top": 5217,
+      "height": 229,
+      "words": 32,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Services focused on commercial objectives.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 33,
+      "textLeft": 24,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.divide-y.divide-zy-border",
+      "tag": "div",
+      "top": 5526,
+      "height": 1675,
+      "words": 187,
+      "media": 0,
+      "middle": 46,
+      "heading": {
+       "text": "Web Design & Art Direction",
+       "size": 24,
+       "tag": "h3"
+      },
+      "left": 48,
+      "right": 108,
+      "textLeft": 48,
+      "textRight": 108,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.mt-12.p-6",
+      "tag": "div",
+      "top": 7249,
+      "height": 291,
+      "words": 68,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 57,
+      "right": 57,
+      "textLeft": 57,
+      "textRight": 57,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.flex.flex-col",
+      "tag": "div",
+      "top": 7700,
+      "height": 229,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "A deliberate, transparent process.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 101,
+      "textLeft": 24,
+      "textRight": 101,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.relative.border-l",
+      "tag": "div",
+      "top": 8116,
+      "height": 2013,
+      "words": 325,
+      "media": 0,
+      "middle": 46,
+      "heading": {
+       "text": "Discovery & Diagnosis",
+       "size": 24,
+       "tag": "h3"
+      },
+      "left": 138,
+      "right": 57,
+      "textLeft": 138,
+      "textRight": 57,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#studio.py-14.sm:py-20",
+      "tag": "section",
+      "top": 10330,
+      "height": 1200,
+      "words": 198,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Independent by design. International in outlook.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 27,
+      "textLeft": 24,
+      "textRight": 27,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#faq.py-14.sm:py-20",
+      "tag": "section",
+      "top": 11530,
+      "height": 1321,
+      "words": 163,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Clarity from day one.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#contact.py-14.sm:py-20",
+      "tag": "section",
+      "top": 12851,
+      "height": 961,
+      "words": 74,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Let’s discuss your next website.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 41,
+      "right": 41,
+      "textLeft": 41,
+      "textRight": 41,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.relative.bg-zy-bg",
+      "tag": "footer",
+      "top": 13812,
+      "height": 872,
+      "words": 92,
+      "media": 0,
+      "middle": 44,
+      "heading": {
+       "text": "Let’s talk.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 56,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Digital, with intention.",
+      "size": 60,
+      "top": 407,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 24,
+      "n": 14
+     },
+     {
+      "x": 57,
+      "n": 13
+     },
+     {
+      "x": 77,
+      "n": 10
+     },
+     {
+      "x": 138,
+      "n": 10
+     },
+     {
+      "x": 164,
+      "n": 5
+     },
+     {
+      "x": 186,
+      "n": 5
+     },
+     {
+      "x": 396,
+      "n": 5
+     },
+     {
+      "x": 45,
+      "n": 3
+     },
+     {
+      "x": 292,
+      "n": 2
+     },
+     {
+      "x": 416,
+      "n": 2
+     },
+     {
+      "x": 538,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 71,
+    "bodySize": 14,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.5,
+    0.64,
+    0.86,
+    0.86,
+    0.92,
+    0.75,
+    0.31,
+    0.36,
+    0.62,
+    0.71,
+    0.78,
+    0.83
+   ],
+   "motion": {
+    "elements": 45,
+    "css": 0,
+    "transitions": 10,
+    "scripted": 35,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 16501,
+     "screens": 19.6,
+     "words": 1557,
+     "img": 16,
+     "video": 0,
+     "canvas": 0,
+     "svg": 74,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 4,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "image?url=%2Fimages%2Faura-cover.webp&w=640&q=75",
+      "image?url=%2Fimages%2Fkon-hero.webp&w=640&q=75",
+      "image?url=%2Fimages%2Fmonolith-hero.webp&w=640&q",
+      "image?url=%2Fimages%2Fsoma-hero-editorial.webp&w"
+     ],
+     "blendText": 0,
+     "sideScrollers": 1,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Digital, with intention.",
+     "words": 3,
+     "chars": 24,
+     "lines": 2,
+     "size": 42.4,
+     "vw": 10.9,
+     "font": "-apple-system",
+     "weight": 700,
+     "tracking": -0.035,
+     "leading": 0.98,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.92,
+     "top": 285,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Digital, with intention.",
+     "words": 3,
+     "lines": 2,
+     "size": 42.4,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "Digital, with intention.",
+      "words": 3,
+      "chars": 24,
+      "lines": 2,
+      "size": 42.4,
+      "vw": 10.9,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.035,
+      "leading": 0.98,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 285,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Digital projects & concepts.",
+      "words": 4,
+      "chars": 28,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 970,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "AURA Sanctuary",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 1577,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "KÔN Atelier",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 2424,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "MONOLITH Studio",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 3272,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "SŌMA Formulations",
+      "words": 2,
+      "chars": 17,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 4188,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Services focused on commercial objectives.",
+      "words": 5,
+      "chars": 42,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4896,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "A deliberate, transparent process.",
+      "words": 4,
+      "chars": 34,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 7793,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Independent by design. International in outlook.",
+      "words": 6,
+      "chars": 48,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 11262,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Clarity from day one.",
+      "words": 4,
+      "chars": 21,
+      "lines": 1,
+      "size": 30,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 12887,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Let’s discuss your next website.",
+      "words": 5,
+      "chars": 32,
+      "lines": 2,
+      "size": 30,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 14261,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Let’s talk.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 30,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 15350,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 1,
+     "medianWords": 4,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.67,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.33,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      9,
+      10,
+      11,
+      12,
+      14,
+      16,
+      20,
+      24,
+      30,
+      42
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 14,
+      "leading": 1.63,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 7
+     },
+     "measureChars": 45,
+     "max": {
+      "size": 42.4,
+      "vw": 10.9,
+      "font": "-apple-system",
+      "text": "Digital,"
+     },
+     "monoShare": 0.33,
+     "monoProseShare": 0.33,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "/",
+      "ES",
+      "/",
+      "EN",
+      "// ZYRVAE",
+      "/"
+     ],
+     "microLabels": 56,
+     "microLabelShare": 0.094,
+     "microSamples": [
+      "// ZYRVAE",
+      "/",
+      "Independent Digital Studio",
+      "ZYRVAE // MONOGRAM",
+      "WEB DESIGN & ENGINEERING",
+      "[48×48]"
+     ],
+     "upperShare": 0.13,
+     "centerShare": 0.04,
+     "smallText": 166
+    },
+    "eyebrows": [
+     {
+      "text": "WEB DESIGN & ENGINEERING",
+      "above": "Digital, with intention.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 10,
+      "top": 226
+     },
+     {
+      "text": "04 INTERACTIVE EXPERIENCES",
+      "above": "Digital projects & concepts.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 927
+     },
+     {
+      "text": "Hospitality / Boutique Retreat",
+      "above": "AURA Sanctuary",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 1532
+     },
+     {
+      "text": "Gastronomy / Culinary Atelier",
+      "above": "KÔN Atelier",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 2379
+     },
+     {
+      "text": "Architecture / Spatial Practice",
+      "above": "MONOLITH Studio",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 3227
+     },
+     {
+      "text": "Beauty & Commerce / Cellular Care",
+      "above": "SŌMA Formulations",
+      "upper": false,
+      "tracked": false,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 4143
+     },
+     {
+      "text": "05 PRACTICE AREAS",
+      "above": "Services focused on commercial objective",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 4870
+     },
+     {
+      "text": "05 STRUCTURED PHASES",
+      "above": "A deliberate, transparent process.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 7766
+     },
+     {
+      "text": "IDENTITY & ETHOS",
+      "above": "Independent by design. International in ",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 11,
+      "top": 11222
+     },
+     {
+      "text": "05 / Frequently Asked Questions",
+      "above": "Clarity from day one.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 12870
+     },
+     {
+      "text": "06 / Start a Project",
+      "above": "Let’s discuss your next website.",
+      "upper": true,
+      "tracked": true,
+      "mono": true,
+      "pill": false,
+      "size": 12,
+      "top": 14236
+     }
+    ],
+    "numbered": [
+     {
+      "text": "01 / Selected Work",
+      "size": 12,
+      "top": 927
+     },
+     {
+      "text": "02 / Capabilities",
+      "size": 12,
+      "top": 4870
+     },
+     {
+      "text": "03 / Approach",
+      "size": 12,
+      "top": 7766
+     },
+     {
+      "text": "04 / About the Studio",
+      "size": 12,
+      "top": 11222
+     },
+     {
+      "text": "05 / Frequently Asked Question",
+      "size": 12,
+      "top": 12870
+     },
+     {
+      "text": "06 / Start a Project",
+      "size": 12,
+      "top": 14236
+     },
+     {
+      "text": "01. Essential details",
+      "size": 12,
+      "top": 14458
+     },
+     {
+      "text": "01. AURA Sanctuary",
+      "size": 12,
+      "top": 16050
+     },
+     {
+      "text": "02. KÔN Atelier",
+      "size": 12,
+      "top": 16076
+     },
+     {
+      "text": "03. MONOLITH Studio",
+      "size": 12,
+      "top": 16102
+     },
+     {
+      "text": "04. SŌMA Formulations",
+      "size": 12,
+      "top": 16128
+     }
+    ],
+    "color": {
+     "bodyBg": "#f6f8fb",
+     "bodyBgHsl": {
+      "h": 216,
+      "s": 0.38,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 1284,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#f6f8fb",
+       "top": 15257,
+       "hsl": {
+        "h": 216,
+        "s": 0.38,
+        "l": 0.97
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#4a556b",
+       "share": 0.42
+      },
+      {
+       "color": "#263042",
+       "share": 0.2
+      },
+      {
+       "color": "#0b0e14",
+       "share": 0.14
+      },
+      {
+       "color": "#5e6a82",
+       "share": 0.1
+      },
+      {
+       "color": "#0a5cff",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#0a5cff",
+      "hsl": {
+       "h": 220,
+       "s": 1,
+       "l": 0.52
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 34,
+     "inHero": 2,
+     "radius": 8,
+     "height": 38,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 24,
+     "upper": 0,
+     "heroLabels": [
+      "Start a project ↗",
+      "Explore case studies ↓"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 21,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "button.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "article.lg:col-span-12.group → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "a.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "article.lg:col-span-6.group → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0"
+     ],
+     "gradients": 4,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+      "div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)"
+     ],
+     "gradientText": 0,
+     "hairlines": 47,
+     "hairlineSamples": [
+      "div.flex.flex-wrap 358px",
+      "div.pt-6.sm:pt-7 358px",
+      "section#work.py-14.sm:py-20 390px",
+      "div.flex.flex-col 358px",
+      "div.flex.items-center 308px"
+     ],
+     "outlinedBoxes": 24,
+     "dashed": 0,
+     "blurred": 17,
+     "roundedBoxes": 24,
+     "boxRadius": 12,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": true,
+     "height": 84,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 16501,
+    "margins": {
+     "left": 16,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "section.relative.min-h-[88svh]",
+      "tag": "section",
+      "top": 0,
+      "height": 870,
+      "words": 82,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Digital,",
+       "size": 42,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 22,
+      "textLeft": 16,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.flex.flex-col",
+      "tag": "div",
+      "top": 927,
+      "height": 310,
+      "words": 34,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Digital projects & concepts.",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 18,
+      "textLeft": 16,
+      "textRight": 18,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.grid.grid-cols-1",
+      "tag": "div",
+      "top": 1284,
+      "height": 3473,
+      "words": 355,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "AURA Sanctuary",
+       "size": 24,
+       "tag": "h3"
+      },
+      "left": 17,
+      "right": 17,
+      "textLeft": 41,
+      "textRight": 41,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.flex.flex-col",
+      "tag": "div",
+      "top": 4870,
+      "height": 224,
+      "words": 32,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Services focused on commercial objectives.",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 20,
+      "textLeft": 16,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.divide-y.divide-zy-border",
+      "tag": "div",
+      "top": 5150,
+      "height": 1954,
+      "words": 192,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Web Design & Art Direction",
+       "size": 20,
+       "tag": "h3"
+      },
+      "left": 28,
+      "right": 28,
+      "textLeft": 28,
+      "textRight": 28,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.mt-12.p-6",
+      "tag": "div",
+      "top": 7152,
+      "height": 502,
+      "words": 68,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 41,
+      "right": 49,
+      "textLeft": 41,
+      "textRight": 49,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.flex.flex-col",
+      "tag": "div",
+      "top": 7766,
+      "height": 198,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "A deliberate, transparent process.",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 34,
+      "textLeft": 16,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.relative.border-l",
+      "tag": "div",
+      "top": 8113,
+      "height": 2803,
+      "words": 263,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Discovery & Diagnosis",
+       "size": 20,
+       "tag": "h3"
+      },
+      "left": 70,
+      "right": 37,
+      "textLeft": 70,
+      "textRight": 37,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#studio.py-14.sm:py-20",
+      "tag": "section",
+      "top": 11147,
+      "height": 1641,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#faq.py-14.sm:py-20",
+      "tag": "section",
+      "top": 12788,
+      "height": 1384,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#contact.py-14.sm:py-20",
+      "tag": "section",
+      "top": 14172,
+      "height": 1085,
+      "words": 71,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Let’s discuss your next website.",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 28,
+      "right": 28,
+      "textLeft": 28,
+      "textRight": 28,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.relative.bg-zy-bg",
+      "tag": "footer",
+      "top": 15257,
+      "height": 1244,
+      "words": 92,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Let’s talk.",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 45,
+      "textLeft": 16,
+      "textRight": 45,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [
+     {
+      "top": 10336,
+      "height": 3900
+     }
+    ],
+    "h1s": [
+     {
+      "text": "Digital, with intention.",
+      "size": 42,
+      "top": 285,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 41,
+      "n": 12
+     },
+     {
+      "x": 61,
+      "n": 12
+     },
+     {
+      "x": 28,
+      "n": 10
+     },
+     {
+      "x": 16,
+      "n": 9
+     },
+     {
+      "x": 118,
+      "n": 4
+     }
+    ],
+    "leftBlocks": 47,
+    "bodySize": 14,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 1440,
+   "message": "1 headline(s) wrap past two lines at 1440px: \"Independent by design. International in outlook.\" → 3 lines (6 words, 48px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 36px or less."
+  },
+  {
+   "level": "FAIL",
+   "id": "eyebrow",
+   "width": 1440,
+   "message": "9 eyebrow/kicker label(s) above headings: \"04 INTERACTIVE EXPERIENCES\" above \"Digital projects & concepts.\"; \"Hospitality / Boutique Retreat\" above \"AURA Sanctuary\"; \"Gastronomy / Culinary Atelier\" above \"KÔN Atelier\"; \"Architecture / Spatial Practice\" above \"MONOLITH Studio\"; \"Beauty & Commerce / Cellular Care\" above \"SŌMA Formulations\"",
+   "fix": "Delete them. If the label carried real information, fold it into the headline or the supporting sentence.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "mono",
+   "width": 1440,
+   "message": "Monospace type outside code: ui-monospace — e.g. \"Dark\", \"/\", \"Light\", \"ES\"",
+   "fix": "Set it in the text face. Monospace is for literal code inside <pre>/<code> only.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "numbering",
+   "width": 1440,
+   "message": "Decorative index numbers: \"01 / AURA\", \"02 / KÔN\", \"03 / MONOLITH\", \"04 / SŌMA\", \"01 / Selected Work\", \"02 / Capabilities\"",
+   "fix": "Remove them. If order truly matters, write it into the words (\"First, …\") or use a real <ol>.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "micro-label",
+   "width": 1440,
+   "message": "69 tiny uppercase letter-spaced labels (e.g. \"// ZYRVAE\", \"/\", \"Independent Digital Studio\", \"BUENOS AIRES [34°36′S 58°22′W] // GLOBAL\").",
+   "fix": "Use sentence-case text at a readable size, or delete the label.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "4 gradient fill(s): div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%) | div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%) | div.absolute.inset-0 → linear-gradient(to top, oklab(0 0 0 / 0.75) 0%, oklab(0 0 0 / 0.15) 50%, oklab(0 0 0 / 0.3) 100%)",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "shadow",
+   "width": 1440,
+   "message": "17 box-shadow(s) on elements at rest: div.hidden.lg:flex → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0 | button.inline-flex.items-center → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0 | article.lg:col-span-12.group → rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+   "fix": "Remove. Separate surfaces with a tone step or space. Shadows are for things that really float (menus, dialogs, sticky bars).",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "hairline",
+   "width": 1440,
+   "message": "49 thin rule(s)/divider line(s): div.flex.flex-wrap 1216px | div.w-full.flex 315px | div.space-y-2.5.pt-3 315px | div.pt-6.sm:pt-7 1216px",
+   "fix": "Delete. Separate with space, a tone change, or scale. Lines are only for real tables and form fields.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "outlined-box",
+   "width": 1440,
+   "message": "28 boxes drawn with a 1px outline.",
+   "fix": "Define a surface by its fill (one tone step from the page) or leave the content unboxed.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "dashed",
+   "width": 1440,
+   "message": "1 dashed/dotted border(s).",
+   "fix": "Remove unless it is a real drop zone."
+  },
+  {
+   "level": "WARN",
+   "id": "glass",
+   "width": 1440,
+   "message": "17 backdrop-blur surfaces.",
+   "fix": "One blurred sticky bar at most; glass cards are a tell.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "icon-cards",
+   "width": 1440,
+   "message": "1 row(s) of identical cards each topped with a small icon (5 cards).",
+   "fix": "Replace with one composed section from the direction: a narrative split, a list set in large type, or real imagery per item."
+  },
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "14 different font sizes (9, 10, 11, 12, 14, 16, 18, 20, 24, 26, 30, 48, 60, 94).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "FAIL",
+   "id": "small-text",
+   "width": 1440,
+   "message": "161 text blocks under 13px.",
+   "fix": "Nothing meant to be read goes below 13px.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "late-title",
+   "width": 1440,
+   "message": "The title is not readable 1.2s after the page loaded (something lies over it).",
+   "fix": "Put the headline in the HTML, painted on the first frame; the load sequence only adds arrival and is settled by 1.2s (references/motion.md, \"Load sequence in 1.2 seconds\"). No preloader, no gate, no waiting for the load event.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "ragged-edges",
+   "width": 1440,
+   "message": "Left-aligned text starts at 12 different lines (112px, 226px, 587px, 853px, 274px, 335px, 732px); the three most used hold only 42% of it.",
+   "fix": "Pick two or three anchor lines from the grid and start every heading and paragraph on one of them.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "body-size",
+   "width": 390,
+   "message": "Body text is 14px (the size most of the running text is set in).",
+   "fix": "Body copy 16–20px. Map small sizes from blueprints onto your body step."
+  },
+  {
+   "level": "WARN",
+   "id": "side-scroll",
+   "width": 390,
+   "message": "1 row(s) scroll sideways with content past their edge.",
+   "fix": "Jurors and most visitors read a row cut at the edge as clipped, not as scrollable. Wrap it onto more lines, or end it inside the grid."
+  },
+  {
+   "level": "FAIL",
+   "id": "blank-gap",
+   "width": 390,
+   "message": "1 stretch(es) of the page hold nothing at all: 3900px at 10336px (the screen is 844px tall).",
+   "fix": "Close the gap: a section gap is 120–240px on desktop and 72–112px on a phone. Look for a min-height: 100vh on a short section, an empty grid row, a hidden element still holding its space, or a reveal that never fired. A deliberate rest is a placed picture or colour field, not nothing."
+  },
+  {
+   "level": "WARN",
+   "id": "name-only-title",
+   "width": 390,
+   "message": "The h1 is a bare name (\"Digital, with intention.\") and nothing else on the first screen says what this is.",
+   "fix": "Keep the name if it leads, and give the line under it (18px or more) the plain words: what it is, for whom, where or when. In the study of 97 Sites of the Day, first screens that named nothing lost usability and content points."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/home/runner/work/my-project/my-project/.taste-skill/before/desktop-fold.jpg",
+   "pages": [
+    "/home/runner/work/my-project/my-project/.taste-skill/before/desktop-page-01.jpg",
+    "/home/runner/work/my-project/my-project/.taste-skill/before/desktop-page-02.jpg",
+    "/home/runner/work/my-project/my-project/.taste-skill/before/desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "/home/runner/work/my-project/my-project/.taste-skill/before/tablet-fold.jpg",
+   "pages": [
+    "/home/runner/work/my-project/my-project/.taste-skill/before/tablet-page-01.jpg",
+    "/home/runner/work/my-project/my-project/.taste-skill/before/tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/home/runner/work/my-project/my-project/.taste-skill/before/mobile-fold.jpg",
+   "pages": [
+    "/home/runner/work/my-project/my-project/.taste-skill/before/mobile-page-01.jpg",
+    "/home/runner/work/my-project/my-project/.taste-skill/before/mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}
