@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useSpring, AnimatePresence } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
+import { ArrowUpRight } from 'lucide-react';
 
 export const CustomCursor: React.FC = () => {
   const { language } = useLanguage();
@@ -33,7 +34,7 @@ export const CustomCursor: React.FC = () => {
         if (customText) {
           setCursorText(customText);
         } else {
-          setCursorText(language === 'es' ? 'VER CASO ↗' : 'EXPLORE ↗');
+          setCursorText(language === 'es' ? 'VER CASO' : 'EXPLORE');
         }
       } else {
         setIsVisible(false);
@@ -68,8 +69,9 @@ export const CustomCursor: React.FC = () => {
           exit={{ scale: 0.95, opacity: 0, transition: { duration: 0.15, ease: 'easeOut' } }}
           transition={{ duration: 0.18, ease: 'easeOut' }}
         >
-          <div className="px-3 py-1 rounded-full bg-zy-blue text-white text-[11px] font-mono tracking-wider font-semibold border border-white/20 select-none whitespace-nowrap shadow-md">
-            {cursorText}
+          <div className="px-3 py-1 rounded-full bg-zy-blue text-white text-[11px] font-mono tracking-wider font-semibold border border-white/20 select-none whitespace-nowrap shadow-md inline-flex items-center space-x-1">
+            <span>{cursorText}</span>
+            <ArrowUpRight size={11} />
           </div>
         </motion.div>
       )}

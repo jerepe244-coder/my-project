@@ -1002,7 +1002,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                 onClick={(e) => scrollToSection(e, 'soma-hero')}
                 className="hover:text-zy-fg transition-colors"
               >
-                {language === 'es' ? '↑ Volver arriba' : '↑ Back to top'}
+                {language === 'es' ? 'Volver arriba' : 'Back to top'}
               </a>
               <Link
                 href="/#work"
@@ -1597,7 +1597,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
                       onClick={() => setCheckoutStep(1)}
                       className="text-xs font-mono text-zy-blue hover:underline"
                     >
-                      {language === 'es' ? '← Volver' : '← Back'}
+                      {language === 'es' ? 'Volver' : 'Back'}
                     </button>
                   </div>
 

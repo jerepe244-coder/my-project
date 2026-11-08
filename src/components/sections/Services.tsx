@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { services } from '@/data/services';
+import { Magnetic } from '@/components/ui/Magnetic';
 import { ArrowUpRight, Check } from 'lucide-react';
 
 export const Services: React.FC = () => {
@@ -79,13 +80,18 @@ export const Services: React.FC = () => {
           </p>
         </div>
 
-        <Link
-          href="/#contact"
-          className="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-zy-fg hover:text-zy-blue underline underline-offset-4 decoration-zy-blue self-start lg:self-end"
-        >
-          <span>{t.cta}</span>
-          <ArrowUpRight size={13} className="text-zy-blue" />
-        </Link>
+        <Magnetic>
+          <Link
+            href="/#contact"
+            className="group min-h-[44px] px-4 py-2 rounded-full bg-zy-surface hover:bg-zy-card border border-zy-border inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-zy-fg hover:text-zy-blue transition-colors self-start lg:self-end"
+          >
+            <span>{t.cta}</span>
+            <ArrowUpRight
+              size={13}
+              className="text-zy-blue transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </Link>
+        </Magnetic>
       </motion.div>
 
       {/* Sticky Table Strip (Taste: list-lineup-one-size) */}

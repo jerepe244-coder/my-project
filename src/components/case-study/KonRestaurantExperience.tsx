@@ -621,7 +621,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                       className="inline-flex items-center space-x-1 text-[11px] font-mono text-zy-blue hover:underline pt-1"
                     >
                       <Maximize2 size={12} />
-                      <span>{language === 'es' ? 'Ver fotografía ↗' : 'View photo ↗'}</span>
+                      <span>{language === 'es' ? 'Ver fotografía' : 'View photo'}</span>
                     </button>
                   )}
                 </div>
@@ -973,7 +973,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                     type="submit"
                     className="w-full py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs sm:text-sm font-mono tracking-wider transition-all shadow-[0_0_20px_rgba(10,92,255,0.4)]"
                   >
-                    {language === 'es' ? 'Confirmar simulación de mesa ↗' : 'Confirm table simulation ↗'}
+                    {language === 'es' ? 'Confirmar simulación de mesa' : 'Confirm table simulation'}
                   </button>
                 </form>
               ) : (
@@ -1040,7 +1040,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                     onClick={resetSimulation}
                     className="px-4 py-2 rounded-lg bg-zy-warm-card hover:bg-zy-warm-badge border border-zy-warm-border text-xs font-mono text-zy-warm-fg transition-colors"
                   >
-                    {language === 'es' ? '← Realizar otra simulación' : '← Run another simulation'}
+                    {language === 'es' ? 'Realizar otra simulación' : 'Run another simulation'}
                   </button>
                 </div>
               )}
@@ -1218,15 +1218,16 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
               className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-mono tracking-wider transition-all shadow-[0_0_20px_rgba(10,92,255,0.35)]"
             >
               <span>
-                {language === 'es' ? 'Simular mesa (Demo) ↗' : 'Simulate table (Demo) ↗'}
+                {language === 'es' ? 'Simular mesa (Demo)' : 'Simulate table (Demo)'}
               </span>
+              <ArrowUpRight size={14} />
             </a>
 
             <Link
               href="/#contact"
               className="inline-flex items-center space-x-2 px-5 py-3.5 rounded-xl bg-zy-warm-bar hover:bg-zy-warm-active border border-zy-warm-border text-xs font-mono text-zy-warm-fg transition-colors"
             >
-              <span>{language === 'es' ? 'Iniciar proyecto ZYRVAE ↗' : 'Start project with ZYRVAE ↗'}</span>
+              <span>{language === 'es' ? 'Iniciar proyecto ZYRVAE' : 'Start project with ZYRVAE'}</span>
               <ArrowUpRight size={14} className="text-zy-blue" />
             </Link>
 
@@ -1328,7 +1329,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                     }}
                     className="px-4 py-2 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-mono tracking-wider transition-colors"
                   >
-                    {language === 'es' ? 'Simular reserva de mesa ↗' : 'Simulate table request ↗'}
+                    {language === 'es' ? 'Simular reserva de mesa' : 'Simulate table request'}
                   </button>
                 </div>
               </div>

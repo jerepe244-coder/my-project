@@ -135,7 +135,7 @@ export const GastronomyDemo: React.FC = () => {
               onClick={() => setBookingSimOpen(true)}
               className="px-3.5 py-1.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-mono tracking-wider transition-all shadow-[0_0_12px_rgba(10,92,255,0.3)]"
             >
-              {language === 'es' ? 'Simular Mesa ↗' : 'Simulate Table ↗'}
+              {language === 'es' ? 'Simular Mesa' : 'Simulate Table'}
             </button>
           </div>
         </div>
@@ -255,7 +255,7 @@ export const GastronomyDemo: React.FC = () => {
                   onClick={() => setBookedSuccess(true)}
                   className="w-full py-2.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white font-mono font-medium transition-all"
                 >
-                  {language === 'es' ? 'Confirmar simulación de mesa ↗' : 'Confirm table simulation ↗'}
+                  {language === 'es' ? 'Confirmar simulación de mesa' : 'Confirm table simulation'}
                 </button>
               </div>
             ) : (

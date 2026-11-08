@@ -1494,7 +1494,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
               onClick={(e) => scrollToSection(e, 'monolith-hero')}
               className="hover:text-zy-fg transition-colors"
             >
-              {language === 'es' ? '↑ Volver arriba' : '↑ Back to top'}
+              {language === 'es' ? 'Volver arriba' : 'Back to top'}
             </a>
             <Link
               href="/#work"

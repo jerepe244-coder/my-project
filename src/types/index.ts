@@ -6,6 +6,7 @@ export type ProjectCategory = 'all' | 'hospitality' | 'gastronomy' | 'architectu
 
 export interface ProjectDetail {
   slug: string;
+  idCode: string;
   category: 'hospitality' | 'gastronomy' | 'architecture' | 'ecommerce';
   categoryLabel: { es: string; en: string };
   title: string;

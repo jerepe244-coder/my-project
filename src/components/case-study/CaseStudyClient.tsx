@@ -360,12 +360,13 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
                       <span>
                         {isSelected
                           ? language === 'es'
-                            ? '✓ Suite seleccionada · Configurar estadía ↓'
-                            : '✓ Suite selected · Configure stay ↓'
+                            ? 'Suite seleccionada · Configurar estadía'
+                            : 'Suite selected · Configure stay'
                           : language === 'es'
-                            ? 'Seleccionar esta suite ↓'
-                            : 'Select this suite ↓'}
+                            ? 'Seleccionar esta suite'
+                            : 'Select this suite'}
                       </span>
+                      <ArrowDown size={13} />
                     </button>
                   </div>
                 </article>
@@ -567,8 +568,9 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
                 className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-xl bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-mono tracking-wider transition-all shadow-[0_0_20px_rgba(10,92,255,0.35)]"
               >
                 <span>
-                  {language === 'es' ? 'Reservar estadía (Demo) ↗' : 'Book stay (Demo) ↗'}
+                  {language === 'es' ? 'Reservar estadía (Demo)' : 'Book stay (Demo)'}
                 </span>
+                <ArrowUpRight size={14} />
               </button>
 
               <Link

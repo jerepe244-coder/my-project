@@ -5,46 +5,46 @@ html.dark,
 html[data-theme="dark"] {
   color-scheme: dark;
 
-  /* Core Backgrounds & Surfaces (Dark Default Identity) */
-  --background: #060709;
+  /* Core Backgrounds & Surfaces — Deep Graphite (#0A0A0C) */
+  --background: #0a0a0c;
   --foreground: #f4f5f8;
-  --zy-bg: #060709;
-  --zy-bg-elevated: #090b0e;
-  --zy-card: #0c0e12;
-  --zy-card-alt: #0e1014;
-  --zy-card-hover: #141720;
-  --zy-surface: #101216;
-  --zy-surface-alt: #0e1117;
-  --zy-surface-hover: #151922;
-  --zy-control: #12151b;
-  --zy-control-hover: #1a202c;
-  --zy-control-active: #1b2230;
+  --zy-bg: #0a0a0c;
+  --zy-bg-elevated: #0e1014;
+  --zy-card: #111318;
+  --zy-card-alt: #13161c;
+  --zy-card-hover: #181c24;
+  --zy-surface: #14171e;
+  --zy-surface-alt: #12151b;
+  --zy-surface-hover: #1a1e28;
+  --zy-control: #151820;
+  --zy-control-hover: #1d222e;
+  --zy-control-active: #202736;
   --zy-accent-soft: #151d2b;
-  --zy-benefits-bg: #0e1117;
+  --zy-benefits-bg: #0f1218;
   --zy-benefits-border: #1f2635;
-  --zy-logo-plate: #0e1014;
+  --zy-logo-plate: #111318;
 
   /* Overlays & Chrome */
-  --zy-header-scrolled: rgba(9, 11, 14, 0.85);
-  --zy-header-top: rgba(9, 11, 14, 0.4);
-  --zy-header-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-  --zy-drawer-bg: rgba(6, 7, 9, 0.95);
-  --zy-modal-backdrop: rgba(0, 0, 0, 0.82);
+  --zy-header-scrolled: rgba(10, 10, 12, 0.88);
+  --zy-header-top: rgba(10, 10, 12, 0.65);
+  --zy-header-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --zy-drawer-bg: rgba(10, 10, 12, 0.96);
+  --zy-modal-backdrop: rgba(5, 6, 8, 0.84);
 
-  /* Borders & Hairlines */
-  --zy-border-subtle: #161a22;
-  --zy-border: #1e232d;
-  --zy-border-card: #181d26;
-  --zy-border-strong: #2b3548;
+  /* Borders & 1px Architectural Hairlines (neutral-800 #262626) */
+  --zy-border-subtle: #262626;
+  --zy-border: #262626;
+  --zy-border-card: #262626;
+  --zy-border-strong: #3f3f46;
 
-  /* Typography */
+  /* Typography (WCAG 2.1 AA Verified > 4.5:1 on #0A0A0C) */
   --zy-fg: #ffffff;
   --zy-fg-soft: #f4f5f8;
-  --zy-fg-secondary: #cbd4e6;
-  --zy-fg-hero-sub: #d0d7e6;
-  --zy-muted: #8b92a5;
-  --zy-dim: #515768;
-  --zy-crosshair: #2c3340;
+  --zy-fg-secondary: #d4dce8;
+  --zy-fg-hero-sub: #d4dce8;
+  --zy-muted: #9ca3b5;
+  --zy-dim: #8690a3;
+  --zy-crosshair: #3f3f46;
 
   /* Brand Accent */
   --zy-blue: #0a5cff;
@@ -67,27 +67,27 @@ html[data-theme="dark"] {
   --zy-warm-border-subtle: #1c1913;
   --zy-warm-border-hover: #2f271c;
   --zy-warm-fg: #f0ebe3;
-  --zy-warm-muted: #8c7e6b;
-  --zy-warm-dim: #695f51;
+  --zy-warm-muted: #a39581;
+  --zy-warm-dim: #8c7f6d;
 }
 
 html.light,
 html[data-theme="light"] {
   color-scheme: light;
 
-  /* Core Backgrounds & Surfaces (Premium Architectural Light) */
-  --background: #f6f8fb;
+  /* Core Backgrounds & Surfaces — Neutral Architectural Light (#F8F9FA) */
+  --background: #f8f9fa;
   --foreground: #0b0e14;
-  --zy-bg: #f6f8fb;
+  --zy-bg: #f8f9fa;
   --zy-bg-elevated: #ffffff;
   --zy-card: #ffffff;
-  --zy-card-alt: #f0f3f8;
-  --zy-card-hover: #eaf0f8;
-  --zy-surface: #eff3f8;
-  --zy-surface-alt: #e9eff8;
-  --zy-surface-hover: #e2e9f4;
-  --zy-control: #ebeef5;
-  --zy-control-hover: #dfe5f0;
+  --zy-card-alt: #f1f4f8;
+  --zy-card-hover: #eaeff6;
+  --zy-surface: #eef2f6;
+  --zy-surface-alt: #e8edf5;
+  --zy-surface-hover: #e1e8f2;
+  --zy-control: #e9edf4;
+  --zy-control-hover: #dde3ee;
   --zy-control-active: #ffffff;
   --zy-accent-soft: #e8f0ff;
   --zy-benefits-bg: #edf3fc;
@@ -95,26 +95,26 @@ html[data-theme="light"] {
   --zy-logo-plate: #eef2f8;
 
   /* Overlays & Chrome */
-  --zy-header-scrolled: rgba(255, 255, 255, 0.88);
-  --zy-header-top: rgba(246, 248, 251, 0.72);
+  --zy-header-scrolled: rgba(255, 255, 255, 0.92);
+  --zy-header-top: rgba(248, 249, 250, 0.85);
   --zy-header-shadow: 0 8px 30px rgba(11, 14, 20, 0.07);
-  --zy-drawer-bg: rgba(246, 248, 251, 0.96);
-  --zy-modal-backdrop: rgba(11, 14, 20, 0.55);
+  --zy-drawer-bg: rgba(248, 249, 250, 0.97);
+  --zy-modal-backdrop: rgba(11, 14, 20, 0.58);
 
   /* Borders & Hairlines */
-  --zy-border-subtle: #e1e6f0;
-  --zy-border: #d0d8e6;
-  --zy-border-card: #d8e0ed;
-  --zy-border-strong: #9fb0c8;
+  --zy-border-subtle: #d5dce6;
+  --zy-border: #c6d0de;
+  --zy-border-card: #cfd8e6;
+  --zy-border-strong: #94a3b8;
 
-  /* Typography — High-Contrast Ink & Balanced Architectural Slates */
+  /* Typography — Medium Graphite (#475569) for WCAG 2.1 AA (> 7.4:1 contrast on #F8F9FA) */
   --zy-fg: #0b0e14;
-  --zy-fg-soft: #111622;
-  --zy-fg-secondary: #263042;
-  --zy-fg-hero-sub: #222b3c;
-  --zy-muted: #4a556b;
-  --zy-dim: #5e6a82;
-  --zy-crosshair: #b0bcd0;
+  --zy-fg-soft: #0f172a;
+  --zy-fg-secondary: #1e293b;
+  --zy-fg-hero-sub: #1e293b;
+  --zy-muted: #475569;
+  --zy-dim: #475569;
+  --zy-crosshair: #94a3b8;
 
   /* Brand Accent */
   --zy-blue: #0a5cff;
@@ -137,8 +137,8 @@ html[data-theme="light"] {
   --zy-warm-border-subtle: #e6dfd5;
   --zy-warm-border-hover: #b8ac99;
   --zy-warm-fg: #181510;
-  --zy-warm-muted: #574d40;
-  --zy-warm-dim: #6e6253;
+  --zy-warm-muted: #475569;
+  --zy-warm-dim: #475569;
 }
 
 @theme inline {
@@ -208,7 +208,8 @@ html {
   scroll-behavior: smooth;
   background-color: var(--zy-bg);
   color: var(--zy-fg-soft);
-  font-family: 'Hanken Grotesk', var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  caret-color: var(--zy-blue);
+  font-family: var(--font-hanken), 'Hanken Grotesk', var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -217,21 +218,61 @@ html {
 body {
   background-color: var(--zy-bg);
   color: var(--zy-fg-soft);
-  font-family: 'Hanken Grotesk', var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-hanken), 'Hanken Grotesk', var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
 }
 
-/* Monumental Display Typography (Taste: name-as-monument) */
+/* Subtle SVG architectural surface grain in dark graphite mode (#0A0A0C) */
+html.dark body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 35;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Ccircle cx='12' cy='18' r='0.75'/%3E%3Ccircle cx='84' cy='42' r='0.6'/%3E%3Ccircle cx='138' cy='24' r='0.75'/%3E%3Ccircle cx='46' cy='96' r='0.65'/%3E%3Ccircle cx='112' cy='118' r='0.75'/%3E%3Ccircle cx='28' cy='144' r='0.6'/%3E%3Ccircle cx='148' cy='88' r='0.65'/%3E%3Ccircle cx='72' cy='136' r='0.7'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Monumental Display Typography */
 .font-monument {
-  font-family: 'Hanken Grotesk', var(--font-geist-sans), sans-serif;
-  letter-spacing: -0.055em;
-  line-height: 0.82;
+  font-family: var(--font-hanken), 'Hanken Grotesk', var(--font-geist-sans), sans-serif;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+.font-mono {
+  font-variant-numeric: tabular-nums;
 }
 
 .text-balance {
   text-wrap: balance;
+}
+
+/* Custom Browser Surfaces (Selection, Scrollbars, Focus Rings) */
+::selection {
+  background-color: rgba(10, 92, 255, 0.25);
+  color: var(--zy-fg);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--zy-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--zy-border-strong);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--zy-blue);
 }
 
 /* Accessible focus visible outlines */

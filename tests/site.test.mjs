@@ -384,4 +384,75 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       'Portfolio must allow inspecting case study specifications and context'
     );
   });
+
+  test('UI/UX Audit & Awwwards Redesign Verification (Contrast, Grid, Hero, FAQ Accordion, Live Demos, Copy & Icons)', async () => {
+    const { projects } = await import('../src/data/projects.ts');
+    const translationsRaw = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'data', 'translations.ts'),
+      'utf-8'
+    );
+
+    // 1. No duplicate Unicode arrows in translation strings
+    for (const glyph of ['↗', '↓', '↑', '→', '←']) {
+      assert.equal(
+        translationsRaw.includes(glyph),
+        false,
+        `translations.ts must not contain Unicode arrow ${glyph} (prevents double arrow glitch with SVG icons)`
+      );
+    }
+
+    // 2. Project 03 ID code and pure Spanish tagline
+    const project03 = projects.find((p) => p.title === 'MONOLITH Studio');
+    assert.ok(project03, 'Project 03 MONOLITH Studio must exist');
+    assert.equal(project03.idCode, 'MONOLITH-STUDIO', 'Project 03 formal ID code must be MONOLITH-STUDIO');
+    assert.ok(
+      project03.tagline.es.startsWith('Espacios modelados por la luz:'),
+      'Project 03 Spanish tagline must be fully translated into Spanish'
+    );
+
+    // 3. Palette & WCAG 2.1 AA contrast tokens (#0a0a0c dark graphite + #475569 light mode secondary text)
+    const globalsCss = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'app', 'globals.css'),
+      'utf-8'
+    );
+    assert.ok(globalsCss.includes('#0a0a0c'), 'Dark mode must use deep graphite #0a0a0c');
+    assert.ok(globalsCss.includes('#475569'), 'Light mode secondary text must use medium graphite #475569 for WCAG AA');
+
+    // 4. Hero padding-top: 120px, corner coordinates, and un-overlapped typography
+    const heroTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Hero.tsx'),
+      'utf-8'
+    );
+    assert.ok(heroTsx.includes('120px'), 'Hero must enforce 120px top padding to clear floating header');
+    assert.ok(heroTsx.includes('cornerCoordinates'), 'Hero must render 4 viewport corner coordinate micro-labels');
+    assert.equal(heroTsx.includes('-mt-['), false, 'Hero headline must not overlap layers with negative margins');
+
+    // 5. Portfolio homogeneous 12-column grid, 1px border-neutral-800, [LIVE DEMO] widgets, 44x44px targets & in-situ modal
+    const portfolioTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Portfolio.tsx'),
+      'utf-8'
+    );
+    assert.ok(portfolioTsx.includes('lg:grid-cols-12'), 'Portfolio must use 12-column modular grid');
+    assert.ok(portfolioTsx.includes('border-neutral-800'), 'Portfolio must use 1px border-neutral-800 separators');
+    assert.ok(portfolioTsx.includes('[LIVE DEMO]'), 'Portfolio must embed interactive [LIVE DEMO] micro-widgets');
+    assert.ok(portfolioTsx.includes('activeDemoModalSlug'), 'Portfolio must open interactive demo in-situ via modal');
+    assert.ok(portfolioTsx.includes('min-w-[44px] min-h-[44px]'), 'Portfolio controls must meet 44x44px touch target minimum');
+    assert.ok(portfolioTsx.includes('project.idCode'), 'Portfolio must display formal project.idCode');
+
+    // 6. Header deterministic IntersectionObserver active section synchronization
+    const headerTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'layout', 'Header.tsx'),
+      'utf-8'
+    );
+    assert.ok(headerTsx.includes('IntersectionObserver'), 'Header must use IntersectionObserver');
+    assert.ok(headerTsx.includes('resolveCurrentSection'), 'Header must synchronize active section across all scroll depths');
+
+    // 7. FAQ interactive collapsible accordion with smooth CSS transitions
+    const faqTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'FAQ.tsx'),
+      'utf-8'
+    );
+    assert.ok(faqTsx.includes('aria-expanded={isOpen}'), 'FAQ must implement accessible collapsible accordion');
+    assert.ok(faqTsx.includes('grid-rows-[1fr]'), 'FAQ must animate accordion height smoothly with CSS grid rows');
+  });
 });

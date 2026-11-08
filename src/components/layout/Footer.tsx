@@ -191,10 +191,13 @@ export const Footer: React.FC = () => {
           <button
             type="button"
             onClick={scrollToTop}
-            className="inline-flex items-center space-x-1.5 text-zy-muted hover:text-zy-fg transition-colors py-1 px-2.5 rounded-sm hover:bg-zy-surface border border-transparent hover:border-zy-border"
+            className="group min-h-[44px] inline-flex items-center space-x-1.5 text-zy-muted hover:text-zy-fg transition-colors py-2 px-3.5 rounded-full hover:bg-zy-surface border border-transparent hover:border-zy-border"
           >
             <span>{t.footer.backToTop}</span>
-            <ArrowUp size={12} />
+            <ArrowUp
+              size={12}
+              className="text-zy-blue transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-0.5"
+            />
           </button>
         </div>
       </div>

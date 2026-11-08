@@ -3,6 +3,7 @@ import { ProjectDetail } from '@/types';
 export const projects: ProjectDetail[] = [
   {
     slug: 'aura-sanctuary',
+    idCode: 'AURA-SANCTUARY',
     category: 'hospitality',
     categoryLabel: {
       es: 'Hospitalidad / Alojamiento Boutique',
@@ -86,6 +87,7 @@ export const projects: ProjectDetail[] = [
   },
   {
     slug: 'kon-atelier',
+    idCode: 'KON-ATELIER',
     category: 'gastronomy',
     categoryLabel: {
       es: 'Gastronomía / Atelier Culinario',
@@ -170,6 +172,7 @@ export const projects: ProjectDetail[] = [
   },
   {
     slug: 'vectra-architects',
+    idCode: 'MONOLITH-STUDIO',
     category: 'architecture',
     categoryLabel: {
       es: 'Arquitectura / Práctica Espacial',
@@ -177,7 +180,7 @@ export const projects: ProjectDetail[] = [
     },
     title: 'MONOLITH Studio',
     tagline: {
-      es: 'Spaces shaped by light: volúmenes puros de hormigón visto, piedra fósil y silencio en simbiosis con el paisaje.',
+      es: 'Espacios modelados por la luz: volúmenes puros de hormigón visto, piedra fósil y silencio en simbiosis con el paisaje.',
       en: 'Spaces shaped by light: pure board-formed concrete volumes, fossil stone, and stillness in symbiosis with landscape.',
     },
     isConcept: true,
@@ -258,6 +261,7 @@ export const projects: ProjectDetail[] = [
   },
   {
     slug: 'soma-formulations',
+    idCode: 'SOMA-FORMULATIONS',
     category: 'ecommerce',
     categoryLabel: {
       es: 'Beauty & Commerce / Cuidado Celular',

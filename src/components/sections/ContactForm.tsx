@@ -12,6 +12,7 @@ import {
   Copy,
   Mail,
   Edit2,
+  ArrowUpRight,
 } from 'lucide-react';
 
 interface FormData {
@@ -421,9 +422,10 @@ export const ContactForm: React.FC = () => {
                     <Mail size={13} />
                     <span>
                       {language === 'es'
-                        ? 'Enviar directo a zyrvae.co@gmail.com ↗'
-                        : 'Send directly to zyrvae.co@gmail.com ↗'}
+                        ? 'Enviar directo a zyrvae.co@gmail.com'
+                        : 'Send directly to zyrvae.co@gmail.com'}
                     </span>
+                    <ArrowUpRight size={13} />
                   </a>
 
                   {submitError.briefText && (
@@ -957,10 +959,14 @@ export const ContactForm: React.FC = () => {
         </span>
         <a
           href="mailto:zyrvae.co@gmail.com"
-          className="inline-flex items-center space-x-1.5 text-zy-fg-secondary hover:text-zy-blue transition-colors font-medium"
+          className="group inline-flex items-center space-x-1.5 text-zy-fg-secondary hover:text-zy-blue transition-colors font-medium"
         >
           <Mail size={13} className="text-zy-blue" />
-          <span>zyrvae.co@gmail.com ↗</span>
+          <span>zyrvae.co@gmail.com</span>
+          <ArrowUpRight
+            size={13}
+            className="text-zy-blue transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
         </a>
       </div>
     </section>

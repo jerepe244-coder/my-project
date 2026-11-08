@@ -6,7 +6,7 @@ export const translations = {
       process: 'Proceso',
       studio: 'Estudio',
       faq: 'FAQ',
-      cta: 'Iniciar un proyecto ↗',
+      cta: 'Iniciar un proyecto',
       menu: 'Menú',
       close: 'Cerrar',
       skipToContent: 'Saltar al contenido principal',
@@ -24,8 +24,8 @@ export const translations = {
       headlinePart2: 'con intención.',
       subhead:
         'Diseñamos y desarrollamos sitios web distintivos para marcas que quieren destacar, transmitir confianza y convertir visitas en oportunidades.',
-      ctaPrimary: 'Iniciar un proyecto ↗',
-      ctaSecondary: 'Ver casos de estudio ↓',
+      ctaPrimary: 'Iniciar un proyecto',
+      ctaSecondary: 'Ver casos de estudio',
       scrollPrompt: 'Desplazar para explorar',
     },
     portfolio: {
@@ -39,7 +39,7 @@ export const translations = {
       filterArchitecture: 'Arquitectura',
       filterEcommerce: 'Beauty & Commerce',
       conceptBadge: 'Proyecto conceptual',
-      viewProject: 'Ver caso de estudio ↗',
+      viewProject: 'Ver caso de estudio',
       featuredTag: 'Destacado',
       tryDemo: 'Probar demo interactiva',
     },
@@ -48,7 +48,7 @@ export const translations = {
       title: 'Servicios orientados a objetivos comerciales.',
       subtitle:
         'Conectamos las necesidades reales de tu negocio con soluciones visuales y de ingeniería web a medida.',
-      cta: 'Consultar por un servicio ↗',
+      cta: 'Consultar por un servicio',
     },
     process: {
       label: '03 / Metodología',
@@ -87,7 +87,7 @@ export const translations = {
       subtitle:
         'Respuestas transparentes sobre cómo colaboramos, tiempos y requerimientos técnicos.',
       moreQuestions: '¿Tenés una consulta específica?',
-      contactUs: 'Escribinos directamente a zyrvae.co@gmail.com ↗',
+      contactUs: 'Escribinos directamente a zyrvae.co@gmail.com',
     },
     form: {
       label: '06 / Iniciar un Proyecto',
@@ -152,9 +152,9 @@ export const translations = {
       },
 
       buttons: {
-        next: 'Continuar etapa →',
-        back: '← Volver',
-        submit: 'Enviar propuesta a ZYRVAE ↗',
+        next: 'Continuar etapa',
+        back: 'Volver',
+        submit: 'Enviar propuesta a ZYRVAE',
         submitting: 'Verificando y enviando...',
         edit: 'Modificar datos',
       },
@@ -178,16 +178,16 @@ export const translations = {
       ctaTitle: '¿Tenés un proyecto en mente?',
       ctaAction: 'Hablemos.',
       copy: 'Construyamos una presencia digital que represente la calidad de lo que hacés.',
-      button: 'Iniciar un proyecto ↗',
+      button: 'Iniciar un proyecto',
     },
     footer: {
       description: 'Estudio digital independiente. Diseño y desarrollo web con criterio y rigor técnico.',
       rights: 'Todos los derechos reservados.',
       directContact: 'Contacto directo:',
-      backToTop: 'Volver arriba ↑',
+      backToTop: 'Volver arriba',
     },
     caseStudy: {
-      back: '← Volver al portfolio',
+      back: 'Volver al portfolio',
       conceptNotice: 'Este proyecto es un concepto de diseño y desarrollo creado por ZYRVAE para demostrar capacidades técnicas y visuales.',
       clientLabel: 'Concepto',
       yearLabel: 'Año',
@@ -200,7 +200,7 @@ export const translations = {
       demoTitle: '06 / Demostración Interactiva en Vivo',
       demoNotice: 'Esta es una simulación interactiva con fines demostrativos. No se procesan transacciones ni reservas reales.',
       ctaTitle: '¿Buscás una solución similar para tu negocio?',
-      ctaButton: 'Iniciar un proyecto ↗',
+      ctaButton: 'Iniciar un proyecto',
     },
   },
   en: {
@@ -210,7 +210,7 @@ export const translations = {
       process: 'Process',
       studio: 'Studio',
       faq: 'FAQ',
-      cta: 'Start a project ↗',
+      cta: 'Start a project',
       menu: 'Menu',
       close: 'Close',
       skipToContent: 'Skip to main content',
@@ -228,8 +228,8 @@ export const translations = {
       headlinePart2: 'with intention.',
       subhead:
         'We design and build distinctive websites that help ambitious businesses communicate their value and move forward.',
-      ctaPrimary: 'Start a project ↗',
-      ctaSecondary: 'Explore case studies ↓',
+      ctaPrimary: 'Start a project',
+      ctaSecondary: 'Explore case studies',
       scrollPrompt: 'Scroll to explore',
     },
     portfolio: {
@@ -243,7 +243,7 @@ export const translations = {
       filterArchitecture: 'Architecture',
       filterEcommerce: 'Beauty & Commerce',
       conceptBadge: 'Concept Project',
-      viewProject: 'View case study ↗',
+      viewProject: 'View case study',
       featuredTag: 'Featured',
       tryDemo: 'Launch interactive demo',
     },
@@ -252,7 +252,7 @@ export const translations = {
       title: 'Services focused on commercial objectives.',
       subtitle:
         'We connect your business’s concrete goals with bespoke visual design and web engineering.',
-      cta: 'Inquire about a service ↗',
+      cta: 'Inquire about a service',
     },
     process: {
       label: '03 / Approach',
@@ -291,7 +291,7 @@ export const translations = {
       subtitle:
         'Straightforward answers regarding our collaboration model, timelines, and technical requirements.',
       moreQuestions: 'Have a specific question?',
-      contactUs: 'Reach out directly at zyrvae.co@gmail.com ↗',
+      contactUs: 'Reach out directly at zyrvae.co@gmail.com',
     },
     form: {
       label: '06 / Start a Project',
@@ -356,9 +356,9 @@ export const translations = {
       },
 
       buttons: {
-        next: 'Next stage →',
-        back: '← Back',
-        submit: 'Submit proposal to ZYRVAE ↗',
+        next: 'Next stage',
+        back: 'Back',
+        submit: 'Submit proposal to ZYRVAE',
         submitting: 'Validating & sending...',
         edit: 'Edit details',
       },
@@ -382,16 +382,16 @@ export const translations = {
       ctaTitle: 'Have a project in mind?',
       ctaAction: 'Let’s talk.',
       copy: 'Let us build a digital presence worthy of the quality of your work.',
-      button: 'Start a project ↗',
+      button: 'Start a project',
     },
     footer: {
       description: 'Independent digital studio. Web design and engineering with intention and technical rigor.',
       rights: 'All rights reserved.',
       directContact: 'Direct contact:',
-      backToTop: 'Back to top ↑',
+      backToTop: 'Back to top',
     },
     caseStudy: {
-      back: '← Back to portfolio',
+      back: 'Back to portfolio',
       conceptNotice: 'This project is a design and engineering concept crafted by ZYRVAE to demonstrate visual and technical capabilities.',
       clientLabel: 'Concept',
       yearLabel: 'Year',
@@ -404,7 +404,7 @@ export const translations = {
       demoTitle: '06 / Live Interactive Demo',
       demoNotice: 'This is an interactive simulation for demonstration purposes. No real reservations or payments are processed.',
       ctaTitle: 'Looking for a similar digital experience?',
-      ctaButton: 'Start a project ↗',
+      ctaButton: 'Start a project',
     },
   },
 };
