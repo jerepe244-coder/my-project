@@ -5,6 +5,10 @@ import {
   Hanken_Grotesk,
   Syne,
   Plus_Jakarta_Sans,
+  DM_Sans,
+  Barlow_Condensed,
+  Roboto_Condensed,
+  Oswald,
   Instrument_Serif,
   JetBrains_Mono,
 } from 'next/font/google';
@@ -44,7 +48,31 @@ const syneDisplay = Syne({
 const plusJakarta = Plus_Jakarta_Sans({
   variable: '--font-jakarta',
   subsets: ['latin'],
-  weight: ['700', '800'],
+  weight: ['400', '500', '600', '700', '800'],
+});
+
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+});
+
+const barlowCondensed = Barlow_Condensed({
+  variable: '--font-barlow-condensed',
+  subsets: ['latin'],
+  weight: ['700', '800', '900'],
+});
+
+const robotoCondensed = Roboto_Condensed({
+  variable: '--font-roboto-condensed',
+  subsets: ['latin'],
+  weight: ['800', '900'],
+});
+
+const oswaldDisplay = Oswald({
+  variable: '--font-oswald',
+  subsets: ['latin'],
+  weight: ['700'],
 });
 
 const instrumentSerif = Instrument_Serif({
@@ -150,7 +178,7 @@ export default function RootLayout({
     <html
       lang="es"
       suppressHydrationWarning
-      className={`light ${hankenGrotesk.variable} ${geistSans.variable} ${geistMono.variable} ${syneDisplay.variable} ${plusJakarta.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`light ${hankenGrotesk.variable} ${geistSans.variable} ${geistMono.variable} ${syneDisplay.variable} ${plusJakarta.variable} ${dmSans.variable} ${barlowCondensed.variable} ${robotoCondensed.variable} ${oswaldDisplay.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

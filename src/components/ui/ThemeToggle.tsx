@@ -31,7 +31,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       role="group"
       aria-label={t.label}
       onKeyDown={handleKeyDown}
-      className={`inline-flex items-center rounded-none bg-zy-control border border-zy-grid-line p-0 text-[11px] font-mono-tech uppercase tracking-[0.08em] ${className}`}
+      className={`inline-flex items-center rounded-none bg-transparent p-0 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case ${className}`}
     >
       <button
         type="button"
@@ -40,17 +40,26 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         aria-label={t.switchToLight}
         title={t.light}
         suppressHydrationWarning
-        className={`inline-flex items-center space-x-1 px-2 py-1 rounded-none transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
+        className={`inline-flex items-center space-x-1 px-1.5 py-1 rounded-none bg-transparent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
           theme === 'light'
-            ? 'bg-zy-fg text-zy-bg font-medium'
-            : 'text-zy-muted hover:text-zy-fg'
+            ? 'text-zy-fg font-semibold'
+            : 'text-zy-muted/75 hover:text-zy-fg'
         }`}
       >
-        <Sun size={11} aria-hidden="true" />
+        <Sun
+          size={11}
+          strokeWidth={theme === 'light' ? 2.1 : 1.5}
+          aria-hidden="true"
+        />
         <span className={showLabels ? 'inline text-[10px]' : 'sr-only'}>
           {t.light}
         </span>
       </button>
+
+      <span
+        aria-hidden="true"
+        className="w-[0.5px] h-2.5 bg-zy-grid-line mx-0.5 select-none"
+      />
 
       <button
         type="button"
@@ -59,13 +68,17 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         aria-label={t.switchToDark}
         title={t.dark}
         suppressHydrationWarning
-        className={`inline-flex items-center space-x-1 px-2 py-1 rounded-none border-l border-zy-grid-line transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
+        className={`inline-flex items-center space-x-1 px-1.5 py-1 rounded-none bg-transparent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
           theme === 'dark'
-            ? 'bg-zy-fg text-zy-bg font-medium'
-            : 'text-zy-muted hover:text-zy-fg'
+            ? 'text-zy-fg font-semibold'
+            : 'text-zy-muted/75 hover:text-zy-fg'
         }`}
       >
-        <Moon size={11} aria-hidden="true" />
+        <Moon
+          size={11}
+          strokeWidth={theme === 'dark' ? 2.1 : 1.5}
+          aria-hidden="true"
+        />
         <span className={showLabels ? 'inline text-[10px]' : 'sr-only'}>
           {t.dark}
         </span>

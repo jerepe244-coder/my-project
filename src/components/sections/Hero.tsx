@@ -9,6 +9,19 @@ import { ObsidianSculpture } from '@/components/ui/ObsidianSculpture';
 import { CircularSeal } from '@/components/ui/CircularSeal';
 import { ArrowUpRight } from 'lucide-react';
 
+/**
+ * Cruz de registro tipográfica fina de imprenta suiza para esquinas e intersecciones
+ */
+const RegistrationCross: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 9 9"
+    className={`pointer-events-none w-[9px] h-[9px] text-[#94A3B8] select-none ${className}`}
+  >
+    <path d="M4.5 0V9M0 4.5H9" stroke="currentColor" strokeWidth="0.75" />
+  </svg>
+);
+
 export const Hero: React.FC = () => {
   const { language } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
@@ -51,27 +64,31 @@ export const Hero: React.FC = () => {
   const cornerCoordinates = [
     {
       id: 'nw',
-      position: 'NW // 01',
-      label: 'BUENOS AIRES, ARG',
-      coord: '[34°36′S 58°22′W]',
+      position: 'Nw · 01',
+      label: 'Buenos Aires, Argentina',
+      coord: '34°36′S 58°22′W',
+      cota: '34.68°',
     },
     {
       id: 'ne',
-      position: 'NE // 02',
-      label: 'THE MONOLITH GRID',
-      coord: 'SYS.2026 // PHASE 01',
+      position: 'Ne · 02',
+      label: 'The Monolith Grid',
+      coord: 'Pliego 2026 · Fase 01',
+      cota: '01.198',
     },
     {
       id: 'sw',
-      position: 'SW // 03',
-      label: 'SWISS BRUTALISM',
-      coord: '4-COL / 3-COL · 0.5PX',
+      position: 'Sw · 03',
+      label: 'Swiss Editorial System',
+      coord: 'Retícula 4-Col / 3-Col · 0.5 px',
+      cota: '58.38°',
     },
     {
       id: 'se',
-      position: 'SE // 04',
-      label: 'GLOBAL PRACTICE',
+      position: 'Se · 04',
+      label: 'Global Practice',
       coord: 'UTC-03:00',
+      cota: '02.410',
     },
   ];
 
@@ -86,107 +103,158 @@ export const Hero: React.FC = () => {
       id="hero"
       data-clearance={legacyClearanceConfig.floatingHeaderOffset}
       data-spacing-token={legacyClearanceConfig.legacySpacingToken}
-      className="relative w-full min-h-[100svh] pt-[60px] sm:pt-[64px] pb-5 flex flex-col justify-between bg-zy-bg text-zy-fg select-none rounded-none"
+      className="relative w-full min-h-[100svh] pt-[56px] sm:pt-[60px] pb-4 flex flex-col justify-between bg-zy-bg text-zy-fg select-none rounded-none"
       aria-label="ZYRVAE Hero — The Monolith Grid (Swiss Corporate Brutalism)"
     >
       {/* =====================================================================
           FILA 2 (CAJA MONUMENTAL DEL HERO):
           Única celda masiva que abarca el 100% del ancho de la retícula,
-          con una altura mínima de 50vh a 55vh.
+          con una altura mínima de 52vh a 56vh y titular ZYRVAE condensado/vertical
+          de margen a margen con gran altura arquitectónica.
           ===================================================================== */}
-      <div className="relative w-full min-h-[52vh] lg:min-h-[54vh] flex-1 flex flex-col justify-between px-4 sm:px-8 lg:px-10 py-5 sm:py-7 border-b border-zy-grid-line rounded-none overflow-hidden">
-        {/* Top Cell Registration Bar (NW / NE Micro-Typography) */}
-        <div className="flex items-center justify-between gap-4 font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted">
+      <div className="relative w-full min-h-[52vh] lg:min-h-[56vh] flex-1 flex flex-col justify-between px-4 sm:px-8 lg:px-10 py-4 sm:py-6 border-b border-zy-grid-line monolith-hairline rounded-none overflow-hidden">
+        {/* Corner Registration Crosses & Blueprint Cotas (#94A3B8) */}
+        <RegistrationCross className="absolute top-[6px] left-[6px]" />
+        <RegistrationCross className="absolute top-[6px] right-[6px]" />
+        <RegistrationCross className="absolute bottom-[6px] left-[6px]" />
+        <RegistrationCross className="absolute bottom-[6px] right-[6px]" />
+
+        {/* Subtle intermediate grid intersection cotas (#94A3B8) */}
+        <span
+          aria-hidden="true"
+          className="font-cota hidden lg:inline absolute top-2 left-[40%] -translate-x-1/2 text-[#94A3B8] select-none"
+        >
+          34.68°
+        </span>
+        <span
+          aria-hidden="true"
+          className="font-cota hidden lg:inline absolute top-2 left-[75%] -translate-x-1/2 text-[#94A3B8] select-none"
+        >
+          01.198
+        </span>
+
+        {/* Top Cell Registration Bar (Sentence case Swiss Grotesque, 10px, font-medium 500, tracking 0.015em) */}
+        <div className="flex items-center justify-between gap-4 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
           <div className="inline-flex items-center space-x-2">
             <span className="text-zy-fg">[{cornerCoordinates[0].position}]</span>
             <span>{cornerCoordinates[0].label}</span>
-            <span className="hidden sm:inline">{cornerCoordinates[0].coord}</span>
+            <span className="hidden sm:inline text-[#94A3B8]">· {cornerCoordinates[0].coord}</span>
+            <span className="font-cota hidden md:inline text-[#94A3B8] ml-1">
+              {cornerCoordinates[0].cota}
+            </span>
           </div>
 
           <div className="inline-flex items-center space-x-2">
+            <span className="font-cota hidden md:inline text-[#94A3B8] mr-1">
+              {cornerCoordinates[1].cota}
+            </span>
             <span className="hidden md:inline">{cornerCoordinates[1].label}</span>
-            <span>[{cornerCoordinates[1].coord}]</span>
+            <span className="text-zy-fg">[{cornerCoordinates[1].coord}]</span>
           </div>
         </div>
 
-        {/* Center Monumental Display Wordmark (ZYRVAE) — All-Caps, 12vw-15vw fluid scale, line-height 0.85, tracking -0.04em */}
-        <div className="my-auto py-3 sm:py-5 w-full overflow-hidden">
+        {/* Center Monumental Display Wordmark (ZYRVAE):
+            Proporción vertical y condensada (condensed / tall), peso black (900),
+            letter-spacing: -0.04em, line-height: 0.85, llenando la caja de margen a margen */}
+        <div className="my-auto py-2 sm:py-3 w-full overflow-hidden flex items-center justify-center">
           <h1
-            className="w-full font-monument font-extrabold uppercase text-zy-fg tracking-[-0.04em] leading-[0.85] select-none"
+            className="w-full font-monument font-black uppercase text-zy-fg tracking-[-0.04em] leading-[0.85] select-none"
             aria-label="ZYRVAE — An avant-garde independent digital studio based in Buenos Aires, Argentina."
           >
             <motion.span
-              initial={prefersReducedMotion ? false : { y: '18%', opacity: 0 }}
+              initial={prefersReducedMotion ? false : { y: '14%', opacity: 0 }}
               animate={{ y: '0%', opacity: 1 }}
               transition={{ duration: 0.75, ease: easeOutExpo }}
               style={{
                 lineHeight: 0.85,
                 letterSpacing: '-0.04em',
+                transform: 'scaleY(1.14)',
+                transformOrigin: 'center center',
               }}
-              className="block w-full text-[11.1vw] sm:text-[11.8vw] lg:text-[12.6vw] font-monument font-extrabold uppercase text-zy-fg whitespace-nowrap"
+              className="flex items-center justify-between w-full text-[27.5vw] sm:text-[28.2vw] lg:text-[28.8vw] font-monument font-black uppercase text-zy-fg whitespace-nowrap py-[0.04em]"
             >
-              ZYRVAE
+              <span>Z</span>
+              <span>Y</span>
+              <span>R</span>
+              <span>V</span>
+              <span>A</span>
+              <span>E</span>
             </motion.span>
           </h1>
         </div>
 
-        {/* Bottom of Fila 2: Manifiesto Editorial (Subtítulo de autor en Instrument Serif Italic, 2.2rem a 3.5rem / 3vw) */}
-        <div className="pt-3 sm:pt-4 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+        {/* Bottom of Fila 2: Manifiesto Editorial (Subtítulo de autor en Instrument Serif Italic) */}
+        <div className="pt-2 sm:pt-3 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
           <motion.p
             initial={prefersReducedMotion ? false : { y: 12, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.75, delay: 0.1, ease: easeOutExpo }}
             style={{
-              fontSize: 'clamp(1.75rem, 3vw, 3.5rem)',
+              fontSize: 'clamp(1.75rem, 2.85vw, 3.35rem)',
             }}
             className="font-serif-editorial italic font-normal text-zy-fg leading-[1.08] tracking-[-0.01em] max-w-[34ch]"
           >
             An avant-garde independent digital studio based in Buenos Aires, Argentina.
           </motion.p>
 
-          {/* Technical Datum & Blueprint Monogram Stamp */}
-          <div className="hidden sm:flex items-center space-x-3 shrink-0 pb-1">
-            <SymbolLogo size={26} animate={true} showPlate={false} showBlueprint={true} />
-            <div className="font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted">
-              <span className="text-zy-fg block">MONOLITH // SPEC.01</span>
-              <span>[{cornerCoordinates[2].coord}]</span>
+          {/* Technical Datum & Blueprint Monogram Stamp in Sentence Case 10px Swiss Grotesque */}
+          <div className="hidden sm:flex items-center space-x-3 shrink-0 pb-0.5">
+            <SymbolLogo size={24} animate={true} showPlate={false} showBlueprint={true} />
+            <div className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+              <span className="text-zy-fg block">
+                Monolith · Spec. 01 <span className="text-[#94A3B8] ml-1">34.68°</span>
+              </span>
+              <span>{cornerCoordinates[2].coord}</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* =====================================================================
-          FILA 3 (PANEL DE CAPACIDADES E INSIGNIA):
+          FILA 3 (PANEL DE CAPACIDADES, ESCULTURA Y SELLO):
           3 celdas proporcionales:
-          - Celda 1: 01 / CAPABILITIES (40% del ancho)
-          - Celda 2: Área del Activo Escultórico 3D (35% del ancho)
-          - Celda 3: 02 / CURRENT PHASE + Sello Circular 70px (25% del ancho)
+          - Celda 1: 01 / Capabilities (40% del ancho)
+          - Celda 2: Escultura central de obsidiana y cristal FIG. 01 (35% del ancho)
+          - Celda 3: 02 / Current phase + Sello Circular 70px (25% del ancho)
           ===================================================================== */}
-      <div className="relative w-full grid grid-cols-1 lg:grid-cols-[40%_35%_25%] items-stretch border-b border-zy-grid-line rounded-none">
-        {/* CELDA 1 (40% del ancho): Módulo 01 / CAPABILITIES */}
-        <div className="w-full p-5 sm:p-7 lg:p-8 border-b lg:border-b-0 lg:border-r border-zy-grid-line flex flex-col justify-between gap-5 rounded-none">
-          <div className="space-y-3.5">
+      <div className="relative w-full grid grid-cols-1 lg:grid-cols-[40%_35%_25%] items-stretch border-b border-zy-grid-line monolith-hairline rounded-none">
+        {/* CELDA 1 (40% del ancho): Módulo 01 / Capabilities */}
+        <div
+          aria-label="01 / CAPABILITIES"
+          className="relative w-full p-5 sm:p-6 lg:p-7 border-b lg:border-b-0 lg:border-r border-zy-grid-line monolith-hairline flex flex-col justify-between gap-4 rounded-none"
+        >
+          {/* Intersection Registration Cross & Cota at Top-Right and Bottom-Right of Cell 1 */}
+          <RegistrationCross className="hidden lg:block absolute -top-[4.5px] -right-[4.5px] z-20" />
+          <RegistrationCross className="hidden lg:block absolute -bottom-[4.5px] -right-[4.5px] z-20" />
+          <span
+            aria-hidden="true"
+            className="font-cota absolute bottom-2 right-2.5 text-[#94A3B8] select-none"
+          >
+            34.68° · 00.400
+          </span>
+
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-fg">
-                01 / CAPABILITIES
+              <h2 className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
+                01 / Capabilities
               </h2>
-              <span className="font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted">
-                [ARCH // UI]
+              <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+                Arch. &amp; Digital UI <span className="text-[#94A3B8] ml-1">· 01.198</span>
               </span>
             </div>
 
-            {/* Bloque de texto justificado de 3 líneas describiendo la intersección entre arquitectura brutalista e interfaces digitales */}
-            <p className="font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-muted text-justify leading-[1.65]">
+            {/* Bloque de texto justificado de 3 líneas en grotesca suiza neutra Sentence case (10px, medium 500, tracking 0.015em) */}
+            <p className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted text-justify leading-[1.65] w-full">
               {language === 'es'
-                ? 'INTERSECCIÓN ENTRE ARQUITECTURA BRUTALISTA E INTERFACES DIGITALES. CONSTRUIMOS SISTEMAS VISUALES MONOLÍTICOS, RETÍCULAS MODULARES Y EXPERIENCIAS WEB.'
-                : 'ARCHITECTURAL INTERSECTION OF SWISS BRUTALISM AND DIGITAL INTERFACES. WE ENGINEER MONOLITHIC VISUAL SYSTEMS, MODULAR GRIDS, AND BESPOKE WEB EXPERIENCES.'}
+                ? 'Intersección entre arquitectura brutalista e interfaces digitales de alta precisión. Construimos sistemas visuales monolíticos, retículas modulares editoriales, simulaciones interactivas de producto y dirección de arte CGI para marcas globales.'
+                : 'Architectural intersection of Swiss brutalism and high-precision digital interfaces. We engineer monolithic visual systems, modular editorial grids, interactive product simulations, and bespoke CGI art direction for global brands.'}
             </p>
           </div>
 
-          {/* Direct Specimen Index Links (Preserves interactive case study shortcuts) */}
+          {/* Direct Specimen Index Links (10px Sentence case) */}
           <nav
             aria-label="Selected Specimen Index"
-            className="pt-3 border-t border-zy-grid-line flex flex-wrap items-center justify-between gap-2"
+            className="pt-3 border-t border-zy-grid-line monolith-hairline flex flex-wrap items-center justify-between gap-2 pr-14"
           >
             {demoShortcuts.map((demo) => (
               <Link
@@ -194,61 +262,77 @@ export const Hero: React.FC = () => {
                 href={`/case-study/${demo.slug}`}
                 data-cursor="true"
                 data-cursor-text={language === 'es' ? 'EXPLORAR' : 'EXPLORE'}
-                className="group inline-flex items-center space-x-1 font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted hover:text-zy-fg transition-colors rounded-none"
+                className="group inline-flex items-center space-x-1 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted hover:text-zy-fg transition-colors rounded-none"
               >
-                <span className="text-zy-fg">[{demo.index}]</span>
+                <span className="text-zy-fg">{demo.index}.</span>
                 <span className="group-hover:line-through">{demo.name}</span>
-                <ArrowUpRight size={11} className="text-[#FF3B30]" />
+                <ArrowUpRight size={10} className="text-[#FF3B30]" />
               </Link>
             ))}
           </nav>
         </div>
 
-        {/* CELDA 2 (35% del ancho): Posición del Activo Escultórico 3D
-            Objeto de obsidiana facetada y vidrio con refracción anclado en la parte inferior,
-            solapándose sobre la línea de división inferior para romper la bidimensionalidad */}
-        <div className="relative w-full min-h-[210px] sm:min-h-[230px] border-b lg:border-b-0 lg:border-r border-zy-grid-line flex flex-col justify-between items-center px-4 pt-4 pb-0 overflow-visible rounded-none">
-          <div className="w-full flex items-center justify-between font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted z-10">
-            <span>FIG. 01 // OBSIDIAN &amp; GLASS</span>
-            <span>IOR 2.42</span>
+        {/* CELDA 2 (35% del ancho): Escultura central de obsidiana y cristal (FIG. 01)
+            Pre-renderizada en WebP transparente 2K, contenida estrictamente dentro de su celda */}
+        <div className="relative w-full min-h-[236px] sm:min-h-[252px] border-b lg:border-b-0 lg:border-r border-zy-grid-line monolith-hairline flex flex-col justify-between items-center p-5 sm:p-6 overflow-hidden rounded-none">
+          <RegistrationCross className="hidden lg:block absolute -top-[4.5px] -right-[4.5px] z-20" />
+          <RegistrationCross className="hidden lg:block absolute -bottom-[4.5px] -right-[4.5px] z-20" />
+
+          <div className="w-full flex items-center justify-between font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted z-10">
+            <span className="text-zy-fg">
+              Fig. 01 <span className="text-zy-muted">— Obsidian &amp; crystal</span>
+            </span>
+            <span>
+              IOR 2.42 <span className="text-[#94A3B8] ml-1">· 01.198</span>
+            </span>
           </div>
 
-          {/* Anclado en la parte inferior, solapado sobre la línea divisoria inferior */}
-          <div
-            style={{ marginBottom: '-24px' }}
-            className="relative z-30 mt-auto flex items-end justify-center pointer-events-auto"
-          >
+          {/* Contenida estrictamente dentro de su celda con sombra de contacto limpia */}
+          <div className="relative z-10 my-auto py-1 flex items-center justify-center w-full">
             <ObsidianSculpture />
+          </div>
+
+          {/* Bottom cell technical registration bar */}
+          <div className="w-full flex items-center justify-between font-cota text-[9px] text-[#94A3B8] z-10">
+            <span>Spec. 2048px · HDRI Studio</span>
+            <span>34.68° / 00.750</span>
           </div>
         </div>
 
-        {/* CELDA 3 (25% del ancho): Módulo 02 / CURRENT PHASE + Módulo de Firma (Sello Circular 70px) */}
-        <div className="w-full p-5 sm:p-7 lg:p-8 flex flex-col justify-between gap-6 rounded-none">
-          <div className="space-y-3.5">
+        {/* CELDA 3 (25% del ancho): Módulo 02 / Current phase + Módulo de Firma (Sello Circular 70px) */}
+        <div
+          aria-label="02 / CURRENT PHASE"
+          className="relative w-full p-5 sm:p-6 lg:p-7 flex flex-col justify-between gap-5 rounded-none"
+        >
+          <RegistrationCross className="absolute bottom-[6px] right-[6px]" />
+
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-fg">
-                02 / CURRENT PHASE
+              <h2 className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
+                02 / Current phase
               </h2>
-              <span className="font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted">
-                [2026]
+              <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-[#94A3B8]">
+                02.410 · [2026]
               </span>
             </div>
 
-            {/* Lista limpia con guiones largos (— Art Direction, — Interactive, — CGI) */}
-            <ul className="space-y-1.5 font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-fg">
+            {/* Lista limpia con guiones largos en grotesca suiza 10px */}
+            <ul className="space-y-1 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
               {currentPhaseItems.map((item) => (
-                <li key={item} className="leading-[1.45]">
+                <li key={item} className="leading-[1.5]">
                   {item}
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Módulo de Firma: Sello tipográfico circular de 70 px de diámetro (ZYRVAE · BS.AS. · ARG + Z monolítica) */}
+          {/* Módulo de Firma: Sello tipográfico circular de 70 px de diámetro */}
           <div className="pt-2 flex items-end justify-between gap-3">
-            <div className="font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted leading-[1.4]">
-              <span className="block text-zy-fg">EDITION // 01</span>
-              <span>[{cornerCoordinates[3].coord}]</span>
+            <div className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted leading-[1.45]">
+              <span className="block text-zy-fg">Edition 01 · Ficha técnica</span>
+              <span className="text-[#94A3B8]">
+                {cornerCoordinates[3].coord} · 34.68°
+              </span>
             </div>
 
             <CircularSeal size={70} />

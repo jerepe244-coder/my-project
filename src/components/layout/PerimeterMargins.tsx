@@ -4,66 +4,98 @@ import React from 'react';
 
 /**
  * Márgenes perimetrales de imprenta (40 px a cada lado de la pantalla):
- * - Izquierda: BUENOS AIRES (rotado a 90°)
- * - Derecha: © 2026 y coordenadas (rotado a 90°)
- * Aristas vivas absolutas (border-radius: 0px) y líneas divisorias de 0.5px/1px
- * en #D8D6CE (modo claro) y #1E2024 (modo oscuro).
+ * - Izquierda: Buenos Aires (rotado a 90°) + cotas de registro (#94A3B8)
+ * - Derecha: © 2026 y coordenadas (rotado a 90°) + cotas de registro (#94A3B8)
+ * Grotesca suiza neutra en caja mixta (Sentence case), 10px, font-medium (500), tracking 0.015em.
  */
 export const PerimeterMargins: React.FC = () => {
   return (
     <>
       {/* Left 40px Print Perimeter Strip */}
       <aside
-        aria-label="Left print margin — Buenos Aires"
-        className="fixed top-0 bottom-0 left-0 z-40 w-[28px] sm:w-[40px] bg-zy-bg border-r border-zy-grid-line flex flex-col items-center justify-between py-8 select-none pointer-events-none rounded-none"
+        aria-label="Left print margin — BUENOS AIRES"
+        className="fixed top-0 bottom-0 left-0 z-40 w-[28px] sm:w-[40px] bg-zy-bg border-r border-zy-grid-line monolith-hairline flex flex-col items-center justify-between py-7 select-none pointer-events-none rounded-none"
       >
-        <span
-          className="font-mono-tech text-[10px] sm:text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted whitespace-nowrap"
-          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-        >
-          ZYRVAE // MONOLITH GRID [01]
-        </span>
+        <div className="flex flex-col items-center gap-3">
+          <span className="font-cota text-[9px] text-[#94A3B8]">00.1</span>
+          <span
+            className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted whitespace-nowrap"
+            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          >
+            Zyrvae · Monolith Grid [01]
+          </span>
+        </div>
 
-        <span
-          className="font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-fg whitespace-nowrap"
-          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-        >
-          BUENOS AIRES
-        </span>
+        <div className="flex flex-col items-center gap-3">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 9 9"
+            className="w-[7px] h-[7px] text-[#94A3B8]"
+          >
+            <path d="M4.5 0V9M0 4.5H9" stroke="currentColor" strokeWidth="0.75" />
+          </svg>
+          <span
+            data-label="BUENOS AIRES"
+            className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg whitespace-nowrap"
+            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          >
+            Buenos Aires, Argentina
+          </span>
+          <span className="font-cota text-[9px] text-[#94A3B8]">34.68°</span>
+        </div>
 
-        <span
-          className="font-mono-tech text-[10px] sm:text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted whitespace-nowrap"
-          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-        >
-          PHASE 01 — SWISS BRUTALISM
-        </span>
+        <div className="flex flex-col items-center gap-3">
+          <span
+            className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted whitespace-nowrap"
+            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          >
+            Phase 01 — Editorial Sheet
+          </span>
+          <span className="font-cota text-[9px] text-[#94A3B8]">01.198</span>
+        </div>
       </aside>
 
       {/* Right 40px Print Perimeter Strip */}
       <aside
         aria-label="Right print margin — Copyright 2026 and coordinates"
-        className="fixed top-0 bottom-0 right-0 z-40 w-[28px] sm:w-[40px] bg-zy-bg border-l border-zy-grid-line flex flex-col items-center justify-between py-8 select-none pointer-events-none rounded-none"
+        className="fixed top-0 bottom-0 right-0 z-40 w-[28px] sm:w-[40px] bg-zy-bg border-l border-zy-grid-line monolith-hairline flex flex-col items-center justify-between py-7 select-none pointer-events-none rounded-none"
       >
-        <span
-          className="font-mono-tech text-[10px] sm:text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted whitespace-nowrap"
-          style={{ writingMode: 'vertical-rl' }}
-        >
-          34°36′13″S 58°22′54″W
-        </span>
+        <div className="flex flex-col items-center gap-3">
+          <span className="font-cota text-[9px] text-[#94A3B8]">58.38°</span>
+          <span
+            className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted whitespace-nowrap"
+            style={{ writingMode: 'vertical-rl' }}
+          >
+            Lat. 34°36′13″S · Long. 58°22′54″W
+          </span>
+        </div>
 
-        <span
-          className="font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-fg whitespace-nowrap"
-          style={{ writingMode: 'vertical-rl' }}
-        >
-          © 2026 · 34°36′S 58°22′W
-        </span>
+        <div className="flex flex-col items-center gap-3">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 9 9"
+            className="w-[7px] h-[7px] text-[#94A3B8]"
+          >
+            <path d="M4.5 0V9M0 4.5H9" stroke="currentColor" strokeWidth="0.75" />
+          </svg>
+          <span
+            className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg whitespace-nowrap"
+            style={{ writingMode: 'vertical-rl' }}
+          >
+            © 2026 · 34°36′S 58°22′W
+          </span>
+          <span className="font-cota text-[9px] text-[#94A3B8]">02.410</span>
+        </div>
 
-        <span
-          className="font-mono-tech text-[10px] sm:text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted whitespace-nowrap"
-          style={{ writingMode: 'vertical-rl' }}
-        >
-          ARG // UTC-03:00
-        </span>
+        <div className="flex flex-col items-center gap-3">
+          <span
+            className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted whitespace-nowrap"
+            style={{ writingMode: 'vertical-rl' }}
+          >
+            Buenos Aires · UTC-03:00
+          </span>
+          <span className="font-cota text-[9px] text-[#94A3B8]">01.0</span>
+        </div>
       </aside>
     </>
   );

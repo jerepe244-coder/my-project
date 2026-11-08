@@ -553,5 +553,64 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     }
     assert.ok(sealTsx.includes('ZYRVAE · BS.AS. · ARG'), '70px CircularSeal must feature ZYRVAE · BS.AS. · ARG perimeter text');
     assert.ok(sealTsx.includes('viewBox="0 0 70 70"'), 'CircularSeal must be 70px in diameter');
+
+    // 6. Pliego Consolidado de Dirección de Arte — 5 Correcciones de Fase 1:
+    // (1) Micrografía técnica en grotesca suiza neutra Sentence case (10px, font-medium 500, tracking 0.015em, text-transform: none)
+    assert.ok(globalsCss.includes('.font-editorial-micro'), 'globals.css must define .font-editorial-micro');
+    assert.ok(globalsCss.includes('font-size: 10px'), 'Micro-typography must be 10px');
+    assert.ok(globalsCss.includes('text-transform: none'), 'Micro-typography must enforce text-transform: none (Sentence case)');
+    assert.ok(globalsCss.includes('letter-spacing: 0.015em'), 'Micro-typography must use subtle 0.015em tracking');
+
+    // (2) Escultura central de obsidiana y cristal pre-renderizada en WebP transparente 2K contenida dentro de su celda
+    const sculptureWebpPath = path.join(process.cwd(), 'public', 'images', 'obsidian-crystal-2k.webp');
+    assert.ok(fs.existsSync(sculptureWebpPath), '2K transparent WebP sculpture asset must exist on disk');
+    assert.ok(fs.statSync(sculptureWebpPath).size > 100000, '2K transparent WebP sculpture must be high definition (>100KB)');
+    assert.ok(
+      sculptureTsx.includes('/images/obsidian-crystal-2k.webp'),
+      'ObsidianSculpture must render pre-rendered 2K transparent WebP asset'
+    );
+    assert.equal(
+      heroTsx.includes("marginBottom: '-24px'"),
+      false,
+      'Sculpture must be strictly contained within its cell without overflowing bottom divider'
+    );
+
+    // (3) Proporción tipográfica condensada/vertical del titular ZYRVAE (800/900, tracking -0.04em, line-height 0.85)
+    assert.ok(
+      globalsCss.includes('--font-barlow-condensed'),
+      'Display headline must use condensed/vertical grotesque typeface'
+    );
+    assert.ok(globalsCss.includes('font-stretch: condensed'), 'Display headline must specify condensed stretch');
+    assert.ok(heroTsx.includes('font-black'), 'Hero ZYRVAE headline must use black (900) weight');
+
+    // (4) Controles del Header separados por divisor vertical interno de 0.5px y sin cajas de fondo negro sólido
+    assert.ok(
+      headerTsx.includes("borderLeftWidth: '0.5px'"),
+      'Header Cell 2 must separate system controls from nav links with a 0.5px internal vertical divider'
+    );
+    const themeToggleTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'ui', 'ThemeToggle.tsx'),
+      'utf-8'
+    );
+    const langSwitcherTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'ui', 'LanguageSwitcher.tsx'),
+      'utf-8'
+    );
+    assert.equal(
+      themeToggleTsx.includes('bg-zy-fg'),
+      false,
+      'ThemeToggle must not use solid black background box (bg-zy-fg)'
+    );
+    assert.equal(
+      langSwitcherTsx.includes('bg-zy-fg'),
+      false,
+      'LanguageSwitcher must not use solid black background box (bg-zy-fg)'
+    );
+
+    // (5) Cotas arquitectónicas (#94A3B8: 34.68°, 01.198) y cruces de registro en la retícula
+    assert.ok(globalsCss.includes('#94A3B8'), 'globals.css must define #94A3B8 for architectural cota marks');
+    assert.ok(heroTsx.includes('34.68°'), 'Hero grid must include 34.68° architectural cota mark');
+    assert.ok(heroTsx.includes('01.198'), 'Hero grid must include 01.198 architectural cota mark');
+    assert.ok(heroTsx.includes('RegistrationCross'), 'Hero grid must render fine typographic registration crosses at module corners');
   });
 });

@@ -66,11 +66,11 @@ export const CircularSeal: React.FC<CircularSealProps> = ({
         <g className="origin-center transition-transform duration-700 ease-out group-hover:rotate-45">
           <text
             fill="currentColor"
-            className="font-mono uppercase"
+            className="font-editorial-micro"
             style={{
               fontSize: '5.55px',
-              fontWeight: 600,
-              letterSpacing: '0.145em',
+              fontWeight: 500,
+              letterSpacing: '0.12em',
             }}
           >
             <textPath href="#zyrvae-seal-perimeter" startOffset="0%">

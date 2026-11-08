@@ -14,31 +14,37 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className = 
     <div
       role="group"
       aria-label="Language selection"
-      className={`inline-flex items-center rounded-none bg-zy-control border border-zy-grid-line p-0 text-[11px] font-mono-tech uppercase tracking-[0.08em] ${className}`}
+      className={`inline-flex items-center rounded-none bg-transparent p-0 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case ${className}`}
     >
       <button
         type="button"
         onClick={() => setLanguage('es')}
         aria-pressed={language === 'es'}
-        className={`px-2 py-1 rounded-none transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
+        className={`px-1 py-0.5 rounded-none bg-transparent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
           language === 'es'
-            ? 'bg-zy-fg text-zy-bg font-medium'
-            : 'text-zy-muted hover:text-zy-fg'
+            ? 'text-zy-fg font-semibold underline decoration-[#FF3B30] decoration-[1px] underline-offset-[3px]'
+            : 'text-zy-muted/75 hover:text-zy-fg'
         }`}
       >
-        ES
+        Es
       </button>
+      <span
+        aria-hidden="true"
+        className="text-[10px] text-[#94A3B8] px-0.5 select-none"
+      >
+        /
+      </span>
       <button
         type="button"
         onClick={() => setLanguage('en')}
         aria-pressed={language === 'en'}
-        className={`px-2 py-1 rounded-none border-l border-zy-grid-line transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
+        className={`px-1 py-0.5 rounded-none bg-transparent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
           language === 'en'
-            ? 'bg-zy-fg text-zy-bg font-medium'
-            : 'text-zy-muted hover:text-zy-fg'
+            ? 'text-zy-fg font-semibold underline decoration-[#FF3B30] decoration-[1px] underline-offset-[3px]'
+            : 'text-zy-muted/75 hover:text-zy-fg'
         }`}
       >
-        EN
+        En
       </button>
     </div>
   );

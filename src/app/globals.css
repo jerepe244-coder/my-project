@@ -316,15 +316,17 @@ html.light body::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='%230a0a0c' fill-opacity='1'%3E%3Ccircle cx='12' cy='18' r='0.75'/%3E%3Ccircle cx='84' cy='42' r='0.6'/%3E%3Ccircle cx='138' cy='24' r='0.75'/%3E%3Ccircle cx='46' cy='96' r='0.65'/%3E%3Ccircle cx='112' cy='118' r='0.75'/%3E%3Ccircle cx='28' cy='144' r='0.6'/%3E%3Ccircle cx='148' cy='88' r='0.65'/%3E%3Ccircle cx='72' cy='136' r='0.7'/%3E%3Ccircle cx='58' cy='22' r='0.55'/%3E%3Ccircle cx='19' cy='74' r='0.6'/%3E%3Ccircle cx='126' cy='62' r='0.55'/%3E%3Ccircle cx='95' cy='148' r='0.6'/%3E%3Ccircle cx='164' cy='154' r='0.65'/%3E%3Ccircle cx='34' cy='52' r='0.6'/%3E%3Ccircle cx='104' cy='78' r='0.55'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* 1. Titular Display (ZYRVAE): Syne Extra Bold / Plus Jakarta Sans 800/900, letter-spacing: -0.04em, line-height: 0.85 */
+/* 1. Titular Display (ZYRVAE): Grotesca de proporción vertical y condensada (condensed / tall),
+      peso extra bold o black (800/900), letter-spacing: -0.04em, line-height: 0.85 */
 .font-monument,
 .font-display-zyrvae {
-  font-family: var(--font-syne), var(--font-jakarta), 'Monument Extended', 'Druk Wide Bold', 'Syne', 'Plus Jakarta Sans', var(--font-hanken), sans-serif;
-  font-weight: 800;
+  font-family: var(--font-oswald), var(--font-roboto-condensed), var(--font-barlow-condensed), 'Oswald', 'Roboto Condensed', 'Barlow Condensed', 'Helvetica Neue Condensed', 'Arial Narrow', sans-serif;
+  font-weight: 900;
+  font-stretch: condensed;
   letter-spacing: -0.04em;
   line-height: 0.85;
   text-transform: uppercase;
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-feature-settings: 'kern' 1;
 }
 
 /* 2. Manifiesto Editorial (Subtítulo de autor): Instrument Serif Italic, Playfair Display Italic, Ogg Italic */
@@ -334,14 +336,29 @@ html.light body::before {
   font-weight: 400;
 }
 
-/* 3. Micrografía Técnica (Metadatos y celdas inferiores): JetBrains Mono / Geist Mono, 11px-12px, uppercase, tracking 0.08em, medium 500 */
+/* 3. Letra pequeña y micrografía técnica (Ficha de imprenta / catálogo de museo):
+      Grotesca suiza neutra en caja mixta (Sentence case) — General Sans, PP Neue Montreal,
+      Plus Jakarta Sans / DM Sans, 10px, font-medium (500), tracking 0.015em, text-transform: none */
+.font-editorial-micro,
 .font-mono-tech {
-  font-family: var(--font-jetbrains-mono), var(--font-geist-mono), 'JetBrains Mono', 'Geist Mono', 'Space Mono', ui-monospace, monospace;
-  font-size: 11px;
-  line-height: 1.35;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-family: 'General Sans', 'PP Neue Montreal', var(--font-dm-sans), var(--font-jakarta), 'Plus Jakarta Sans', 'DM Sans', var(--font-hanken), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10px;
+  line-height: 1.4;
+  text-transform: none;
+  letter-spacing: 0.015em;
   font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Cotas arquitectónicas de imprenta en intersecciones de retícula (#94A3B8) */
+.font-cota {
+  font-family: 'General Sans', 'PP Neue Montreal', var(--font-dm-sans), var(--font-jakarta), 'Plus Jakarta Sans', 'DM Sans', sans-serif;
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  font-weight: 500;
+  color: #94A3B8;
+  text-transform: none;
   font-variant-numeric: tabular-nums;
 }
 
