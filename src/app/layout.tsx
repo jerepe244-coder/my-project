@@ -6,7 +6,9 @@ import { LanguageProvider } from '@/context/LanguageContext';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { IntroAnimation } from '@/components/layout/IntroAnimation';
+import { SmoothScroll } from '@/components/layout/SmoothScroll';
 import { CustomCursor } from '@/components/ui/CustomCursor';
+import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -120,6 +122,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-zy-bg text-zy-fg-soft font-sans selection:bg-zy-blue/30 selection:text-zy-fg">
         <ThemeProvider>
           <LanguageProvider>
+            <SmoothScroll />
+            <NoiseOverlay />
             <IntroAnimation />
             <CustomCursor />
             <Header />

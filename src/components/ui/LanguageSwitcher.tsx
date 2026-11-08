@@ -14,7 +14,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className = 
     <div
       role="group"
       aria-label="Language selection"
-      className={`inline-flex items-center rounded-full bg-zy-control border border-zy-border p-0.5 text-xs font-mono ${className}`}
+      className={`inline-flex items-center rounded-full bg-zy-control border border-zy-border p-0.5 text-xs font-swiss tracking-wide ${className}`}
     >
       <button
         type="button"

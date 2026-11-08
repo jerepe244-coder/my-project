@@ -9,6 +9,7 @@ import { translations } from '@/data/translations';
 import { projects } from '@/data/projects';
 import { ProjectCategory } from '@/types';
 import { Magnetic } from '@/components/ui/Magnetic';
+import { BorderBeamOverlay } from '@/components/ui/BorderBeamCard';
 import { HospitalityDemo, AURA_SUITES } from '@/components/demos/HospitalityDemo';
 import { GastronomyDemo } from '@/components/demos/GastronomyDemo';
 import { ArchitectureDemo } from '@/components/demos/ArchitectureDemo';
@@ -49,12 +50,12 @@ const CAPABILITY_HIGHLIGHTS_BY_SLUG: Record<
     en: ['7 vs. 11 course switcher', 'Real-time allergen filter', 'Table reservation simulator'],
   },
   'vectra-architects': {
-    es: ['Simulador solar de sombras', 'Planimetría & Axonometría 3D', 'Matriz tectónica Passivhaus'],
-    en: ['Solar shadow massing', 'Section AA & 3D Axonometric', 'Passivhaus tectonic matrix'],
+    es: ['Simulador solar de sombras', 'Planimetría y axonometría 3D', 'Matriz tectónica Passivhaus'],
+    en: ['Solar shadow massing', 'Section AA & 3D axonometric', 'Passivhaus tectonic matrix'],
   },
   'soma-formulations': {
-    es: ['Selector 30ml/50ml & Recarga', 'Laboratorio de activos', 'Carrito & checkout reactivo'],
-    en: ['30ml/50ml & Refill selector', 'Active formulation lab', 'Reactive cart & checkout'],
+    es: ['Selector 30ml/50ml y recarga', 'Laboratorio de activos', 'Carrito y checkout reactivo'],
+    en: ['30ml/50ml & refill selector', 'Active formulation lab', 'Reactive cart & checkout'],
   },
 };
 
@@ -170,16 +171,20 @@ export const Portfolio: React.FC = () => {
       return (
         <div
           data-ui="true"
-          className="p-4 bg-zy-surface/90 border border-neutral-800/80 dark:border-neutral-800 space-y-3"
+          data-cursor="true"
+          data-cursor-mode="demo"
+          data-cursor-text={language === 'es' ? 'VER DEMO' : 'VIEW DEMO'}
+          className="relative overflow-hidden p-4 bg-zy-surface/90 border border-neutral-800/80 dark:border-neutral-800 space-y-3"
         >
+          <BorderBeamOverlay size={280} showSurfaceGlow={false} />
           <div className="flex items-center justify-between gap-2">
             <div className="inline-flex items-center space-x-2">
-              <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-sm bg-emerald-500/15 border border-emerald-600/40 dark:border-emerald-500/40 text-[10px] font-mono font-semibold text-emerald-800 dark:text-emerald-300 tracking-wider">
+              <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-sm bg-emerald-500/15 border border-emerald-600/40 dark:border-emerald-500/40 text-[10px] font-mono font-semibold text-emerald-800 dark:text-emerald-300 tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse" />
                 <span>[LIVE DEMO]</span>
               </span>
-              <span className="font-mono text-[11px] text-zy-muted uppercase tracking-wider">
-                {language === 'es' ? 'Cotizador de Estadía' : 'Live Stay Estimator'}
+              <span className="font-swiss text-xs text-zy-fg-secondary font-medium tracking-wide">
+                {language === 'es' ? 'Cotizador de estadía' : 'Live stay estimator'}
               </span>
             </div>
             <span className="font-mono text-sm font-semibold text-zy-fg">
@@ -198,24 +203,36 @@ export const Portfolio: React.FC = () => {
                     setAuraSuiteIdx(i);
                     setActiveImageBySlug((prev) => ({ ...prev, 'aura-sanctuary': i }));
                   }}
-                  className={`min-h-[44px] px-2.5 py-1.5 text-left border transition-all font-mono text-[11px] ${
+                  className={`min-h-[44px] px-2.5 py-1.5 text-left border transition-all text-xs ${
                     selected
                       ? 'bg-zy-card border-zy-blue text-zy-fg font-semibold'
                       : 'bg-zy-bg/60 border-zy-border text-zy-muted hover:text-zy-fg'
                   }`}
                 >
-                  <span className="block truncate">{suite.name[language]}</span>
-                  <span className="block text-[10px] text-zy-blue">${suite.baseRate}/n</span>
+                  <span className="block truncate font-swiss tracking-wide">
+                    {suite.name[language]}
+                  </span>
+                  <span className="block font-mono text-[10px] text-zy-blue">
+                    ${suite.baseRate}/n
+                  </span>
                 </button>
               );
             })}
           </div>
 
-          <div className="flex items-center justify-between pt-1 text-xs font-mono">
-            <span className="text-zy-muted flex items-center space-x-1.5">
+          <div className="flex items-center justify-between pt-1 text-xs">
+            <span className="text-zy-muted flex items-center space-x-1.5 font-swiss tracking-wide">
               <Calendar size={12} className="text-zy-blue" />
               <span>
-                {auraNights} {language === 'es' ? (auraNights === 1 ? 'noche' : 'noches') : auraNights === 1 ? 'night' : 'nights'} · {currentSuite.area}
+                <strong className="font-mono font-semibold text-zy-fg">{auraNights}</strong>{' '}
+                {language === 'es'
+                  ? auraNights === 1
+                    ? 'noche'
+                    : 'noches'
+                  : auraNights === 1
+                  ? 'night'
+                  : 'nights'}{' '}
+                · <span className="font-mono">{currentSuite.area}</span>
               </span>
             </span>
             <div className="inline-flex items-center space-x-1">
@@ -249,24 +266,31 @@ export const Portfolio: React.FC = () => {
       return (
         <div
           data-ui="true"
-          className="p-4 bg-zy-surface/90 border border-neutral-800/80 dark:border-neutral-800 space-y-3"
+          data-cursor="true"
+          data-cursor-mode="demo"
+          data-cursor-text={language === 'es' ? 'VER DEMO' : 'VIEW DEMO'}
+          className="relative overflow-hidden p-4 bg-zy-surface/90 border border-neutral-800/80 dark:border-neutral-800 space-y-3"
         >
+          <BorderBeamOverlay size={280} showSurfaceGlow={false} />
           <div className="flex items-center justify-between gap-2">
             <div className="inline-flex items-center space-x-2">
-              <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-sm bg-emerald-500/15 border border-emerald-600/40 dark:border-emerald-500/40 text-[10px] font-mono font-semibold text-emerald-800 dark:text-emerald-300 tracking-wider">
+              <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-sm bg-emerald-500/15 border border-emerald-600/40 dark:border-emerald-500/40 text-[10px] font-mono font-semibold text-emerald-800 dark:text-emerald-300 tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse" />
                 <span>[LIVE DEMO]</span>
               </span>
-              <span className="font-mono text-[11px] text-zy-muted uppercase tracking-wider">
-                {language === 'es' ? 'Simulador de Degustación' : 'Tasting Configurator'}
+              <span className="font-swiss text-xs text-zy-fg-secondary font-medium tracking-wide">
+                {language === 'es' ? 'Simulador de degustación' : 'Tasting configurator'}
               </span>
             </div>
             <span className="font-mono text-sm font-semibold text-zy-fg">
-              ${totalPerGuest} USD / {language === 'es' ? 'comensal' : 'guest'}
+              ${totalPerGuest} USD{' '}
+              <span className="font-swiss text-xs font-normal text-zy-muted">
+                / {language === 'es' ? 'comensal' : 'guest'}
+              </span>
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5 font-mono text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-xs">
             <button
               type="button"
               onClick={() => {
@@ -279,8 +303,11 @@ export const Portfolio: React.FC = () => {
                   : 'bg-zy-bg/60 border-zy-border text-zy-muted hover:text-zy-fg'
               }`}
             >
-              <span className="block">7 {language === 'es' ? 'Pasos' : 'Courses'}</span>
-              <span className="block text-[10px] text-zy-blue">$110 USD</span>
+              <span className="block font-swiss tracking-wide">
+                <strong className="font-mono">7</strong>{' '}
+                {language === 'es' ? 'pasos' : 'courses'}
+              </span>
+              <span className="block font-mono text-[10px] text-zy-blue">$110 USD</span>
             </button>
 
             <button
@@ -295,8 +322,11 @@ export const Portfolio: React.FC = () => {
                   : 'bg-zy-bg/60 border-zy-border text-zy-muted hover:text-zy-fg'
               }`}
             >
-              <span className="block">11 {language === 'es' ? 'Pasos' : 'Courses'}</span>
-              <span className="block text-[10px] text-zy-blue">$165 USD</span>
+              <span className="block font-swiss tracking-wide">
+                <strong className="font-mono">11</strong>{' '}
+                {language === 'es' ? 'pasos' : 'courses'}
+              </span>
+              <span className="block font-mono text-[10px] text-zy-blue">$165 USD</span>
             </button>
 
             <button
@@ -310,8 +340,10 @@ export const Portfolio: React.FC = () => {
               }`}
             >
               <div>
-                <span className="block">{language === 'es' ? 'Maridaje' : 'Wine Pairing'}</span>
-                <span className="block text-[10px] text-zy-blue">
+                <span className="block font-swiss tracking-wide">
+                  {language === 'es' ? 'Maridaje' : 'Wine pairing'}
+                </span>
+                <span className="block font-mono text-[10px] text-zy-blue">
                   +${konCourses === 7 ? 55 : 80} USD
                 </span>
               </div>
@@ -329,16 +361,20 @@ export const Portfolio: React.FC = () => {
       return (
         <div
           data-ui="true"
-          className="p-4 bg-zy-surface/90 border border-neutral-800/80 dark:border-neutral-800 space-y-3"
+          data-cursor="true"
+          data-cursor-mode="drag"
+          data-cursor-text={language === 'es' ? 'ARRASTRAR' : 'DRAG'}
+          className="relative overflow-hidden p-4 bg-zy-surface/90 border border-neutral-800/80 dark:border-neutral-800 space-y-3"
         >
+          <BorderBeamOverlay size={280} showSurfaceGlow={false} />
           <div className="flex items-center justify-between gap-2">
             <div className="inline-flex items-center space-x-2">
-              <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-sm bg-zy-blue/15 border border-zy-blue/40 text-[10px] font-mono font-semibold text-zy-blue tracking-wider">
+              <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-sm bg-zy-blue/15 border border-zy-blue/40 text-[10px] font-mono font-semibold text-zy-blue tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-zy-blue animate-pulse" />
                 <span>[LIVE DEMO]</span>
               </span>
-              <span className="font-mono text-[11px] text-zy-muted uppercase tracking-wider">
-                {language === 'es' ? 'Control Solar & Masa' : 'Solar Massing Control'}
+              <span className="font-swiss text-xs text-zy-fg-secondary font-medium tracking-wide">
+                {language === 'es' ? 'Control solar y masa' : 'Solar massing control'}
               </span>
             </div>
             <span className="font-mono text-xs font-semibold text-zy-fg inline-flex items-center space-x-1.5">
@@ -350,7 +386,7 @@ export const Portfolio: React.FC = () => {
           {/* Interactive Solar Massing Diagram + Preset Triggers */}
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
             <div className="sm:col-span-5 h-12 bg-zy-bg border border-zy-border px-3 flex items-center justify-between relative overflow-hidden">
-              <span className="font-mono text-[10px] text-zy-muted uppercase z-10">
+              <span className="font-mono text-[10px] text-zy-muted z-10">
                 AZIMUTH // {110 + solarAngle}°
               </span>
               <div className="relative flex items-end h-8 w-16">
@@ -388,6 +424,22 @@ export const Portfolio: React.FC = () => {
               })}
             </div>
           </div>
+
+          {/* Continuous Solar Altitude Drag Slider */}
+          <div className="flex items-center space-x-3 pt-0.5">
+            <span className="font-swiss text-[11px] text-zy-muted tracking-wide shrink-0">
+              {language === 'es' ? 'Ángulo solar' : 'Solar altitude'}
+            </span>
+            <input
+              type="range"
+              min={15}
+              max={80}
+              value={solarAngle}
+              aria-label={language === 'es' ? 'Ajustar ángulo solar' : 'Adjust solar altitude'}
+              onChange={(e) => setSolarAngle(Number(e.target.value))}
+              className="w-full h-1.5 bg-zy-bg border border-zy-border rounded-lg appearance-none cursor-ew-resize accent-zy-blue"
+            />
+          </div>
         </div>
       );
     }
@@ -399,16 +451,20 @@ export const Portfolio: React.FC = () => {
     return (
       <div
         data-ui="true"
-        className="p-4 bg-zy-surface/90 border border-neutral-800/80 dark:border-neutral-800 space-y-3"
+        data-cursor="true"
+        data-cursor-mode="demo"
+        data-cursor-text={language === 'es' ? 'VER DEMO' : 'VIEW DEMO'}
+        className="relative overflow-hidden p-4 bg-zy-surface/90 border border-neutral-800/80 dark:border-neutral-800 space-y-3"
       >
+        <BorderBeamOverlay size={280} showSurfaceGlow={false} />
         <div className="flex items-center justify-between gap-2">
           <div className="inline-flex items-center space-x-2">
-            <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-sm bg-emerald-500/15 border border-emerald-600/40 dark:border-emerald-500/40 text-[10px] font-mono font-semibold text-emerald-800 dark:text-emerald-300 tracking-wider">
+            <span className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded-sm bg-emerald-500/15 border border-emerald-600/40 dark:border-emerald-500/40 text-[10px] font-mono font-semibold text-emerald-800 dark:text-emerald-300 tracking-wide">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse" />
               <span>[LIVE DEMO]</span>
             </span>
-            <span className="font-mono text-[11px] text-zy-muted uppercase tracking-wider">
-              {language === 'es' ? 'Selector Biofotónico' : 'Biophotonic Selector'}
+            <span className="font-swiss text-xs text-zy-fg-secondary font-medium tracking-wide">
+              {language === 'es' ? 'Selector biofotónico' : 'Biophotonic selector'}
             </span>
           </div>
           <span className="font-mono text-sm font-semibold text-zy-fg inline-flex items-center space-x-1.5">
@@ -417,14 +473,14 @@ export const Portfolio: React.FC = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono text-[11px]">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
           <button
             type="button"
             onClick={() => {
               setSomaSize('30ml');
               setActiveImageBySlug((prev) => ({ ...prev, 'soma-formulations': 0 }));
             }}
-            className={`min-h-[44px] px-2.5 py-1.5 border transition-all ${
+            className={`min-h-[44px] px-2.5 py-1.5 border transition-all font-mono text-[11px] ${
               somaSize === '30ml'
                 ? 'bg-zy-card border-zy-blue text-zy-fg font-semibold'
                 : 'bg-zy-bg/60 border-zy-border text-zy-muted hover:text-zy-fg'
@@ -438,7 +494,7 @@ export const Portfolio: React.FC = () => {
               setSomaSize('50ml');
               setActiveImageBySlug((prev) => ({ ...prev, 'soma-formulations': 1 }));
             }}
-            className={`min-h-[44px] px-2.5 py-1.5 border transition-all ${
+            className={`min-h-[44px] px-2.5 py-1.5 border transition-all font-mono text-[11px] ${
               somaSize === '50ml'
                 ? 'bg-zy-card border-zy-blue text-zy-fg font-semibold'
                 : 'bg-zy-bg/60 border-zy-border text-zy-muted hover:text-zy-fg'
@@ -452,13 +508,13 @@ export const Portfolio: React.FC = () => {
               setSomaVessel('glass');
               setActiveImageBySlug((prev) => ({ ...prev, 'soma-formulations': 1 }));
             }}
-            className={`min-h-[44px] px-2.5 py-1.5 border transition-all ${
+            className={`min-h-[44px] px-2.5 py-1.5 border transition-all font-swiss tracking-wide ${
               somaVessel === 'glass'
                 ? 'bg-zy-card border-zy-blue text-zy-fg font-semibold'
                 : 'bg-zy-bg/60 border-zy-border text-zy-muted hover:text-zy-fg'
             }`}
           >
-            {language === 'es' ? 'Vidrio Miron' : 'Miron Glass'}
+            {language === 'es' ? 'Vidrio Miron' : 'Miron glass'}
           </button>
           <button
             type="button"
@@ -466,13 +522,13 @@ export const Portfolio: React.FC = () => {
               setSomaVessel('refill');
               setActiveImageBySlug((prev) => ({ ...prev, 'soma-formulations': 2 }));
             }}
-            className={`min-h-[44px] px-2.5 py-1.5 border transition-all ${
+            className={`min-h-[44px] px-2.5 py-1.5 border transition-all font-swiss tracking-wide ${
               somaVessel === 'refill'
                 ? 'bg-zy-card border-zy-blue text-zy-fg font-semibold'
                 : 'bg-zy-bg/60 border-zy-border text-zy-muted hover:text-zy-fg'
             }`}
           >
-            Refill · -$8
+            {language === 'es' ? 'Recarga' : 'Refill'} <span className="font-mono text-[11px]">-$8</span>
           </button>
         </div>
       </div>
@@ -496,9 +552,12 @@ export const Portfolio: React.FC = () => {
         className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 sm:mb-16 gap-6 border-b border-zy-border dark:border-neutral-800 pb-6"
       >
         <div>
-          <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold block mb-2">
-            // {t.label}
-          </span>
+          <div className="inline-flex items-center space-x-2 mb-2">
+            <span className="font-mono text-xs text-zy-blue font-semibold">01 //</span>
+            <span className="font-swiss text-xs sm:text-sm tracking-wide text-zy-fg-secondary font-medium">
+              {language === 'es' ? 'Trabajo seleccionado' : 'Selected work'}
+            </span>
+          </div>
           <h2 className="text-4xl sm:text-6xl lg:text-7xl font-sans font-medium tracking-tight text-zy-fg">
             {language === 'es' ? 'PROYECTOS' : 'WORK'}
           </h2>
@@ -522,14 +581,14 @@ export const Portfolio: React.FC = () => {
                 type="button"
                 aria-selected={isActive}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`min-h-[44px] min-w-[44px] inline-flex items-center space-x-2 px-4 py-2 rounded-md text-xs font-mono transition-all active:scale-[0.97] ${
+                className={`min-h-[44px] min-w-[44px] inline-flex items-center space-x-2 px-4 py-2 rounded-md text-xs font-swiss tracking-wide transition-all active:scale-[0.97] ${
                   isActive
                     ? 'bg-zy-card text-zy-fg font-semibold border border-zy-border-strong shadow-xs'
                     : 'text-zy-muted hover:text-zy-fg border border-transparent'
                 }`}
               >
                 <span>{cat.label}</span>
-                <span className={`text-[10px] ${isActive ? 'text-zy-blue' : 'text-zy-dim'}`}>
+                <span className={`font-mono text-[10px] ${isActive ? 'text-zy-blue' : 'text-zy-dim'}`}>
                   [{cat.count}]
                 </span>
               </button>
@@ -538,9 +597,9 @@ export const Portfolio: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Homogeneous 12-Column Modular Grid with Ultrafine 1px Separators (border-neutral-800) */}
+      {/* Homogeneous 12-Column Modular Grid with Ultrafine 1px Separators (border-neutral-800) & Reactive Border Beam */}
       <div className="grid grid-cols-1 lg:grid-cols-12 border-t border-l border-zy-border dark:border-neutral-800">
-        {filteredProjects.map((project) => {
+        {filteredProjects.map((project, idx) => {
           const globalIndex = projects.findIndex((p) => p.slug === project.slug);
           const projectNumber = `0${globalIndex + 1}`;
           const galleryFrames = project.galleryImages.slice(0, 3);
@@ -563,26 +622,33 @@ export const Portfolio: React.FC = () => {
               initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-6 border-r border-b border-zy-border dark:border-neutral-800 bg-zy-card/30 hover:bg-zy-card/60 transition-colors p-5 sm:p-8 flex flex-col justify-between group"
+              transition={{
+                duration: 0.6,
+                delay: prefersReducedMotion ? 0 : (idx % 2) * 0.12,
+                ease: [0.23, 1, 0.32, 1],
+              }}
+              className="relative overflow-hidden lg:col-span-6 border-r border-b border-zy-border dark:border-neutral-800 bg-zy-card/30 hover:bg-zy-card/60 transition-colors p-5 sm:p-8 flex flex-col justify-between group"
             >
-              <div>
-                {/* 1. Card Top Metadata Bar: Uniform Number, Formal Title, Discipline & Year */}
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-zy-border-subtle dark:border-neutral-800 text-xs font-mono uppercase tracking-wider">
+              {/* Reactive Cursor-Tracking 1px Border Beam + 3D Surface Glow */}
+              <BorderBeamOverlay size={480} showSurfaceGlow={true} />
+
+              <div className="relative z-10">
+                {/* 1. Card Top Metadata Bar: Technical Number & ID in Monospace, Title & Category in Swiss Sans Sentence Case */}
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-zy-border-subtle dark:border-neutral-800 text-xs">
                   <div className="flex items-center space-x-2.5">
-                    <span className="text-zy-blue font-semibold">{projectNumber} //</span>
-                    <h3 className="text-zy-fg font-semibold tracking-widest text-sm">
+                    <span className="font-mono text-zy-blue font-semibold">{projectNumber} //</span>
+                    <h3 className="font-sans text-zy-fg font-semibold tracking-tight text-sm sm:text-base">
                       {project.title}
                     </h3>
                     <span className="text-zy-border-strong">·</span>
-                    <span className="text-zy-muted">{project.categoryLabel[language]}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-zy-muted font-mono text-[11px]">
-                      ID // {project.idCode}
+                    <span className="font-swiss tracking-wide text-zy-muted">
+                      {project.categoryLabel[language]}
                     </span>
+                  </div>
+                  <div className="flex items-center space-x-2 font-mono text-[11px] text-zy-muted">
+                    <span>ID // {project.idCode}</span>
                     <span className="text-zy-border-strong">/</span>
-                    <span className="text-zy-muted font-mono text-[11px]">{project.year}</span>
+                    <span>{project.year}</span>
                   </div>
                 </div>
 
@@ -591,7 +657,8 @@ export const Portfolio: React.FC = () => {
                   <Link
                     href={`/case-study/${project.slug}`}
                     data-cursor="true"
-                    data-cursor-text={language === 'es' ? 'VER CASO' : 'EXPLORE'}
+                    data-cursor-mode="explore"
+                    data-cursor-text={language === 'es' ? 'EXPLORAR' : 'EXPLORE'}
                     className="relative w-full aspect-[16/10] overflow-hidden block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
                     aria-label={`${project.title} — ${project.categoryLabel[language]}`}
                   >
@@ -622,17 +689,22 @@ export const Portfolio: React.FC = () => {
                     {/* Subtle neutral scrim for badge legibility */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/25 z-[3] pointer-events-none" />
 
-                    {/* Top-Left Concept Badge + Live Status */}
+                    {/* Top-Left Concept Badge in Swiss Sans Sentence Case */}
                     <div className="absolute top-3 left-3 z-[4] flex items-center space-x-2 pointer-events-none">
-                      <span className="px-2.5 py-1 rounded-sm bg-black/80 backdrop-blur-md border border-white/15 text-[10px] font-mono tracking-wider uppercase text-white">
+                      <span className="px-2.5 py-1 rounded-sm bg-black/80 backdrop-blur-md border border-white/15 text-[11px] font-swiss tracking-wide font-medium text-white">
                         {t.conceptBadge}
                       </span>
                     </div>
 
                     {/* Bottom-Left Frame Counter */}
                     <div className="absolute bottom-3 left-3 z-[4] pointer-events-none">
-                      <span className="font-mono text-[11px] text-white/95 uppercase tracking-widest bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-sm border border-white/15">
-                        {language === 'es' ? 'VISTA' : 'FRAME'} 0{activeImgIdx + 1}/0{galleryFrames.length}
+                      <span className="text-[11px] text-white/95 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-sm border border-white/15 inline-flex items-center space-x-1.5">
+                        <span className="font-swiss tracking-wide">
+                          {language === 'es' ? 'Vista' : 'Frame'}
+                        </span>
+                        <span className="font-mono font-semibold">
+                          0{activeImgIdx + 1}/0{galleryFrames.length}
+                        </span>
                       </span>
                     </div>
                   </Link>
@@ -681,7 +753,7 @@ export const Portfolio: React.FC = () => {
                   {renderEmbeddedMicroWidget(project.slug)}
                 </div>
 
-                {/* 4. Project Tagline, Editorial Description & Capability Pills */}
+                {/* 4. Project Tagline, Editorial Description & Capability Pills in Swiss Sans Sentence Case */}
                 <div className="pt-5 space-y-3">
                   <p className="text-base sm:text-lg lg:text-xl font-sans text-zy-fg font-medium leading-snug">
                     {project.tagline[language]}
@@ -696,7 +768,7 @@ export const Portfolio: React.FC = () => {
                       {capabilities.map((cap) => (
                         <span
                           key={cap}
-                          className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-sm bg-zy-surface border border-zy-border text-[11px] font-mono text-zy-fg-secondary"
+                          className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-sm bg-zy-surface border border-zy-border text-xs font-swiss tracking-wide text-zy-fg-secondary"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-zy-blue" />
                           <span>{cap}</span>
@@ -708,15 +780,18 @@ export const Portfolio: React.FC = () => {
               </div>
 
               {/* 5. Clear Action Hierarchy: Primary In-Situ Interactive Simulator CTA + Subordinate Case Study Link */}
-              <div className="pt-5 mt-6 border-t border-zy-border-subtle dark:border-neutral-800 space-y-3">
+              <div className="relative z-10 pt-5 mt-6 border-t border-zy-border-subtle dark:border-neutral-800 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="flex flex-wrap items-center gap-3">
                     {/* Primary Highlighted CTA: Opens Live Interactive Simulator Modal In-Situ */}
                     <Magnetic>
                       <button
                         type="button"
+                        data-cursor="true"
+                        data-cursor-mode="demo"
+                        data-cursor-text={language === 'es' ? 'VER DEMO' : 'VIEW DEMO'}
                         onClick={() => setActiveDemoModalSlug(project.slug)}
-                        className="group/btn min-h-[44px] px-4 py-2.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.97] text-white inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-wider font-semibold transition-all cursor-pointer"
+                        className="group/btn min-h-[44px] px-4 py-2.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.97] text-white inline-flex items-center space-x-2 text-xs font-swiss tracking-wide font-medium transition-all cursor-pointer"
                       >
                         <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
                         <span>{t.tryDemo}</span>
@@ -727,7 +802,10 @@ export const Portfolio: React.FC = () => {
                     {/* Subordinate Secondary Link: Full Editorial Case Study Monograph */}
                     <Link
                       href={`/case-study/${project.slug}`}
-                      className="group/link min-h-[44px] px-3 py-2 inline-flex items-center space-x-1.5 text-xs font-mono uppercase tracking-wider text-zy-muted hover:text-zy-fg transition-colors"
+                      data-cursor="true"
+                      data-cursor-mode="explore"
+                      data-cursor-text={language === 'es' ? 'EXPLORAR' : 'EXPLORE'}
+                      className="group/link min-h-[44px] px-3 py-2 inline-flex items-center space-x-1.5 text-xs font-swiss tracking-wide font-medium text-zy-muted hover:text-zy-fg transition-colors"
                     >
                       <span>{t.viewProject}</span>
                       <ArrowUpRight
@@ -743,7 +821,7 @@ export const Portfolio: React.FC = () => {
                     onClick={() => toggleSpec(project.slug)}
                     aria-expanded={isSpecOpen}
                     aria-controls={`spec-${project.slug}`}
-                    className="min-h-[44px] px-2.5 py-2 inline-flex items-center space-x-1.5 text-xs font-mono text-zy-muted hover:text-zy-fg transition-colors"
+                    className="min-h-[44px] px-2.5 py-2 inline-flex items-center space-x-1.5 text-xs font-swiss tracking-wide text-zy-muted hover:text-zy-fg transition-colors"
                   >
                     <span>
                       {isSpecOpen
@@ -777,12 +855,14 @@ export const Portfolio: React.FC = () => {
                       <div className="grid grid-cols-1 gap-5 text-xs">
                         {/* Visual Decisions */}
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between font-mono text-zy-blue uppercase tracking-wider">
-                            <span className="inline-flex items-center space-x-2">
+                          <div className="flex items-center justify-between text-zy-blue">
+                            <span className="inline-flex items-center space-x-2 font-swiss font-medium tracking-wide">
                               <Compass size={13} />
                               <span>{tCase.visualDecisionsTitle}</span>
                             </span>
-                            <span className="text-zy-muted">ID // {project.idCode}</span>
+                            <span className="font-mono text-[11px] text-zy-muted">
+                              ID // {project.idCode}
+                            </span>
                           </div>
                           <p className="text-zy-muted font-sans leading-relaxed">
                             {project.clientContext[language]}
@@ -799,7 +879,7 @@ export const Portfolio: React.FC = () => {
 
                         {/* Interactions */}
                         <div className="space-y-2 pt-3 border-t border-zy-border-subtle dark:border-neutral-800">
-                          <div className="flex items-center space-x-2 font-mono text-zy-blue uppercase tracking-wider">
+                          <div className="flex items-center space-x-2 font-swiss font-medium text-zy-blue tracking-wide">
                             <Layers size={13} />
                             <span>{tCase.interactionsTitle}</span>
                           </div>
@@ -818,8 +898,8 @@ export const Portfolio: React.FC = () => {
                         {/* Commercial Benefits & Direct Links */}
                         <div className="space-y-3 bg-zy-benefits-bg border border-zy-benefits-border p-4">
                           <div className="space-y-2">
-                            <span className="font-mono text-[11px] text-zy-blue uppercase tracking-wider block">
-                              // {tCase.benefitsTitle}
+                            <span className="font-swiss font-medium text-xs text-zy-blue tracking-wide block">
+                              {tCase.benefitsTitle}
                             </span>
                             {project.potentialBenefits.map((ben, i) => (
                               <div key={i} className="flex items-start space-x-2 text-zy-fg-secondary">
@@ -832,7 +912,7 @@ export const Portfolio: React.FC = () => {
                           <div className="pt-3 border-t border-zy-border flex flex-wrap items-center justify-between gap-2">
                             <Link
                               href={demoHref}
-                              className="group/spec inline-flex items-center space-x-1 font-mono text-[11px] text-zy-blue hover:underline font-semibold"
+                              className="group/spec inline-flex items-center space-x-1 font-swiss tracking-wide text-xs text-zy-blue hover:underline font-medium"
                             >
                               <span>{t.viewProject}</span>
                               <ArrowUpRight
@@ -842,7 +922,7 @@ export const Portfolio: React.FC = () => {
                             </Link>
                             <Link
                               href="/#contact"
-                              className="inline-flex items-center space-x-1 font-mono text-[11px] text-zy-muted hover:text-zy-fg"
+                              className="inline-flex items-center space-x-1 font-swiss tracking-wide text-xs text-zy-muted hover:text-zy-fg"
                             >
                               <span>{tCase.ctaButton}</span>
                               <ArrowUpRight size={12} className="text-zy-blue" />
@@ -865,12 +945,14 @@ export const Portfolio: React.FC = () => {
           <div
             role="dialog"
             aria-modal="true"
+            data-lenis-prevent
             aria-label={`${activeModalProject.title} — ${t.tryDemo}`}
             style={{ backgroundColor: 'var(--zy-modal-backdrop)' }}
             onClick={() => setActiveDemoModalSlug(null)}
             className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md p-3 sm:p-6 overflow-y-auto"
           >
             <motion.div
+              data-lenis-prevent
               initial={{ opacity: 0, scale: 0.96, y: 12 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 8 }}
@@ -881,7 +963,7 @@ export const Portfolio: React.FC = () => {
               {/* Sticky Modal Header Bar */}
               <div className="sticky top-0 z-20 px-5 sm:px-6 py-4 bg-zy-bg/95 backdrop-blur-md border-b border-zy-border dark:border-neutral-800 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center space-x-3">
-                  <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-sm bg-emerald-500/15 border border-emerald-600/40 dark:border-emerald-500/40 text-[10px] font-mono font-semibold text-emerald-800 dark:text-emerald-300 tracking-wider">
+                  <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-sm bg-emerald-500/15 border border-emerald-600/40 dark:border-emerald-500/40 text-[10px] font-mono font-semibold text-emerald-800 dark:text-emerald-300 tracking-wide">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse" />
                     <span>[LIVE DEMO IN-SITU]</span>
                   </span>
@@ -889,9 +971,13 @@ export const Portfolio: React.FC = () => {
                     <h3 className="text-sm sm:text-base font-sans font-semibold text-zy-fg">
                       {activeModalProject.title}
                     </h3>
-                    <span className="font-mono text-[10px] text-zy-muted uppercase tracking-wider block">
-                      ID // {activeModalProject.idCode} · {activeModalProject.categoryLabel[language]}
-                    </span>
+                    <div className="flex items-center space-x-1.5 text-[11px] text-zy-muted">
+                      <span className="font-mono">ID // {activeModalProject.idCode}</span>
+                      <span>·</span>
+                      <span className="font-swiss tracking-wide">
+                        {activeModalProject.categoryLabel[language]}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -901,7 +987,7 @@ export const Portfolio: React.FC = () => {
                       DEMO_ANCHOR_BY_SLUG[activeModalProject.slug] || ''
                     }`}
                     onClick={() => setActiveDemoModalSlug(null)}
-                    className="group min-h-[40px] px-3.5 py-2 rounded-lg bg-zy-surface hover:bg-zy-card border border-zy-border text-xs font-mono text-zy-fg-secondary hover:text-zy-fg inline-flex items-center space-x-1.5 transition-colors"
+                    className="group min-h-[40px] px-3.5 py-2 rounded-lg bg-zy-surface hover:bg-zy-card border border-zy-border text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary hover:text-zy-fg inline-flex items-center space-x-1.5 transition-colors"
                   >
                     <span>{t.viewProject}</span>
                     <ArrowUpRight

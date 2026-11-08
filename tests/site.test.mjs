@@ -454,5 +454,24 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     );
     assert.ok(faqTsx.includes('aria-expanded={isOpen}'), 'FAQ must implement accessible collapsible accordion');
     assert.ok(faqTsx.includes('grid-rows-[1fr]'), 'FAQ must animate accordion height smoothly with CSS grid rows');
+
+    // 8. Secondary Typography Separation (Swiss Sans Sentence Case vs Technical Monospace)
+    assert.ok(globalsCss.includes('.font-swiss'), 'globals.css must define .font-swiss for refined Swiss sans-serif labels');
+    assert.equal(
+      projects[0].categoryLabel.es,
+      'Hospitalidad boutique',
+      'Category labels must use natural Sentence case (e.g. Hospitalidad boutique)'
+    );
+
+    // 9. 5 Awwwards Visual Keys: Editorial Noise Overlay, Reactive Border Beam, Lenis Smooth Scroll, Contextual Pill Cursor, Staggered Reveals
+    assert.ok(globalsCss.includes('.zy-noise-overlay'), 'globals.css must define .zy-noise-overlay for dark & light modes');
+    const layoutTsx = fs.readFileSync(path.join(process.cwd(), 'src', 'app', 'layout.tsx'), 'utf-8');
+    assert.ok(layoutTsx.includes('<NoiseOverlay />'), 'layout.tsx must mount fixed SVG NoiseOverlay');
+    assert.ok(layoutTsx.includes('<SmoothScroll />'), 'layout.tsx must mount Lenis SmoothScroll controller');
+    assert.ok(portfolioTsx.includes('<BorderBeamOverlay'), 'Portfolio cards must render reactive BorderBeamOverlay');
+    assert.ok(portfolioTsx.includes('VER DEMO'), 'Portfolio must provide VER DEMO contextual cursor state');
+    assert.ok(portfolioTsx.includes('EXPLORAR'), 'Portfolio must provide EXPLORAR contextual cursor state');
+    assert.ok(portfolioTsx.includes('ARRASTRAR'), 'Portfolio must provide ARRASTRAR contextual cursor state');
+    assert.ok(heroTsx.includes('pt-28 sm:pt-32'), 'Hero must include generous top padding classes to clear floating header at y=0');
   });
 });

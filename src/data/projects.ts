@@ -6,8 +6,8 @@ export const projects: ProjectDetail[] = [
     idCode: 'AURA-SANCTUARY',
     category: 'hospitality',
     categoryLabel: {
-      es: 'Hospitalidad / Alojamiento Boutique',
-      en: 'Hospitality / Boutique Retreat',
+      es: 'Hospitalidad boutique',
+      en: 'Boutique hospitality',
     },
     title: 'AURA Sanctuary',
     tagline: {
@@ -90,8 +90,8 @@ export const projects: ProjectDetail[] = [
     idCode: 'KON-ATELIER',
     category: 'gastronomy',
     categoryLabel: {
-      es: 'Gastronomía / Atelier Culinario',
-      en: 'Gastronomy / Culinary Atelier',
+      es: 'Gastronomía y atelier culinario',
+      en: 'Gastronomy & culinary atelier',
     },
     title: 'KÔN Atelier',
     tagline: {
@@ -175,8 +175,8 @@ export const projects: ProjectDetail[] = [
     idCode: 'MONOLITH-STUDIO',
     category: 'architecture',
     categoryLabel: {
-      es: 'Arquitectura / Práctica Espacial',
-      en: 'Architecture / Spatial Practice',
+      es: 'Arquitectura y práctica espacial',
+      en: 'Architecture & spatial practice',
     },
     title: 'MONOLITH Studio',
     tagline: {
@@ -264,8 +264,8 @@ export const projects: ProjectDetail[] = [
     idCode: 'SOMA-FORMULATIONS',
     category: 'ecommerce',
     categoryLabel: {
-      es: 'Beauty & Commerce / Cuidado Celular',
-      en: 'Beauty & Commerce / Cellular Care',
+      es: 'Cosmética celular y comercio digital',
+      en: 'Cellular care & digital commerce',
     },
     title: 'SŌMA Formulations',
     tagline: {

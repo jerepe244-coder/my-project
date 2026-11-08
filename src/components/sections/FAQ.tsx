@@ -34,21 +34,24 @@ export const FAQ: React.FC = () => {
         className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 sm:pb-16"
       >
         <div className="lg:col-span-6 space-y-2">
-          <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold block">
-            // {t.label}
-          </span>
+          <div className="inline-flex items-center space-x-2">
+            <span className="font-mono text-xs text-zy-blue font-semibold">05 //</span>
+            <span className="font-swiss text-xs sm:text-sm tracking-wide text-zy-fg-secondary font-medium">
+              {language === 'es' ? 'Preguntas frecuentes' : 'Frequently asked questions'}
+            </span>
+          </div>
           <h2 className="text-4xl sm:text-6xl font-sans font-medium tracking-tight text-zy-fg">
             {language === 'es' ? 'PREGUNTAS' : 'QUESTIONS'}
           </h2>
         </div>
 
-        <div className="lg:col-span-6 lg:self-end flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-zy-muted">
+        <div className="lg:col-span-6 lg:self-end flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-zy-muted">
           <p className="max-w-md font-sans text-sm text-zy-muted">
             {t.subtitle}
           </p>
           <a
             href="mailto:zyrvae.co@gmail.com"
-            className="group min-h-[44px] inline-flex items-center space-x-1.5 text-zy-fg hover:text-zy-blue underline underline-offset-4 decoration-zy-blue transition-colors shrink-0"
+            className="group min-h-[44px] inline-flex items-center space-x-1.5 font-swiss tracking-wide text-zy-fg hover:text-zy-blue underline underline-offset-4 decoration-zy-blue transition-colors shrink-0"
           >
             <Mail size={13} className="text-zy-blue" />
             <span>zyrvae.co@gmail.com</span>
@@ -135,14 +138,14 @@ export const FAQ: React.FC = () => {
       </div>
 
       {/* Inquiry Callout Footer Row */}
-      <div className="mt-12 pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs">
-        <span className="text-zy-muted uppercase">
-          // {t.moreQuestions}
+      <div className="mt-12 pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+        <span className="font-swiss tracking-wide text-zy-muted">
+          {t.moreQuestions}
         </span>
         <Magnetic>
           <Link
             href="/#contact"
-            className="group min-h-[44px] px-4 py-2 rounded-full bg-zy-surface hover:bg-zy-card border border-zy-border inline-flex items-center space-x-2 text-zy-fg hover:text-zy-blue transition-colors self-start sm:self-center"
+            className="group min-h-[44px] px-4 py-2 rounded-full bg-zy-surface hover:bg-zy-card border border-zy-border inline-flex items-center space-x-2 font-swiss tracking-wide font-medium text-zy-fg hover:text-zy-blue transition-colors self-start sm:self-center"
           >
             <span>{language === 'es' ? 'Iniciar brief de proyecto' : 'Start project brief'}</span>
             <ArrowUpRight

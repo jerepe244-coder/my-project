@@ -165,7 +165,11 @@ export const Header: React.FC = () => {
         e.preventDefault();
         setActiveSection(targetId);
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        element.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+        if (!reduced && window.__zyrvaeLenis) {
+          window.__zyrvaeLenis.scrollTo(element, { offset: -88, duration: 1.15 });
+        } else {
+          element.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+        }
       }
     }
   };
@@ -250,7 +254,7 @@ export const Header: React.FC = () => {
                 <Link
                   href="/#contact"
                   onClick={(e) => handleLinkClick(e, '/#contact')}
-                  className="group inline-flex items-center space-x-1.5 px-4 py-2 rounded-full bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.97] text-white text-xs font-mono tracking-wider transition-all duration-150 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
+                  className="group inline-flex items-center space-x-1.5 px-4 py-2 rounded-full bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.97] text-white text-xs font-swiss font-medium tracking-wide transition-all duration-150 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zy-bg focus-visible:ring-zy-blue"
                 >
                   <span>{t.cta}</span>
                   <ArrowUpRight

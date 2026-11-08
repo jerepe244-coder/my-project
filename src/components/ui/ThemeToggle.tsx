@@ -31,7 +31,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       role="group"
       aria-label={t.label}
       onKeyDown={handleKeyDown}
-      className={`inline-flex items-center rounded-full bg-zy-control border border-zy-border p-0.5 text-xs font-mono ${className}`}
+      className={`inline-flex items-center rounded-full bg-zy-control border border-zy-border p-0.5 text-xs font-swiss tracking-wide ${className}`}
     >
       <button
         type="button"

@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { processStages } from '@/data/process';
+import { BorderBeamOverlay } from '@/components/ui/BorderBeamCard';
 import { Check, ArrowUpRight } from 'lucide-react';
 
 export const Process: React.FC = () => {
@@ -19,19 +20,19 @@ export const Process: React.FC = () => {
       es: 'En la primera semana:',
       en: 'On the first week:',
     },
-    'art-direction': {
-      es: 'En el sprint de arte:',
-      en: 'In the design sprint:',
+    direction: {
+      es: 'En el sprint de dirección:',
+      en: 'In the direction sprint:',
     },
-    development: {
+    'design-build': {
       es: 'Durante el desarrollo:',
       en: 'Through engineering:',
     },
-    'testing-demos': {
-      es: 'En la fase interactiva:',
-      en: 'In interactive testing:',
+    'review-refine': {
+      es: 'En la fase de validación:',
+      en: 'In interactive validation:',
     },
-    launch: {
+    'launch-support': {
       es: 'Al pase a producción:',
       en: 'At production handover:',
     },
@@ -78,9 +79,12 @@ export const Process: React.FC = () => {
         className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 sm:mb-24 gap-6 border-b border-zy-border-subtle pb-6"
       >
         <div>
-          <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold block mb-2">
-            // {t.label}
-          </span>
+          <div className="inline-flex items-center space-x-2 mb-2">
+            <span className="font-mono text-xs text-zy-blue font-semibold">03 //</span>
+            <span className="font-swiss text-xs sm:text-sm tracking-wide text-zy-fg-secondary font-medium">
+              {language === 'es' ? 'Metodología' : 'Approach'}
+            </span>
+          </div>
           <h2 className="text-4xl sm:text-6xl font-sans font-medium tracking-tight text-zy-fg">
             {language === 'es' ? 'PROCESO' : 'PROCESS'}
           </h2>
@@ -89,10 +93,10 @@ export const Process: React.FC = () => {
           </p>
         </div>
 
-        <div className="font-mono text-xs text-zy-dim uppercase tracking-wider self-start lg:self-end">
+        <div className="font-swiss text-xs text-zy-dim tracking-wide self-start lg:self-end">
           {language === 'es'
-            ? '// COLABORACIÓN DIRECTA · SIN INTERMEDIARIOS'
-            : '// DIRECT COLLABORATION · ZERO MIDDLEMEN'}
+            ? 'Colaboración directa · Sin intermediarios'
+            : 'Direct collaboration · Zero middlemen'}
         </div>
       </motion.div>
 
@@ -115,10 +119,13 @@ export const Process: React.FC = () => {
                   : 'bg-transparent border-transparent hover:bg-zy-surface text-zy-muted hover:text-zy-fg'
               }`}
             >
-              <span className={`block font-mono text-[10px] uppercase tracking-wider ${
-                isSelected ? 'text-zy-blue font-semibold' : 'text-zy-dim'
-              }`}>
-                {t.stageLabel} {stage.number}
+              <span
+                className={`block text-[11px] ${
+                  isSelected ? 'text-zy-blue font-semibold' : 'text-zy-dim'
+                }`}
+              >
+                <span className="font-swiss tracking-wide">{t.stageLabel}</span>{' '}
+                <span className="font-mono">{stage.number}</span>
               </span>
               <span className="block font-sans text-xs sm:text-sm font-medium truncate mt-0.5">
                 {stage.name[language]}
@@ -128,7 +135,7 @@ export const Process: React.FC = () => {
         })}
       </div>
 
-      {/* Stages down a falling diagonal grid (Taste: how-it-works-photographs-down-a-diagonal) */}
+      {/* Stages down a falling diagonal grid with Staggered Reveals & Border Beam */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-16 sm:gap-y-24 items-start">
         {processStages.map((stage, idx) => {
           const isSelected = activeStageId === stage.id;
@@ -142,17 +149,21 @@ export const Process: React.FC = () => {
               initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.23, 1, 0.32, 1] }}
               onMouseEnter={() => setActiveStageId(stage.id)}
               className={`${colClass} group scroll-mt-28`}
             >
               <div
-                className={`p-6 sm:p-8 border bg-zy-card transition-colors ${
-                  isSelected ? 'border-zy-border-strong' : 'border-zy-border-subtle hover:border-zy-border'
+                className={`relative overflow-hidden p-6 sm:p-8 border bg-zy-card transition-colors ${
+                  isSelected
+                    ? 'border-zy-border-strong'
+                    : 'border-zy-border-subtle hover:border-zy-border'
                 }`}
               >
+                <BorderBeamOverlay size={400} showSurfaceGlow={true} />
+
                 {/* Stage Header */}
-                <div className="flex items-baseline justify-between border-b border-zy-border-subtle pb-4 mb-5">
+                <div className="relative z-10 flex items-baseline justify-between border-b border-zy-border-subtle pb-4 mb-5">
                   <div className="flex items-baseline space-x-3">
                     <span className="font-mono text-sm text-zy-blue font-semibold">
                       // {stage.number}
@@ -161,16 +172,17 @@ export const Process: React.FC = () => {
                       {stage.name[language]}
                     </h3>
                   </div>
-                  <span className="font-mono text-[11px] text-zy-dim uppercase">
-                    STAGE 0{idx + 1}/05
+                  <span className="text-xs text-zy-dim inline-flex items-center space-x-1.5">
+                    <span className="font-swiss tracking-wide">{t.stageLabel}</span>
+                    <span className="font-mono text-[11px]">0{idx + 1}/05</span>
                   </span>
                 </div>
 
                 {/* Stage Body with bold run-in phrase */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6">
                   <div className="md:col-span-7 space-y-3">
                     <p className="text-base font-sans text-zy-fg leading-relaxed">
-                      <strong className="text-zy-blue font-mono font-medium block text-xs uppercase tracking-wider mb-1">
+                      <strong className="text-zy-blue font-swiss font-semibold block text-xs tracking-wide mb-1">
                         {runIn}
                       </strong>
                       {stage.objective[language]}
@@ -183,8 +195,8 @@ export const Process: React.FC = () => {
 
                   {/* Deliverables module */}
                   <div className="md:col-span-5 bg-zy-surface p-4 border border-zy-border-subtle space-y-2.5">
-                    <span className="font-mono text-xs text-zy-blue uppercase tracking-wider font-semibold block">
-                      // {t.deliverablesLabel}
+                    <span className="font-swiss text-xs text-zy-blue tracking-wide font-semibold block">
+                      {t.deliverablesLabel}
                     </span>
                     <ul className="space-y-1.5 text-xs text-zy-fg-secondary font-sans">
                       {stage.deliverables[language].map((deliv, i) => (
@@ -203,19 +215,19 @@ export const Process: React.FC = () => {
       </div>
 
       {/* Bottom CTA Row */}
-      <div className="mt-16 pt-6 border-t border-zy-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-zy-dim">
-        <p className="max-w-xl">
+      <div className="mt-16 pt-6 border-t border-zy-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-zy-dim">
+        <p className="max-w-xl font-swiss tracking-wide">
           {language === 'es'
-            ? '* Cada hito y entregable se calendariza de mutuo acuerdo según la escala y complejidad del proyecto.'
-            : '* Milestones and assets are scheduled based on project scale and architectural requirements.'}
+            ? 'Cada hito y entregable se calendariza de mutuo acuerdo según la escala y complejidad del proyecto.'
+            : 'Milestones and assets are scheduled based on project scale and architectural requirements.'}
         </p>
 
         <Link
           href="/#contact"
-          className="group min-h-[44px] px-4 py-2 rounded-full bg-zy-surface hover:bg-zy-card border border-zy-border inline-flex items-center space-x-2 text-zy-fg hover:text-zy-blue transition-colors self-start sm:self-center"
+          className="group min-h-[44px] px-4 py-2 rounded-full bg-zy-surface hover:bg-zy-card border border-zy-border inline-flex items-center space-x-2 font-swiss tracking-wide font-medium text-zy-fg hover:text-zy-blue transition-colors self-start sm:self-center"
         >
           <span>
-            {language === 'es' ? 'Iniciar Etapa 01 — Discovery' : 'Begin Stage 01 — Discovery'}
+            {language === 'es' ? 'Iniciar etapa 01 · Discovery' : 'Begin stage 01 · Discovery'}
           </span>
           <ArrowUpRight
             size={13}

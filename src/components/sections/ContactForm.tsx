@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
+import { BorderBeamOverlay } from '@/components/ui/BorderBeamCard';
 import {
   Check,
   ArrowRight,
@@ -240,9 +241,12 @@ export const ContactForm: React.FC = () => {
     >
       {/* Top Section Label */}
       <div className="mb-8 border-b border-zy-border-subtle pb-4">
-        <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold block">
-          // {t.label}
-        </span>
+        <div className="inline-flex items-center space-x-2">
+          <span className="font-mono text-xs text-zy-blue font-semibold">06 //</span>
+          <span className="font-swiss text-xs sm:text-sm tracking-wide text-zy-fg-secondary font-medium">
+            {language === 'es' ? 'Iniciar un proyecto' : 'Start a project'}
+          </span>
+        </div>
       </div>
 
       {/* Taste Blueprint: Address in Display Rows */}
@@ -252,8 +256,8 @@ export const ContactForm: React.FC = () => {
           <span className="text-3xl sm:text-5xl lg:text-7xl font-sans font-medium tracking-tight text-zy-fg">
             ZYRVAE DIGITAL STUDIO
           </span>
-          <span className="font-mono text-xs text-zy-blue uppercase tracking-widest hidden sm:inline">
-            [BUENOS AIRES]
+          <span className="font-swiss text-xs text-zy-blue tracking-wide hidden sm:inline">
+            Buenos Aires · <span className="font-mono">[34°36′S 58°22′W]</span>
           </span>
         </div>
 
@@ -266,8 +270,8 @@ export const ContactForm: React.FC = () => {
             <span>zyrvae.co@gmail.com</span>
             <ArrowRight size={24} className="text-zy-blue shrink-0 hidden sm:inline" />
           </a>
-          <span className="font-mono text-xs text-zy-dim uppercase tracking-widest hidden sm:inline">
-            // DIRECT INBOX
+          <span className="font-swiss text-xs text-zy-dim tracking-wide hidden sm:inline">
+            {language === 'es' ? 'Bandeja directa' : 'Direct inbox'}
           </span>
         </div>
 
@@ -275,11 +279,11 @@ export const ContactForm: React.FC = () => {
         <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between">
           <span className="text-2xl sm:text-4xl lg:text-5xl font-sans font-normal tracking-tight text-zy-fg-secondary">
             {language === 'es'
-              ? 'TRATO DIRECTO DE FUNDADOR A FUNDADOR'
-              : 'FOUNDER-TO-FOUNDER COLLABORATION'}
+              ? 'Trato directo de fundador a fundador'
+              : 'Founder-to-founder collaboration'}
           </span>
-          <span className="font-mono text-xs text-zy-dim uppercase tracking-widest hidden sm:inline">
-            NO MIDDLEMEN
+          <span className="font-swiss text-xs text-zy-dim tracking-wide hidden sm:inline">
+            {language === 'es' ? 'Sin intermediarios' : 'No middlemen'}
           </span>
         </div>
 
@@ -287,10 +291,10 @@ export const ContactForm: React.FC = () => {
         <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between">
           <span className="text-xl sm:text-3xl lg:text-4xl font-sans font-normal text-zy-dim">
             {language === 'es'
-              ? 'RESPUESTA Y CALENDARIZACIÓN EN MENOS DE 24 HORAS'
-              : 'INITIAL RESPONSE & SCOPING WITHIN 24 HOURS'}
+              ? 'Respuesta y calendarización en menos de 24 horas'
+              : 'Initial response & scoping within 24 hours'}
           </span>
-          <span className="font-mono text-xs text-zy-blue uppercase tracking-widest hidden sm:inline">
+          <span className="font-mono text-xs text-zy-blue tracking-wide hidden sm:inline">
             UTC-3 // GLOBAL
           </span>
         </div>
@@ -298,13 +302,14 @@ export const ContactForm: React.FC = () => {
         {/* Row 5: Action Trigger Row */}
         <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between bg-zy-surface/40 px-2 sm:px-4">
           <div className="space-y-1">
-            <span className="font-mono text-xs text-zy-blue uppercase tracking-widest block font-semibold">
-              // {language === 'es' ? 'BRIEF PROGRESIVO' : 'PROGRESSIVE BRIEF'}
+            <span className="font-swiss text-xs text-zy-blue tracking-wide block font-semibold">
+              {language === 'es' ? 'Brief progresivo' : 'Progressive brief'}
             </span>
             <span className="text-xl sm:text-3xl font-sans font-medium text-zy-fg block">
               {language === 'es'
-                ? 'INICIAR FICHA DE PROYECTO [4 ETAPAS]'
-                : 'START PROJECT BRIEF [4 STAGES]'}
+                ? 'Iniciar ficha de proyecto'
+                : 'Start project brief'}{' '}
+              <span className="font-mono text-base sm:text-xl text-zy-blue">[04]</span>
             </span>
           </div>
 
@@ -318,8 +323,9 @@ export const ContactForm: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Form Container */}
-      <div id="brief-form" className="bg-zy-card border border-zy-border p-6 sm:p-10 lg:p-12 relative max-w-4xl mx-auto scroll-mt-28">
+      {/* Main Form Container with Reactive Border Beam */}
+      <div id="brief-form" className="overflow-hidden bg-zy-card border border-zy-border p-6 sm:p-10 lg:p-12 relative max-w-4xl mx-auto scroll-mt-28">
+        <BorderBeamOverlay size={520} showSurfaceGlow={true} />
         {/* Anti-spam honeypot */}
         <input
           type="text"
@@ -369,16 +375,16 @@ export const ContactForm: React.FC = () => {
         ) : (
           <div>
             {/* Step Progress Indicator Bar */}
-            <div className="mb-10 pb-6 border-b border-zy-border-card space-y-4">
-              <div className="flex items-center justify-between text-xs font-mono text-zy-muted">
-                <span className="text-zy-fg font-semibold">
+            <div className="relative z-10 mb-10 pb-6 border-b border-zy-border-card space-y-4">
+              <div className="flex items-center justify-between text-xs text-zy-muted">
+                <span className="font-swiss tracking-wide text-zy-fg font-semibold">
                   {step === 1 && t.step1Title}
                   {step === 2 && t.step2Title}
                   {step === 3 && t.step3Title}
                   {step === 4 && t.stepReviewTitle}
                 </span>
-                <span className="text-zy-blue font-semibold">
-                  {language === 'es' ? `ETAPA 0${step} // 04` : `STAGE 0${step} // 04`}
+                <span className="font-mono text-zy-blue font-semibold">
+                  0{step} // 04
                 </span>
               </div>
 
@@ -450,13 +456,13 @@ export const ContactForm: React.FC = () => {
             <form onSubmit={handleSubmit} noValidate>
               {/* STEP 1: Essential Info */}
               {step === 1 && (
-                <div className="space-y-6">
-                  <p className="text-xs text-zy-muted font-mono mb-4">{t.step1Desc}</p>
+                <div className="relative z-10 space-y-6">
+                  <p className="text-xs text-zy-muted font-swiss tracking-wide mb-4">{t.step1Desc}</p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {/* Full Name */}
                     <div className="space-y-2">
-                      <label htmlFor="form-name" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-name" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.name}
                       </label>
                       <input
@@ -475,7 +481,7 @@ export const ContactForm: React.FC = () => {
                         }`}
                       />
                       {errors.name && (
-                        <p id="err-name" className="text-[11px] text-red-500 font-mono">
+                        <p id="err-name" className="text-[11px] text-red-500 font-swiss tracking-wide">
                           {errors.name}
                         </p>
                       )}
@@ -483,7 +489,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Email */}
                     <div className="space-y-2">
-                      <label htmlFor="form-email" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-email" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.email}
                       </label>
                       <input
@@ -502,7 +508,7 @@ export const ContactForm: React.FC = () => {
                         }`}
                       />
                       {errors.email && (
-                        <p id="err-email" className="text-[11px] text-red-500 font-mono">
+                        <p id="err-email" className="text-[11px] text-red-500 font-swiss tracking-wide">
                           {errors.email}
                         </p>
                       )}
@@ -510,7 +516,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Brand / Company */}
                     <div className="space-y-2">
-                      <label htmlFor="form-brand" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-brand" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.brand}
                       </label>
                       <input
@@ -529,7 +535,7 @@ export const ContactForm: React.FC = () => {
                         }`}
                       />
                       {errors.brand && (
-                        <p id="err-brand" className="text-[11px] text-red-500 font-mono">
+                        <p id="err-brand" className="text-[11px] text-red-500 font-swiss tracking-wide">
                           {errors.brand}
                         </p>
                       )}
@@ -537,7 +543,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Country */}
                     <div className="space-y-2">
-                      <label htmlFor="form-country" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-country" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.country}
                       </label>
                       <input
@@ -556,7 +562,7 @@ export const ContactForm: React.FC = () => {
                         }`}
                       />
                       {errors.country && (
-                        <p id="err-country" className="text-[11px] text-red-500 font-mono">
+                        <p id="err-country" className="text-[11px] text-red-500 font-swiss tracking-wide">
                           {errors.country}
                         </p>
                       )}
@@ -567,13 +573,13 @@ export const ContactForm: React.FC = () => {
 
               {/* STEP 2: Project Details (Adaptive) */}
               {step === 2 && (
-                <div className="space-y-6">
-                  <p className="text-xs text-zy-muted font-mono mb-4">{t.step2Desc}</p>
+                <div className="relative z-10 space-y-6">
+                  <p className="text-xs text-zy-muted font-swiss tracking-wide mb-4">{t.step2Desc}</p>
 
                   <div className="space-y-6">
                     {/* Project Type */}
                     <div className="space-y-2">
-                      <label htmlFor="form-projectType" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-projectType" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.projectType}
                       </label>
                       <select
@@ -595,7 +601,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Main Goal */}
                     <div className="space-y-2">
-                      <label htmlFor="form-mainGoal" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-mainGoal" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.mainGoal}
                       </label>
                       <input
@@ -614,7 +620,7 @@ export const ContactForm: React.FC = () => {
                         }`}
                       />
                       {errors.mainGoal && (
-                        <p id="err-mainGoal" className="text-[11px] text-red-500 font-mono">
+                        <p id="err-mainGoal" className="text-[11px] text-red-500 font-swiss tracking-wide">
                           {errors.mainGoal}
                         </p>
                       )}
@@ -622,7 +628,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Target Audience */}
                     <div className="space-y-2">
-                      <label htmlFor="form-targetAudience" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-targetAudience" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.targetAudience}
                       </label>
                       <input
@@ -636,9 +642,9 @@ export const ContactForm: React.FC = () => {
                       />
                     </div>
 
-                    {/* Adaptive Features (changes dynamically!) */}
+                    {/* Adaptive Features */}
                     <div className="space-y-2.5">
-                      <label className="block text-xs font-mono text-zy-fg-secondary">
+                      <label className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.features}
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -651,7 +657,7 @@ export const ContactForm: React.FC = () => {
                               key={feat.id}
                               type="button"
                               onClick={() => toggleFeature(label)}
-                              className={`p-3 rounded-xl border text-left text-xs font-mono transition-all flex items-center justify-between ${
+                              className={`p-3 rounded-xl border text-left text-xs font-swiss tracking-wide transition-all flex items-center justify-between ${
                                 selected
                                   ? 'bg-zy-accent-soft border-zy-blue text-zy-fg font-semibold shadow-sm'
                                   : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg hover:border-zy-border-strong'
@@ -675,7 +681,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Project Description */}
                     <div className="space-y-2">
-                      <label htmlFor="form-description" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-description" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.projectDescription}
                       </label>
                       <textarea
@@ -694,7 +700,7 @@ export const ContactForm: React.FC = () => {
                         }`}
                       />
                       {errors.projectDescription && (
-                        <p id="err-desc" className="text-[11px] text-red-500 font-mono">
+                        <p id="err-desc" className="text-[11px] text-red-500 font-swiss tracking-wide">
                           {errors.projectDescription}
                         </p>
                       )}
@@ -702,7 +708,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* References */}
                     <div className="space-y-2">
-                      <label htmlFor="form-references" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-references" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.references}
                       </label>
                       <input
@@ -721,13 +727,13 @@ export const ContactForm: React.FC = () => {
 
               {/* STEP 3: Scope and Budget */}
               {step === 3 && (
-                <div className="space-y-6">
-                  <p className="text-xs text-zy-muted font-mono mb-4">{t.step3Desc}</p>
+                <div className="relative z-10 space-y-6">
+                  <p className="text-xs text-zy-muted font-swiss tracking-wide mb-4">{t.step3Desc}</p>
 
                   <div className="space-y-6">
                     {/* Budget Range Radio Brackets */}
                     <div className="space-y-2">
-                      <label className="block text-xs font-mono text-zy-fg-secondary">
+                      <label className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.budgetRange}
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -758,7 +764,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Timeline Radio */}
                     <div className="space-y-2">
-                      <label className="block text-xs font-mono text-zy-fg-secondary">
+                      <label className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.timeline}
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -769,7 +775,7 @@ export const ContactForm: React.FC = () => {
                               key={key}
                               type="button"
                               onClick={() => setFormData((p) => ({ ...p, timeline: key }))}
-                              className={`p-3.5 rounded-xl border text-left text-xs font-mono transition-all flex items-center justify-between ${
+                              className={`p-3.5 rounded-xl border text-left text-xs font-swiss tracking-wide transition-all flex items-center justify-between ${
                                 isChecked
                                   ? 'bg-zy-accent-soft border-zy-blue text-zy-fg font-semibold'
                                   : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg'
@@ -789,7 +795,7 @@ export const ContactForm: React.FC = () => {
 
                     {/* Additional Notes */}
                     <div className="space-y-2">
-                      <label htmlFor="form-notes" className="block text-xs font-mono text-zy-fg-secondary">
+                      <label htmlFor="form-notes" className="block text-xs font-swiss tracking-wide font-medium text-zy-fg-secondary">
                         {t.fields.additionalNotes}
                       </label>
                       <textarea
@@ -808,23 +814,23 @@ export const ContactForm: React.FC = () => {
 
               {/* STEP 4: Review Before Submission */}
               {step === 4 && (
-                <div className="space-y-6">
-                  <p className="text-xs text-zy-muted font-mono mb-4">{t.stepReviewDesc}</p>
+                <div className="relative z-10 space-y-6">
+                  <p className="text-xs text-zy-muted font-swiss tracking-wide mb-4">{t.stepReviewDesc}</p>
 
                   <div className="space-y-4">
                     {/* Section 1 Review */}
                     <div className="p-4 bg-zy-surface rounded-xl border border-zy-border flex justify-between items-start">
                       <div className="text-xs space-y-1">
-                        <span className="font-mono text-zy-blue font-semibold block">
-                          01. {language === 'es' ? 'Contacto' : 'Contact'}
+                        <span className="font-swiss tracking-wide text-zy-blue font-semibold block">
+                          <span className="font-mono">01.</span> {language === 'es' ? 'Contacto' : 'Contact'}
                         </span>
                         <p className="text-zy-fg font-sans font-medium">{formData.name} — {formData.brand}</p>
-                        <p className="text-zy-muted font-mono">{formData.email} | {formData.country}</p>
+                        <p className="text-zy-muted font-swiss tracking-wide">{formData.email} · {formData.country}</p>
                       </div>
                       <button
                         type="button"
                         onClick={() => setStep(1)}
-                        className="text-xs font-mono text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1"
+                        className="text-xs font-swiss tracking-wide text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1"
                       >
                         <Edit2 size={12} />
                         <span>{t.buttons.edit}</span>
@@ -834,10 +840,10 @@ export const ContactForm: React.FC = () => {
                     {/* Section 2 Review */}
                     <div className="p-4 bg-zy-surface rounded-xl border border-zy-border flex justify-between items-start">
                       <div className="text-xs space-y-1 max-w-lg">
-                        <span className="font-mono text-zy-blue font-semibold block">
-                          02. {language === 'es' ? 'Proyecto' : 'Project'}
+                        <span className="font-swiss tracking-wide text-zy-blue font-semibold block">
+                          <span className="font-mono">02.</span> {language === 'es' ? 'Proyecto' : 'Project'}
                         </span>
-                        <p className="text-zy-fg font-medium font-mono">
+                        <p className="text-zy-fg font-medium font-swiss tracking-wide">
                           {t.fields.projectTypeOptions[
                             formData.projectType as keyof typeof t.fields.projectTypeOptions
                           ] || formData.projectType}
@@ -847,7 +853,7 @@ export const ContactForm: React.FC = () => {
                         {formData.features.length > 0 && (
                           <div className="flex flex-wrap gap-1 pt-1">
                             {formData.features.map((f, i) => (
-                              <span key={i} className="text-[10px] font-mono bg-zy-card border border-zy-border text-zy-fg-secondary px-2 py-0.5 rounded">
+                              <span key={i} className="text-[11px] font-swiss tracking-wide bg-zy-card border border-zy-border text-zy-fg-secondary px-2 py-0.5 rounded">
                                 {f}
                               </span>
                             ))}
@@ -857,7 +863,7 @@ export const ContactForm: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setStep(2)}
-                        className="text-xs font-mono text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1 shrink-0 ml-2"
+                        className="text-xs font-swiss tracking-wide text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1 shrink-0 ml-2"
                       >
                         <Edit2 size={12} />
                         <span>{t.buttons.edit}</span>
@@ -867,16 +873,18 @@ export const ContactForm: React.FC = () => {
                     {/* Section 3 Review */}
                     <div className="p-4 bg-zy-surface rounded-xl border border-zy-border flex justify-between items-start">
                       <div className="text-xs space-y-1">
-                        <span className="font-mono text-zy-blue font-semibold block">
-                          03. {language === 'es' ? 'Alcance' : 'Scope'}
+                        <span className="font-swiss tracking-wide text-zy-blue font-semibold block">
+                          <span className="font-mono">03.</span> {language === 'es' ? 'Alcance' : 'Scope'}
                         </span>
                         <p className="text-zy-fg font-mono">
-                          {language === 'es' ? 'Inversión:' : 'Budget:'}{' '}
+                          <span className="font-swiss tracking-wide text-zy-muted">
+                            {language === 'es' ? 'Inversión:' : 'Budget:'}
+                          </span>{' '}
                           {t.fields.budgetOptions[
                             formData.budgetRange as keyof typeof t.fields.budgetOptions
                           ] || formData.budgetRange}
                         </p>
-                        <p className="text-zy-muted font-mono">
+                        <p className="text-zy-muted font-swiss tracking-wide">
                           {language === 'es' ? 'Plazo:' : 'Timeline:'}{' '}
                           {t.fields.timelineOptions[
                             formData.timeline as keyof typeof t.fields.timelineOptions
@@ -886,7 +894,7 @@ export const ContactForm: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setStep(3)}
-                        className="text-xs font-mono text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1"
+                        className="text-xs font-swiss tracking-wide text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1"
                       >
                         <Edit2 size={12} />
                         <span>{t.buttons.edit}</span>
@@ -897,22 +905,22 @@ export const ContactForm: React.FC = () => {
               )}
 
               {/* Navigation & Submission Controls */}
-              <div className="mt-10 pt-6 border-t border-zy-border-card flex items-center justify-between">
+              <div className="relative z-10 mt-10 pt-6 border-t border-zy-border-card flex items-center justify-between">
                 {step > 1 ? (
                   <button
                     type="button"
                     onClick={prevStep}
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-zy-surface hover:bg-zy-surface-hover active:scale-[0.98] border border-zy-border text-xs font-mono text-zy-muted hover:text-zy-fg transition-all"
+                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-zy-surface hover:bg-zy-surface-hover active:scale-[0.98] border border-zy-border text-xs font-swiss tracking-wide font-medium text-zy-muted hover:text-zy-fg transition-all"
                   >
                     <ArrowLeft size={13} />
                     <span>{t.buttons.back}</span>
                   </button>
                 ) : (
-                  <div className="text-[11px] font-mono text-zy-dim hidden sm:block">
+                  <div className="text-xs font-swiss tracking-wide text-zy-dim hidden sm:block">
                     {language === 'es'
-                      ? '// CONFIDENCIALIDAD GARANTIZADA'
-                      : '// STRICT CONFIDENTIALITY'}
+                      ? 'Confidencialidad garantizada'
+                      : 'Strict confidentiality'}
                   </div>
                 )}
 
@@ -920,7 +928,7 @@ export const ContactForm: React.FC = () => {
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs font-mono font-medium tracking-wider transition-all"
+                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs font-swiss font-medium tracking-wide transition-all"
                   >
                     <span>{t.buttons.next}</span>
                     <ArrowRight size={14} />
@@ -929,7 +937,7 @@ export const ContactForm: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] disabled:bg-zy-control text-white text-xs font-mono font-medium tracking-wider transition-all disabled:opacity-50"
+                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] disabled:bg-zy-control text-white text-xs font-swiss font-medium tracking-wide transition-all disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
@@ -951,7 +959,7 @@ export const ContactForm: React.FC = () => {
       </div>
 
       {/* Direct Email Alternative Bar */}
-      <div className="mt-6 px-4 py-3.5 rounded-xl bg-zy-bg-elevated border border-zy-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-mono text-zy-dim">
+      <div className="mt-6 px-4 py-3.5 rounded-xl bg-zy-bg-elevated border border-zy-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-swiss tracking-wide text-zy-dim">
         <span>
           {language === 'es'
             ? '¿Preferís escribirnos directamente sin completar el brief?'

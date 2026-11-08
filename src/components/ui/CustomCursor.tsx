@@ -3,14 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useSpring, AnimatePresence } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, MoveHorizontal, Sparkles } from 'lucide-react';
 
 export const CustomCursor: React.FC = () => {
   const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [cursorText, setCursorText] = useState('');
+  const [cursorMode, setCursorMode] = useState<'explore' | 'demo' | 'drag'>('explore');
 
-  const springConfig = { damping: 28, stiffness: 350, mass: 0.5 };
+  const springConfig = { damping: 26, stiffness: 360, mass: 0.45 };
   const cursorX = useSpring(-100, springConfig);
   const cursorY = useSpring(-100, springConfig);
 
@@ -31,10 +32,24 @@ export const CustomCursor: React.FC = () => {
       if (target) {
         setIsVisible(true);
         const customText = target.getAttribute('data-cursor-text');
-        if (customText) {
-          setCursorText(customText);
+        const modeAttr = target.getAttribute('data-cursor-mode') as
+          | 'explore'
+          | 'demo'
+          | 'drag'
+          | null;
+
+        const resolvedText =
+          customText || (language === 'es' ? 'EXPLORAR' : 'EXPLORE');
+        setCursorText(resolvedText);
+
+        if (modeAttr) {
+          setCursorMode(modeAttr);
+        } else if (/ARRASTRAR|DRAG/i.test(resolvedText)) {
+          setCursorMode('drag');
+        } else if (/DEMO/i.test(resolvedText)) {
+          setCursorMode('demo');
         } else {
-          setCursorText(language === 'es' ? 'VER CASO' : 'EXPLORE');
+          setCursorMode('explore');
         }
       } else {
         setIsVisible(false);
@@ -66,12 +81,21 @@ export const CustomCursor: React.FC = () => {
           }}
           initial={{ scale: 0.92, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.95, opacity: 0, transition: { duration: 0.15, ease: 'easeOut' } }}
-          transition={{ duration: 0.18, ease: 'easeOut' }}
+          exit={{ scale: 0.94, opacity: 0, transition: { duration: 0.14, ease: 'easeOut' } }}
+          transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
         >
-          <div className="px-3 py-1 rounded-full bg-zy-blue text-white text-[11px] font-mono tracking-wider font-semibold border border-white/20 select-none whitespace-nowrap shadow-md inline-flex items-center space-x-1">
+          <div className="px-3.5 py-1.5 rounded-full bg-zy-blue text-white text-[11px] font-swiss tracking-wide font-medium border border-white/25 select-none whitespace-nowrap shadow-lg inline-flex items-center space-x-1.5">
+            {cursorMode === 'demo' && (
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
+            )}
             <span>{cursorText}</span>
-            <ArrowUpRight size={11} />
+            {cursorMode === 'drag' ? (
+              <MoveHorizontal size={12} />
+            ) : cursorMode === 'demo' ? (
+              <Sparkles size={11} />
+            ) : (
+              <ArrowUpRight size={12} />
+            )}
           </div>
         </motion.div>
       )}
