@@ -59,10 +59,37 @@ export const SmoothScroll: React.FC = () => {
 
   useEffect(() => {
     const lenis = lenisRef.current;
-    if (!lenis) return;
-    if (typeof window !== 'undefined' && !window.location.hash) {
-      lenis.scrollTo(0, { immediate: true });
+    if (typeof window === 'undefined') return;
+
+    if (lenis) {
+      lenis.start();
+      lenis.resize();
+      if (!window.location.hash) {
+        lenis.scrollTo(0, { immediate: true });
+      }
     }
+
+    const refreshId = window.requestAnimationFrame(() => {
+      lenisRef.current?.resize();
+      ScrollTrigger.refresh();
+    });
+
+    const handlePopState = () => {
+      window.requestAnimationFrame(() => {
+        lenisRef.current?.start();
+        lenisRef.current?.resize();
+        ScrollTrigger.refresh();
+      });
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('pageshow', handlePopState);
+
+    return () => {
+      window.cancelAnimationFrame(refreshId);
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('pageshow', handlePopState);
+    };
   }, [pathname]);
 
   return null;

@@ -96,88 +96,38 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
     const sculptureGroup = new THREE.Group();
     scene.add(sculptureGroup);
 
-    // 1. Núcleo de obsidiana negra pulida (#0A0A0C) de alta reflectancia
+    // 1. Núcleo de obsidiana negra pulida (#0A0A0C) con propiedades ópticas (ior: 2.42, transmission: 1.0, roughness: 0.03)
+    // Sin geometría OctahedronGeometry ni LineSegments(edgesGeometry) superpuestos para evitar el rombo fantasma sobre la imagen 2K
     const obsidianGeometry = new THREE.IcosahedronGeometry(0.68, 0);
     const obsidianMaterial = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(SCULPTURE_PHYSICS_CONFIG.obsidianCoreColor),
-      roughness: 0.06,
-      metalness: 0.88,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.04,
-      reflectivity: 1.0,
-    });
-    const obsidianMesh = new THREE.Mesh(obsidianGeometry, obsidianMaterial);
-    obsidianMesh.position.set(-0.14, -0.06, -0.05);
-    sculptureGroup.add(obsidianMesh);
-
-    // 2. Prisma envolvente de cristal óptico (ior: 2.42, transmission: 1.0, roughness: 0.03)
-    const crystalGeometry = new THREE.OctahedronGeometry(1.06, 0);
-    const crystalPhysicalMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color('#f8fafc'),
       ior: SCULPTURE_PHYSICS_CONFIG.crystalOptical.ior,
       transmission: SCULPTURE_PHYSICS_CONFIG.crystalOptical.transmission,
       roughness: SCULPTURE_PHYSICS_CONFIG.crystalOptical.roughness,
       thickness: SCULPTURE_PHYSICS_CONFIG.crystalOptical.thickness,
-      iridescence: 0.48,
-      iridescenceIOR: 2.42,
-      specularIntensity: 1.0,
+      metalness: 0.88,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.04,
       reflectivity: 1.0,
       transparent: true,
-      opacity: 0.42,
+      opacity: 0,
     });
 
     // Material estático optimizado para el FPS Throttle (< 50 FPS)
     const staticOptimizedMaterial = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#e2e8f0'),
+      color: new THREE.Color(SCULPTURE_PHYSICS_CONFIG.obsidianCoreColor),
       roughness: 0.12,
       metalness: 0.25,
       transparent: true,
-      opacity: 0.28,
+      opacity: 0,
     });
 
-    const crystalMesh = new THREE.Mesh<
-      THREE.OctahedronGeometry,
+    const obsidianMesh = new THREE.Mesh<
+      THREE.IcosahedronGeometry,
       THREE.MeshPhysicalMaterial | THREE.MeshStandardMaterial
-    >(crystalGeometry, crystalPhysicalMaterial);
-    crystalMesh.position.set(0.12, 0.05, 0.12);
-    sculptureGroup.add(crystalMesh);
-
-    // 3. Shader de dispersión cáustica en aristas (prismática RGB IOR 2.42)
-    const edgesGeometry = new THREE.EdgesGeometry(crystalGeometry, 12);
-    const causticUniforms = {
-      uTime: { value: 0 },
-      uIor: { value: SCULPTURE_PHYSICS_CONFIG.crystalOptical.ior },
-    };
-    const causticEdgeMaterial = new THREE.ShaderMaterial({
-      uniforms: causticUniforms,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      vertexShader: `
-        varying vec3 vPos;
-        void main() {
-          vPos = position;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform float uTime;
-        uniform float uIor;
-        varying vec3 vPos;
-        void main() {
-          float phase = dot(vPos, vec3(1.8, 2.2, 1.4)) * (uIor * 0.4) + uTime * 1.2;
-          vec3 causticRgb = vec3(
-            0.78 + 0.22 * sin(phase),
-            0.85 + 0.15 * sin(phase + 1.05),
-            0.96 + 0.04 * sin(phase + 2.10)
-          );
-          gl_FragColor = vec4(causticRgb, 0.52);
-        }
-      `,
-    });
-    const causticEdges = new THREE.LineSegments(edgesGeometry, causticEdgeMaterial);
-    causticEdges.position.copy(crystalMesh.position);
-    sculptureGroup.add(causticEdges);
+    >(obsidianGeometry, obsidianMaterial);
+    obsidianMesh.position.set(0, 0, 0);
+    sculptureGroup.add(obsidianMesh);
 
     // Estado cinemático de rotación e inercia (lerp: 0.05, ±15° X, ±25° Y)
     const maxTiltXRad = THREE.MathUtils.degToRad(SCULPTURE_PHYSICS_CONFIG.maxTiltXDeg);
@@ -188,7 +138,6 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
     let currentTiltXDeg = 0;
     let currentTiltYDeg = 0;
     let passiveAngleRad = 0;
-    let lastPointerMoveTime = 0;
     const isTouchDevice =
       typeof window !== 'undefined' &&
       window.matchMedia('(pointer: coarse)').matches;
@@ -220,7 +169,6 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
         -SCULPTURE_PHYSICS_CONFIG.maxTiltYDeg,
         Math.min(SCULPTURE_PHYSICS_CONFIG.maxTiltYDeg, normX * SCULPTURE_PHYSICS_CONFIG.maxTiltYDeg)
       );
-      lastPointerMoveTime = performance.now();
     };
 
     const handleMouseLeave = () => {
@@ -245,8 +193,7 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
         const currentFps = (frameCount * 1000) / windowElapsed;
         if (!isThrottledLocal && currentFps < SCULPTURE_PHYSICS_CONFIG.fpsThrottleThreshold) {
           isThrottledLocal = true;
-          crystalMesh.material = staticOptimizedMaterial;
-          causticEdges.visible = false;
+          obsidianMesh.material = staticOptimizedMaterial;
           setFpsThrottled(true);
         }
         frameCount = 0;
@@ -257,17 +204,18 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
       currentTiltXDeg += (targetTiltXDeg - currentTiltXDeg) * SCULPTURE_PHYSICS_CONFIG.lerp;
       currentTiltYDeg += (targetTiltYDeg - currentTiltYDeg) * SCULPTURE_PHYSICS_CONFIG.lerp;
 
-      // 3. Levitación pasiva (0.4 Hz, amplitud 6 px) y rotación pasiva (0.15 rad/s) en reposo o táctil
-      const isCursorIdle = isTouchDevice || now - lastPointerMoveTime > 180;
-      if (isCursorIdle) {
-        passiveAngleRad += SCULPTURE_PHYSICS_CONFIG.passiveRotationRadPerSec * dt;
-      }
+      // 3. Rotación continua ininterrumpida (0.15 rad/s) + oscilación armónica en forma de ocho (curva de Lissajous)
+      passiveAngleRad += SCULPTURE_PHYSICS_CONFIG.passiveRotationRadPerSec * dt;
 
+      const t = elapsedSec * Math.PI * 2 * SCULPTURE_PHYSICS_CONFIG.levitationFrequencyHz;
+      const levitationX =
+        Math.cos(t * 0.5) * (SCULPTURE_PHYSICS_CONFIG.levitationAmplitudePx * 0.85);
       const levitationY =
-        Math.sin(elapsedSec * Math.PI * 2 * SCULPTURE_PHYSICS_CONFIG.levitationFrequencyHz) *
-        SCULPTURE_PHYSICS_CONFIG.levitationAmplitudePx;
+        Math.sin(t) * SCULPTURE_PHYSICS_CONFIG.levitationAmplitudePx;
+      const levitationZ =
+        Math.cos(t * 0.5) * (SCULPTURE_PHYSICS_CONFIG.levitationAmplitudePx * 1.5);
 
-      // Aplicación a la escena WebGL de Three.js
+      // Aplicación a la escena WebGL de Three.js (ejes X, Y y Z con curva de Lissajous)
       const clampedRotX = THREE.MathUtils.clamp(
         THREE.MathUtils.degToRad(currentTiltXDeg),
         -maxTiltXRad,
@@ -279,32 +227,44 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
         maxTiltYRad
       );
 
-      sculptureGroup.rotation.x = clampedRotX;
+      sculptureGroup.rotation.x = clampedRotX + Math.cos(t * 0.5) * 0.12;
       sculptureGroup.rotation.y = clampedRotY + passiveAngleRad;
+      sculptureGroup.rotation.z = Math.sin(t * 0.5) * 0.06;
+      sculptureGroup.position.x = (levitationX / 268) * 1.4;
       sculptureGroup.position.y = (levitationY / 268) * 1.4;
-
-      if (!isThrottledLocal) {
-        causticUniforms.uTime.value = elapsedSec;
-      }
+      sculptureGroup.position.z = (levitationZ / 268) * 1.4;
 
       if (renderer) {
         renderer.render(scene, camera);
       }
 
-      // Aplicación sincronizada al contenedor óptico 2K y su sombra de contacto
-      const passiveTiltDeg = Math.sin(passiveAngleRad) * 3.2;
+      // Aplicación sincronizada 3D al contenedor óptico 2K y su sombra de contacto
+      const passiveTiltXDeg = Math.cos(passiveAngleRad * 0.75) * 6.5;
+      const passiveTiltYDeg = Math.sin(passiveAngleRad) * 12.0;
+      const passiveRollZDeg = Math.cos(t * 0.5) * 2.8;
+
+      const totalRotX = Math.max(
+        -SCULPTURE_PHYSICS_CONFIG.maxTiltXDeg,
+        Math.min(SCULPTURE_PHYSICS_CONFIG.maxTiltXDeg, currentTiltXDeg + passiveTiltXDeg)
+      );
       const totalRotY = Math.max(
         -SCULPTURE_PHYSICS_CONFIG.maxTiltYDeg,
-        Math.min(SCULPTURE_PHYSICS_CONFIG.maxTiltYDeg, currentTiltYDeg + passiveTiltDeg)
+        Math.min(SCULPTURE_PHYSICS_CONFIG.maxTiltYDeg, currentTiltYDeg + passiveTiltYDeg)
       );
 
-      stageEl.style.transform = `perspective(950px) translate3d(0px, ${levitationY.toFixed(
+      stageEl.style.transform = `perspective(950px) translate3d(${levitationX.toFixed(
         2
-      )}px, 0px) rotateX(${currentTiltXDeg.toFixed(2)}deg) rotateY(${totalRotY.toFixed(2)}deg)`;
+      )}px, ${levitationY.toFixed(2)}px, ${levitationZ.toFixed(
+        2
+      )}px) rotateX(${totalRotX.toFixed(2)}deg) rotateY(${totalRotY.toFixed(
+        2
+      )}deg) rotateZ(${passiveRollZDeg.toFixed(2)}deg)`;
 
       if (shadowEl) {
-        const shadowShiftX = (-totalRotY / SCULPTURE_PHYSICS_CONFIG.maxTiltYDeg) * 6;
-        const shadowScale = 1 - (levitationY / SCULPTURE_PHYSICS_CONFIG.levitationAmplitudePx) * 0.05;
+        const shadowShiftX =
+          levitationX * 0.65 + (-totalRotY / SCULPTURE_PHYSICS_CONFIG.maxTiltYDeg) * 6;
+        const shadowScale =
+          1 - (levitationY / SCULPTURE_PHYSICS_CONFIG.levitationAmplitudePx) * 0.06;
         shadowEl.style.transform = `translate3d(${shadowShiftX.toFixed(2)}px, 0px, 0px) scaleX(${shadowScale.toFixed(3)})`;
       }
 
@@ -322,11 +282,7 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
       }
       obsidianGeometry.dispose();
       obsidianMaterial.dispose();
-      crystalGeometry.dispose();
-      crystalPhysicalMaterial.dispose();
       staticOptimizedMaterial.dispose();
-      edgesGeometry.dispose();
-      causticEdgeMaterial.dispose();
       scene.clear();
       if (renderer) {
         renderer.dispose();
@@ -364,13 +320,13 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
           className="relative z-10 w-full h-full object-contain pointer-events-none select-none drop-shadow-[0_18px_28px_rgba(10,10,12,0.22)]"
         />
 
-        {/* Canvas WebGL de Three.js con refracción IOR 2.42, transmisión 1.0 y dispersión cáustica en aristas */}
+        {/* Canvas WebGL de Three.js sincronizado sin malla OctahedronGeometry ni aristas de alambre superpuestas */}
         <canvas
           ref={canvasRef}
           width={268}
           height={268}
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-20 w-full h-full mix-blend-screen opacity-85"
+          className="pointer-events-none absolute inset-0 z-20 w-full h-full opacity-0"
         />
       </div>
 

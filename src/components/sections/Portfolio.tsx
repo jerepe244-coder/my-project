@@ -3,8 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence, LayoutGroup, useReducedMotion } from 'motion/react';
+import { usePathname } from 'next/navigation';
+import { motion, LayoutGroup, useReducedMotion } from 'motion/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLanguage } from '@/context/LanguageContext';
@@ -162,11 +162,29 @@ const CASE_STUDY_LAB_REGISTRY: Record<
 export const Portfolio: React.FC = () => {
   const { language } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
-  const router = useRouter();
+  const pathname = usePathname();
   const sectionRef = useRef<HTMLElement | null>(null);
 
-  // Estado para la transición continua hacia casos de estudio (Shared Element Morph sin salto en blanco)
+  // Estado limpio al navegar y al retornar con el botón "Atrás" del navegador (popstate / pageshow / pathname)
   const [morphingSlug, setMorphingSlug] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMorphingSlug(null);
+
+    const handleBackRestore = () => {
+      setMorphingSlug(null);
+      if (typeof window !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
+    };
+
+    window.addEventListener('popstate', handleBackRestore);
+    window.addEventListener('pageshow', handleBackRestore);
+    return () => {
+      window.removeEventListener('popstate', handleBackRestore);
+      window.removeEventListener('pageshow', handleBackRestore);
+    };
+  }, [pathname]);
 
   // ===========================================================================
   // FASE 3 — PROFUNDIDAD TRIDIMENSIONAL MULTICAPA (GSAP SCROLLTRIGGER):
@@ -229,46 +247,7 @@ export const Portfolio: React.FC = () => {
     return () => {
       ctx.revert();
     };
-  }, [prefersReducedMotion]);
-
-  // Manejador de transición continua hacia los casos de estudio (Shared Element Morph + View Transitions API)
-  const handleCaseStudyMorph = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    slug: string,
-    href: string
-  ) => {
-    if (
-      e.metaKey ||
-      e.ctrlKey ||
-      e.shiftKey ||
-      e.altKey ||
-      e.button !== 0 ||
-      prefersReducedMotion
-    ) {
-      return;
-    }
-
-    e.preventDefault();
-    setMorphingSlug(slug);
-
-    const docWithVT = document as Document & {
-      startViewTransition?: (cb: () => void) => void;
-    };
-
-    window.setTimeout(() => {
-      if (typeof docWithVT.startViewTransition === 'function') {
-        docWithVT.startViewTransition(() => {
-          router.push(href);
-        });
-      } else {
-        router.push(href);
-      }
-    }, 340);
-  };
-
-  const activeMorphProject = morphingSlug
-    ? projects.find((p) => p.slug === morphingSlug) || null
-    : null;
+  }, [prefersReducedMotion, pathname]);
 
   return (
     <LayoutGroup id="zyrvae-case-study-shared-morph">
@@ -276,6 +255,7 @@ export const Portfolio: React.FC = () => {
         ref={sectionRef}
         id="work"
         data-act="02"
+        data-morphing-slug={morphingSlug ?? ''}
         className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-[60px]"
         aria-label="Acto 2 — Selección de Obras en Láminas Editoriales a Sangre"
       >
@@ -334,7 +314,8 @@ export const Portfolio: React.FC = () => {
                 key={project.slug}
                 data-plate={projectNumber}
                 data-layout-mode={spec.layoutMode}
-                initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
+                initial={false}
+                animate={{ opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{
@@ -351,7 +332,6 @@ export const Portfolio: React.FC = () => {
                        y velocidad diferencial interna (yPercent: -8%, scale: 1.06 -> 1.0) */}
                 <Link
                   href={caseStudyHref}
-                  onClick={(e) => handleCaseStudyMorph(e, project.slug, caseStudyHref)}
                   aria-label={`${project.title} — ${
                     language === 'es' ? 'EXPLORAR CASO DE ESTUDIO' : 'EXPLORE CASE STUDY'
                   }`}
@@ -360,11 +340,11 @@ export const Portfolio: React.FC = () => {
                   <motion.div
                     layoutId={`case-study-image-${project.slug}`}
                     data-clip-reveal="inset(100% 0 0 0)->inset(0% 0 0 0)"
-                    initial={
-                      prefersReducedMotion
-                        ? { opacity: 0 }
-                        : { clipPath: PORTFOLIO_CINEMATIC_CONFIG.clipPathInitial }
-                    }
+                    initial={false}
+                    animate={{
+                      opacity: 1,
+                      clipPath: PORTFOLIO_CINEMATIC_CONFIG.clipPathRevealed,
+                    }}
                     whileInView={
                       prefersReducedMotion
                         ? { opacity: 1 }
@@ -455,7 +435,6 @@ export const Portfolio: React.FC = () => {
                         e intensifica la opacidad de la línea inferior */}
                     <Link
                       href={caseStudyHref}
-                      onClick={(e) => handleCaseStudyMorph(e, project.slug, caseStudyHref)}
                       aria-label={ctaLabelText}
                       data-kinetic-arrow="3px-diagonal"
                       className="group/cta relative min-w-[44px] min-h-[44px] -my-2 inline-flex items-center space-x-1.5 font-editorial-micro text-[10px] font-medium tracking-[0.03em] text-zy-fg hover:text-[#FF3B30] transition-colors rounded-none"
@@ -523,58 +502,6 @@ export const Portfolio: React.FC = () => {
             );
           })}
         </div>
-
-        {/* =====================================================================
-            FASE 3 — SHARED ELEMENT MORPH OVERLAY (EXPANSIÓN SIN SALTO DE RECARGA):
-            Expande la imagen de la lámina hasta cubrir el 100% de la ventana y
-            asciende suavemente el título del proyecto hacia la cabecera superior.
-            ===================================================================== */}
-        <AnimatePresence>
-          {activeMorphProject && (
-            <motion.div
-              key={`morph-portal-${activeMorphProject.slug}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.32, ease: PORTFOLIO_CINEMATIC_CONFIG.revealCubicBezier }}
-              className="fixed inset-0 z-50 bg-[#0a0a0c] text-white flex flex-col justify-between overflow-hidden rounded-none pointer-events-none"
-              aria-hidden="true"
-            >
-              <motion.div
-                layoutId={`case-study-image-${activeMorphProject.slug}`}
-                transition={{ duration: 0.42, ease: PORTFOLIO_CINEMATIC_CONFIG.revealCubicBezier }}
-                className="absolute inset-0 w-full h-full"
-              >
-                <Image
-                  src={activeMorphProject.coverImage}
-                  alt={activeMorphProject.title}
-                  fill
-                  priority
-                  sizes="100vw"
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-black/50" />
-              </motion.div>
-
-              <motion.div
-                layoutId={`case-study-title-${activeMorphProject.slug}`}
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.34, ease: PORTFOLIO_CINEMATIC_CONFIG.revealCubicBezier }}
-                className="relative z-10 px-8 sm:px-14 pt-20 pb-6 border-b border-white/15 flex items-center justify-between"
-              >
-                <div className="space-y-1">
-                  <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] text-[#FF3B30] block">
-                    [Laboratorio Técnico &amp; Prototipo Funcional]
-                  </span>
-                  <span className="font-monument font-black uppercase text-4xl sm:text-6xl tracking-[-0.04em] text-white block">
-                    {activeMorphProject.title}
-                  </span>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </section>
     </LayoutGroup>
   );

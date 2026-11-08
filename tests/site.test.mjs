@@ -937,8 +937,31 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     assert.ok(
       sculptureTsx.includes('renderer.dispose()') &&
         sculptureTsx.includes('obsidianGeometry.dispose()') &&
-        sculptureTsx.includes('crystalGeometry.dispose()'),
+        sculptureTsx.includes('obsidianMaterial.dispose()'),
       'ObsidianSculpture must dispose Three.js geometries, materials, and WebGLRenderer on unmount'
+    );
+    assert.equal(
+      sculptureTsx.includes('new THREE.OctahedronGeometry'),
+      false,
+      'ObsidianSculpture must not mount OctahedronGeometry ghost diamond over 2K sculpture'
+    );
+    assert.equal(
+      sculptureTsx.includes('new THREE.LineSegments'),
+      false,
+      'ObsidianSculpture must not mount wireframe LineSegments over 2K sculpture'
+    );
+    assert.equal(
+      sculptureTsx.includes('isCursorIdle'),
+      false,
+      'ObsidianSculpture must not freeze continuous rotation on pointer movement (no isCursorIdle)'
+    );
+    assert.ok(
+      sculptureTsx.includes('Math.cos(t * 0.5)'),
+      'ObsidianSculpture must include Lissajous figure-eight harmonic oscillation (Math.cos(t * 0.5)) on X and Z axes'
+    );
+    assert.ok(
+      portfolioTsx.includes('usePathname') && portfolioTsx.includes('popstate'),
+      'Portfolio must reset state on route return via usePathname and popstate listener'
     );
   });
 });
