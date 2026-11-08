@@ -22,7 +22,7 @@ export const PerimeterMargins: React.FC = () => {
             className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted whitespace-nowrap"
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
-            Zyrvae · Monolith Grid [01]
+            Zyrvae · Monolith Grid [02]
           </span>
         </div>
 
@@ -49,7 +49,7 @@ export const PerimeterMargins: React.FC = () => {
             className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted whitespace-nowrap"
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
-            Phase 01 — Editorial Sheet
+            Phase 02 — Editorial Sheet
           </span>
           <span className="font-cota text-[9px] text-[#94A3B8]">01.198</span>
         </div>

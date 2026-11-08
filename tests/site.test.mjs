@@ -520,7 +520,7 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       headerTsx.includes('lg:grid-cols-[20%_45%_20%_15%]'),
       'Header Row 1 must use 20% | 45% | 20% | 15% 4-column layout'
     );
-    assert.ok(headerTsx.includes('ZYRVAE / PHASE 1 [01]'), 'Header Cell 1 must display ZYRVAE / PHASE 1 [01]');
+    assert.ok(headerTsx.includes('ZYRVAE / PHASE 02 [02]'), 'Header Cell 1 must display ZYRVAE / PHASE 02 [02]');
     assert.ok(headerTsx.includes('p-[16px]'), 'Header Cell 1 must have 16px padding');
     for (const navItem of ['WORK', 'STUDIO', 'JOURNAL', 'ARCHIVE']) {
       assert.ok(headerTsx.includes(navItem), `Header Cell 2 must include ${navItem} link`);
@@ -747,6 +747,66 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     assert.ok(
       heroTsx.includes('data-hero-intersection="zyrvae-obsidian-manifesto"'),
       'Obsidian sculpture must be mounted directly at the intersection between ZYRVAE and the Instrument Serif Italic manifesto'
+    );
+
+    // 7. Micro-ajustes de cierre de Fase 2:
+    // (a) Supresión de la solapa roja flotante (EXPLOR...) en el margen perimetral derecho
+    const layoutTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'app', 'layout.tsx'),
+      'utf-8'
+    );
+    const customCursorTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'ui', 'CustomCursor.tsx'),
+      'utf-8'
+    );
+    assert.equal(
+      layoutTsx.includes('<CustomCursor'),
+      false,
+      'layout.tsx must not mount floating red CustomCursor tab that collides with right perimeter margin'
+    );
+    assert.ok(
+      customCursorTsx.includes('return null;'),
+      'CustomCursor must return null to preserve clean perimeter margins'
+    );
+
+    // (b) Sincronización de etiquetas de fase a Phase 02 en Header y PerimeterMargins
+    const headerTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'layout', 'Header.tsx'),
+      'utf-8'
+    );
+    const perimeterTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'layout', 'PerimeterMargins.tsx'),
+      'utf-8'
+    );
+    assert.ok(
+      headerTsx.includes('Zyrvae / Phase 02') && headerTsx.includes('[02]'),
+      'Header top-left cell must be synchronized to Zyrvae / Phase 02 [02]'
+    );
+    assert.equal(
+      headerTsx.includes('Zyrvae / Phase 1'),
+      false,
+      'Header must not retain outdated Phase 1 label'
+    );
+    assert.ok(
+      perimeterTsx.includes('Phase 02 — Editorial Sheet') &&
+        perimeterTsx.includes('Zyrvae · Monolith Grid [02]'),
+      'PerimeterMargins must be synchronized to Phase 02 — Editorial Sheet'
+    );
+    assert.equal(
+      perimeterTsx.includes('Phase 01 — Editorial Sheet'),
+      false,
+      'PerimeterMargins must not retain outdated Phase 01 — Editorial Sheet label'
+    );
+
+    // (c) Coherencia en la numeración del Acto 03 ([Acto 03 // Capacidades & Filosofía])
+    assert.ok(
+      servicesTsx.includes('[Acto 03 // Capacidades & Filosofía]'),
+      'Acto 03 header must use unified label [Acto 03 // Capacidades & Filosofía]'
+    );
+    assert.equal(
+      servicesTsx.includes('02 / Capabilities'),
+      false,
+      'Acto 03 header must not contain double numeric label 02 / Capabilities'
     );
   });
 });

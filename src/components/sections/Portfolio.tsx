@@ -214,9 +214,6 @@ export const Portfolio: React.FC = () => {
                      (rounded-none) ni márgenes internos que la hagan parecer tarjeta flotante. */}
               <Link
                 href={caseStudyHref}
-                data-cursor="true"
-                data-cursor-mode="explore"
-                data-cursor-text={language === 'es' ? 'EXPLORAR' : 'EXPLORE'}
                 aria-label={`${project.title} — ${
                   language === 'es' ? 'EXPLORAR CASO DE ESTUDIO' : 'EXPLORE CASE STUDY'
                 }`}
@@ -277,9 +274,6 @@ export const Portfolio: React.FC = () => {
                   {/* Jerarquía de llamada a la acción unificada: único enlace tipográfico sobrio */}
                   <Link
                     href={caseStudyHref}
-                    data-cursor="true"
-                    data-cursor-mode="explore"
-                    data-cursor-text={language === 'es' ? 'EXPLORAR' : 'EXPLORE'}
                     className="min-w-[44px] min-h-[44px] -my-2 inline-flex items-center space-x-1.5 font-editorial-micro text-[10px] font-medium tracking-[0.03em] text-zy-fg hover:text-[#FF3B30] transition-colors rounded-none"
                   >
                     <span>

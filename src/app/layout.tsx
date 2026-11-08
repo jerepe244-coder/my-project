@@ -20,7 +20,6 @@ import { Footer } from '@/components/layout/Footer';
 import { IntroAnimation } from '@/components/layout/IntroAnimation';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
 import { PerimeterMargins } from '@/components/layout/PerimeterMargins';
-import { CustomCursor } from '@/components/ui/CustomCursor';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 
 const geistSans = Geist({
@@ -189,7 +188,6 @@ export default function RootLayout({
             <SmoothScroll />
             <NoiseOverlay />
             <IntroAnimation />
-            <CustomCursor />
             <PerimeterMargins />
             <Header />
             <main id="main-content" className="flex-grow px-[28px] sm:px-[40px]">

@@ -185,17 +185,17 @@ export const Header: React.FC = () => {
       >
         {/* Desktop 4-Cell Continuous Monolith Header: 20% | 45% | 20% | 15% */}
         <div className="hidden lg:grid lg:grid-cols-[20%_45%_20%_15%] w-full h-full items-stretch rounded-none">
-          {/* Celda 1 (20% del ancho — Header Izquierda): Zyrvae / Phase 1 [01] con padding de 16px */}
+          {/* Celda 1 (20% del ancho — Header Izquierda): Zyrvae / Phase 02 [02] con padding de 16px */}
           <div className="relative w-full h-full p-[16px] border-r border-zy-grid-line monolith-hairline flex items-center justify-between rounded-none">
             <Link
               href="/"
               onClick={() => {
                 if (pathname === '/') setActiveSection('');
               }}
-              aria-label="ZYRVAE / PHASE 1 [01] — Home"
+              aria-label="ZYRVAE / PHASE 02 [02] — Home"
               className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg hover:text-[#FF3B30] transition-colors truncate"
             >
-              Zyrvae / Phase 1 <span className="text-zy-muted ml-0.5">[01]</span>
+              Zyrvae / Phase 02 <span className="text-zy-muted ml-0.5">[02]</span>
             </Link>
 
             <span className="font-cota hidden xl:inline select-none">00.200</span>
@@ -330,14 +330,14 @@ export const Header: React.FC = () => {
 
         {/* Tablet & Mobile Compact Monolith Bar (< 1024px) */}
         <div className="grid lg:hidden grid-cols-[1fr_auto_auto] w-full h-full items-stretch rounded-none">
-          {/* Cell 1 Mobile: Zyrvae / Phase 1 [01] */}
+          {/* Cell 1 Mobile: Zyrvae / Phase 02 [02] */}
           <div className="p-[12px] sm:p-[16px] border-r border-zy-grid-line monolith-hairline flex items-center justify-between overflow-hidden">
             <Link
               href="/"
-              aria-label="ZYRVAE / PHASE 1 [01]"
+              aria-label="ZYRVAE / PHASE 02 [02]"
               className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg truncate"
             >
-              Zyrvae / Phase 1 [01]
+              Zyrvae / Phase 02 [02]
             </Link>
             <span
               suppressHydrationWarning

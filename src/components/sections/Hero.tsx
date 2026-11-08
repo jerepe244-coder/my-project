@@ -304,8 +304,6 @@ export const Hero: React.FC = () => {
               <Link
                 key={demo.slug}
                 href={`/case-study/${demo.slug}`}
-                data-cursor="true"
-                data-cursor-text={language === 'es' ? 'EXPLORAR' : 'EXPLORE'}
                 className="group inline-flex items-center space-x-1 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted hover:text-zy-fg transition-colors rounded-none"
               >
                 <span className="text-zy-fg">{demo.index}.</span>

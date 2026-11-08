@@ -163,8 +163,11 @@ export const Services: React.FC = () => {
 
         <div className="lg:col-span-6 space-y-2">
           <div className="inline-flex items-center space-x-2 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
-            <span className="text-[#FF3B30]">[Acto 03]</span>
-            <span className="text-zy-fg">02 / Capabilities &amp; Philosophy</span>
+            <span className="text-[#FF3B30]">
+              {language === 'es'
+                ? '[Acto 03 // Capacidades & Filosofía]'
+                : '[Acto 03 // Capabilities & Philosophy]'}
+            </span>
             <span className="text-[#94A3B8]">· Retícula Suiza 4-Columnas</span>
           </div>
 
