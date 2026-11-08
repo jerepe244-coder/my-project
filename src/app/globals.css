@@ -234,6 +234,12 @@ html[data-theme="dark"] {
   --color-zy-warm-fg: var(--zy-warm-fg);
   --color-zy-warm-muted: var(--zy-warm-muted);
   --color-zy-warm-dim: var(--zy-warm-dim);
+
+  /* Fase 3 — Paleta tonal mineral por disciplina (demos) */
+  --color-zy-mineral-aura: #55624F;
+  --color-zy-mineral-kon: #8C4A2F;
+  --color-zy-mineral-monolith: #6B6B66;
+  --color-zy-mineral-soma: #8A7F6A;
 }
 
 html {
@@ -373,6 +379,92 @@ html.light body::before {
 .font-mono {
   font-family: var(--font-jetbrains-mono), var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   FASE 3 — CONSOLA DE PRECISIÓN SUIZA PARA LAS DEMOS
+   - Aristas vivas a 90° (rounded-none estricto) dentro de cada demo
+   - Filetes de 0.5px, cifras tabulares de alta escala, etiquetas en caja mixta
+   - Bermellón #FF3B30 como única llamada a la acción (sin azul genérico)
+   ========================================================================== */
+
+/* Red de seguridad: ningún control dentro de una demo conserva radios de curvatura */
+[data-demo-console],
+[data-demo-console] *,
+[data-demo-console] *::before,
+[data-demo-console] *::after {
+  border-radius: 0 !important;
+}
+
+/* Filete de 0.5px (color de retícula) */
+.zy-hair {
+  border-width: 0.5px;
+  border-style: solid;
+  border-color: var(--zy-grid-line);
+}
+
+/* Cifras tabulares de consola (tarifas, métricas, totales) */
+.zy-tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+
+/* Cifra de alto calibre: grotesca condensada, tabular, interlineado ajustado */
+.zy-figure {
+  font-family: var(--font-oswald), var(--font-barlow-condensed), 'Oswald', 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+
+/* Etiqueta de consola: grotesca suiza en caja mixta (Sentence case) */
+.zy-label {
+  font-family: 'General Sans', 'PP Neue Montreal', var(--font-dm-sans), var(--font-jakarta), 'Plus Jakarta Sans', 'DM Sans', sans-serif;
+  font-size: 11px;
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Trama rayada de dibujo técnico (hatching) para sombras arrojadas */
+.zy-hatch {
+  background-image: repeating-linear-gradient(
+    45deg,
+    currentColor 0,
+    currentColor 0.75px,
+    transparent 0.75px,
+    transparent 5px
+  );
+}
+
+/* Campo de subrayado tipográfico continuo (checkout / formularios de demo) */
+.zy-line-input {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 0.5px solid var(--zy-fg);
+  border-radius: 0;
+  padding: 0.55rem 0 0.45rem;
+  color: var(--zy-fg);
+  font-size: 0.9rem;
+  line-height: 1.3;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.zy-line-input::placeholder {
+  color: var(--zy-muted);
+  opacity: 0.6;
+}
+.zy-line-input:focus,
+.zy-line-input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--zy-vermilion);
+  box-shadow: 0 0.5px 0 0 var(--zy-vermilion);
 }
 
 /* Lenis Inertial Smooth Scroll Foundation */
