@@ -1,11 +1,32 @@
-# DESIGN.md — ZYRVAE Digital Studio (Phase 1: Swiss Corporate Brutalism)
+# DESIGN.md — ZYRVAE Digital Studio (Phase 1 & Phase 2: Swiss Corporate Brutalism)
 
-## Aesthetic Direction: The Monolith Grid
-ZYRVAE Phase 1 is built under the visual language of **Swiss Corporate Brutalism** (*Brutalismo Corporativo Suizo*), combining lithographic print precision, exposed hairline modular grids with architectural registration marks, raw bone paper warmth, monumental condensed display typography, and a pre-rendered 2K refractive obsidian-and-crystal sculptural intervention.
+## Aesthetic Direction: The Monolith Grid & 4-Act Editorial Architecture
+ZYRVAE combines **Swiss Corporate Brutalism** (*Brutalismo Corporativo Suizo*) with a disciplined **4-Act Cinematographic Journey**. Phase 1 established lithographic print precision, exposed `0.5px` hairline modular grids with architectural registration marks, raw bone paper warmth, monumental condensed display typography, and a pre-rendered 2K refractive obsidian-and-crystal sculptural intervention. Phase 2 eradicates scroll fatigue, elevates the obsidian sculpture to the geometric/optical center of the Hero poster, replaces SaaS-style home widgets with **Full-Bleed Editorial Plates** (*Láminas Editoriales a Sangre*), condenses Process & Studio into a 4-column Swiss grid, and relocates all interactive functional prototypes exclusively inside `/case-study/[slug]` under the seal **"Laboratorio Técnico & Prototipo Funcional"**.
 
 ---
 
-## 1. Modular Grid System & Print Registration Marks (The Monolith Grid)
+## 1. Fixed 4-Act Home Structure (Phase 2)
+- **Acto 1 — Monumental Swiss Poster Hero (`<Hero />`):**
+  - The 3D obsidian and optical crystal sculpture (`/images/obsidian-crystal-2k.webp`) is mounted directly at the geometric/optical center over the intersection (`data-hero-intersection="zyrvae-obsidian-manifesto"`) between the monumental `ZYRVAE` display wordmark and the `Instrument Serif Italic` manifesto sentence.
+  - Lower 3-column architectural datum strip (`40% | 35% | 25%`) with `01 / Capabilities`, `Fig. 01 — Optical Center Datum` blueprint table, and `02 / Current Phase` + `70px` circular typographic seal.
+- **Acto 2 — Selected Works in Full-Bleed Editorial Plates (`<Portfolio />`):**
+  - **Zero Home Widgets:** All night selectors, `+`/`-` counters, solar azimuth sliders, and shopping carts are removed from the Home page.
+  - **Full-Bleed Photography:** `rounded-none`, `p-0`, occupying 100% of each architectural cell width without internal card margins.
+  - **Colossal Watermark Numerals:** Low-contrast platinum gray (`#94A3B8`) monumental numerals (`01`, `02`, `03`, `04`) behind the specification sheet.
+  - **3-Row Architectural Blueprint Specification Sheet (`0.5px` hairlines):**
+    - *Fila superior:* Client & Typology (e.g., `AURA SANCTUARY · Hospitality & Botanical Retreat`) + unified typographic CTA `EXPLORAR CASO DE ESTUDIO ↗`.
+    - *Fila intermedia:* Conceptual headline + 2-line editorial synthesis (`line-clamp-2`) on the studio's intervention.
+    - *Fila inferior:* Divided metadata cells (`Año | Ubicación | Disciplina`).
+  - **Asymmetric Visual Rhythm:** Alternates between full-width colossal plates (`01` and `04`, `lg:col-span-12`) and an asymmetric 2-column diptych (`02` [`lg:col-span-7`] + `03` [`lg:col-span-5`]).
+- **Acto 3 — Capabilities, Process & Studio Philosophy (`<Services />`):**
+  - Fuses the studio manifesto and 5-stage engineering methodology into a single concise section resolved in a clean **4-column Swiss grid (`lg:grid-cols-4`)** with `0.5px` dividers.
+  - FAQ accordion is completely removed from the Home page.
+- **Acto 4 — Direct Contact & Editorial Signature (`<ContactForm />` + `<Footer />`):**
+  - Streamlined 2-column Swiss contact layout (direct studio correspondence table + progressive project brief) followed immediately by the monumental `ZYRVAE` footer colophon.
+
+---
+
+## 2. Modular Grid System & Print Registration Marks (The Monolith Grid)
 - **Perimeter Print Margins:** `40px` outer vertical strips on the left and right edges of the viewport housing 90°-rotated editorial micro-typography (`Buenos Aires, Argentina` on the left; `© 2026 · 34°36′S 58°22′W` on the right) and blueprint cotas (`34.68°`, `01.198`, `58.38°`, `02.410`) in `#94A3B8`.
 - **Row 1 (Integrated Header):** 4 continuous horizontal cells (`20% | 45% | 20% | 15%`):
   - Cell 1 (`20%`): `Zyrvae / Phase 1 [01]` (neutral Swiss grotesque in Sentence case, `10px`, `font-medium`, `16px` padding).

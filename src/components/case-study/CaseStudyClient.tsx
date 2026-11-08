@@ -430,12 +430,28 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
           </div>
         </section>
 
-        {/* 5. INTEGRATED RESERVATION EXPERIENCE */}
+        {/* 5. INTEGRATED RESERVATION EXPERIENCE — LABORATORIO TÉCNICO & PROTOTIPO FUNCIONAL */}
         <section
           id="aura-booking"
+          data-lab-seal="Laboratorio Técnico & Prototipo Funcional"
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 scroll-mt-28"
-          aria-label={language === 'es' ? 'Reserva de estadía' : 'Stay reservation'}
+          aria-label={language === 'es' ? 'Laboratorio Técnico & Prototipo Funcional — Cotizador de estadía AURA' : 'Technical Laboratory & Functional Prototype — AURA Stay Estimator'}
         >
+          {/* Sello Oficial Fase 2: Laboratorio Técnico & Prototipo Funcional */}
+          <div className="mb-6 p-4 sm:p-5 bg-zy-surface border border-zy-grid-line monolith-hairline flex flex-wrap items-center justify-between gap-3">
+            <div className="inline-flex items-center space-x-2.5">
+              <span className="w-2 h-2 bg-[#FF3B30]" aria-hidden="true" />
+              <span className="font-editorial-micro text-[10px] font-semibold tracking-[0.04em] uppercase text-zy-fg">
+                {language === 'es'
+                  ? 'Laboratorio Técnico & Prototipo Funcional'
+                  : 'Technical Laboratory & Functional Prototype · Laboratorio Técnico & Prototipo Funcional'}
+              </span>
+            </div>
+            <span className="font-cota text-[#94A3B8]">
+              SPEC // AURA-ENGINE-01 · COTIZADOR INTERACTIVO EN VIVO
+            </span>
+          </div>
+
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-8">
             <div>
               <span className="font-mono text-xs uppercase tracking-widest text-zy-blue font-semibold">
@@ -796,15 +812,24 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
           </div>
         </section>
 
-        {/* Section 06: LIVE INTERACTIVE FUNCTIONAL DEMO */}
+        {/* Section 06: LIVE INTERACTIVE FUNCTIONAL DEMO — LABORATORIO TÉCNICO & PROTOTIPO FUNCIONAL */}
         <section className="space-y-4 pt-8 border-t border-zy-border-subtle">
+          <div className="p-4 bg-zy-surface border border-zy-grid-line monolith-hairline flex flex-wrap items-center justify-between gap-2">
+            <div className="inline-flex items-center space-x-2">
+              <span className="w-2 h-2 bg-[#FF3B30]" aria-hidden="true" />
+              <span className="font-editorial-micro text-[10px] font-semibold uppercase tracking-[0.04em] text-zy-fg">
+                Laboratorio Técnico &amp; Prototipo Funcional
+              </span>
+            </div>
+            <span className="font-mono text-[11px] text-zy-dim">
+              {t.demoNotice}
+            </span>
+          </div>
+
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <h2 className="font-mono text-xs text-zy-blue uppercase tracking-wider">
               {t.demoTitle}
             </h2>
-            <span className="font-mono text-[11px] text-zy-dim">
-              {t.demoNotice}
-            </span>
           </div>
 
           {/* Render corresponding interactive demo */}

@@ -12,7 +12,7 @@ import { ArrowUp, ArrowUpRight, Mail } from 'lucide-react';
 export const Footer: React.FC = () => {
   const { language } = useLanguage();
   const t = translations[language];
-  const currentYear = 2025;
+  const currentYear = 2026;
 
   const scrollToTop = () => {
     const reduced =
@@ -27,169 +27,153 @@ export const Footer: React.FC = () => {
 
   return (
     <footer
-      className="relative bg-zy-bg text-zy-fg border-t border-zy-border-subtle pt-16 sm:pt-24 pb-8 sm:pb-12 px-5 sm:px-8 lg:px-12 max-w-[1720px] mx-auto min-h-[90svh] sm:min-h-[96svh] flex flex-col justify-between select-none overflow-hidden"
-      aria-label="ZYRVAE Footer — Columns above, Wordmark below"
+      data-act="04-signature"
+      className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline pt-10 sm:pt-12 pb-6 sm:pb-8 px-4 sm:px-8 lg:px-10 flex flex-col justify-between select-none overflow-hidden rounded-none"
+      aria-label="Acto 4 — Firma Editorial y Colofón de ZYRVAE"
     >
-      {/* Top Row: Four Columns on 12-Column Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 sm:gap-12 pb-12 border-b border-zy-border-subtle">
+      {/* Top Row: Four Architectural Columns on 12-Column Swiss Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-8 border-b border-zy-grid-line monolith-hairline">
         {/* Col 1: Studio Identity (cols 1-4) */}
-        <div className="lg:col-span-4 space-y-4">
+        <div className="lg:col-span-4 space-y-3">
           <div className="flex items-center space-x-3">
-            <SymbolLogo size={28} showPlate={false} showBlueprint={true} />
-            <span className="font-sans font-medium text-lg tracking-[0.16em] text-zy-fg">
+            <SymbolLogo size={24} showPlate={false} showBlueprint={true} />
+            <span className="font-sans font-semibold text-base tracking-[0.16em] text-zy-fg">
               ZYRVAE
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-zy-muted font-sans max-w-sm leading-relaxed">
+          <p className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted max-w-sm leading-[1.6]">
             {t.footer.description}
           </p>
-          <div className="text-xs text-zy-dim pt-1 inline-flex items-center space-x-1.5">
-            <span className="font-swiss tracking-wide">Buenos Aires</span>
-            <span className="font-mono text-[11px]">[34°36′S 58°22′W]</span>
+          <div className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-[#94A3B8] pt-0.5 inline-flex items-center space-x-1.5">
+            <span className="text-zy-fg">Buenos Aires</span>
+            <span>[34°36′S 58°22′W]</span>
             <span>·</span>
-            <span className="font-swiss tracking-wide">
-              {language === 'es' ? 'Alcance global' : 'Global practice'}
-            </span>
+            <span>{language === 'es' ? 'Práctica de autor global' : 'Global authorial practice'}</span>
           </div>
         </div>
 
-        {/* Col 2: Navigation (cols 5-6) */}
-        <div className="lg:col-span-2 space-y-3">
-          <span className="font-swiss text-xs font-medium tracking-wide text-zy-dim block">
-            {language === 'es' ? 'Navegación' : 'Navigation'}
+        {/* Col 2: 4-Act Navigation (cols 5-6) — FAQ removed per Fase 2 */}
+        <div className="lg:col-span-2 space-y-2.5">
+          <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-[#94A3B8] block">
+            {language === 'es' ? 'Estructura (4 Actos)' : 'Structure (4 Acts)'}
           </span>
-          <ul className="space-y-2 text-xs font-swiss tracking-wide text-zy-muted">
+          <ul className="space-y-1.5 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+            <li>
+              <Link href="/#hero" className="hover:text-zy-fg transition-colors">
+                01. Hero Monumental
+              </Link>
+            </li>
             <li>
               <Link href="/#work" className="hover:text-zy-fg transition-colors">
-                {t.nav.work}
+                02. {t.nav.work}
               </Link>
             </li>
             <li>
               <Link href="/#services" className="hover:text-zy-fg transition-colors">
-                {t.nav.services}
-              </Link>
-            </li>
-            <li>
-              <Link href="/#process" className="hover:text-zy-fg transition-colors">
-                {t.nav.process}
-              </Link>
-            </li>
-            <li>
-              <Link href="/#studio" className="hover:text-zy-fg transition-colors">
-                {t.nav.studio}
-              </Link>
-            </li>
-            <li>
-              <Link href="/#faq" className="hover:text-zy-fg transition-colors">
-                {t.nav.faq}
+                03. {language === 'es' ? 'Capacidades & Filosofía' : 'Capabilities & Ethos'}
               </Link>
             </li>
             <li>
               <Link href="/#contact" className="hover:text-zy-fg transition-colors">
-                {language === 'es' ? 'Contacto' : 'Contact'}
+                04. {language === 'es' ? 'Contacto Directo' : 'Direct Contact'}
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Col 3: Concept Demos Index (cols 7-9) */}
-        <div className="lg:col-span-3 space-y-3">
-          <span className="font-swiss text-xs font-medium tracking-wide text-zy-dim block">
-            {language === 'es' ? 'Casos interactivos' : 'Case studies'}
+        {/* Col 3: Case Studies & Technical Prototypes (cols 7-9) */}
+        <div className="lg:col-span-3 space-y-2.5">
+          <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-[#94A3B8] block">
+            {language === 'es'
+              ? 'Laboratorio Técnico & Casos [01—04]'
+              : 'Technical Lab & Case Studies [01—04]'}
           </span>
-          <ul className="space-y-2 text-xs text-zy-muted">
+          <ul className="space-y-1.5 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
             <li>
               <Link
                 href="/case-study/aura-sanctuary"
-                className="inline-flex items-center space-x-1.5 hover:text-zy-blue transition-colors"
+                className="inline-flex items-center space-x-1.5 hover:text-zy-fg transition-colors"
               >
-                <span className="font-mono text-[11px] text-zy-blue">01</span>
-                <span className="font-swiss tracking-wide">AURA Sanctuary</span>
-                <ArrowUpRight size={11} className="text-zy-blue" />
+                <span className="text-[#FF3B30]">01</span>
+                <span>AURA Sanctuary</span>
+                <ArrowUpRight size={10} className="text-[#FF3B30]" />
               </Link>
             </li>
             <li>
               <Link
                 href="/case-study/kon-atelier"
-                className="inline-flex items-center space-x-1.5 hover:text-zy-blue transition-colors"
+                className="inline-flex items-center space-x-1.5 hover:text-zy-fg transition-colors"
               >
-                <span className="font-mono text-[11px] text-zy-blue">02</span>
-                <span className="font-swiss tracking-wide">KÔN Atelier</span>
-                <ArrowUpRight size={11} className="text-zy-blue" />
+                <span className="text-[#FF3B30]">02</span>
+                <span>KÔN Atelier</span>
+                <ArrowUpRight size={10} className="text-[#FF3B30]" />
               </Link>
             </li>
             <li>
               <Link
                 href="/case-study/vectra-architects"
-                className="inline-flex items-center space-x-1.5 hover:text-zy-blue transition-colors"
+                className="inline-flex items-center space-x-1.5 hover:text-zy-fg transition-colors"
               >
-                <span className="font-mono text-[11px] text-zy-blue">03</span>
-                <span className="font-swiss tracking-wide">MONOLITH Studio</span>
-                <ArrowUpRight size={11} className="text-zy-blue" />
+                <span className="text-[#FF3B30]">03</span>
+                <span>MONOLITH Studio</span>
+                <ArrowUpRight size={10} className="text-[#FF3B30]" />
               </Link>
             </li>
             <li>
               <Link
                 href="/case-study/soma-formulations"
-                className="inline-flex items-center space-x-1.5 hover:text-zy-blue transition-colors"
+                className="inline-flex items-center space-x-1.5 hover:text-zy-fg transition-colors"
               >
-                <span className="font-mono text-[11px] text-zy-blue">04</span>
-                <span className="font-swiss tracking-wide">SŌMA Formulations</span>
-                <ArrowUpRight size={11} className="text-zy-blue" />
+                <span className="text-[#FF3B30]">04</span>
+                <span>SŌMA Formulations</span>
+                <ArrowUpRight size={10} className="text-[#FF3B30]" />
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Col 4: Preferences & Contact (cols 10-12) */}
-        <div className="lg:col-span-3 space-y-4">
-          <span className="font-swiss text-xs font-medium tracking-wide text-zy-dim block">
-            {language === 'es' ? 'Preferencias y contacto' : 'Preferences & contact'}
+        {/* Col 4: System Preferences & Direct Inbox (cols 10-12) */}
+        <div className="lg:col-span-3 space-y-3">
+          <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-[#94A3B8] block">
+            {language === 'es' ? 'Preferencias y firma' : 'Preferences & colophon'}
           </span>
           <div className="flex flex-wrap items-center gap-2">
             <LanguageSwitcher />
             <ThemeToggle showLabels={true} />
           </div>
 
-          <div className="pt-1 space-y-1">
-            <span className="text-xs font-swiss tracking-wide text-zy-dim block">
-              {t.footer.directContact}
-            </span>
+          <div className="pt-1 space-y-0.5 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case">
+            <span className="text-zy-muted block">{t.footer.directContact}</span>
             <a
               href="mailto:zyrvae.co@gmail.com"
-              className="inline-flex items-center space-x-1.5 text-xs font-swiss tracking-wide text-zy-fg hover:text-zy-blue transition-colors"
+              className="inline-flex items-center space-x-1.5 text-zy-fg hover:text-[#FF3B30] transition-colors"
             >
-              <Mail size={12} className="text-zy-blue" />
+              <Mail size={11} className="text-[#FF3B30]" />
               <span>zyrvae.co@gmail.com</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Middle Row: Generous Architectural Emptiness */}
-      <div className="my-auto py-12 sm:py-16" aria-hidden="true" />
-
-      {/* Bottom Row: Monumental Full-Width Wordmark + Legal Bar */}
-      <div className="space-y-4">
-        {/* Full-bleed inline SVG Wordmark scaled from margin to margin */}
+      {/* Bottom Row: Firma Editorial Monumental a Sangre + Colofón Legal */}
+      <div className="pt-6 space-y-4">
         <div className="w-full overflow-hidden select-none text-zy-fg">
           <svg
-            viewBox="0 0 1000 160"
-            className="w-full h-auto max-h-[22vw] block text-zy-fg"
+            viewBox="0 0 1000 152"
+            className="w-full h-auto max-h-[19vw] block text-zy-fg"
             preserveAspectRatio="xMidYMid meet"
-            aria-label="ZYRVAE Wordmark Monument"
+            aria-label="ZYRVAE Editorial Signature Monument"
           >
             <text
               x="500"
-              y="138"
+              y="134"
               textAnchor="middle"
               fill="currentColor"
               className="font-monument"
               style={{
-                fontFamily: "'Hanken Grotesk', var(--font-geist-sans), sans-serif",
-                fontWeight: 600,
-                fontSize: '185px',
-                letterSpacing: '-0.065em',
+                fontWeight: 900,
+                fontSize: '182px',
+                letterSpacing: '-0.04em',
               }}
             >
               ZYRVAE
@@ -198,20 +182,20 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Legal Text & Back to Top Strip */}
-        <div className="pt-3 border-t border-zy-border-subtle flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zy-dim">
-          <p className="font-swiss tracking-wide">
-            © <span className="font-mono">{currentYear}</span> ZYRVAE Digital Studio. {t.footer.rights}
+        <div className="pt-3 border-t border-zy-grid-line monolith-hairline flex flex-col sm:flex-row items-center justify-between gap-3 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+          <p>
+            © {currentYear} ZYRVAE Digital Studio · Buenos Aires, Argentina. {t.footer.rights}
           </p>
 
           <button
             type="button"
             onClick={scrollToTop}
-            className="group min-h-[44px] inline-flex items-center space-x-1.5 font-swiss tracking-wide text-zy-muted hover:text-zy-fg transition-colors py-2 px-3.5 rounded-full hover:bg-zy-surface border border-transparent hover:border-zy-border"
+            className="group min-h-[44px] -my-2 inline-flex items-center space-x-1.5 text-zy-fg hover:text-[#FF3B30] transition-colors px-2"
           >
             <span>{t.footer.backToTop}</span>
             <ArrowUp
-              size={12}
-              className="text-zy-blue transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-0.5"
+              size={11}
+              className="text-[#FF3B30] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-0.5"
             />
           </button>
         </div>

@@ -9,16 +9,15 @@
 ## Core Proposition
 ZYRVAE is an independent digital studio operating at the intersection of brutalist architectural systems and high-precision digital interfaces. We design and engineer bespoke web experiences, interactive product simulations, art direction, and CGI for brands across hospitality, gastronomy, spatial architecture, and luxury commerce.
 
-## Key Surfaces & Features
-1. **Phase 1 — The Monolith Grid (Hero & Header System):**
+## Key Surfaces & Features (Phase 2 — 4-Act Architecture)
+1. **Acto 1 — The Monolith Grid & Swiss Poster Hero (`<Hero />` + `<Header />`):**
    - Swiss Corporate Brutalist modular grid with 40px outer print margins (`BUENOS AIRES` on the left, `© 2026` and coordinates on the right).
    - 4-column continuous integrated header (`20%` phase identifier, `45%` vertical-bar navigation, `20%` live Buenos Aires clock, `15%` solid Security Vermilion `#FF3B30` contact block).
-   - Monumental Hero box (`50vh–55vh` minimum height) featuring the all-caps `ZYRVAE` display lockup and the authorial editorial manifesto in `Instrument Serif Italic`.
-   - 3-column lower panel (`40%` `01 / CAPABILITIES` justified block, `35%` interactive 3D faceted obsidian & refractive glass sculptural object overlapping the bottom divider line, `25%` `02 / CURRENT PHASE` + `70px` circular typographic seal).
-2. **Selected Work & Live Interactive Concept Demos:**
-   - **01 — AURA Sanctuary:** Boutique hospitality & thermal suite rate estimator.
-   - **02 — KÔN Atelier:** Seasonal culinary atelier, tasting menu switcher, and table booking simulator.
-   - **03 — MONOLITH Studio:** Spatial architecture, solar shadow massing, and tectonic material matrix.
-   - **04 — SŌMA Formulations:** Bioactive cellular cosmetics e-commerce catalog and reactive bag/checkout.
-3. **Capabilities, Process, Studio Dossier, FAQ & Progressive Project Brief:**
-   - Complete end-to-end agency flow with a 4-step validated project inquiry form dispatching via `/api/contact`.
+   - Monumental Hero composition featuring the all-caps condensed `ZYRVAE` display lockup, the 3D faceted obsidian & optical crystal sculpture mounted directly at the geometric/optical center intersection (`data-hero-intersection="zyrvae-obsidian-manifesto"`), and the authorial editorial manifesto in `Instrument Serif Italic`.
+2. **Acto 2 — Selected Works in Full-Bleed Editorial Plates (`<Portfolio />`) & Relocated Technical Lab (`/case-study/[slug]`):**
+   - Full-bleed photography (`rounded-none`, `p-0`), colossal low-contrast platinum watermarks (`01`–`04`), 3-row `0.5px` architectural blueprint tables (`Cliente & Tipología`, `Titular & Síntesis Editorial`, `Año | Ubicación | Disciplina`), asymmetric rhythm (`12 cols` + `7/5 cols` diptych + `12 cols`), and unified CTA `EXPLORAR CASO DE ESTUDIO ↗`.
+   - All interactive functional prototypes (Aura suite estimator, Kôn tasting menu & table configurator, Monolith solar altitude/azimuth simulator, Sōma catalog & cart) live exclusively inside `/case-study/[slug]` under the seal **"Laboratorio Técnico & Prototipo Funcional"**.
+3. **Acto 3 — Capabilities & Studio Philosophy (`<Services />`):**
+   - Unified studio manifesto and 4-column Swiss grid (`lg:grid-cols-4`) condensing capabilities, disciplines, and the 5-stage engineering methodology (with the SaaS-style FAQ accordion completely removed from the Home page).
+4. **Acto 4 — Direct Contact & Editorial Signature (`<ContactForm />` + `<Footer />`):**
+   - Direct correspondence channels + 4-step validated project brief dispatching via `/api/contact`, anchored by the full-bleed `ZYRVAE` footer colophon.

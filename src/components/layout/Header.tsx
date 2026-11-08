@@ -56,7 +56,7 @@ export const Header: React.FC = () => {
       return;
     }
 
-    const sectionIds = ['hero', 'work', 'services', 'process', 'studio', 'faq', 'contact'];
+    const sectionIds = ['hero', 'work', 'services', 'process', 'studio', 'contact'];
 
     const resolveCurrentSection = () => {
       if (typeof window === 'undefined') return;

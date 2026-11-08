@@ -50,8 +50,16 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   // Plan / Drafting Inspector View Mode
   const [activeDraftingView, setActiveDraftingView] = useState<'axonometric' | 'section' | 'plan'>('axonometric');
 
-  // Solar Light Simulation: Dawn (08:00), Zenith (12:30), Dusk (18:45)
+  // Solar Light Simulation: Dawn (08:00), Zenith (12:30), Dusk (18:45) + Continuous Solar Angle (relocated from Home in Fase 2)
   const [solarTime, setSolarTime] = useState<'dawn' | 'zenith' | 'dusk'>('dawn');
+  const [solarAngle, setSolarAngle] = useState<number>(22);
+
+  const handleSolarPresetChange = (preset: 'dawn' | 'zenith' | 'dusk') => {
+    setSolarTime(preset);
+    if (preset === 'dawn') setSolarAngle(22);
+    else if (preset === 'zenith') setSolarAngle(68);
+    else setSolarAngle(16);
+  };
 
   // Active Tectonic Material
   const [activeMaterialId, setActiveMaterialId] = useState<string>('concrete-board');
@@ -352,15 +360,33 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
             ))}
           </div>
 
-          {/* Interactive Daylight & Shadow Simulation Widget */}
-          <div className="rounded-2xl border border-zy-border bg-zy-card overflow-hidden p-6 sm:p-8 space-y-6 shadow-sm">
+          {/* Interactive Daylight & Shadow Simulation Widget — LABORATORIO TÉCNICO & PROTOTIPO FUNCIONAL */}
+          <div
+            data-lab-seal="Laboratorio Técnico & Prototipo Funcional"
+            className="rounded-2xl border border-zy-border bg-zy-card overflow-hidden p-6 sm:p-8 space-y-6 shadow-sm"
+          >
+            {/* Sello Oficial Fase 2: Laboratorio Técnico & Prototipo Funcional */}
+            <div className="p-3.5 sm:p-4 bg-zy-surface border border-zy-grid-line monolith-hairline flex flex-wrap items-center justify-between gap-3">
+              <div className="inline-flex items-center space-x-2.5">
+                <span className="w-2 h-2 bg-[#FF3B30]" aria-hidden="true" />
+                <span className="font-editorial-micro text-[10px] font-semibold tracking-[0.04em] uppercase text-zy-fg">
+                  {language === 'es'
+                    ? 'Laboratorio Técnico & Prototipo Funcional'
+                    : 'Technical Laboratory & Functional Prototype · Laboratorio Técnico & Prototipo Funcional'}
+                </span>
+              </div>
+              <span className="font-cota text-[#94A3B8]">
+                SPEC // MONOLITH-SOLAR-03 · AZIMUTH {110 + solarAngle}° · {Math.round(280 + solarAngle * 11.5)} LUX
+              </span>
+            </div>
+
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zy-border-subtle pb-5">
               <div className="space-y-1">
                 <span className="font-mono text-xs text-zy-blue uppercase tracking-wider">
-                  {language === 'es' ? 'HERRAMIENTA ESPACIAL // ESTUDIO SOLAR' : 'SPATIAL SIMULATOR // SOLAR CYCLE'}
+                  {language === 'es' ? 'HERRAMIENTA ESPACIAL // SIMULADOR SOLAR' : 'SPATIAL SIMULATOR // SOLAR CYCLE'}
                 </span>
                 <h4 className="font-sans font-bold text-lg text-zy-fg">
-                  {language === 'es' ? 'Incidencia de luz rasante y sombras volumétricas' : 'Raking daylight incidence & volumetric shadow study'}
+                  {language === 'es' ? 'Incidencia de luz rasante, azimut y sombras volumétricas' : 'Raking daylight incidence, azimuth & volumetric shadow study'}
                 </h4>
               </div>
 
@@ -372,7 +398,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
               >
                 <button
                   type="button"
-                  onClick={() => setSolarTime('dawn')}
+                  onClick={() => handleSolarPresetChange('dawn')}
                   className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
                     solarTime === 'dawn'
                       ? 'bg-zy-blue text-white font-semibold'
@@ -384,7 +410,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 </button>
                 <button
                   type="button"
-                  onClick={() => setSolarTime('zenith')}
+                  onClick={() => handleSolarPresetChange('zenith')}
                   className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
                     solarTime === 'zenith'
                       ? 'bg-zy-blue text-white font-semibold'
@@ -396,7 +422,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 </button>
                 <button
                   type="button"
-                  onClick={() => setSolarTime('dusk')}
+                  onClick={() => handleSolarPresetChange('dusk')}
                   className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
                     solarTime === 'dusk'
                       ? 'bg-zy-blue text-white font-semibold'
@@ -406,6 +432,36 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   <Moon size={13} />
                   <span>{language === 'es' ? 'Ocaso 18:45' : 'Dusk 18:45'}</span>
                 </button>
+              </div>
+            </div>
+
+            {/* Continuous Solar Altitude & Azimuth Control (Relocated from Home Card to Technical Lab) */}
+            <div className="p-4 bg-zy-surface border border-zy-border flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono">
+              <div className="flex items-center space-x-3 shrink-0">
+                <Sun size={14} className="text-zy-blue" />
+                <span className="text-zy-fg font-semibold">
+                  {language === 'es' ? 'Altitud solar continua:' : 'Continuous solar altitude:'} {solarAngle}°
+                </span>
+                <span className="text-zy-muted">
+                  · AZIMUTH {110 + solarAngle}° · {Math.round(280 + solarAngle * 11.5)} LUX
+                </span>
+              </div>
+              <div className="flex items-center space-x-3 w-full sm:max-w-xs">
+                <input
+                  type="range"
+                  min={15}
+                  max={80}
+                  value={solarAngle}
+                  aria-label={language === 'es' ? 'Ajustar ángulo solar y azimut' : 'Adjust solar altitude and azimuth'}
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
+                    setSolarAngle(val);
+                    if (val < 35) setSolarTime('dawn');
+                    else if (val > 52) setSolarTime('zenith');
+                    else setSolarTime('dusk');
+                  }}
+                  className="w-full h-1.5 bg-zy-bg border border-zy-border appearance-none cursor-ew-resize accent-zy-blue"
+                />
               </div>
             </div>
 

@@ -381,12 +381,28 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
         </div>
       </section>
 
-      {/* 4. SEASONAL MENU: Dual Tasting Switcher, Wine Pairing Toggle & Real-Time Dietary Filter */}
+      {/* 4. SEASONAL MENU: Dual Tasting Switcher, Wine Pairing Toggle & Real-Time Dietary Filter — LABORATORIO TÉCNICO & PROTOTIPO FUNCIONAL */}
       <section
         id="kon-menu"
+        data-lab-seal="Laboratorio Técnico & Prototipo Funcional"
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-32 scroll-mt-24"
-        aria-label={language === 'es' ? 'Menú de Estación' : 'Seasonal Menu'}
+        aria-label={language === 'es' ? 'Laboratorio Técnico & Prototipo Funcional — Menú de Estación KÔN' : 'Technical Laboratory & Functional Prototype — KÔN Seasonal Menu'}
       >
+        {/* Sello Oficial Fase 2: Laboratorio Técnico & Prototipo Funcional */}
+        <div className="mb-6 p-4 sm:p-5 bg-zy-warm-bar border border-zy-warm-border flex flex-wrap items-center justify-between gap-3">
+          <div className="inline-flex items-center space-x-2.5">
+            <span className="w-2 h-2 bg-[#FF3B30]" aria-hidden="true" />
+            <span className="font-editorial-micro text-[10px] font-semibold tracking-[0.04em] uppercase text-zy-warm-fg">
+              {language === 'es'
+                ? 'Laboratorio Técnico & Prototipo Funcional'
+                : 'Technical Laboratory & Functional Prototype · Laboratorio Técnico & Prototipo Funcional'}
+            </span>
+          </div>
+          <span className="font-cota text-[#94A3B8]">
+            SPEC // KON-ENGINE-02 · CONFIGURADOR GASTRONÓMICO &amp; RESERVA
+          </span>
+        </div>
+
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-8 border-b border-zy-warm-border">
           <div>
             <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">

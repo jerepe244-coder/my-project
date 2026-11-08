@@ -483,12 +483,28 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
           </div>
         </section>
 
-        {/* 4. CATÁLOGO CON IMÁGENES, NOMBRES, PRECIOS Y FILTROS FUNCIONALES */}
+        {/* 4. CATÁLOGO CON IMÁGENES, NOMBRES, PRECIOS Y FILTROS FUNCIONALES — LABORATORIO TÉCNICO & PROTOTIPO FUNCIONAL */}
         <section
           id="soma-catalog"
+          data-lab-seal="Laboratorio Técnico & Prototipo Funcional"
           className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
-          aria-label="SOMA Product Catalog"
+          aria-label="SOMA Product Catalog — Laboratorio Técnico & Prototipo Funcional"
         >
+          {/* Sello Oficial Fase 2: Laboratorio Técnico & Prototipo Funcional */}
+          <div className="mb-8 p-4 sm:p-5 bg-zy-surface border border-zy-grid-line monolith-hairline flex flex-wrap items-center justify-between gap-3">
+            <div className="inline-flex items-center space-x-2.5">
+              <span className="w-2 h-2 bg-[#FF3B30]" aria-hidden="true" />
+              <span className="font-editorial-micro text-[10px] font-semibold tracking-[0.04em] uppercase text-zy-fg">
+                {language === 'es'
+                  ? 'Laboratorio Técnico & Prototipo Funcional'
+                  : 'Technical Laboratory & Functional Prototype · Laboratorio Técnico & Prototipo Funcional'}
+              </span>
+            </div>
+            <span className="font-cota text-[#94A3B8]">
+              SPEC // SOMA-ENGINE-04 · CATÁLOGO BIOFOTÓNICO &amp; CHECKOUT REACTIVO
+            </span>
+          </div>
+
           {/* Header & Controls */}
           <div className="space-y-8 mb-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zy-border-subtle pb-8">

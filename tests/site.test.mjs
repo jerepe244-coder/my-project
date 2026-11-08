@@ -613,4 +613,140 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     assert.ok(heroTsx.includes('01.198'), 'Hero grid must include 01.198 architectural cota mark');
     assert.ok(heroTsx.includes('RegistrationCross'), 'Hero grid must render fine typographic registration crosses at module corners');
   });
+
+  test('Fase 2 — Poda Radical en 4 Actos, Láminas Full-Bleed, Laboratorio Técnico y Ascenso de la Obsidiana', () => {
+    const pageTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'app', 'page.tsx'),
+      'utf-8'
+    );
+    const heroTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Hero.tsx'),
+      'utf-8'
+    );
+    const portfolioTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Portfolio.tsx'),
+      'utf-8'
+    );
+    const servicesTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Services.tsx'),
+      'utf-8'
+    );
+    const contactTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'ContactForm.tsx'),
+      'utf-8'
+    );
+    const caseStudyClientTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'CaseStudyClient.tsx'),
+      'utf-8'
+    );
+    const monolithExpTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'MonolithArchitectureExperience.tsx'),
+      'utf-8'
+    );
+    const somaExpTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'SomaCommerceExperience.tsx'),
+      'utf-8'
+    );
+    const konExpTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'KonRestaurantExperience.tsx'),
+      'utf-8'
+    );
+
+    // 1. Poda radical de la Home: Estructura fija en 4 actos y supresión del bloque FAQ
+    const pageWithoutComments = pageTsx.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+    assert.equal(
+      pageWithoutComments.includes('<FAQ'),
+      false,
+      'Home page must completely remove FAQ accordion block'
+    );
+    assert.equal(
+      pageWithoutComments.includes('<Process'),
+      false,
+      'Home page must condense Process into Acto 3 Services'
+    );
+    assert.equal(
+      pageWithoutComments.includes('<Studio'),
+      false,
+      'Home page must condense Studio into Acto 3 Services'
+    );
+    assert.ok(heroTsx.includes('data-act="01"'), 'Hero must be marked as Acto 1');
+    assert.ok(portfolioTsx.includes('data-act="02"'), 'Portfolio must be marked as Acto 2');
+    assert.ok(servicesTsx.includes('data-act="03"'), 'Services & Philosophy must be marked as Acto 3');
+    assert.ok(contactTsx.includes('data-act="04"'), 'Contact & Footer must be marked as Acto 4');
+
+    // 2. Fusión de Proceso y Estudio en una retícula suiza limpia de 4 columnas (Acto 3)
+    assert.ok(
+      servicesTsx.includes('lg:grid-cols-4'),
+      'Acto 3 (Capacidades y Filosofía) must use a clean 4-column Swiss grid (lg:grid-cols-4)'
+    );
+    assert.ok(
+      servicesTsx.includes('id="studio"') && servicesTsx.includes('id="process"'),
+      'Acto 3 must preserve #studio and #process navigation anchors within the unified section'
+    );
+
+    // 3. Retirada de widgets utilitarios de la Home y unificación de CTA
+    const portfolioNoComments = portfolioTsx.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+    for (const demoComponent of ['<HospitalityDemo', '<GastronomyDemo', '<ArchitectureDemo', '<EcommerceDemo']) {
+      assert.equal(
+        portfolioNoComments.includes(demoComponent),
+        false,
+        `Portfolio on Home must not render embedded ${demoComponent}`
+      );
+    }
+    assert.ok(
+      portfolioTsx.includes('EXPLORAR CASO DE ESTUDIO ↗'),
+      'Each project on the Home page must present the unified typographic link EXPLORAR CASO DE ESTUDIO ↗'
+    );
+
+    // 4. Anatomía visual de las nuevas láminas de proyectos (Full-Bleed, Marca de Agua, Ficha Técnica 3 filas, Ritmo Asimétrico)
+    assert.ok(
+      portfolioTsx.includes('data-plate={projectNumber}'),
+      'Each portfolio plate must include a colossal watermark number (01, 02, 03, 04)'
+    );
+    assert.ok(
+      portfolioTsx.includes('data-watermark={projectNumber}'),
+      'Portfolio plates must render low-contrast platinum watermark behind technical specification sheet'
+    );
+    assert.ok(
+      portfolioTsx.includes('AURA SANCTUARY · Hospitality & Botanical Retreat'),
+      'Fila superior must display Client and Typology (e.g. AURA SANCTUARY · Hospitality & Botanical Retreat)'
+    );
+    assert.ok(
+      portfolioTsx.includes('line-clamp-2'),
+      'Fila intermedia must display conceptual headline and 2-line editorial synthesis'
+    );
+    assert.ok(
+      portfolioTsx.includes('Patagonia') && portfolioTsx.includes('Brand Identity & Digital Engine'),
+      'Fila inferior must display divided metadata cells (Año | Ubicación | Disciplina)'
+    );
+    assert.ok(
+      portfolioTsx.includes('lg:col-span-12') &&
+        portfolioTsx.includes('lg:col-span-7') &&
+        portfolioTsx.includes('lg:col-span-5'),
+      'Portfolio must alternate between full-width colossal plates (col-span-12) and asymmetric 2-column diptychs (col-span-7 + col-span-5)'
+    );
+
+    // 5. Reubicación de las demos en /case-study/[slug] bajo el sello "Laboratorio Técnico & Prototipo Funcional"
+    for (const [name, source] of [
+      ['CaseStudyClient.tsx', caseStudyClientTsx],
+      ['MonolithArchitectureExperience.tsx', monolithExpTsx],
+      ['SomaCommerceExperience.tsx', somaExpTsx],
+      ['KonRestaurantExperience.tsx', konExpTsx],
+    ]) {
+      assert.ok(
+        source.includes('Laboratorio Técnico & Prototipo Funcional'),
+        `${name} must present interactive prototype under the seal "Laboratorio Técnico & Prototipo Funcional"`
+      );
+    }
+    assert.ok(
+      monolithExpTsx.includes('type="range"'),
+      'Monolith case study experience must house the relocated interactive solar azimuth/altitude simulator'
+    );
+
+    // 6. Ajuste de la Obsidiana en el Hero: ascenso al centro geométrico/óptico en la intersección ZYRVAE + serif itálica
+    assert.ok(
+      heroTsx.includes('data-hero-intersection="zyrvae-obsidian-manifesto"'),
+      'Obsidian sculpture must be mounted directly at the intersection between ZYRVAE and the Instrument Serif Italic manifesto'
+    );
+  });
 });

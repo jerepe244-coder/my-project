@@ -1,224 +1,299 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
-import { translations } from '@/data/translations';
-import { services } from '@/data/services';
-import { Magnetic } from '@/components/ui/Magnetic';
-import { BorderBeamOverlay } from '@/components/ui/BorderBeamCard';
-import { ArrowUpRight, Check } from 'lucide-react';
+
+/**
+ * Cruz de registro tipográfica fina de imprenta suiza para intersecciones de retícula
+ */
+const RegistrationCross: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 9 9"
+    className={`pointer-events-none w-[9px] h-[9px] text-[#94A3B8] select-none ${className}`}
+  >
+    <path d="M4.5 0V9M0 4.5H9" stroke="currentColor" strokeWidth="0.75" />
+  </svg>
+);
 
 export const Services: React.FC = () => {
   const { language } = useLanguage();
-  const t = translations[language].services;
   const prefersReducedMotion = useReducedMotion();
-  const [hoveredService, setHoveredService] = useState<string | null>(null);
 
-  const baselineStandards =
+  const columns =
     language === 'es'
       ? [
           {
-            title: 'Diseño 100% a medida',
-            desc: 'Sin plantillas prefabricadas. Sistemas visuales creados para la identidad de tu negocio.',
+            num: '01',
+            cota: '34.68° · C-01',
+            tag: 'Disciplina I',
+            title: 'Dirección de Arte & Sistemas Visuales',
+            synthesis:
+              'Retículas suizas modulares, tipografía editorial de alto contraste, identidad digital y dirección estética CGI concebidas sin plantillas prefabricadas.',
+            items: [
+              '— Sistemas visuales monolíticos',
+              '— Tipografía & jerarquía editorial',
+              '— Dirección de arte & activos CGI 2K',
+              '— Diseño 100% a medida de autor',
+            ],
           },
           {
-            title: 'Ingeniería de alto rendimiento',
-            desc: 'Next.js, TypeScript y optimización de Core Web Vitals para carga instantánea.',
+            num: '02',
+            cota: '01.198 · C-02',
+            tag: 'Disciplina II',
+            title: 'Ingeniería Web & Arquitectura Frontend',
+            synthesis:
+              'Construcción de plataformas en Next.js y TypeScript con carga instantánea, precisión milimétrica en cada breakpoint y propiedad total del código.',
+            items: [
+              '— Next.js · TypeScript · Tailwind',
+              '— Core Web Vitals & fluidez a 60fps',
+              '— Arquitectura bilingüe (ES / EN) & WCAG',
+              '— Repositorio limpio sin vendor lock-in',
+            ],
           },
           {
-            title: 'Responsive y accesible (WCAG)',
-            desc: 'Experiencia calibrada en móvil, tablet y escritorio con navegación por teclado.',
+            num: '03',
+            cota: '58.38° · C-03',
+            tag: 'Disciplina III',
+            title: 'Laboratorio Técnico & Motores Interactivos',
+            synthesis:
+              'Ingeniería de prototipos funcionales a medida: simuladores solares, cotizadores de hospitalidad, configuradores gastronómicos y comercio reactivo.',
+            items: [
+              '— Simuladores solares y planimétricos',
+              '— Cotizadores de estadía en tiempo real',
+              '— Catálogos bioactivos y checkout reactivo',
+              '— Integración de APIs, webhooks y SEO',
+            ],
           },
           {
-            title: 'Propiedad total y autonomía',
-            desc: 'Repositorio limpio, documentado y sin ataduras forzadas a plataformas cerradas.',
+            num: '04',
+            cota: '02.410 · C-04',
+            tag: 'Filosofía & Cadencia',
+            title: 'Manifiesto de Estudio & Método en 5 Hitos',
+            synthesis:
+              'Trato directo de fundador a fundador desde Buenos Aires hacia el mundo. Cinco etapas condensadas en un flujo continuo, honesto y sin intermediarios.',
+            items: [
+              '— I & II: Diagnóstico & Dirección Visual',
+              '— III: Diseño & Construcción en Código',
+              '— IV: Validación Interactiva & Auditoría',
+              '— V: Despliegue Seguro & Evolución',
+            ],
           },
         ]
       : [
           {
-            title: '100% bespoke design',
-            desc: 'Zero off-the-shelf templates. Visual systems architected specifically for your brand.',
+            num: '01',
+            cota: '34.68° · C-01',
+            tag: 'Discipline I',
+            title: 'Art Direction & Visual Systems',
+            synthesis:
+              'Modular Swiss grids, high-contrast editorial typography, digital identity, and bespoke CGI art direction architected with zero off-the-shelf templates.',
+            items: [
+              '— Monolithic visual systems',
+              '— Editorial typography & hierarchy',
+              '— Bespoke CGI & 2K studio assets',
+              '— 100% authorial custom design',
+            ],
           },
           {
-            title: 'High-performance engineering',
-            desc: 'Next.js, TypeScript, and Core Web Vitals optimization for instantaneous load times.',
+            num: '02',
+            cota: '01.198 · C-02',
+            tag: 'Discipline II',
+            title: 'Web Engineering & Frontend Architecture',
+            synthesis:
+              'High-precision Next.js and TypeScript platforms engineered for instantaneous load times, responsive rigor across viewports, and full code ownership.',
+            items: [
+              '— Next.js · TypeScript · Tailwind',
+              '— Core Web Vitals & 60fps motion',
+              '— Bilingual (ES / EN) & WCAG accessible',
+              '— Clean handover with zero lock-in',
+            ],
           },
           {
-            title: 'Responsive & accessible (WCAG)',
-            desc: 'Calibrated across mobile, tablet, and desktop with full keyboard navigation.',
+            num: '03',
+            cota: '58.38° · C-03',
+            tag: 'Discipline III',
+            title: 'Technical Lab & Interactive Engines',
+            synthesis:
+              'Custom functional prototypes: volumetric solar simulators, live hospitality rate estimators, culinary configurators, and reactive digital commerce.',
+            items: [
+              '— Solar & architectural drafting engines',
+              '— Live hospitality stay estimators',
+              '— Reactive catalogs & bespoke checkout',
+              '— APIs, webhooks & technical SEO',
+            ],
           },
           {
-            title: 'Full code ownership',
-            desc: 'Clean, documented repository handover with zero vendor lock-in.',
+            num: '04',
+            cota: '02.410 · C-04',
+            tag: 'Ethos & Cadence',
+            title: 'Studio Manifesto & 5-Stage Cadence',
+            synthesis:
+              'Direct founder-to-founder collaboration from Buenos Aires to global markets. Five transparent stages condensed into a single frictionless cadence.',
+            items: [
+              '— I & II: Diagnosis & Visual Direction',
+              '— III: Engineering & Live Prototyping',
+              '— IV: Interactive QA & WCAG Audit',
+              '— V: Production Handover & Evolution',
+            ],
           },
         ];
 
   return (
     <section
       id="services"
-      className="py-20 sm:py-28 lg:py-36 px-5 sm:px-8 lg:px-12 max-w-[1720px] mx-auto scroll-mt-20 border-t border-zy-border-subtle"
-      aria-label="Capabilities & Services — Line-up at one type size"
+      data-act="03"
+      className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-[60px]"
+      aria-label="Acto 3 — Capacidades y Filosofía del Estudio (Retícula Suiza de 4 Columnas)"
     >
-      {/* Section Header */}
-      <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 sm:mb-20 gap-6 border-b border-zy-border-subtle pb-6"
-      >
-        <div>
-          <div className="inline-flex items-center space-x-2 mb-2">
-            <span className="font-mono text-xs text-zy-blue font-semibold">02 //</span>
-            <span className="font-swiss text-xs sm:text-sm tracking-wide text-zy-fg-secondary font-medium">
-              {language === 'es' ? 'Capacidades' : 'Capabilities'}
-            </span>
+      {/* Anchors for Studio & Process fused into Acto 3 so Header navigation links resolve seamlessly */}
+      <span id="studio" className="absolute -top-[60px] left-0 pointer-events-none" aria-hidden="true" />
+      <span id="process" className="absolute -top-[60px] left-0 pointer-events-none" aria-hidden="true" />
+
+      {/* =====================================================================
+          CABECERA EDITORIAL DEL ACTO 3: CAPACIDADES Y FILOSOFÍA (MANIFIESTO CONCISO)
+          ===================================================================== */}
+      <div className="relative px-4 sm:px-8 lg:px-10 py-8 sm:py-10 border-b border-zy-grid-line monolith-hairline grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+        <RegistrationCross className="absolute top-[6px] left-[6px]" />
+        <RegistrationCross className="absolute top-[6px] right-[6px]" />
+        <RegistrationCross className="absolute bottom-[6px] left-[6px]" />
+        <RegistrationCross className="absolute bottom-[6px] right-[6px]" />
+
+        <div className="lg:col-span-6 space-y-2">
+          <div className="inline-flex items-center space-x-2 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+            <span className="text-[#FF3B30]">[Acto 03]</span>
+            <span className="text-zy-fg">02 / Capabilities &amp; Philosophy</span>
+            <span className="text-[#94A3B8]">· Retícula Suiza 4-Columnas</span>
           </div>
-          <h2 className="text-4xl sm:text-6xl font-sans font-medium tracking-tight text-zy-fg">
-            {language === 'es' ? 'SERVICIOS' : 'SERVICES'}
+
+          <h2 className="font-monument font-black uppercase text-4xl sm:text-6xl lg:text-7xl tracking-[-0.04em] leading-[0.88] text-zy-fg">
+            {language === 'es' ? 'CAPACIDADES & FILOSOFÍA' : 'CAPABILITIES & ETHOS'}
           </h2>
-          <p className="text-sm sm:text-base text-zy-muted font-sans mt-2 max-w-xl">
-            {t.subtitle}
-          </p>
         </div>
 
-        <Magnetic>
-          <Link
-            href="/#contact"
-            className="group min-h-[44px] px-4 py-2 rounded-full bg-zy-surface hover:bg-zy-card border border-zy-border inline-flex items-center space-x-2 text-xs font-swiss tracking-wide font-medium text-zy-fg hover:text-zy-blue transition-colors self-start lg:self-end"
-          >
-            <span>{t.cta}</span>
-            <ArrowUpRight
-              size={13}
-              className="text-zy-blue transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
-          </Link>
-        </Magnetic>
-      </motion.div>
+        <div className="lg:col-span-6 flex flex-col justify-end space-y-3">
+          <p className="font-serif-editorial italic text-xl sm:text-2xl lg:text-[1.7rem] text-zy-fg leading-[1.18] tracking-[-0.01em]">
+            {language === 'es'
+              ? '«Independientes por diseño. Condensamos dirección de arte, arquitectura web e ingeniería interactiva en una práctica de autor sin intermediarios.»'
+              : '“Independent by design. We condense art direction, web architecture, and interactive engineering into an authorial practice with zero middlemen.”'}
+          </p>
 
-      {/* Sticky Table Strip */}
-      <div className="sticky top-16 z-20 py-2.5 px-4 bg-zy-bg/95 backdrop-blur-md border-y border-zy-border flex items-center justify-between text-xs">
-        <span className="font-swiss font-medium tracking-wide text-zy-blue">
-          {language === 'es' ? 'Práctica y capacidades técnicas' : 'Practice & technical capabilities'}
-        </span>
-        <span className="text-zy-dim inline-flex items-center space-x-1.5">
-          <span className="font-mono text-[11px] text-zy-fg-secondary">05</span>
-          <span className="font-swiss tracking-wide">
-            {language === 'es' ? 'áreas' : 'areas'}
-          </span>
-        </span>
+          <div className="flex flex-wrap items-center justify-between gap-2 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted pt-1">
+            <span>Buenos Aires, Argentina · 34°36′S 58°22′W [UTC-3]</span>
+            <span className="font-cota text-[#94A3B8]">Pliego Técnico · 4 Disciplinas</span>
+          </div>
+        </div>
       </div>
 
-      {/* Disciplined Four-Column Table Line-Up */}
-      <div className="divide-y divide-zy-border-subtle border-b border-zy-border-subtle">
-        {services.map((service, idx) => {
-          const isHovered = hoveredService === service.id;
+      {/* =====================================================================
+          RETÍCULA SUIZA LIMPIA DE 4 COLUMNAS (CAPACIDADES, INGENIERÍA, LAB Y MÉTODO)
+          ===================================================================== */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full border-b border-zy-grid-line monolith-hairline rounded-none">
+        {columns.map((col, idx) => {
+          const borderClasses =
+            idx < 3
+              ? 'border-b md:border-b lg:border-b-0 md:odd:border-r lg:border-r border-zy-grid-line monolith-hairline'
+              : '';
 
           return (
             <motion.div
-              key={service.id}
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+              key={col.num}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: idx * 0.07, ease: [0.23, 1, 0.32, 1] }}
-              onMouseEnter={() => setHoveredService(service.id)}
-              onMouseLeave={() => setHoveredService(null)}
-              className={`relative py-8 sm:py-10 transition-colors duration-150 group ${
-                isHovered ? 'bg-zy-surface/50' : 'bg-transparent'
-              }`}
+              transition={{
+                duration: 0.5,
+                delay: prefersReducedMotion ? 0 : idx * 0.06,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className={`relative p-5 sm:p-6 lg:p-8 flex flex-col justify-between gap-8 bg-zy-bg text-zy-fg rounded-none overflow-hidden ${borderClasses}`}
             >
-              {/* Electric blue hairline active bar */}
-              <div
-                className={`absolute left-0 top-0 bottom-0 w-1 bg-zy-blue transition-opacity duration-150 ${
-                  isHovered ? 'opacity-100' : 'opacity-0'
-                }`}
+              {idx < 3 && (
+                <>
+                  <RegistrationCross className="hidden lg:block absolute -top-[4.5px] -right-[4.5px] z-20" />
+                  <RegistrationCross className="hidden lg:block absolute -bottom-[4.5px] -right-[4.5px] z-20" />
+                </>
+              )}
+
+              {/* Subtle low-contrast platinum column watermark */}
+              <span
                 aria-hidden="true"
-              />
+                className="pointer-events-none select-none absolute -bottom-3 right-3 font-monument font-black text-[5.5rem] leading-[0.8] tracking-[-0.05em] text-[#94A3B8]/[0.11] dark:text-[#94A3B8]/[0.07] z-0"
+              >
+                {col.num}
+              </span>
 
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start px-2 sm:px-6">
-                {/* Col 1: Number & Title */}
-                <div className="md:col-span-5 space-y-1">
-                  <span className="font-mono text-xs text-zy-blue font-semibold block">
-                    {service.number} //
+              <div className="relative z-10 space-y-5">
+                {/* Column Top Bar */}
+                <div
+                  style={{ borderBottomWidth: '0.5px' }}
+                  className="pb-3 border-b border-zy-grid-line monolith-hairline flex items-center justify-between font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case"
+                >
+                  <span className="text-zy-fg">
+                    <strong className="text-[#FF3B30] font-semibold">{col.num}</strong> / {col.tag}
                   </span>
-                  <h3 className="text-xl sm:text-2xl lg:text-[1.75rem] font-sans font-medium text-zy-fg group-hover:text-zy-blue transition-colors tracking-tight leading-snug">
-                    {service.title[language]}
-                  </h3>
+                  <span className="font-cota text-[#94A3B8]">{col.cota}</span>
                 </div>
 
-                {/* Col 2: Strategic description */}
-                <div className="md:col-span-4">
-                  <p className="text-sm sm:text-base text-zy-muted font-sans leading-relaxed">
-                    {service.description[language]}
-                  </p>
-                </div>
+                {/* Column Title */}
+                <h3 className="text-lg sm:text-xl font-sans font-medium tracking-tight text-zy-fg leading-[1.2]">
+                  {col.title}
+                </h3>
 
-                {/* Col 3: Deliverable tags in Swiss Sans Sentence case */}
-                <div className="md:col-span-2 space-y-1.5 pt-1">
-                  <div className="flex flex-wrap gap-1.5">
-                    {service.tags.map((tag, i) => (
-                      <span
-                        key={i}
-                        className="font-swiss tracking-wide text-xs text-zy-fg-secondary bg-zy-surface border border-zy-border px-2.5 py-0.5 rounded-sm"
-                      >
-                        {tag[language]}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                {/* Column Editorial Synthesis */}
+                <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed">
+                  {col.synthesis}
+                </p>
+              </div>
 
-                {/* Col 4: Action link right-aligned */}
-                <div className="md:col-span-1 flex md:justify-end pt-1">
-                  <Link
-                    href="/#contact"
-                    className="p-2 rounded-sm border border-transparent group-hover:border-zy-border text-zy-dim group-hover:text-zy-blue transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-                    aria-label={`${
-                      language === 'es' ? 'Consultar' : 'Inquire'
-                    } ${service.title[language]}`}
-                  >
-                    <ArrowUpRight size={18} />
-                  </Link>
-                </div>
+              {/* Column Technical Deliverables / Cadence List */}
+              <div
+                style={{ borderTopWidth: '0.5px' }}
+                className="relative z-10 pt-4 border-t border-zy-grid-line monolith-hairline"
+              >
+                <ul className="space-y-1.5 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
+                  {col.items.map((item) => (
+                    <li key={item} className="leading-[1.45]">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.div>
           );
         })}
       </div>
 
-      {/* Engineering Baseline Standards Row with Reactive Border Beam */}
-      <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
-        className="relative overflow-hidden mt-14 p-6 sm:p-8 bg-zy-card border border-zy-border"
-      >
-        <BorderBeamOverlay size={420} showSurfaceGlow={true} />
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-6 border-b border-zy-border-subtle text-xs">
-          <span className="font-swiss tracking-wide text-zy-blue font-semibold">
-            {language === 'es' ? 'Estándares en cada entrega' : 'Baseline in every delivery'}
+      {/* =====================================================================
+          ZÓCALO TÉCNICO DE ACTO 3: SÍNTESIS DEL ESTUDIO & ENLACE A CONTACTO
+          ===================================================================== */}
+      <div className="px-4 sm:px-8 lg:px-10 py-3.5 flex flex-wrap items-center justify-between gap-4 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-zy-muted">
+          <span>
+            <strong className="text-zy-fg font-medium">
+              {language === 'es' ? 'Modelo operativo:' : 'Practice model:'}
+            </strong>{' '}
+            {language === 'es'
+              ? 'Estudio independiente · Colaboración global remota'
+              : 'Independent studio · Global remote collaboration'}
           </span>
-          <span className="font-swiss tracking-wide text-zy-dim">
-            {language === 'es' ? 'Definidos antes de iniciar' : 'Defined before kickoff'}
+          <span className="hidden sm:inline text-[#94A3B8]">|</span>
+          <span>
+            <strong className="text-zy-fg font-medium">Stack:</strong> Next.js · TypeScript · Tailwind · Motion
           </span>
         </div>
 
-        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {baselineStandards.map((std, i) => (
-            <div key={i} className="space-y-1.5">
-              <div className="flex items-center space-x-2 text-xs font-swiss tracking-wide font-semibold text-zy-fg">
-                <Check size={13} className="text-zy-blue shrink-0" />
-                <span>{std.title}</span>
-              </div>
-              <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed pl-5">
-                {std.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </motion.div>
+        <Link
+          href="/#contact"
+          className="min-w-[44px] min-h-[44px] -my-2 inline-flex items-center space-x-1.5 text-zy-fg hover:text-[#FF3B30] transition-colors rounded-none"
+        >
+          <span>
+            {language === 'es' ? 'INICIAR PROYECTO EN ACTO 04 ↗' : 'INITIATE PROJECT IN ACT 04 ↗'}
+          </span>
+        </Link>
+      </div>
     </section>
   );
 };

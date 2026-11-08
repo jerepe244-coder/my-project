@@ -236,96 +236,117 @@ export const ContactForm: React.FC = () => {
   return (
     <section
       id="contact"
-      className="py-20 sm:py-28 lg:py-36 px-5 sm:px-8 lg:px-12 max-w-[1720px] mx-auto scroll-mt-20 border-t border-zy-border-subtle"
-      aria-label="Contact ZYRVAE — Address in Display Rows & Project Brief"
+      data-act="04"
+      className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-[60px]"
+      aria-label="Acto 4 — Contacto Directo y Brief de Proyecto"
     >
-      {/* Top Section Label */}
-      <div className="mb-8 border-b border-zy-border-subtle pb-4">
-        <div className="inline-flex items-center space-x-2">
-          <span className="font-mono text-xs text-zy-blue font-semibold">06 //</span>
-          <span className="font-swiss text-xs sm:text-sm tracking-wide text-zy-fg-secondary font-medium">
-            {language === 'es' ? 'Iniciar un proyecto' : 'Start a project'}
-          </span>
-        </div>
-      </div>
-
-      {/* Taste Blueprint: Address in Display Rows */}
-      <div className="divide-y divide-zy-border-subtle border-y border-zy-border-subtle mb-16 sm:mb-24">
-        {/* Row 1: Studio Name */}
-        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between group">
-          <span className="text-3xl sm:text-5xl lg:text-7xl font-sans font-medium tracking-tight text-zy-fg">
-            ZYRVAE DIGITAL STUDIO
-          </span>
-          <span className="font-swiss text-xs text-zy-blue tracking-wide hidden sm:inline">
-            Buenos Aires · <span className="font-mono">[34°36′S 58°22′W]</span>
-          </span>
-        </div>
-
-        {/* Row 2: Direct Email Link */}
-        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between group">
-          <a
-            href="mailto:zyrvae.co@gmail.com"
-            className="text-2xl sm:text-4xl lg:text-6xl font-sans font-normal tracking-tight text-zy-muted hover:text-zy-blue transition-colors flex items-center space-x-3"
-          >
-            <span>zyrvae.co@gmail.com</span>
-            <ArrowRight size={24} className="text-zy-blue shrink-0 hidden sm:inline" />
-          </a>
-          <span className="font-swiss text-xs text-zy-dim tracking-wide hidden sm:inline">
-            {language === 'es' ? 'Bandeja directa' : 'Direct inbox'}
-          </span>
-        </div>
-
-        {/* Row 3: Operating Model */}
-        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between">
-          <span className="text-2xl sm:text-4xl lg:text-5xl font-sans font-normal tracking-tight text-zy-fg-secondary">
-            {language === 'es'
-              ? 'Trato directo de fundador a fundador'
-              : 'Founder-to-founder collaboration'}
-          </span>
-          <span className="font-swiss text-xs text-zy-dim tracking-wide hidden sm:inline">
-            {language === 'es' ? 'Sin intermediarios' : 'No middlemen'}
-          </span>
-        </div>
-
-        {/* Row 4: Response Time SLA */}
-        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between">
-          <span className="text-xl sm:text-3xl lg:text-4xl font-sans font-normal text-zy-dim">
-            {language === 'es'
-              ? 'Respuesta y calendarización en menos de 24 horas'
-              : 'Initial response & scoping within 24 hours'}
-          </span>
-          <span className="font-mono text-xs text-zy-blue tracking-wide hidden sm:inline">
-            UTC-3 // GLOBAL
-          </span>
-        </div>
-
-        {/* Row 5: Action Trigger Row */}
-        <div className="py-6 sm:py-8 lg:py-10 flex items-center justify-between bg-zy-surface/40 px-2 sm:px-4">
-          <div className="space-y-1">
-            <span className="font-swiss text-xs text-zy-blue tracking-wide block font-semibold">
-              {language === 'es' ? 'Brief progresivo' : 'Progressive brief'}
-            </span>
-            <span className="text-xl sm:text-3xl font-sans font-medium text-zy-fg block">
-              {language === 'es'
-                ? 'Iniciar ficha de proyecto'
-                : 'Start project brief'}{' '}
-              <span className="font-mono text-base sm:text-xl text-zy-blue">[04]</span>
-            </span>
+      {/* =====================================================================
+          CABECERA ARQUITECTÓNICA DEL ACTO 4 (CONTACTO DIRECTO)
+          ===================================================================== */}
+      <div className="relative px-4 sm:px-8 lg:px-10 py-8 sm:py-10 border-b border-zy-grid-line monolith-hairline flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+        <div className="space-y-2">
+          <div className="inline-flex items-center space-x-2 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+            <span className="text-[#FF3B30]">[Acto 04]</span>
+            <span className="text-zy-fg">03 / Direct Contact &amp; Colophon</span>
+            <span className="text-[#94A3B8]">· Trato directo de fundador a fundador</span>
           </div>
 
+          <h2 className="font-monument font-black uppercase text-4xl sm:text-6xl lg:text-7xl tracking-[-0.04em] leading-[0.88] text-zy-fg">
+            {language === 'es' ? 'CONTACTO DIRECTO' : 'DIRECT INQUIRY'}
+          </h2>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-end gap-4 lg:gap-8">
           <a
-            href="#brief-form"
-            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-zy-blue hover:bg-zy-blue-hover active:scale-95 text-white flex items-center justify-center transition-transform shrink-0 ml-4 shadow-sm"
-            aria-label="Ir al brief de proyecto"
+            href="mailto:zyrvae.co@gmail.com"
+            className="font-serif-editorial italic text-2xl sm:text-3xl lg:text-4xl text-zy-fg hover:text-[#FF3B30] transition-colors leading-none"
           >
-            <ArrowRight size={22} />
+            zyrvae.co@gmail.com &#8599;
           </a>
+
+          <span className="font-cota text-[#94A3B8] shrink-0">
+            34°36′S 58°22′W · UTC-03:00
+          </span>
         </div>
       </div>
 
-      {/* Main Form Container with Reactive Border Beam */}
-      <div id="brief-form" className="overflow-hidden bg-zy-card border border-zy-border p-6 sm:p-10 lg:p-12 relative max-w-4xl mx-auto scroll-mt-28">
-        <BorderBeamOverlay size={520} showSurfaceGlow={true} />
+      {/* =====================================================================
+          CUADRÍCULA DE CONTACTO EN 2 COLUMNAS (FICHA DIRECTA + BRIEF PROGRESIVO)
+          ===================================================================== */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 w-full items-stretch rounded-none">
+        {/* Columna Izquierda (5 cols): Ficha de Contacto Directo y SLA */}
+        <div className="lg:col-span-5 p-5 sm:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-zy-grid-line monolith-hairline flex flex-col justify-between gap-8 bg-zy-bg">
+          <div className="space-y-6">
+            <p className="font-serif-editorial italic text-2xl sm:text-3xl text-zy-fg leading-[1.18]">
+              {language === 'es'
+                ? '«Construyamos una presencia digital con la precisión arquitectónica y el carácter de tu marca.»'
+                : '“Let us architect a digital presence worthy of the material precision and character of your brand.”'}
+            </p>
+
+            <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed">
+              {language === 'es'
+                ? 'Operamos con cupo limitado de encargos simultáneos para garantizar involucramiento directo en dirección de arte, arquitectura e ingeniería.'
+                : 'We accept a strictly limited number of concurrent commissions to guarantee founder-level involvement across art direction and engineering.'}
+            </p>
+
+            {/* Tabla técnica de contacto (0.5px) */}
+            <div
+              style={{ borderTopWidth: '0.5px' }}
+              className="border-t border-zy-grid-line monolith-hairline divide-y divide-zy-grid-line font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case"
+            >
+              <div className="py-3 flex items-center justify-between gap-2">
+                <span className="text-zy-muted">
+                  {language === 'es' ? 'Bandeja directa:' : 'Direct inbox:'}
+                </span>
+                <a
+                  href="mailto:zyrvae.co@gmail.com"
+                  className="text-zy-fg hover:text-[#FF3B30] transition-colors font-semibold"
+                >
+                  zyrvae.co@gmail.com &#8599;
+                </a>
+              </div>
+
+              <div className="py-3 flex items-center justify-between gap-2">
+                <span className="text-zy-muted">
+                  {language === 'es' ? 'Modelo de colaboración:' : 'Collaboration model:'}
+                </span>
+                <span className="text-zy-fg">
+                  {language === 'es'
+                    ? 'Directo · Sin intermediarios'
+                    : 'Founder-to-founder · Zero middlemen'}
+                </span>
+              </div>
+
+              <div className="py-3 flex items-center justify-between gap-2">
+                <span className="text-zy-muted">
+                  {language === 'es' ? 'Tiempo de respuesta:' : 'Response SLA:'}
+                </span>
+                <span className="text-zy-fg">
+                  {language === 'es' ? 'Menos de 24 horas hábiles' : 'Within 24 business hours'}
+                </span>
+              </div>
+
+              <div className="py-3 flex items-center justify-between gap-2">
+                <span className="text-zy-muted">
+                  {language === 'es' ? 'Sede & huso horario:' : 'Base & timezone:'}
+                </span>
+                <span className="text-zy-fg">Buenos Aires · UTC-03:00</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-4 border-t border-zy-grid-line monolith-hairline flex items-center justify-between font-cota text-[#94A3B8]">
+            <span>ZYRVAE DIGITAL STUDIO · EDICIÓN 2026</span>
+            <span>ACTO 04 // BRIEF</span>
+          </div>
+        </div>
+
+        {/* Columna Derecha (7 cols): Brief Progresivo de 4 Etapas */}
+        <div
+          id="brief-form"
+          className="lg:col-span-7 overflow-hidden bg-zy-card/40 p-5 sm:p-8 lg:p-10 relative scroll-mt-20"
+        >
+          <BorderBeamOverlay size={520} showSurfaceGlow={false} />
         {/* Anti-spam honeypot */}
         <input
           type="text"
@@ -956,26 +977,7 @@ export const ContactForm: React.FC = () => {
             </form>
           </div>
         )}
-      </div>
-
-      {/* Direct Email Alternative Bar */}
-      <div className="mt-6 px-4 py-3.5 rounded-xl bg-zy-bg-elevated border border-zy-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-swiss tracking-wide text-zy-dim">
-        <span>
-          {language === 'es'
-            ? '¿Preferís escribirnos directamente sin completar el brief?'
-            : 'Prefer to write directly without filling out the progressive brief?'}
-        </span>
-        <a
-          href="mailto:zyrvae.co@gmail.com"
-          className="group inline-flex items-center space-x-1.5 text-zy-fg-secondary hover:text-zy-blue transition-colors font-medium"
-        >
-          <Mail size={13} className="text-zy-blue" />
-          <span>zyrvae.co@gmail.com</span>
-          <ArrowUpRight
-            size={13}
-            className="text-zy-blue transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          />
-        </a>
+        </div>
       </div>
     </section>
   );

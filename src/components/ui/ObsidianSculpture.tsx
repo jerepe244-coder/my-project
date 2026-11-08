@@ -73,13 +73,14 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
   return (
     <div
       ref={containerRef}
+      data-hero-sculpture="optical-center"
       aria-label="Fig. 01 — High-definition 2K pre-rendered volcanic obsidian and optical crystal sculpture"
-      className={`relative w-full max-w-[218px] sm:max-w-[236px] flex flex-col items-center justify-center select-none overflow-hidden rounded-none ${className}`}
+      className={`relative w-full max-w-[230px] sm:max-w-[275px] lg:max-w-[310px] flex flex-col items-center justify-center select-none rounded-none ${className}`}
     >
       {/* Pre-rendered 2K Transparent WebP Studio Sculpture with Spring Tilt / Parallax */}
       <motion.div
         style={prefersReducedMotion ? undefined : { transform: transformStyle }}
-        className="relative z-10 w-[188px] h-[188px] sm:w-[208px] sm:h-[208px] flex items-center justify-center will-change-transform"
+        className="relative z-10 w-[195px] h-[195px] sm:w-[235px] sm:h-[235px] lg:w-[268px] lg:h-[268px] flex items-center justify-center will-change-transform"
       >
         <Image
           src="/images/obsidian-crystal-2k.webp"
@@ -87,22 +88,22 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
           width={2048}
           height={2048}
           priority
-          sizes="(max-width: 640px) 188px, 208px"
-          className="w-full h-full object-contain pointer-events-none select-none"
+          sizes="(max-width: 640px) 195px, (max-width: 1024px) 235px, 268px"
+          className="w-full h-full object-contain pointer-events-none select-none drop-shadow-[0_18px_28px_rgba(10,10,12,0.22)]"
         />
       </motion.div>
 
-      {/* Clean Studio Contact Shadow + Subtle Optical Caustic Line strictly inside the cell */}
+      {/* Clean Studio Contact Shadow + Subtle Optical Caustic Line */}
       <motion.div
         aria-hidden="true"
         style={prefersReducedMotion ? undefined : { transform: shadowTransform }}
-        className="relative z-0 -mt-2.5 w-[138px] sm:w-[152px] h-[8px] flex flex-col items-center justify-center pointer-events-none"
+        className="relative z-0 -mt-3 w-[150px] sm:w-[176px] h-[9px] flex flex-col items-center justify-center pointer-events-none"
       >
         {/* Core tight contact shadow beneath obsidian & crystal base */}
         <div
           style={{
             background:
-              'radial-gradient(50% 50% at 50% 50%, rgba(10, 10, 12, 0.42) 0%, rgba(10, 10, 12, 0.16) 58%, rgba(10, 10, 12, 0) 100%)',
+              'radial-gradient(50% 50% at 50% 50%, rgba(10, 10, 12, 0.46) 0%, rgba(10, 10, 12, 0.18) 58%, rgba(10, 10, 12, 0) 100%)',
           }}
           className="w-full h-[7px] dark:opacity-85"
         />
@@ -110,9 +111,9 @@ export const ObsidianSculpture: React.FC<ObsidianSculptureProps> = ({
         <div
           style={{
             background:
-              'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 45%, rgba(210,225,245,0.5) 78%, rgba(255,255,255,0) 100%)',
+              'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.72) 45%, rgba(210,225,245,0.55) 78%, rgba(255,255,255,0) 100%)',
           }}
-          className="w-[62px] h-[1px] -mt-[4px] ml-8 opacity-80 dark:opacity-45"
+          className="w-[74px] h-[1px] -mt-[4px] ml-8 opacity-85 dark:opacity-50"
         />
       </motion.div>
     </div>

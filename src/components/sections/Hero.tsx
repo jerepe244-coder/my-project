@@ -40,24 +40,28 @@ export const Hero: React.FC = () => {
       name: 'Aura',
       slug: 'aura-sanctuary',
       idCode: 'AURA-SANCTUARY',
+      discipline: 'Hospitality',
     },
     {
       index: '02',
       name: 'Kôn',
       slug: 'kon-atelier',
       idCode: 'KON-ATELIER',
+      discipline: 'Gastronomy',
     },
     {
       index: '03',
       name: 'Monolith',
       slug: 'vectra-architects',
       idCode: 'MONOLITH-STUDIO',
+      discipline: 'Architecture',
     },
     {
       index: '04',
       name: 'Sōma',
       slug: 'soma-formulations',
       idCode: 'SOMA-FORMULATIONS',
+      discipline: 'Cellular Care',
     },
   ];
 
@@ -73,14 +77,14 @@ export const Hero: React.FC = () => {
       id: 'ne',
       position: 'Ne · 02',
       label: 'The Monolith Grid',
-      coord: 'Pliego 2026 · Fase 01',
+      coord: 'Pliego 2026 · Fase 02',
       cota: '01.198',
     },
     {
       id: 'sw',
       position: 'Sw · 03',
       label: 'Swiss Editorial System',
-      coord: 'Retícula 4-Col / 3-Col · 0.5 px',
+      coord: 'Retícula 4-Actos · 0.5 px',
       cota: '58.38°',
     },
     {
@@ -101,18 +105,19 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
+      data-act="01"
       data-clearance={legacyClearanceConfig.floatingHeaderOffset}
       data-spacing-token={legacyClearanceConfig.legacySpacingToken}
-      className="relative w-full min-h-[100svh] pt-[56px] sm:pt-[60px] pb-4 flex flex-col justify-between bg-zy-bg text-zy-fg select-none rounded-none"
-      aria-label="ZYRVAE Hero — The Monolith Grid (Swiss Corporate Brutalism)"
+      className="relative w-full min-h-[100svh] pt-[56px] sm:pt-[60px] flex flex-col justify-between bg-zy-bg text-zy-fg select-none rounded-none"
+      aria-label="Acto 1 — ZYRVAE Hero Monumental (Swiss Poster Composition)"
     >
       {/* =====================================================================
-          FILA 2 (CAJA MONUMENTAL DEL HERO):
-          Única celda masiva que abarca el 100% del ancho de la retícula,
-          con una altura mínima de 52vh a 56vh y titular ZYRVAE condensado/vertical
-          de margen a margen con gran altura arquitectónica.
+          ACTO 1 — CARTEL SUIZO MONUMENTAL:
+          La escultura tridimensional de obsidiana y cristal asciende al centro
+          óptico/geométrico del Hero, montada directamente sobre la intersección
+          entre el titular monumental ZYRVAE y la frase en Instrument Serif Italic.
           ===================================================================== */}
-      <div className="relative w-full min-h-[52vh] lg:min-h-[56vh] flex-1 flex flex-col justify-between px-4 sm:px-8 lg:px-10 py-4 sm:py-6 border-b border-zy-grid-line monolith-hairline rounded-none overflow-hidden">
+      <div className="relative w-full flex-1 min-h-[68vh] lg:min-h-[74vh] flex flex-col justify-between px-4 sm:px-8 lg:px-10 py-4 sm:py-5 border-b border-zy-grid-line monolith-hairline rounded-none overflow-hidden">
         {/* Corner Registration Crosses & Blueprint Cotas (#94A3B8) */}
         <RegistrationCross className="absolute top-[6px] left-[6px]" />
         <RegistrationCross className="absolute top-[6px] right-[6px]" />
@@ -134,7 +139,7 @@ export const Hero: React.FC = () => {
         </span>
 
         {/* Top Cell Registration Bar (Sentence case Swiss Grotesque, 10px, font-medium 500, tracking 0.015em) */}
-        <div className="flex items-center justify-between gap-4 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+        <div className="relative z-20 flex items-center justify-between gap-4 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
           <div className="inline-flex items-center space-x-2">
             <span className="text-zy-fg">[{cornerCoordinates[0].position}]</span>
             <span>{cornerCoordinates[0].label}</span>
@@ -142,6 +147,11 @@ export const Hero: React.FC = () => {
             <span className="font-cota hidden md:inline text-[#94A3B8] ml-1">
               {cornerCoordinates[0].cota}
             </span>
+          </div>
+
+          <div className="hidden lg:inline-flex items-center space-x-2 text-[#94A3B8]">
+            <span className="text-zy-fg">Fig. 01</span>
+            <span>— Obsidian &amp; crystal · IOR 2.42</span>
           </div>
 
           <div className="inline-flex items-center space-x-2">
@@ -153,16 +163,21 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Center Monumental Display Wordmark (ZYRVAE):
-            Proporción vertical y condensada (condensed / tall), peso black (900),
-            letter-spacing: -0.04em, line-height: 0.85, llenando la caja de margen a margen */}
-        <div className="my-auto py-2 sm:py-3 w-full overflow-hidden flex items-center justify-center">
+        {/* =================================================================
+            COMPOSICIÓN DE CARTEL SUIZO EN UN ÚNICO GOLPE DE VISTA:
+            1. Titular Monumental ZYRVAE de margen a margen
+            2. Escultura 3D de Obsidiana y Cristal en el Centro Geométrico/Óptico
+               montada directamente sobre la intersección entre ZYRVAE y el manifiesto
+            3. Frase editorial en Instrument Serif Italic
+            ================================================================= */}
+        <div className="relative my-auto py-1 sm:py-2 w-full flex flex-col items-center justify-center">
+          {/* 1. Monumental Display Wordmark (ZYRVAE) */}
           <h1
-            className="w-full font-monument font-black uppercase text-zy-fg tracking-[-0.04em] leading-[0.85] select-none"
+            className="relative z-10 w-full font-monument font-black uppercase text-zy-fg tracking-[-0.04em] leading-[0.85] select-none"
             aria-label="ZYRVAE — An avant-garde independent digital studio based in Buenos Aires, Argentina."
           >
             <motion.span
-              initial={prefersReducedMotion ? false : { y: '14%', opacity: 0 }}
+              initial={prefersReducedMotion ? false : { y: '12%', opacity: 0 }}
               animate={{ y: '0%', opacity: 1 }}
               transition={{ duration: 0.75, ease: easeOutExpo }}
               style={{
@@ -171,7 +186,7 @@ export const Hero: React.FC = () => {
                 transform: 'scaleY(1.14)',
                 transformOrigin: 'center center',
               }}
-              className="flex items-center justify-between w-full text-[27.5vw] sm:text-[28.2vw] lg:text-[28.8vw] font-monument font-black uppercase text-zy-fg whitespace-nowrap py-[0.04em]"
+              className="flex items-center justify-between w-full text-[26.5vw] sm:text-[27.5vw] lg:text-[28vw] font-monument font-black uppercase text-zy-fg whitespace-nowrap py-[0.02em]"
             >
               <span>Z</span>
               <span>Y</span>
@@ -181,80 +196,109 @@ export const Hero: React.FC = () => {
               <span>E</span>
             </motion.span>
           </h1>
-        </div>
 
-        {/* Bottom of Fila 2: Manifiesto Editorial (Subtítulo de autor en Instrument Serif Italic) */}
-        <div className="pt-2 sm:pt-3 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
-          <motion.p
-            initial={prefersReducedMotion ? false : { y: 12, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.75, delay: 0.1, ease: easeOutExpo }}
-            style={{
-              fontSize: 'clamp(1.75rem, 2.85vw, 3.35rem)',
-            }}
-            className="font-serif-editorial italic font-normal text-zy-fg leading-[1.08] tracking-[-0.01em] max-w-[34ch]"
+          {/* 2. INTERSECCIÓN EN EL CENTRO GEOMÉTRICO / ÓPTICO:
+                 La escultura de obsidiana y cristal se monta directamente sobre la
+                 intersección entre el titular ZYRVAE y la frase en serif itálica */}
+          <div
+            data-hero-intersection="zyrvae-obsidian-manifesto"
+            style={{ marginTop: 'clamp(-118px, -9.8vw, -48px)' }}
+            className="relative z-20 w-full flex flex-col items-center justify-center"
           >
-            An avant-garde independent digital studio based in Buenos Aires, Argentina.
-          </motion.p>
-
-          {/* Technical Datum & Blueprint Monogram Stamp in Sentence Case 10px Swiss Grotesque */}
-          <div className="hidden sm:flex items-center space-x-3 shrink-0 pb-0.5">
-            <SymbolLogo size={24} animate={true} showPlate={false} showBlueprint={true} />
-            <div className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
-              <span className="text-zy-fg block">
-                Monolith · Spec. 01 <span className="text-[#94A3B8] ml-1">34.68°</span>
+            {/* Optical Axis Hairline & Registration Cota */}
+            <div className="relative flex items-center justify-center">
+              <span
+                aria-hidden="true"
+                className="font-cota hidden md:inline-block mr-6 text-[#94A3B8] select-none"
+              >
+                Fig. 01 · 34.68°
               </span>
-              <span>{cornerCoordinates[2].coord}</span>
+
+              <ObsidianSculpture />
+
+              <span
+                aria-hidden="true"
+                className="font-cota hidden md:inline-block ml-6 text-[#94A3B8] select-none"
+              >
+                IOR 2.42 · 01.198
+              </span>
+            </div>
+
+            {/* 3. Manifiesto Editorial en Instrument Serif Italic integrado en la intersección */}
+            <div className="relative z-30 -mt-2 sm:-mt-3 w-full pt-2 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+              <motion.p
+                initial={prefersReducedMotion ? false : { y: 12, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.75, delay: 0.1, ease: easeOutExpo }}
+                style={{
+                  fontSize: 'clamp(1.65rem, 2.75vw, 3.25rem)',
+                }}
+                className="font-serif-editorial italic font-normal text-zy-fg leading-[1.06] tracking-[-0.01em] max-w-[34ch]"
+              >
+                An avant-garde independent digital studio based in Buenos Aires, Argentina.
+              </motion.p>
+
+              {/* Technical Datum & Blueprint Monogram Stamp in Sentence Case 10px Swiss Grotesque */}
+              <div className="hidden sm:flex items-center space-x-3 shrink-0 pb-0.5">
+                <SymbolLogo size={24} animate={true} showPlate={false} showBlueprint={true} />
+                <div className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+                  <span className="text-zy-fg block">
+                    Monolith · Spec. 02 <span className="text-[#94A3B8] ml-1">34.68°</span>
+                  </span>
+                  <span>{cornerCoordinates[2].coord}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* =====================================================================
-          FILA 3 (PANEL DE CAPACIDADES, ESCULTURA Y SELLO):
-          3 celdas proporcionales:
-          - Celda 1: 01 / Capabilities (40% del ancho)
-          - Celda 2: Escultura central de obsidiana y cristal FIG. 01 (35% del ancho)
-          - Celda 3: 02 / Current phase + Sello Circular 70px (25% del ancho)
+          FILA 3 (ZÓCALO TÉCNICO COMPACTO DE IMPACTO INSTANTÁNEO):
+          3 celdas proporcionales (40% | 35% | 25%) sin la escultura (que ascendió
+          al centro geométrico del Hero), manteniendo la síntesis técnica, el índice
+          de láminas y el sello circular de 70px en un único golpe de vista.
           ===================================================================== */}
       <div className="relative w-full grid grid-cols-1 lg:grid-cols-[40%_35%_25%] items-stretch border-b border-zy-grid-line monolith-hairline rounded-none">
         {/* CELDA 1 (40% del ancho): Módulo 01 / Capabilities */}
         <div
           aria-label="01 / CAPABILITIES"
-          className="relative w-full p-5 sm:p-6 lg:p-7 border-b lg:border-b-0 lg:border-r border-zy-grid-line monolith-hairline flex flex-col justify-between gap-4 rounded-none"
+          className="relative w-full px-4 sm:px-6 py-3.5 sm:py-4 border-b lg:border-b-0 lg:border-r border-zy-grid-line monolith-hairline flex flex-col justify-between gap-2 rounded-none"
         >
-          {/* Intersection Registration Cross & Cota at Top-Right and Bottom-Right of Cell 1 */}
           <RegistrationCross className="hidden lg:block absolute -top-[4.5px] -right-[4.5px] z-20" />
           <RegistrationCross className="hidden lg:block absolute -bottom-[4.5px] -right-[4.5px] z-20" />
-          <span
-            aria-hidden="true"
-            className="font-cota absolute bottom-2 right-2.5 text-[#94A3B8] select-none"
-          >
-            34.68° · 00.400
-          </span>
 
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
-                01 / Capabilities
-              </h2>
-              <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
-                Arch. &amp; Digital UI <span className="text-[#94A3B8] ml-1">· 01.198</span>
-              </span>
-            </div>
-
-            {/* Bloque de texto justificado de 3 líneas en grotesca suiza neutra Sentence case (10px, medium 500, tracking 0.015em) */}
-            <p className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted text-justify leading-[1.65] w-full">
-              {language === 'es'
-                ? 'Intersección entre arquitectura brutalista e interfaces digitales de alta precisión. Construimos sistemas visuales monolíticos, retículas modulares editoriales, simulaciones interactivas de producto y dirección de arte CGI para marcas globales.'
-                : 'Architectural intersection of Swiss brutalism and high-precision digital interfaces. We engineer monolithic visual systems, modular editorial grids, interactive product simulations, and bespoke CGI art direction for global brands.'}
-            </p>
+          <div className="flex items-center justify-between">
+            <h2 className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
+              01 / Capabilities
+            </h2>
+            <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+              Arch. &amp; Digital UI <span className="text-[#94A3B8] ml-1">· 01.198</span>
+            </span>
           </div>
 
-          {/* Direct Specimen Index Links (10px Sentence case) */}
+          <p className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted text-justify leading-[1.55] w-full">
+            {language === 'es'
+              ? 'Intersección entre arquitectura brutalista e interfaces digitales de alta precisión. Construimos sistemas visuales monolíticos, láminas editoriales a sangre y prototipos funcionales para marcas de vanguardia.'
+              : 'Architectural intersection of Swiss brutalism and high-precision digital interfaces. We engineer monolithic visual systems, full-bleed editorial plates, and functional prototypes for avant-garde brands.'}
+          </p>
+        </div>
+
+        {/* CELDA 2 (35% del ancho): Índice de Láminas Editoriales [01 — 04] */}
+        <div className="relative w-full px-4 sm:px-6 py-3.5 sm:py-4 border-b lg:border-b-0 lg:border-r border-zy-grid-line monolith-hairline flex flex-col justify-between gap-2 rounded-none">
+          <RegistrationCross className="hidden lg:block absolute -top-[4.5px] -right-[4.5px] z-20" />
+          <RegistrationCross className="hidden lg:block absolute -bottom-[4.5px] -right-[4.5px] z-20" />
+
+          <div className="w-full flex items-center justify-between font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+            <span className="text-zy-fg">
+              Acto 02 <span className="text-zy-muted">— Selected plates [01—04]</span>
+            </span>
+            <span className="text-[#94A3B8]">Full-bleed · 0.5 px</span>
+          </div>
+
           <nav
             aria-label="Selected Specimen Index"
-            className="pt-3 border-t border-zy-grid-line monolith-hairline flex flex-wrap items-center justify-between gap-2 pr-14"
+            className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1"
           >
             {demoShortcuts.map((demo) => (
               <Link
@@ -266,35 +310,13 @@ export const Hero: React.FC = () => {
               >
                 <span className="text-zy-fg">{demo.index}.</span>
                 <span className="group-hover:line-through">{demo.name}</span>
-                <ArrowUpRight size={10} className="text-[#FF3B30]" />
+                <ArrowUpRight size={10} className="text-[#FF3B30] shrink-0" />
               </Link>
             ))}
           </nav>
-        </div>
 
-        {/* CELDA 2 (35% del ancho): Escultura central de obsidiana y cristal (FIG. 01)
-            Pre-renderizada en WebP transparente 2K, contenida estrictamente dentro de su celda */}
-        <div className="relative w-full min-h-[236px] sm:min-h-[252px] border-b lg:border-b-0 lg:border-r border-zy-grid-line monolith-hairline flex flex-col justify-between items-center p-5 sm:p-6 overflow-hidden rounded-none">
-          <RegistrationCross className="hidden lg:block absolute -top-[4.5px] -right-[4.5px] z-20" />
-          <RegistrationCross className="hidden lg:block absolute -bottom-[4.5px] -right-[4.5px] z-20" />
-
-          <div className="w-full flex items-center justify-between font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted z-10">
-            <span className="text-zy-fg">
-              Fig. 01 <span className="text-zy-muted">— Obsidian &amp; crystal</span>
-            </span>
-            <span>
-              IOR 2.42 <span className="text-[#94A3B8] ml-1">· 01.198</span>
-            </span>
-          </div>
-
-          {/* Contenida estrictamente dentro de su celda con sombra de contacto limpia */}
-          <div className="relative z-10 my-auto py-1 flex items-center justify-center w-full">
-            <ObsidianSculpture />
-          </div>
-
-          {/* Bottom cell technical registration bar */}
-          <div className="w-full flex items-center justify-between font-cota text-[9px] text-[#94A3B8] z-10">
-            <span>Spec. 2048px · HDRI Studio</span>
+          <div className="w-full flex items-center justify-between font-cota text-[9px] text-[#94A3B8]">
+            <span>Spec. 2048px · HDRI Optical Center</span>
             <span>34.68° / 00.750</span>
           </div>
         </div>
@@ -302,39 +324,34 @@ export const Hero: React.FC = () => {
         {/* CELDA 3 (25% del ancho): Módulo 02 / Current phase + Módulo de Firma (Sello Circular 70px) */}
         <div
           aria-label="02 / CURRENT PHASE"
-          className="relative w-full p-5 sm:p-6 lg:p-7 flex flex-col justify-between gap-5 rounded-none"
+          className="relative w-full px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between gap-4 rounded-none"
         >
           <RegistrationCross className="absolute bottom-[6px] right-[6px]" />
 
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
+          <div className="space-y-1.5">
+            <div className="flex items-center space-x-2">
               <h2 className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
                 02 / Current phase
               </h2>
               <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-[#94A3B8]">
-                02.410 · [2026]
+                [2026]
               </span>
             </div>
 
-            {/* Lista limpia con guiones largos en grotesca suiza 10px */}
-            <ul className="space-y-1 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
+            <ul className="space-y-0.5 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
               {currentPhaseItems.map((item) => (
-                <li key={item} className="leading-[1.5]">
+                <li key={item} className="leading-[1.35]">
                   {item}
                 </li>
               ))}
             </ul>
+
+            <span className="block font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-[#94A3B8]">
+              {cornerCoordinates[3].coord} · 34.68°
+            </span>
           </div>
 
-          {/* Módulo de Firma: Sello tipográfico circular de 70 px de diámetro */}
-          <div className="pt-2 flex items-end justify-between gap-3">
-            <div className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted leading-[1.45]">
-              <span className="block text-zy-fg">Edition 01 · Ficha técnica</span>
-              <span className="text-[#94A3B8]">
-                {cornerCoordinates[3].coord} · 34.68°
-              </span>
-            </div>
-
+          <div className="shrink-0">
             <CircularSeal size={70} />
           </div>
         </div>
