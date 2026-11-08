@@ -168,15 +168,17 @@ export const Services: React.FC = () => {
 
   return (
     <section
-      id="services"
+      id="capabilities"
       data-act="03"
       data-cad-grid="0.5px-progressive"
-      className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-[60px]"
+      style={{ scrollMarginTop: '90px' }}
+      className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-24"
       aria-label="Acto 3 — Capacidades y Filosofía del Estudio (Retícula Suiza de 4 Columnas)"
     >
-      {/* Anchors for Studio & Process fused into Acto 3 so Header navigation links resolve seamlessly */}
-      <span id="studio" className="absolute -top-[60px] left-0 pointer-events-none" aria-hidden="true" />
-      <span id="process" className="absolute -top-[60px] left-0 pointer-events-none" aria-hidden="true" />
+      {/* Anchors for legacy references (services, studio, process) fused into Acto 3 */}
+      <span id="services" className="absolute -top-24 left-0 pointer-events-none" aria-hidden="true" />
+      <span id="studio" className="absolute -top-24 left-0 pointer-events-none" aria-hidden="true" />
+      <span id="process" className="absolute -top-24 left-0 pointer-events-none" aria-hidden="true" />
 
       {/* =====================================================================
           CABECERA EDITORIAL DEL ACTO 3: CAPACIDADES Y FILOSOFÍA (MANIFIESTO CONCISO)

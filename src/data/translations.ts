@@ -1,7 +1,9 @@
 export const translations = {
   es: {
     nav: {
-      work: 'Portfolio',
+      work: 'Obras',
+      capabilities: 'Capacidades & Filosofía',
+      contact: 'Contacto',
       services: 'Servicios',
       process: 'Proceso',
       studio: 'Estudio',
@@ -205,7 +207,9 @@ export const translations = {
   },
   en: {
     nav: {
-      work: 'Selected Work',
+      work: 'Work',
+      capabilities: 'Studio & Philosophy',
+      contact: 'Contact',
       services: 'Services',
       process: 'Process',
       studio: 'Studio',

@@ -116,7 +116,7 @@ export const Header: React.FC = () => {
       return;
     }
 
-    const sectionIds = ['hero', 'work', 'services', 'process', 'studio', 'contact'];
+    const sectionIds = ['hero', 'work', 'capabilities', 'contact'];
 
     const resolveCurrentSection = () => {
       if (typeof window === 'undefined') return;
@@ -201,13 +201,23 @@ export const Header: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
-  // Fila 1 (Cabecera integrada) — Celda 2 Links: WORK | STUDIO | JOURNAL | ARCHIVE
-  const monolithLinks = [
-    { id: 'work', href: '/#work', code: 'WORK', label: 'Work' },
-    { id: 'studio', href: '/#studio', code: 'STUDIO', label: 'Studio' },
-    { id: 'process', href: '/#process', code: 'JOURNAL', label: 'Journal' },
-    { id: 'services', href: '/#services', code: 'ARCHIVE', label: 'Archive' },
-  ];
+  // Fila 1 (Cabecera integrada) — Celda 2: Mapeo directo de 3 enlaces para los 3 actos navegables
+  // Eliminación completa de enlaces fantasma (Journal y Archive)
+  // - Opción en español: OBRAS (#work) | CAPACIDADES & FILOSOFÍA (#capabilities) | CONTACTO (#contact)
+  // - Opción internacional (EN): WORK (#work) | STUDIO & PHILOSOPHY (#capabilities) | CONTACT (#contact)
+  // (Supresión documentada de enlaces fantasma anteriores: STUDIO, JOURNAL, ARCHIVE)
+  const monolithLinks =
+    language === 'es'
+      ? [
+          { id: 'work', href: '/#work', code: 'OBRAS', label: 'OBRAS' },
+          { id: 'capabilities', href: '/#capabilities', code: 'CAPACIDADES & FILOSOFÍA', label: 'CAPACIDADES & FILOSOFÍA' },
+          { id: 'contact', href: '/#contact', code: 'CONTACTO', label: 'CONTACTO' },
+        ]
+      : [
+          { id: 'work', href: '/#work', code: 'WORK', label: 'WORK' },
+          { id: 'capabilities', href: '/#capabilities', code: 'STUDIO & PHILOSOPHY', label: 'STUDIO & PHILOSOPHY' },
+          { id: 'contact', href: '/#contact', code: 'CONTACT', label: 'CONTACT' },
+        ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setMobileMenuOpen(false);
@@ -219,7 +229,7 @@ export const Header: React.FC = () => {
         setActiveSection(targetId);
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (!reduced && window.__zyrvaeLenis) {
-          window.__zyrvaeLenis.scrollTo(element, { offset: -64, duration: 1.1 });
+          window.__zyrvaeLenis.scrollTo(element, { offset: -90, duration: 1.1 });
         } else {
           element.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
         }
@@ -469,12 +479,12 @@ export const Header: React.FC = () => {
                       key={link.id}
                       href={link.href}
                       onClick={(e) => handleLinkClick(e, link.href)}
-                      className={`flex items-center justify-between py-4 font-monument text-3xl uppercase tracking-[-0.04em] transition-all ${
+                      className={`flex items-center justify-between py-4 font-monument text-xl sm:text-2xl md:text-3xl uppercase tracking-[-0.04em] transition-all gap-4 ${
                         isActive ? 'text-[#FF3B30] line-through' : 'text-zy-fg hover:line-through'
                       }`}
                     >
-                      <span>{link.label}</span>
-                      <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+                      <span className="leading-tight">{link.label}</span>
+                      <span className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted shrink-0">
                         0{idx + 1}
                       </span>
                     </Link>

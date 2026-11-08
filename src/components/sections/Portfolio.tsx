@@ -256,7 +256,8 @@ export const Portfolio: React.FC = () => {
         id="work"
         data-act="02"
         data-morphing-slug={morphingSlug ?? ''}
-        className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-[60px]"
+        style={{ scrollMarginTop: '90px' }}
+        className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-24"
         aria-label="Acto 2 — Selección de Obras en Láminas Editoriales a Sangre"
       >
         {/* =====================================================================

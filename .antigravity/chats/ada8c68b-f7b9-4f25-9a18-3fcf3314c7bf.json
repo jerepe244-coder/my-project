@@ -640,6 +640,66 @@
       "created_at": "2026-11-08T19:02:07.540Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "7e59541b-c269-4559-8ba6-c5d8401f2285",
+      "role": "user",
+      "content": "Al condensar en la Fase 2 las viejas secciones separadas de Estudio, Proceso y Servicios en un único bloque modular ([Acto 03 // Capacidades & Filosofía]), el código del Header.tsx enlazó a los tres botones (Studio, Journal y Archive) a la misma sección o a anclajes antiguos que ahora habitan en ese mismo contenedor.\nComo el navegador ya está situado físicamente sobre esa sección, al hacer clic en cualquiera de los tres no existe ningún desplazamiento nuevo que realizar, dando la sensación de que los botones dejaron de responder.\nCómo resolver la barra de navegación de raíz\nViñeta Eliminación de los enlaces fantasma (Journal y Archive): Deben suprimirse por completo de la cabecera; no existe un blog (Journal) ni un catálogo histórico (Archive) en la página, por lo que mantenerlos solo genera confusión y enlaces rotos.\nViñeta Mapeo directo de 3 enlaces para los 3 actos navegables: La celda 2 de la cabecera debe contener únicamente los enlaces que corresponden a secciones reales de la pantalla:\nViñeta Opción en español: OBRAS (#work) | CAPACIDADES & FILOSOFÍA (#capabilities) | CONTACTO (#contact).\nViñeta Opción internacional (EN): WORK (#work) | STUDIO & PHILOSOPHY (#capabilities) | CONTACT (#contact).\nViñeta Compensación de altura del Header en cada ancla: Asignar la clase CSS scroll-mt-24 (o scroll-margin-top: 90px) tanto al contenedor de #work como al de #capabilities, garantizando que al pulsar cualquiera de los dos, la pantalla aterrice con holgura limpia debajo de la barra sin tapar ningún titular.",
+      "status": "pending",
+      "model": "gemini-4-argon-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-11-08T20:20:29.144Z",
+      "sender": "ios",
+      "is_cancelled": false
+    },
+    {
+      "id": "df2aca4f-be10-4d4f-9859-5544b9b263d1",
+      "role": "agent",
+      "content": "Your weekly Google allowance for this model is used up.\nIt comes back in about 6 days.\nTwo ways to keep going now:\n- Pick another model in the app — each family has its own allowance, and the picker shows what's left.\n- Get more from Google: https://antigravity.google/g1-upgrade",
+      "status": "error",
+      "model": "gemini-4-argon-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": "7e59541b-c269-4559-8ba6-c5d8401f2285",
+      "created_at": "2026-11-08T20:21:00.633Z",
+      "sender": "macOS",
+      "is_cancelled": false
+    },
+    {
+      "id": "a5a58782-0661-49a7-9ec2-6406cc167eab",
+      "role": "user",
+      "content": "Al condensar en la Fase 2 las viejas secciones separadas de Estudio, Proceso y Servicios en un único bloque modular ([Acto 03 // Capacidades & Filosofía]), el código del Header.tsx enlazó a los tres botones (Studio, Journal y Archive) a la misma sección o a anclajes antiguos que ahora habitan en ese mismo contenedor.\nComo el navegador ya está situado físicamente sobre esa sección, al hacer clic en cualquiera de los tres no existe ningún desplazamiento nuevo que realizar, dando la sensación de que los botones dejaron de responder.\nCómo resolver la barra de navegación de raíz\nViñeta Eliminación de los enlaces fantasma (Journal y Archive): Deben suprimirse por completo de la cabecera; no existe un blog (Journal) ni un catálogo histórico (Archive) en la página, por lo que mantenerlos solo genera confusión y enlaces rotos.\nViñeta Mapeo directo de 3 enlaces para los 3 actos navegables: La celda 2 de la cabecera debe contener únicamente los enlaces que corresponden a secciones reales de la pantalla:\nViñeta Opción en español: OBRAS (#work) | CAPACIDADES & FILOSOFÍA (#capabilities) | CONTACTO (#contact).\nViñeta Opción internacional (EN): WORK (#work) | STUDIO & PHILOSOPHY (#capabilities) | CONTACT (#contact).\nViñeta Compensación de altura del Header en cada ancla: Asignar la clase CSS scroll-mt-24 (o scroll-margin-top: 90px) tanto al contenedor de #work como al de #capabilities, garantizando que al pulsar cualquiera de los dos, la pantalla aterrice con holgura limpia debajo de la barra sin tapar ningún titular.",
+      "status": "pending",
+      "model": "gemini-4-argon-medium",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-11-08T20:21:13.492Z",
+      "sender": "ios",
+      "is_cancelled": false
+    },
+    {
+      "id": "ef375976-0edb-4d50-9cb7-3310b8cf0ec3",
+      "role": "agent",
+      "content": "Your weekly Google allowance for this model is used up.\nIt comes back in about 6 days.\nTwo ways to keep going now:\n- Pick another model in the app — each family has its own allowance, and the picker shows what's left.\n- Get more from Google: https://antigravity.google/g1-upgrade",
+      "status": "error",
+      "model": "gemini-4-argon-medium",
+      "client_type": "gemini-bridge",
+      "parent_message_id": "a5a58782-0661-49a7-9ec2-6406cc167eab",
+      "created_at": "2026-11-08T20:21:17.448Z",
+      "sender": "macOS",
+      "is_cancelled": false
+    },
+    {
+      "id": "5df8ec30-c3ec-46e8-8133-6427c4f22638",
+      "role": "user",
+      "content": "Al condensar en la Fase 2 las viejas secciones separadas de Estudio, Proceso y Servicios en un único bloque modular ([Acto 03 // Capacidades & Filosofía]), el código del Header.tsx enlazó a los tres botones (Studio, Journal y Archive) a la misma sección o a anclajes antiguos que ahora habitan en ese mismo contenedor.\nComo el navegador ya está situado físicamente sobre esa sección, al hacer clic en cualquiera de los tres no existe ningún desplazamiento nuevo que realizar, dando la sensación de que los botones dejaron de responder.\nCómo resolver la barra de navegación de raíz\nViñeta Eliminación de los enlaces fantasma (Journal y Archive): Deben suprimirse por completo de la cabecera; no existe un blog (Journal) ni un catálogo histórico (Archive) en la página, por lo que mantenerlos solo genera confusión y enlaces rotos.\nViñeta Mapeo directo de 3 enlaces para los 3 actos navegables: La celda 2 de la cabecera debe contener únicamente los enlaces que corresponden a secciones reales de la pantalla:\nViñeta Opción en español: OBRAS (#work) | CAPACIDADES & FILOSOFÍA (#capabilities) | CONTACTO (#contact).\nViñeta Opción internacional (EN): WORK (#work) | STUDIO & PHILOSOPHY (#capabilities) | CONTACT (#contact).\nViñeta Compensación de altura del Header en cada ancla: Asignar la clase CSS scroll-mt-24 (o scroll-margin-top: 90px) tanto al contenedor de #work como al de #capabilities, garantizando que al pulsar cualquiera de los dos, la pantalla aterrice con holgura limpia debajo de la barra sin tapar ningún titular.",
+      "status": "pending",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-11-08T20:21:45.405Z",
+      "sender": "ios",
+      "is_cancelled": false
     }
   ]
 }

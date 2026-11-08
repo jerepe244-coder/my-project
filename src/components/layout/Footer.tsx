@@ -69,7 +69,7 @@ export const Footer: React.FC = () => {
               </Link>
             </li>
             <li>
-              <Link href="/#services" className="hover:text-zy-fg transition-colors">
+              <Link href="/#capabilities" className="hover:text-zy-fg transition-colors">
                 03. {language === 'es' ? 'Capacidades & Filosofía' : 'Capabilities & Ethos'}
               </Link>
             </li>

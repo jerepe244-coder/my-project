@@ -237,7 +237,8 @@ export const ContactForm: React.FC = () => {
     <section
       id="contact"
       data-act="04"
-      className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-[60px]"
+      style={{ scrollMarginTop: '90px' }}
+      className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-24"
       aria-label="Acto 4 — Contacto Directo y Brief de Proyecto"
     >
       {/* =====================================================================

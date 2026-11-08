@@ -964,4 +964,67 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       'Portfolio must reset state on route return via usePathname and popstate listener'
     );
   });
+
+  test('Header Navigation Direct Mapping to 3 Navigable Acts, Ghost Links Elimination, and Scroll Clearance Compensation (scroll-mt-24 / 90px)', () => {
+    const headerTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'layout', 'Header.tsx'),
+      'utf-8'
+    );
+    const portfolioTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Portfolio.tsx'),
+      'utf-8'
+    );
+    const servicesTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Services.tsx'),
+      'utf-8'
+    );
+
+    // 1. Direct mapping of 3 links for the 3 real navigable acts in both languages
+    // Spanish: OBRAS (#work) | CAPACIDADES & FILOSOFÍA (#capabilities) | CONTACTO (#contact)
+    assert.ok(headerTsx.includes("href: '/#work', code: 'OBRAS', label: 'OBRAS'"), 'Header must map OBRAS to /#work in ES');
+    assert.ok(
+      headerTsx.includes("href: '/#capabilities', code: 'CAPACIDADES & FILOSOFÍA', label: 'CAPACIDADES & FILOSOFÍA'"),
+      'Header must map CAPACIDADES & FILOSOFÍA to /#capabilities in ES'
+    );
+    assert.ok(headerTsx.includes("href: '/#contact', code: 'CONTACTO', label: 'CONTACTO'"), 'Header must map CONTACTO to /#contact in ES');
+
+    // English: WORK (#work) | STUDIO & PHILOSOPHY (#capabilities) | CONTACT (#contact)
+    assert.ok(headerTsx.includes("href: '/#work', code: 'WORK', label: 'WORK'"), 'Header must map WORK to /#work in EN');
+    assert.ok(
+      headerTsx.includes("href: '/#capabilities', code: 'STUDIO & PHILOSOPHY', label: 'STUDIO & PHILOSOPHY'"),
+      'Header must map STUDIO & PHILOSOPHY to /#capabilities in EN'
+    );
+    assert.ok(headerTsx.includes("href: '/#contact', code: 'CONTACT', label: 'CONTACT'"), 'Header must map CONTACT to /#contact in EN');
+
+    // 2. Active section tracking synchronizes with real sections
+    assert.ok(
+      headerTsx.includes("const sectionIds = ['hero', 'work', 'capabilities', 'contact'];"),
+      'Header must track real section IDs: hero, work, capabilities, contact'
+    );
+
+    // 3. Complete elimination of active ghost links (no Journal or Archive navigation items)
+    assert.equal(
+      headerTsx.includes("label: 'Journal'"),
+      false,
+      'Ghost link Journal must be completely removed from active navigation'
+    );
+    assert.equal(
+      headerTsx.includes("label: 'Archive'"),
+      false,
+      'Ghost link Archive must be completely removed from active navigation'
+    );
+
+    // 4. Header height compensation with scroll-mt-24 and scroll-margin-top: 90px on both containers
+    assert.ok(
+      portfolioTsx.includes('scroll-mt-24') &&
+        (portfolioTsx.includes("scrollMarginTop: '90px'") || portfolioTsx.includes('scroll-margin-top: 90px')),
+      '#work container must include scroll-mt-24 and scroll-margin-top: 90px'
+    );
+    assert.ok(
+      servicesTsx.includes('id="capabilities"') &&
+        servicesTsx.includes('scroll-mt-24') &&
+        (servicesTsx.includes("scrollMarginTop: '90px'") || servicesTsx.includes('scroll-margin-top: 90px')),
+      '#capabilities container must include id="capabilities", scroll-mt-24 and scroll-margin-top: 90px'
+    );
+  });
 });
