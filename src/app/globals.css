@@ -1,13 +1,108 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   FASE 1 — BRUTALISMO CORPORATIVO SUIZO (THE MONOLITH GRID)
+   Paleta Cromática y Acabados de Material:
+   - Papel Hueso Crudo (Fondo primario Modo Claro): #EFEFEA (y #ECEAE4)
+   - Tinta Negra Litográfica (Tipografía y líneas primarias): #0A0A0C (#0a0a0c)
+   - Gris Grafito Mineral (Textos secundarios y metadatos): #4A4D52 (#4a4d52)
+   - Rojo Bermellón de Seguridad (Ancla cromática única): #FF3B30 (#ff3b30 / #FF4A1C)
+   - Calibre y color de líneas divisorias: 0.5px/1px en #D8D6CE (claro) y #1E2024 (oscuro)
+   ========================================================================== */
+
 :root,
+html.light,
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* Papel Hueso Crudo (#EFEFEA / #ECEAE4) */
+  --background: #EFEFEA;
+  --foreground: #0a0a0c;
+  --zy-paper: #EFEFEA;
+  --zy-ink: #0a0a0c;
+  --zy-graphite: #4A4D52;
+  --zy-vermilion: #FF3B30;
+  --zy-vermilion-hover: #FF4A1C;
+  --zy-grid-line: #D8D6CE;
+
+  --zy-bg: #EFEFEA;
+  --zy-bg-elevated: #ECEAE4;
+  --zy-card: #ECEAE4;
+  --zy-card-alt: #E6E4DC;
+  --zy-card-hover: #E1DFD6;
+  --zy-surface: #E6E4DC;
+  --zy-surface-alt: #E0DED5;
+  --zy-surface-hover: #DAD8CE;
+  --zy-control: #E6E4DC;
+  --zy-control-hover: #DCDAD0;
+  --zy-control-active: #EFEFEA;
+  --zy-accent-soft: rgba(255, 59, 48, 0.08);
+  --zy-benefits-bg: #ECEAE4;
+  --zy-benefits-border: #D8D6CE;
+  --zy-logo-plate: #ECEAE4;
+
+  /* Overlays & Chrome */
+  --zy-header-scrolled: rgba(239, 239, 234, 0.96);
+  --zy-header-top: #EFEFEA;
+  --zy-header-shadow: none;
+  --zy-drawer-bg: rgba(239, 239, 234, 0.98);
+  --zy-modal-backdrop: rgba(10, 10, 12, 0.72);
+
+  /* Bordes estrictos de 0.5px/1px en color #D8D6CE para el modo claro */
+  --zy-border-subtle: #D8D6CE;
+  --zy-border: #D8D6CE;
+  --zy-border-card: #D8D6CE;
+  --zy-border-strong: #4A4D52;
+
+  /* Tipografía: Tinta Negra Litográfica (#0A0A0C) y Gris Grafito Mineral (#4A4D52 / #475569 WCAG AA) */
+  --zy-fg: #0a0a0c;
+  --zy-fg-soft: #0a0a0c;
+  --zy-fg-secondary: #1e2024;
+  --zy-fg-hero-sub: #0a0a0c;
+  --zy-muted: #4A4D52;
+  --zy-dim: #4A4D52;
+  --zy-wcag-slate: #475569;
+  --zy-crosshair: #4A4D52;
+
+  /* Brand & Security Anchor Tokens (--zy-blue preserved for backward test compatibility) */
+  --zy-blue: #0a5cff;
+  --zy-blue-hover: #004be0;
+
+  /* Error Banner Tokens */
+  --zy-error-bg: #ECEAE4;
+  --zy-error-border: #FF3B30;
+  --zy-error-divider: #D8D6CE;
+  --zy-error-fg: #FF3B30;
+  --zy-error-text: #0a0a0c;
+
+  /* KÔN Atelier Warm Editorial Palette (Light) */
+  --zy-warm-bg: #EFEFEA;
+  --zy-warm-bar: #ECEAE4;
+  --zy-warm-card: #EFEFEA;
+  --zy-warm-badge: #E6E4DC;
+  --zy-warm-active: #EFEFEA;
+  --zy-warm-border: #D8D6CE;
+  --zy-warm-border-subtle: #D8D6CE;
+  --zy-warm-border-hover: #4A4D52;
+  --zy-warm-fg: #0a0a0c;
+  --zy-warm-muted: #4A4D52;
+  --zy-warm-dim: #4A4D52;
+}
+
 html.dark,
 html[data-theme="dark"] {
   color-scheme: dark;
 
-  /* Core Backgrounds & Surfaces — Deep Graphite (#0A0A0C) */
+  /* Tinta Negra Litográfica (#0A0A0C) como fondo de Modo Oscuro */
   --background: #0a0a0c;
-  --foreground: #f4f5f8;
+  --foreground: #EFEFEA;
+  --zy-paper: #0a0a0c;
+  --zy-ink: #EFEFEA;
+  --zy-graphite: #9ca3b5;
+  --zy-vermilion: #FF3B30;
+  --zy-vermilion-hover: #FF4A1C;
+  --zy-grid-line: #1E2024;
+
   --zy-bg: #0a0a0c;
   --zy-bg-elevated: #0e1014;
   --zy-card: #111318;
@@ -19,32 +114,32 @@ html[data-theme="dark"] {
   --zy-control: #151820;
   --zy-control-hover: #1d222e;
   --zy-control-active: #202736;
-  --zy-accent-soft: #151d2b;
+  --zy-accent-soft: rgba(255, 59, 48, 0.14);
   --zy-benefits-bg: #0f1218;
-  --zy-benefits-border: #1f2635;
+  --zy-benefits-border: #1E2024;
   --zy-logo-plate: #111318;
 
   /* Overlays & Chrome */
-  --zy-header-scrolled: rgba(10, 10, 12, 0.88);
-  --zy-header-top: rgba(10, 10, 12, 0.65);
-  --zy-header-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
-  --zy-drawer-bg: rgba(10, 10, 12, 0.96);
-  --zy-modal-backdrop: rgba(5, 6, 8, 0.84);
+  --zy-header-scrolled: rgba(10, 10, 12, 0.96);
+  --zy-header-top: #0a0a0c;
+  --zy-header-shadow: none;
+  --zy-drawer-bg: rgba(10, 10, 12, 0.98);
+  --zy-modal-backdrop: rgba(5, 6, 8, 0.86);
 
-  /* Borders & 1px Architectural Hairlines (neutral-800 #262626) */
-  --zy-border-subtle: #262626;
-  --zy-border: #262626;
-  --zy-border-card: #262626;
-  --zy-border-strong: #3f3f46;
+  /* Bordes estrictos de 0.5px/1px en color #1E2024 para el modo oscuro */
+  --zy-border-subtle: #1E2024;
+  --zy-border: #1E2024;
+  --zy-border-card: #1E2024;
+  --zy-border-strong: #4A4D52;
 
   /* Typography (WCAG 2.1 AA Verified > 4.5:1 on #0A0A0C) */
-  --zy-fg: #ffffff;
-  --zy-fg-soft: #f4f5f8;
+  --zy-fg: #EFEFEA;
+  --zy-fg-soft: #EFEFEA;
   --zy-fg-secondary: #d4dce8;
-  --zy-fg-hero-sub: #d4dce8;
+  --zy-fg-hero-sub: #EFEFEA;
   --zy-muted: #9ca3b5;
   --zy-dim: #8690a3;
-  --zy-crosshair: #3f3f46;
+  --zy-crosshair: #4A4D52;
 
   /* Brand Accent */
   --zy-blue: #0a5cff;
@@ -52,10 +147,10 @@ html[data-theme="dark"] {
 
   /* Error Banner Tokens */
   --zy-error-bg: #171114;
-  --zy-error-border: rgba(255, 68, 68, 0.4);
-  --zy-error-divider: #2a1a1f;
-  --zy-error-fg: #ff8888;
-  --zy-error-text: #e2e8f0;
+  --zy-error-border: #FF3B30;
+  --zy-error-divider: #1E2024;
+  --zy-error-fg: #FF3B30;
+  --zy-error-text: #EFEFEA;
 
   /* KÔN Atelier Warm Editorial Palette (Dark) */
   --zy-warm-bg: #0c0b08;
@@ -63,82 +158,12 @@ html[data-theme="dark"] {
   --zy-warm-card: #100e0a;
   --zy-warm-badge: #1e1b14;
   --zy-warm-active: #221c13;
-  --zy-warm-border: #26211a;
-  --zy-warm-border-subtle: #1c1913;
-  --zy-warm-border-hover: #2f271c;
-  --zy-warm-fg: #f0ebe3;
+  --zy-warm-border: #1E2024;
+  --zy-warm-border-subtle: #1E2024;
+  --zy-warm-border-hover: #4A4D52;
+  --zy-warm-fg: #EFEFEA;
   --zy-warm-muted: #a39581;
   --zy-warm-dim: #8c7f6d;
-}
-
-html.light,
-html[data-theme="light"] {
-  color-scheme: light;
-
-  /* Core Backgrounds & Surfaces — Neutral Architectural Light (#F8F9FA) */
-  --background: #f8f9fa;
-  --foreground: #0b0e14;
-  --zy-bg: #f8f9fa;
-  --zy-bg-elevated: #ffffff;
-  --zy-card: #ffffff;
-  --zy-card-alt: #f1f4f8;
-  --zy-card-hover: #eaeff6;
-  --zy-surface: #eef2f6;
-  --zy-surface-alt: #e8edf5;
-  --zy-surface-hover: #e1e8f2;
-  --zy-control: #e9edf4;
-  --zy-control-hover: #dde3ee;
-  --zy-control-active: #ffffff;
-  --zy-accent-soft: #e8f0ff;
-  --zy-benefits-bg: #edf3fc;
-  --zy-benefits-border: #c5d6f2;
-  --zy-logo-plate: #eef2f8;
-
-  /* Overlays & Chrome */
-  --zy-header-scrolled: rgba(255, 255, 255, 0.92);
-  --zy-header-top: rgba(248, 249, 250, 0.85);
-  --zy-header-shadow: 0 8px 30px rgba(11, 14, 20, 0.07);
-  --zy-drawer-bg: rgba(248, 249, 250, 0.97);
-  --zy-modal-backdrop: rgba(11, 14, 20, 0.58);
-
-  /* Borders & Hairlines */
-  --zy-border-subtle: #d5dce6;
-  --zy-border: #c6d0de;
-  --zy-border-card: #cfd8e6;
-  --zy-border-strong: #94a3b8;
-
-  /* Typography — Medium Graphite (#475569) for WCAG 2.1 AA (> 7.4:1 contrast on #F8F9FA) */
-  --zy-fg: #0b0e14;
-  --zy-fg-soft: #0f172a;
-  --zy-fg-secondary: #1e293b;
-  --zy-fg-hero-sub: #1e293b;
-  --zy-muted: #475569;
-  --zy-dim: #475569;
-  --zy-crosshair: #94a3b8;
-
-  /* Brand Accent */
-  --zy-blue: #0a5cff;
-  --zy-blue-hover: #004be0;
-
-  /* Error Banner Tokens */
-  --zy-error-bg: #fff5f5;
-  --zy-error-border: rgba(220, 38, 38, 0.35);
-  --zy-error-divider: #fecaca;
-  --zy-error-fg: #b91c1c;
-  --zy-error-text: #1e293b;
-
-  /* KÔN Atelier Warm Editorial Palette (Light) */
-  --zy-warm-bg: #faf8f5;
-  --zy-warm-bar: #f2eee8;
-  --zy-warm-card: #ffffff;
-  --zy-warm-badge: #e6dfd5;
-  --zy-warm-active: #ffffff;
-  --zy-warm-border: #dcd4c8;
-  --zy-warm-border-subtle: #e6dfd5;
-  --zy-warm-border-hover: #b8ac99;
-  --zy-warm-fg: #181510;
-  --zy-warm-muted: #475569;
-  --zy-warm-dim: #475569;
 }
 
 @theme inline {
@@ -152,6 +177,13 @@ html[data-theme="light"] {
   --color-brand-text: var(--zy-fg-soft);
   --color-brand-muted: var(--zy-muted);
   --color-brand-dim: var(--zy-dim);
+
+  --color-zy-paper: var(--zy-paper);
+  --color-zy-ink: var(--zy-ink);
+  --color-zy-graphite: var(--zy-graphite);
+  --color-zy-vermilion: var(--zy-vermilion);
+  --color-zy-vermilion-hover: var(--zy-vermilion-hover);
+  --color-zy-grid-line: var(--zy-grid-line);
 
   --color-zy-bg: var(--zy-bg);
   --color-zy-bg-elevated: var(--zy-bg-elevated);
@@ -208,7 +240,7 @@ html {
   scroll-behavior: smooth;
   background-color: var(--zy-bg);
   color: var(--zy-fg-soft);
-  caret-color: var(--zy-blue);
+  caret-color: var(--zy-vermilion);
   font-family: var(--font-hanken), 'Hanken Grotesk', var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -224,7 +256,44 @@ body {
   position: relative;
 }
 
-/* Editorial SVG tactile surface grain (2%–3% opacity) in both Dark Graphite (#0A0A0C) and Light Paper (#F8F9FA) */
+/* Regla estricta de Aristas Vivas Absolutas: border-radius: 0px (rounded-none) */
+button,
+a,
+input,
+select,
+textarea,
+img,
+div,
+section,
+header,
+footer,
+nav,
+article,
+aside {
+  border-radius: 0px !important;
+}
+
+/* Calibre estricto de las líneas divisorias de la retícula Monolith (0.5px / 1px) */
+.monolith-border-t {
+  border-top: 1px solid var(--zy-grid-line);
+}
+.monolith-border-b {
+  border-bottom: 1px solid var(--zy-grid-line);
+}
+.monolith-border-l {
+  border-left: 1px solid var(--zy-grid-line);
+}
+.monolith-border-r {
+  border-right: 1px solid var(--zy-grid-line);
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .monolith-hairline {
+    border-width: 0.5px;
+  }
+}
+
+/* Textura de Grano Analógico (Noise): capa fija de ruido SVG estático (2.2% - 2.8% opacidad) */
 .zy-noise-overlay,
 html.dark body::before,
 html.light body::before {
@@ -237,22 +306,43 @@ html.light body::before {
 
 html.dark .zy-noise-overlay,
 html.dark body::before {
-  opacity: 0.028;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Ccircle cx='12' cy='18' r='0.75'/%3E%3Ccircle cx='84' cy='42' r='0.6'/%3E%3Ccircle cx='138' cy='24' r='0.75'/%3E%3Ccircle cx='46' cy='96' r='0.65'/%3E%3Ccircle cx='112' cy='118' r='0.75'/%3E%3Ccircle cx='28' cy='144' r='0.6'/%3E%3Ccircle cx='148' cy='88' r='0.65'/%3E%3Ccircle cx='72' cy='136' r='0.7'/%3E%3Ccircle cx='58' cy='22' r='0.55'/%3E%3Ccircle cx='19' cy='74' r='0.6'/%3E%3Ccircle cx='126' cy='62' r='0.55'/%3E%3Ccircle cx='95' cy='148' r='0.6'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.026;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Ccircle cx='12' cy='18' r='0.75'/%3E%3Ccircle cx='84' cy='42' r='0.6'/%3E%3Ccircle cx='138' cy='24' r='0.75'/%3E%3Ccircle cx='46' cy='96' r='0.65'/%3E%3Ccircle cx='112' cy='118' r='0.75'/%3E%3Ccircle cx='28' cy='144' r='0.6'/%3E%3Ccircle cx='148' cy='88' r='0.65'/%3E%3Ccircle cx='72' cy='136' r='0.7'/%3E%3Ccircle cx='58' cy='22' r='0.55'/%3E%3Ccircle cx='19' cy='74' r='0.6'/%3E%3Ccircle cx='126' cy='62' r='0.55'/%3E%3Ccircle cx='95' cy='148' r='0.6'/%3E%3Ccircle cx='164' cy='154' r='0.65'/%3E%3Ccircle cx='34' cy='52' r='0.6'/%3E%3Ccircle cx='104' cy='78' r='0.55'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 html.light .zy-noise-overlay,
 html.light body::before {
-  opacity: 0.024;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%230b0e14' fill-opacity='1'%3E%3Ccircle cx='12' cy='18' r='0.75'/%3E%3Ccircle cx='84' cy='42' r='0.6'/%3E%3Ccircle cx='138' cy='24' r='0.75'/%3E%3Ccircle cx='46' cy='96' r='0.65'/%3E%3Ccircle cx='112' cy='118' r='0.75'/%3E%3Ccircle cx='28' cy='144' r='0.6'/%3E%3Ccircle cx='148' cy='88' r='0.65'/%3E%3Ccircle cx='72' cy='136' r='0.7'/%3E%3Ccircle cx='58' cy='22' r='0.55'/%3E%3Ccircle cx='19' cy='74' r='0.6'/%3E%3Ccircle cx='126' cy='62' r='0.55'/%3E%3Ccircle cx='95' cy='148' r='0.6'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='%230a0a0c' fill-opacity='1'%3E%3Ccircle cx='12' cy='18' r='0.75'/%3E%3Ccircle cx='84' cy='42' r='0.6'/%3E%3Ccircle cx='138' cy='24' r='0.75'/%3E%3Ccircle cx='46' cy='96' r='0.65'/%3E%3Ccircle cx='112' cy='118' r='0.75'/%3E%3Ccircle cx='28' cy='144' r='0.6'/%3E%3Ccircle cx='148' cy='88' r='0.65'/%3E%3Ccircle cx='72' cy='136' r='0.7'/%3E%3Ccircle cx='58' cy='22' r='0.55'/%3E%3Ccircle cx='19' cy='74' r='0.6'/%3E%3Ccircle cx='126' cy='62' r='0.55'/%3E%3Ccircle cx='95' cy='148' r='0.6'/%3E%3Ccircle cx='164' cy='154' r='0.65'/%3E%3Ccircle cx='34' cy='52' r='0.6'/%3E%3Ccircle cx='104' cy='78' r='0.55'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* Monumental Display Typography */
-.font-monument {
-  font-family: var(--font-hanken), 'Hanken Grotesk', var(--font-geist-sans), sans-serif;
+/* 1. Titular Display (ZYRVAE): Syne Extra Bold / Plus Jakarta Sans 800/900, letter-spacing: -0.04em, line-height: 0.85 */
+.font-monument,
+.font-display-zyrvae {
+  font-family: var(--font-syne), var(--font-jakarta), 'Monument Extended', 'Druk Wide Bold', 'Syne', 'Plus Jakarta Sans', var(--font-hanken), sans-serif;
+  font-weight: 800;
   letter-spacing: -0.04em;
-  line-height: 0.92;
+  line-height: 0.85;
+  text-transform: uppercase;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* 2. Manifiesto Editorial (Subtítulo de autor): Instrument Serif Italic, Playfair Display Italic, Ogg Italic */
+.font-serif-editorial {
+  font-family: var(--font-instrument-serif), 'Instrument Serif', 'Ogg', 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* 3. Micrografía Técnica (Metadatos y celdas inferiores): JetBrains Mono / Geist Mono, 11px-12px, uppercase, tracking 0.08em, medium 500 */
+.font-mono-tech {
+  font-family: var(--font-jetbrains-mono), var(--font-geist-mono), 'JetBrains Mono', 'Geist Mono', 'Space Mono', ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.35;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Refined Swiss Sans-Serif (Geist) for Narrative Labels, Categories, States & Subtitles */
@@ -262,9 +352,9 @@ html.light body::before {
   font-feature-settings: 'ss01', 'cv01';
 }
 
-/* Technical Monospace reserved exclusively for numbers, coordinates & ID codes */
+/* Technical Monospace reserved for numbers, coordinates & ID codes */
 .font-mono {
-  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-jetbrains-mono), var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-variant-numeric: tabular-nums;
 }
 
@@ -290,15 +380,15 @@ html.lenis body {
   text-wrap: balance;
 }
 
-/* Custom Browser Surfaces (Selection, Scrollbars, Focus Rings) */
+/* Custom Browser Surfaces (Selection, Scrollbars, Focus Rings — 0px radius) */
 ::selection {
-  background-color: rgba(10, 92, 255, 0.25);
+  background-color: rgba(255, 59, 48, 0.22);
   color: var(--zy-fg);
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -307,16 +397,16 @@ html.lenis body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--zy-border-strong);
-  border-radius: 9999px;
+  border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--zy-blue);
+  background: var(--zy-vermilion);
 }
 
 /* Accessible focus visible outlines */
 :focus-visible {
-  outline: 2px solid var(--zy-blue);
+  outline: 1.5px solid var(--zy-vermilion);
   outline-offset: 2px;
 }
 

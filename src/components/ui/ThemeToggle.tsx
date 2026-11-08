@@ -31,35 +31,8 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       role="group"
       aria-label={t.label}
       onKeyDown={handleKeyDown}
-      className={`inline-flex items-center rounded-full bg-zy-control border border-zy-border p-0.5 text-xs font-swiss tracking-wide ${className}`}
+      className={`inline-flex items-center rounded-none bg-zy-control border border-zy-grid-line p-0 text-[11px] font-mono-tech uppercase tracking-[0.08em] ${className}`}
     >
-      <button
-        type="button"
-        onClick={() => setTheme('dark')}
-        aria-pressed={theme === 'dark'}
-        aria-label={t.switchToDark}
-        title={t.dark}
-        suppressHydrationWarning
-        className={`inline-flex items-center space-x-1.5 px-2 py-1 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue ${
-          theme === 'dark'
-            ? 'bg-zy-control-active text-zy-fg font-semibold shadow-sm'
-            : 'text-zy-muted hover:text-zy-fg'
-        }`}
-      >
-        <Moon
-          size={12}
-          aria-hidden="true"
-          className={theme === 'dark' ? 'text-zy-blue' : 'text-current'}
-        />
-        <span className={showLabels ? 'inline text-[11px]' : 'sr-only xl:not-sr-only xl:inline text-[11px]'}>
-          {t.dark}
-        </span>
-      </button>
-
-      <span className="text-zy-border-strong/60 select-none text-[10px] px-0.5" aria-hidden="true">
-        /
-      </span>
-
       <button
         type="button"
         onClick={() => setTheme('light')}
@@ -67,19 +40,34 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         aria-label={t.switchToLight}
         title={t.light}
         suppressHydrationWarning
-        className={`inline-flex items-center space-x-1.5 px-2 py-1 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue ${
+        className={`inline-flex items-center space-x-1 px-2 py-1 rounded-none transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
           theme === 'light'
-            ? 'bg-zy-control-active text-zy-fg font-semibold shadow-sm'
+            ? 'bg-zy-fg text-zy-bg font-medium'
             : 'text-zy-muted hover:text-zy-fg'
         }`}
       >
-        <Sun
-          size={12}
-          aria-hidden="true"
-          className={theme === 'light' ? 'text-zy-blue' : 'text-current'}
-        />
-        <span className={showLabels ? 'inline text-[11px]' : 'sr-only xl:not-sr-only xl:inline text-[11px]'}>
+        <Sun size={11} aria-hidden="true" />
+        <span className={showLabels ? 'inline text-[10px]' : 'sr-only'}>
           {t.light}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setTheme('dark')}
+        aria-pressed={theme === 'dark'}
+        aria-label={t.switchToDark}
+        title={t.dark}
+        suppressHydrationWarning
+        className={`inline-flex items-center space-x-1 px-2 py-1 rounded-none border-l border-zy-grid-line transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30] ${
+          theme === 'dark'
+            ? 'bg-zy-fg text-zy-bg font-medium'
+            : 'text-zy-muted hover:text-zy-fg'
+        }`}
+      >
+        <Moon size={11} aria-hidden="true" />
+        <span className={showLabels ? 'inline text-[10px]' : 'sr-only'}>
+          {t.dark}
         </span>
       </button>
     </div>

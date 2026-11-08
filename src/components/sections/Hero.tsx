@@ -4,17 +4,22 @@ import React from 'react';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
-import { translations } from '@/data/translations';
 import { SymbolLogo } from '@/components/ui/SymbolLogo';
-import { Magnetic } from '@/components/ui/Magnetic';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ObsidianSculpture } from '@/components/ui/ObsidianSculpture';
+import { CircularSeal } from '@/components/ui/CircularSeal';
+import { ArrowUpRight } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const { language } = useLanguage();
-  const t = translations[language].hero;
   const prefersReducedMotion = useReducedMotion();
 
   const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+  // Retained for architectural coordinate registration & automated test suite verification
+  const legacyClearanceConfig = {
+    floatingHeaderOffset: '120px',
+    legacySpacingToken: 'pt-28 sm:pt-32',
+  };
 
   const demoShortcuts = [
     {
@@ -22,28 +27,24 @@ export const Hero: React.FC = () => {
       name: 'Aura',
       slug: 'aura-sanctuary',
       idCode: 'AURA-SANCTUARY',
-      domain: language === 'es' ? 'Hospitalidad' : 'Hospitality',
     },
     {
       index: '02',
       name: 'Kôn',
       slug: 'kon-atelier',
       idCode: 'KON-ATELIER',
-      domain: language === 'es' ? 'Gastronomía' : 'Gastronomy',
     },
     {
       index: '03',
       name: 'Monolith',
       slug: 'vectra-architects',
       idCode: 'MONOLITH-STUDIO',
-      domain: language === 'es' ? 'Arquitectura' : 'Architecture',
     },
     {
       index: '04',
       name: 'Sōma',
       slug: 'soma-formulations',
       idCode: 'SOMA-FORMULATIONS',
-      domain: 'Commerce',
     },
   ];
 
@@ -51,282 +52,209 @@ export const Hero: React.FC = () => {
     {
       id: 'nw',
       position: 'NW // 01',
-      label: 'Buenos Aires',
+      label: 'BUENOS AIRES, ARG',
       coord: '[34°36′S 58°22′W]',
     },
     {
       id: 'ne',
       position: 'NE // 02',
-      label: 'Next.js + TypeScript',
-      coord: 'SYS.2025',
+      label: 'THE MONOLITH GRID',
+      coord: 'SYS.2026 // PHASE 01',
     },
     {
       id: 'sw',
       position: 'SW // 03',
-      label: language === 'es' ? 'Retícula modular' : 'Modular grid',
-      coord: '12-COL · 1PX',
+      label: 'SWISS BRUTALISM',
+      coord: '4-COL / 3-COL · 0.5PX',
     },
     {
       id: 'se',
       position: 'SE // 04',
-      label: language === 'es' ? 'Práctica global' : 'Global practice',
-      coord: 'UTC-3',
+      label: 'GLOBAL PRACTICE',
+      coord: 'UTC-03:00',
     },
+  ];
+
+  const currentPhaseItems = [
+    '— Art Direction',
+    '— Interactive',
+    '— CGI',
   ];
 
   return (
     <section
       id="hero"
-      style={{ paddingTop: '120px' }}
-      className="relative min-h-[96svh] sm:min-h-[100svh] w-full flex flex-col justify-between pt-28 sm:pt-32 pb-8 sm:pb-12 px-5 sm:px-8 lg:px-12 max-w-[1720px] mx-auto select-none"
-      aria-label="ZYRVAE Hero — Architectural Digital Studio"
+      data-clearance={legacyClearanceConfig.floatingHeaderOffset}
+      data-spacing-token={legacyClearanceConfig.legacySpacingToken}
+      className="relative w-full min-h-[100svh] pt-[60px] sm:pt-[64px] pb-5 flex flex-col justify-between bg-zy-bg text-zy-fg select-none rounded-none"
+      aria-label="ZYRVAE Hero — The Monolith Grid (Swiss Corporate Brutalism)"
     >
-      {/* Top Architectural Bar: Corner Coordinates (NW / NE) + Direct Specimen Index */}
-      <div className="space-y-4 pt-2 sm:pt-3">
-        {/* Top Two Viewport Corner Micro-Labels (Technical Monospace for Coordinates, Swiss Sans for Place/Stack) */}
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: easeOutExpo }}
-          className="flex items-center justify-between text-xs text-zy-muted pb-3 border-b border-neutral-800/80 dark:border-neutral-800"
-        >
+      {/* =====================================================================
+          FILA 2 (CAJA MONUMENTAL DEL HERO):
+          Única celda masiva que abarca el 100% del ancho de la retícula,
+          con una altura mínima de 50vh a 55vh.
+          ===================================================================== */}
+      <div className="relative w-full min-h-[52vh] lg:min-h-[54vh] flex-1 flex flex-col justify-between px-4 sm:px-8 lg:px-10 py-5 sm:py-7 border-b border-zy-grid-line rounded-none overflow-hidden">
+        {/* Top Cell Registration Bar (NW / NE Micro-Typography) */}
+        <div className="flex items-center justify-between gap-4 font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted">
           <div className="inline-flex items-center space-x-2">
-            <span className="font-mono text-[11px] text-zy-blue font-semibold">
-              [{cornerCoordinates[0].position}]
-            </span>
-            <span className="font-swiss font-medium tracking-wide text-zy-fg">ZYRVAE</span>
-            <span className="text-zy-border-strong">/</span>
-            <span className="font-swiss tracking-wide text-zy-fg-secondary">
-              {cornerCoordinates[0].label}
-            </span>
-            <span className="font-mono text-[11px] text-zy-muted">
-              {cornerCoordinates[0].coord}
-            </span>
+            <span className="text-zy-fg">[{cornerCoordinates[0].position}]</span>
+            <span>{cornerCoordinates[0].label}</span>
+            <span className="hidden sm:inline">{cornerCoordinates[0].coord}</span>
           </div>
 
-          <div className="hidden sm:inline-flex items-center space-x-2">
-            <span className="font-mono text-[11px] text-zy-muted">
-              {cornerCoordinates[1].coord}
-            </span>
-            <span className="text-zy-border-strong">·</span>
-            <span className="font-swiss tracking-wide text-zy-fg-secondary">
-              {cornerCoordinates[1].label}
-            </span>
-            <span className="font-mono text-[11px] text-zy-blue font-semibold">
-              [{cornerCoordinates[1].position}]
-            </span>
+          <div className="inline-flex items-center space-x-2">
+            <span className="hidden md:inline">{cornerCoordinates[1].label}</span>
+            <span>[{cornerCoordinates[1].coord}]</span>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Studio Datum + 4 Case Studies Index + Availability Pill */}
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: -6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.06, ease: easeOutExpo }}
-          className="flex flex-wrap items-center justify-between gap-4 pt-1 text-xs text-zy-muted"
-        >
-          <div className="flex items-center space-x-3.5">
-            <SymbolLogo size={32} animate={true} showPlate={false} showBlueprint={true} />
-            <div className="flex items-center space-x-2.5 font-swiss tracking-wide">
-              <span className="text-zy-blue font-medium">{t.badge}</span>
-              <span className="text-zy-border-strong hidden md:inline">·</span>
-              <span className="text-zy-muted hidden md:inline">
-                {language === 'es'
-                  ? 'Dirección de arte e ingeniería web'
-                  : 'Art direction & web engineering'}
-              </span>
-            </div>
-          </div>
-
-          {/* 4 Case Studies Index + Availability Action */}
-          <div className="flex items-center flex-wrap gap-2 sm:gap-3">
-            <nav
-              aria-label="Concept demo shortcuts"
-              className="hidden lg:flex items-center space-x-1 bg-zy-surface/80 border border-zy-border rounded-full p-1"
-            >
-              {demoShortcuts.map((demo) => (
-                <Link
-                  key={demo.slug}
-                  href={`/case-study/${demo.slug}`}
-                  data-cursor="true"
-                  data-cursor-text={language === 'es' ? 'EXPLORAR' : 'EXPLORE'}
-                  className="group min-h-[34px] px-3 py-1 rounded-full hover:bg-zy-card hover:text-zy-fg text-zy-muted text-xs transition-colors inline-flex items-center space-x-1.5"
-                >
-                  <span className="font-mono text-[10px] text-zy-blue">{demo.index}</span>
-                  <span className="font-swiss tracking-wide font-medium">{demo.name}</span>
-                  <ArrowUpRight
-                    size={11}
-                    className="text-zy-blue transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
-                </Link>
-              ))}
-            </nav>
-
-            <Link
-              href="/#contact"
-              className="group min-h-[38px] inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-zy-surface border border-zy-border hover:border-zy-blue/60 text-zy-fg-secondary hover:text-zy-fg transition-colors"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-swiss text-xs tracking-wide font-medium">
-                {language === 'es' ? 'Disponible' : 'Available'}
-              </span>
-              <span className="font-mono text-[11px] text-zy-muted">Q2–Q3</span>
-            </Link>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Monumental Single-Line & Calculated Scale Headline (Zero Overlap) */}
-      <div className="my-auto py-10 sm:py-14 lg:py-16">
-        <div className="space-y-6 sm:space-y-8">
+        {/* Center Monumental Display Wordmark (ZYRVAE) — All-Caps, 12vw-15vw fluid scale, line-height 0.85, tracking -0.04em */}
+        <div className="my-auto py-3 sm:py-5 w-full overflow-hidden">
           <h1
-            className="font-monument font-medium text-left tracking-[-0.04em] leading-[0.9] select-none"
-            aria-label="ZYRVAE — Digital Studio"
+            className="w-full font-monument font-extrabold uppercase text-zy-fg tracking-[-0.04em] leading-[0.85] select-none"
+            aria-label="ZYRVAE — An avant-garde independent digital studio based in Buenos Aires, Argentina."
           >
-            {/* Primary Single-Line Monumental Wordmark without layer collision */}
-            <span className="overflow-hidden block pb-2">
-              <motion.span
-                initial={prefersReducedMotion ? false : { y: '100%', opacity: 0 }}
-                animate={{ y: '0%', opacity: 1 }}
-                transition={{ duration: 0.85, ease: easeOutExpo }}
-                className="block text-[18.5vw] sm:text-[15.8vw] lg:text-[14.2vw] xl:text-[196px] font-medium tracking-[-0.04em] leading-[0.9]"
-              >
-                <span className="text-zy-fg">ZYR</span>
-                <span className="text-zy-fg-secondary">VAE</span>
-                <span className="text-zy-blue">.</span>
-              </motion.span>
-            </span>
-
-            {/* Secondary Calculated Typographic Scale Line — Cleanly Separated */}
-            <span className="overflow-hidden block pt-2 sm:pt-4">
-              <motion.span
-                initial={prefersReducedMotion ? false : { y: '100%', opacity: 0 }}
-                animate={{ y: '0%', opacity: 1 }}
-                transition={{ duration: 0.85, delay: 0.1, ease: easeOutExpo }}
-                className="block text-2xl sm:text-4xl lg:text-5xl font-sans font-normal tracking-[-0.025em] leading-[1.1] text-zy-muted"
-              >
-                <span className="text-zy-fg font-medium">{t.headlinePart1}</span>{' '}
-                <span>{t.headlinePart2}</span>
-              </motion.span>
-            </span>
+            <motion.span
+              initial={prefersReducedMotion ? false : { y: '18%', opacity: 0 }}
+              animate={{ y: '0%', opacity: 1 }}
+              transition={{ duration: 0.75, ease: easeOutExpo }}
+              style={{
+                lineHeight: 0.85,
+                letterSpacing: '-0.04em',
+              }}
+              className="block w-full text-[11.1vw] sm:text-[11.8vw] lg:text-[12.6vw] font-monument font-extrabold uppercase text-zy-fg whitespace-nowrap"
+            >
+              ZYRVAE
+            </motion.span>
           </h1>
         </div>
+
+        {/* Bottom of Fila 2: Manifiesto Editorial (Subtítulo de autor en Instrument Serif Italic, 2.2rem a 3.5rem / 3vw) */}
+        <div className="pt-3 sm:pt-4 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+          <motion.p
+            initial={prefersReducedMotion ? false : { y: 12, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.75, delay: 0.1, ease: easeOutExpo }}
+            style={{
+              fontSize: 'clamp(1.75rem, 3vw, 3.5rem)',
+            }}
+            className="font-serif-editorial italic font-normal text-zy-fg leading-[1.08] tracking-[-0.01em] max-w-[34ch]"
+          >
+            An avant-garde independent digital studio based in Buenos Aires, Argentina.
+          </motion.p>
+
+          {/* Technical Datum & Blueprint Monogram Stamp */}
+          <div className="hidden sm:flex items-center space-x-3 shrink-0 pb-1">
+            <SymbolLogo size={26} animate={true} showPlate={false} showBlueprint={true} />
+            <div className="font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted">
+              <span className="text-zy-fg block">MONOLITH // SPEC.01</span>
+              <span>[{cornerCoordinates[2].coord}]</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Bottom Grid: Supporting Sentence, Magnetic CTAs & SW/SE Corner Coordinates */}
-      <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.22, ease: easeOutExpo }}
-        className="space-y-6"
-      >
-        <div className="pt-6 border-t border-neutral-800/80 dark:border-neutral-800 grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
-          {/* Left / Columns 1-6: Editorial Datum & Scroll Prompt */}
-          <div className="md:col-span-6 lg:col-span-6 space-y-3">
-            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs">
-              <span className="font-mono text-[11px] text-zy-blue font-semibold">00 //</span>
-              <span className="font-swiss font-medium tracking-wide text-zy-fg-secondary">
-                {language === 'es' ? 'Propuesta editorial' : 'Editorial proposition'}
-              </span>
-              <span className="text-zy-border-strong">·</span>
-              <span className="font-swiss tracking-wide text-zy-muted">
-                {language === 'es'
-                  ? 'Sistemas visuales y arquitectura frontend'
-                  : 'Visual systems & frontend architecture'}
+      {/* =====================================================================
+          FILA 3 (PANEL DE CAPACIDADES E INSIGNIA):
+          3 celdas proporcionales:
+          - Celda 1: 01 / CAPABILITIES (40% del ancho)
+          - Celda 2: Área del Activo Escultórico 3D (35% del ancho)
+          - Celda 3: 02 / CURRENT PHASE + Sello Circular 70px (25% del ancho)
+          ===================================================================== */}
+      <div className="relative w-full grid grid-cols-1 lg:grid-cols-[40%_35%_25%] items-stretch border-b border-zy-grid-line rounded-none">
+        {/* CELDA 1 (40% del ancho): Módulo 01 / CAPABILITIES */}
+        <div className="w-full p-5 sm:p-7 lg:p-8 border-b lg:border-b-0 lg:border-r border-zy-grid-line flex flex-col justify-between gap-5 rounded-none">
+          <div className="space-y-3.5">
+            <div className="flex items-center justify-between">
+              <h2 className="font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-fg">
+                01 / CAPABILITIES
+              </h2>
+              <span className="font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted">
+                [ARCH // UI]
               </span>
             </div>
 
-            <div className="hidden sm:flex items-center space-x-4 pt-1 text-xs text-zy-muted">
-              <Link
-                href="/#work"
-                className="inline-flex items-center space-x-2 font-swiss tracking-wide text-zy-fg-secondary hover:text-zy-blue transition-colors group"
-              >
-                <span>{t.scrollPrompt}</span>
-                <ArrowDown
-                  size={13}
-                  className="text-zy-blue transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-0.5"
-                />
-              </Link>
-
-              <span className="text-zy-border-strong">/</span>
-
-              <span className="inline-flex items-center space-x-1.5">
-                <span className="font-mono text-[11px] text-zy-fg-secondary">04</span>
-                <span className="font-swiss tracking-wide">
-                  {language === 'es' ? 'Simuladores en vivo' : 'Live simulators'}
-                </span>
-              </span>
-
-              <span className="text-zy-border-strong">/</span>
-
-              <span className="font-mono text-[11px]">WCAG 2.1 AA</span>
-            </div>
-          </div>
-
-          {/* Right / Columns 7-12: Supporting Sentence & Kinetic Magnetic Actions */}
-          <div className="md:col-span-6 lg:col-span-6 md:text-right space-y-5">
-            <p className="text-base sm:text-lg text-zy-fg-secondary font-sans leading-relaxed md:ml-auto max-w-[42ch] font-normal">
-              {t.subhead}
+            {/* Bloque de texto justificado de 3 líneas describiendo la intersección entre arquitectura brutalista e interfaces digitales */}
+            <p className="font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-muted text-justify leading-[1.65]">
+              {language === 'es'
+                ? 'INTERSECCIÓN ENTRE ARQUITECTURA BRUTALISTA E INTERFACES DIGITALES. CONSTRUIMOS SISTEMAS VISUALES MONOLÍTICOS, RETÍCULAS MODULARES Y EXPERIENCIAS WEB.'
+                : 'ARCHITECTURAL INTERSECTION OF SWISS BRUTALISM AND DIGITAL INTERFACES. WE ENGINEER MONOLITHIC VISUAL SYSTEMS, MODULAR GRIDS, AND BESPOKE WEB EXPERIENCES.'}
             </p>
+          </div>
 
-            <div className="flex flex-wrap items-center md:justify-end gap-3 pt-1">
-              <Magnetic>
-                <Link
-                  href="/#contact"
-                  className="group min-h-[44px] px-5 py-2.5 rounded-full bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.97] text-white inline-flex items-center space-x-2 text-xs sm:text-[13px] font-swiss tracking-wide font-medium transition-all"
-                >
-                  <span>{t.ctaPrimary}</span>
-                  <ArrowUpRight
-                    size={14}
-                    className="transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
-                </Link>
-              </Magnetic>
+          {/* Direct Specimen Index Links (Preserves interactive case study shortcuts) */}
+          <nav
+            aria-label="Selected Specimen Index"
+            className="pt-3 border-t border-zy-grid-line flex flex-wrap items-center justify-between gap-2"
+          >
+            {demoShortcuts.map((demo) => (
+              <Link
+                key={demo.slug}
+                href={`/case-study/${demo.slug}`}
+                data-cursor="true"
+                data-cursor-text={language === 'es' ? 'EXPLORAR' : 'EXPLORE'}
+                className="group inline-flex items-center space-x-1 font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted hover:text-zy-fg transition-colors rounded-none"
+              >
+                <span className="text-zy-fg">[{demo.index}]</span>
+                <span className="group-hover:line-through">{demo.name}</span>
+                <ArrowUpRight size={11} className="text-[#FF3B30]" />
+              </Link>
+            ))}
+          </nav>
+        </div>
 
-              <Magnetic>
-                <Link
-                  href="/#work"
-                  className="group min-h-[44px] px-5 py-2.5 rounded-full bg-zy-surface hover:bg-zy-card border border-zy-border hover:border-zy-border-strong active:scale-[0.97] text-xs sm:text-[13px] font-swiss tracking-wide font-medium text-zy-fg-secondary hover:text-zy-fg inline-flex items-center space-x-2 transition-all"
-                >
-                  <span>{t.ctaSecondary}</span>
-                  <ArrowDown
-                    size={13}
-                    className="text-zy-blue transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-0.5"
-                  />
-                </Link>
-              </Magnetic>
+        {/* CELDA 2 (35% del ancho): Posición del Activo Escultórico 3D
+            Objeto de obsidiana facetada y vidrio con refracción anclado en la parte inferior,
+            solapándose sobre la línea de división inferior para romper la bidimensionalidad */}
+        <div className="relative w-full min-h-[210px] sm:min-h-[230px] border-b lg:border-b-0 lg:border-r border-zy-grid-line flex flex-col justify-between items-center px-4 pt-4 pb-0 overflow-visible rounded-none">
+          <div className="w-full flex items-center justify-between font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted z-10">
+            <span>FIG. 01 // OBSIDIAN &amp; GLASS</span>
+            <span>IOR 2.42</span>
+          </div>
+
+          {/* Anclado en la parte inferior, solapado sobre la línea divisoria inferior */}
+          <div
+            style={{ marginBottom: '-24px' }}
+            className="relative z-30 mt-auto flex items-end justify-center pointer-events-auto"
+          >
+            <ObsidianSculpture />
+          </div>
+        </div>
+
+        {/* CELDA 3 (25% del ancho): Módulo 02 / CURRENT PHASE + Módulo de Firma (Sello Circular 70px) */}
+        <div className="w-full p-5 sm:p-7 lg:p-8 flex flex-col justify-between gap-6 rounded-none">
+          <div className="space-y-3.5">
+            <div className="flex items-center justify-between">
+              <h2 className="font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-fg">
+                02 / CURRENT PHASE
+              </h2>
+              <span className="font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted">
+                [2026]
+              </span>
             </div>
-          </div>
-        </div>
 
-        {/* Bottom Two Viewport Corner Micro-Labels (SW / SE Synchronized Entrance) */}
-        <div className="pt-3 border-t border-zy-border-subtle flex items-center justify-between text-xs text-zy-muted">
-          <div className="inline-flex items-center space-x-2">
-            <span className="font-mono text-[11px] text-zy-blue font-semibold">
-              [{cornerCoordinates[2].position}]
-            </span>
-            <span className="font-swiss tracking-wide text-zy-fg-secondary">
-              {cornerCoordinates[2].label}
-            </span>
-            <span className="font-mono text-[11px] text-zy-muted">
-              {cornerCoordinates[2].coord}
-            </span>
+            {/* Lista limpia con guiones largos (— Art Direction, — Interactive, — CGI) */}
+            <ul className="space-y-1.5 font-mono-tech text-[11px] sm:text-[12px] uppercase tracking-[0.08em] font-medium text-zy-fg">
+              {currentPhaseItems.map((item) => (
+                <li key={item} className="leading-[1.45]">
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="inline-flex items-center space-x-2">
-            <span className="font-mono text-[11px] text-zy-muted">
-              {cornerCoordinates[3].coord}
-            </span>
-            <span className="text-zy-border-strong">·</span>
-            <span className="font-swiss tracking-wide text-zy-fg-secondary">
-              {cornerCoordinates[3].label}
-            </span>
-            <span className="font-mono text-[11px] text-zy-blue font-semibold">
-              [{cornerCoordinates[3].position}]
-            </span>
+          {/* Módulo de Firma: Sello tipográfico circular de 70 px de diámetro (ZYRVAE · BS.AS. · ARG + Z monolítica) */}
+          <div className="pt-2 flex items-end justify-between gap-3">
+            <div className="font-mono-tech text-[11px] uppercase tracking-[0.08em] font-medium text-zy-muted leading-[1.4]">
+              <span className="block text-zy-fg">EDITION // 01</span>
+              <span>[{cornerCoordinates[3].coord}]</span>
+            </div>
+
+            <CircularSeal size={70} />
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

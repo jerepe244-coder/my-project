@@ -1,5 +1,13 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Hanken_Grotesk } from 'next/font/google';
+import {
+  Geist,
+  Geist_Mono,
+  Hanken_Grotesk,
+  Syne,
+  Plus_Jakarta_Sans,
+  Instrument_Serif,
+  JetBrains_Mono,
+} from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { LanguageProvider } from '@/context/LanguageContext';
@@ -7,6 +15,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { IntroAnimation } from '@/components/layout/IntroAnimation';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
+import { PerimeterMargins } from '@/components/layout/PerimeterMargins';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
 
@@ -23,35 +32,62 @@ const geistMono = Geist_Mono({
 const hankenGrotesk = Hanken_Grotesk({
   variable: '--font-hanken',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+});
+
+const syneDisplay = Syne({
+  variable: '--font-syne',
+  subsets: ['latin'],
+  weight: ['700', '800'],
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: '--font-jakarta',
+  subsets: ['latin'],
+  weight: ['700', '800'],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: '--font-instrument-serif',
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: '--font-jetbrains-mono',
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
 });
 
 const themeInitScript = `
 (function() {
   try {
     var saved = localStorage.getItem('zyrvae_theme');
+    var systemLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
     var theme = (saved === 'light' || saved === 'dark')
       ? saved
-      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      : (systemLight ? 'light' : 'light');
     var root = document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
     root.setAttribute('data-theme', theme);
     root.style.colorScheme = theme;
   } catch (e) {
-    document.documentElement.classList.add('dark');
-    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.classList.add('light');
+    document.documentElement.setAttribute('data-theme', 'light');
   }
 })();
 `;
 
 export const metadata: Metadata = {
-  title: 'ZYRVAE — Digital Studio | Diseño y Desarrollo Web',
+  title: 'ZYRVAE — Digital Studio | An avant-garde independent digital studio',
   description:
-    'Estudio digital independiente orientado al diseño y desarrollo web para marcas que buscan diferenciarse, comunicar mejor su propuesta de valor y generar oportunidades comerciales.',
+    'An avant-garde independent digital studio based in Buenos Aires, Argentina. Swiss corporate brutalism, web architecture, interactive systems, and CGI.',
   keywords: [
     'ZYRVAE',
     'Digital Studio',
+    'Swiss Brutalism',
     'Diseño web',
     'Desarrollo web',
     'Web design',
@@ -59,7 +95,7 @@ export const metadata: Metadata = {
     'Next.js',
     'TypeScript',
     'Buenos Aires',
-    'Boutique agency',
+    'Avant-garde digital studio',
     'Independent studio',
   ],
   authors: [{ name: 'ZYRVAE Digital Studio' }],
@@ -73,9 +109,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'ZYRVAE — Digital Studio | Digital, with intention.',
+    title: 'ZYRVAE — Digital Studio | Buenos Aires, Argentina',
     description:
-      'We design and build distinctive websites that help ambitious businesses communicate their value and move forward.',
+      'An avant-garde independent digital studio based in Buenos Aires, Argentina.',
     url: 'https://zyrvae.com',
     siteName: 'ZYRVAE Digital Studio',
     images: [
@@ -93,7 +129,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ZYRVAE — Digital Studio',
     description:
-      'Estudio digital independiente. Diseño y desarrollo web con criterio y rigor técnico.',
+      'An avant-garde independent digital studio based in Buenos Aires, Argentina.',
     images: ['/images/aura-cover.webp'],
   },
   icons: {
@@ -114,23 +150,26 @@ export default function RootLayout({
     <html
       lang="es"
       suppressHydrationWarning
-      className={`${hankenGrotesk.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`light ${hankenGrotesk.variable} ${geistSans.variable} ${geistMono.variable} ${syneDisplay.variable} ${plusJakarta.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="min-h-full flex flex-col bg-zy-bg text-zy-fg-soft font-sans selection:bg-zy-blue/30 selection:text-zy-fg">
+      <body className="min-h-full flex flex-col bg-zy-bg text-zy-fg font-sans selection:bg-[#FF3B30]/20 selection:text-zy-fg rounded-none">
         <ThemeProvider>
           <LanguageProvider>
             <SmoothScroll />
             <NoiseOverlay />
             <IntroAnimation />
             <CustomCursor />
+            <PerimeterMargins />
             <Header />
-            <main id="main-content" className="flex-grow">
+            <main id="main-content" className="flex-grow px-[28px] sm:px-[40px]">
               {children}
             </main>
-            <Footer />
+            <div className="px-[28px] sm:px-[40px]">
+              <Footer />
+            </div>
           </LanguageProvider>
         </ThemeProvider>
       </body>

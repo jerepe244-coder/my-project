@@ -72,21 +72,21 @@ export const CustomCursor: React.FC = () => {
       {isVisible && (
         <motion.div
           aria-hidden="true"
-          className="fixed top-0 left-0 pointer-events-none z-50 flex items-center justify-center"
+          className="fixed top-0 left-0 pointer-events-none z-50 flex items-center justify-center rounded-none"
           style={{
             x: cursorX,
             y: cursorY,
             translateX: '-50%',
             translateY: '-50%',
           }}
-          initial={{ scale: 0.92, opacity: 0 }}
+          initial={{ scale: 0.94, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.94, opacity: 0, transition: { duration: 0.14, ease: 'easeOut' } }}
           transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
         >
-          <div className="px-3.5 py-1.5 rounded-full bg-zy-blue text-white text-[11px] font-swiss tracking-wide font-medium border border-white/25 select-none whitespace-nowrap shadow-lg inline-flex items-center space-x-1.5">
+          <div className="px-3 py-1.5 rounded-none bg-[#FF3B30] text-white text-[11px] font-mono-tech uppercase tracking-[0.08em] font-medium border border-white/30 select-none whitespace-nowrap inline-flex items-center space-x-1.5">
             {cursorMode === 'demo' && (
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-none bg-white animate-pulse" />
             )}
             <span>{cursorText}</span>
             {cursorMode === 'drag' ? (

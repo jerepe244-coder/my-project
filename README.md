@@ -8,11 +8,14 @@ Sitio web oficial, responsive, bilingüe (ES / EN) y de alto rendimiento técnic
 
 * **Framework:** Next.js 16 (App Router con Turbopack y SSR/SSG híbrido).
 * **Lenguaje:** TypeScript 5 (tipado estricto en datos de proyectos, traducciones y componentes).
-* **Estilos:** Tailwind CSS v4 con variables y tokens de diseño personalizados (paleta oscura grafito, acento azul eléctrico controlado `#0a5cff`, contrastes sobrios).
-* **Tipografía:** Sistema técnico-editorial basado en Geist Sans (titulares contemporáneos y lectura) y Geist Mono (metadatos, coordenadas, números y detalles técnicos).
-* **Animaciones e Interacción:** `motion` (Framer Motion para React 19) para la secuencia de ensamblaje del símbolo, revelado tipográfico, filtros de galería y microinteracciones.
-* **Iconografía:** `lucide-react` para controles minimalistas y limpios.
-* **Testing:** Suite automatizada con Node.js Test Runner y TypeScript (`tsx`) para validación de datos bilingües, integridad de assets SVG y validación de la API de contacto.
+* **Identidad Visual (Fase 1 — Brutalismo Corporativo Suizo / The Monolith Grid):**
+  * **Paleta Cromática:** Papel Hueso Crudo (`#EFEFEA`), Tinta Negra Litográfica (`#0A0A0C`), Gris Grafito Mineral (`#4A4D52`), Rojo Bermellón de Seguridad (`#FF3B30`) y líneas divisorias de `0.5px`/`1px` en `#D8D6CE` (Modo Claro) y `#1E2024` (Modo Oscuro).
+  * **Aristas Vivas Absolutas:** Regla estricta de `border-radius: 0px` (`rounded-none`) en cada celda, botón, contenedor e imagen.
+  * **Tipografía:** `Syne` ExtraBold / `Plus Jakarta Sans` (800/900, `-0.04em` tracking, `0.85` line-height) para el titular monumental `ZYRVAE`; `Instrument Serif Italic` para el manifiesto editorial; y `JetBrains Mono` / `Geist Mono` (`11px–12px`, uppercase, `0.08em` tracking) para micrografía técnica.
+  * **Textura Analógica:** Capa fija de grano SVG estático (`2.5%` de opacidad) sobre pliego impreso.
+* **Animaciones e Interacción:** `motion` (Framer Motion para React 19) y renderizado 3D en `<canvas>` para el activo escultórico de obsidiana facetada y vidrio con refracción.
+* **Iconografía:** `lucide-react` y sellos vectoriales SVG de precisión.
+* **Testing:** Suite automatizada con Node.js Test Runner y TypeScript (`tsx`) con 15 pruebas de verificación integral.
 
 ---
 

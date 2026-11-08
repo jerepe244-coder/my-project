@@ -17,7 +17,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 let memoryTheme: Theme | null = null;
 
 function resolveClientTheme(): Theme {
-  if (typeof window === 'undefined') return 'dark';
+  if (typeof window === 'undefined') return 'light';
   try {
     const saved = localStorage.getItem(THEME_STORAGE_KEY);
     if (saved === 'light' || saved === 'dark') {
@@ -27,13 +27,15 @@ function resolveClientTheme(): Theme {
     if (memoryTheme === 'light' || memoryTheme === 'dark') {
       return memoryTheme;
     }
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      // Phase 1 primary editorial identity defaults to Raw Bone Paper (#EFEFEA) light mode
+      // unless explicitly toggled to dark mode by the user.
       return 'light';
     }
   } catch {
     if (memoryTheme) return memoryTheme;
   }
-  return 'dark';
+  return 'light';
 }
 
 function applyThemeToDocument(theme: Theme) {
@@ -90,7 +92,7 @@ function subscribeToTheme(onStoreChange: () => void): () => void {
 }
 
 function getServerSnapshot(): Theme {
-  return 'dark';
+  return 'light';
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {

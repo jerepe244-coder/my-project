@@ -474,4 +474,84 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     assert.ok(portfolioTsx.includes('ARRASTRAR'), 'Portfolio must provide ARRASTRAR contextual cursor state');
     assert.ok(heroTsx.includes('pt-28 sm:pt-32'), 'Hero must include generous top padding classes to clear floating header at y=0');
   });
+
+  test('Fase 1 Swiss Corporate Brutalism — The Monolith Grid Architecture & Visual Identity', () => {
+    const globalsCss = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'app', 'globals.css'),
+      'utf-8'
+    );
+    const headerTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'layout', 'Header.tsx'),
+      'utf-8'
+    );
+    const heroTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Hero.tsx'),
+      'utf-8'
+    );
+    const perimeterTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'layout', 'PerimeterMargins.tsx'),
+      'utf-8'
+    );
+    const sealTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'ui', 'CircularSeal.tsx'),
+      'utf-8'
+    );
+    const sculptureTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'ui', 'ObsidianSculpture.tsx'),
+      'utf-8'
+    );
+
+    // 1. Chromatic Palette & Grid Hairlines
+    assert.ok(globalsCss.includes('#EFEFEA'), 'Light mode primary background must use Raw Bone Paper #EFEFEA');
+    assert.ok(globalsCss.includes('#0a0a0c'), 'Primary ink / dark ground must use Lithographic Black #0A0A0C');
+    assert.ok(globalsCss.includes('#4A4D52'), 'Secondary metadata text must use Mineral Graphite #4A4D52');
+    assert.ok(globalsCss.includes('#FF3B30'), 'Security Vermilion accent must be #FF3B30');
+    assert.ok(globalsCss.includes('#D8D6CE'), 'Light mode divider hairlines must use #D8D6CE');
+    assert.ok(globalsCss.includes('#1E2024'), 'Dark mode divider hairlines must use #1E2024');
+    assert.ok(globalsCss.includes('border-radius: 0px !important'), 'Must enforce strict 0px border-radius (rounded-none)');
+
+    // 2. Perimeter 40px Print Margins with 90-degree rotated technical typography
+    assert.ok(perimeterTsx.includes('w-[28px] sm:w-[40px]'), 'Perimeter print margins must be 40px wide');
+    assert.ok(perimeterTsx.includes('BUENOS AIRES'), 'Left print margin must display BUENOS AIRES');
+    assert.ok(perimeterTsx.includes('© 2026'), 'Right print margin must display © 2026 and coordinates');
+
+    // 3. Row 1 (Integrated Header): 4 continuous cells (20% | 45% | 20% | 15%)
+    assert.ok(
+      headerTsx.includes('lg:grid-cols-[20%_45%_20%_15%]'),
+      'Header Row 1 must use 20% | 45% | 20% | 15% 4-column layout'
+    );
+    assert.ok(headerTsx.includes('ZYRVAE / PHASE 1 [01]'), 'Header Cell 1 must display ZYRVAE / PHASE 1 [01]');
+    assert.ok(headerTsx.includes('p-[16px]'), 'Header Cell 1 must have 16px padding');
+    for (const navItem of ['WORK', 'STUDIO', 'JOURNAL', 'ARCHIVE']) {
+      assert.ok(headerTsx.includes(navItem), `Header Cell 2 must include ${navItem} link`);
+    }
+    assert.ok(headerTsx.includes('hover:line-through'), 'Header Cell 2 links must have strikethrough hover effect');
+    assert.ok(headerTsx.includes('BUENOS AIRES, ARG'), 'Header Cell 3 must display BUENOS AIRES, ARG live clock');
+    assert.ok(headerTsx.includes('bg-[#FF3B30]'), 'Header Cell 4 must be a solid vermilion #FF3B30 block');
+    assert.ok(headerTsx.includes('CONTACT /'), 'Header Cell 4 top line must be CONTACT /');
+    assert.ok(headerTsx.includes('INQUIRE'), 'Header Cell 4 bottom line must be INQUIRE →');
+
+    // 4. Row 2 (Monumental Hero Cell): ZYRVAE Display + Instrument Serif Italic Manifesto
+    assert.ok(
+      heroTsx.includes('An avant-garde independent digital studio based in Buenos Aires, Argentina.'),
+      'Hero Row 2 must include exact editorial manifesto sentence'
+    );
+    assert.ok(heroTsx.includes('font-serif-editorial italic'), 'Manifesto must use Instrument Serif Italic');
+
+    // 5. Row 3 (Capabilities, Sculptural Asset & Signature Seal): 3 proportional cells (40% | 35% | 25%)
+    assert.ok(
+      heroTsx.includes('lg:grid-cols-[40%_35%_25%]'),
+      'Hero Row 3 must use 40% | 35% | 25% 3-column layout'
+    );
+    assert.ok(heroTsx.includes('01 / CAPABILITIES'), 'Row 3 Cell 1 must display 01 / CAPABILITIES');
+    assert.ok(heroTsx.includes('text-justify'), 'Row 3 Cell 1 description must be justified');
+    assert.ok(heroTsx.includes('<ObsidianSculpture />'), 'Row 3 Cell 2 must render 3D ObsidianSculpture asset');
+    assert.ok(sculptureTsx.includes('<canvas'), 'ObsidianSculpture must render 3D faceted obsidian & glass canvas');
+    assert.ok(heroTsx.includes('02 / CURRENT PHASE'), 'Row 3 Cell 3 must display 02 / CURRENT PHASE');
+    for (const phaseItem of ['— Art Direction', '— Interactive', '— CGI']) {
+      assert.ok(heroTsx.includes(phaseItem), `Row 3 Cell 3 must list ${phaseItem}`);
+    }
+    assert.ok(sealTsx.includes('ZYRVAE · BS.AS. · ARG'), '70px CircularSeal must feature ZYRVAE · BS.AS. · ARG perimeter text');
+    assert.ok(sealTsx.includes('viewBox="0 0 70 70"'), 'CircularSeal must be 70px in diameter');
+  });
 });
