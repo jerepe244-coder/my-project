@@ -3,12 +3,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useSpring, useMotionTemplate, useReducedMotion } from 'motion/react';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { Menu, X } from 'lucide-react';
+
+/**
+ * Configuración de Fase 3 para la Atracción Magnética del Bloque Bermellón (CONTACT / INQUIRE →):
+ * - Desplazamiento elástico de hasta 4 px en dirección al cursor
+ * - Radio de activación perimetral: menos de 40 px desde el borde del botón
+ */
+export const HEADER_MAGNETIC_CONFIG = {
+  proximityRadiusPx: 40,
+  maxDisplacementPx: 4,
+} as const;
 
 function formatBuenosAiresTime(date: Date): string {
   try {
@@ -39,6 +49,56 @@ export const Header: React.FC = () => {
   const [baTime, setBaTime] = useState<string>('13:10:30');
 
   const lastScrollY = useRef(0);
+  const contactMagneticRef = useRef<HTMLAnchorElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const magneticSpringConfig = { stiffness: 260, damping: 18, mass: 0.45 };
+  const magX = useSpring(0, magneticSpringConfig);
+  const magY = useSpring(0, magneticSpringConfig);
+  const magneticTransform = useMotionTemplate`translate3d(${magX}px, ${magY}px, 0px)`;
+
+  // Fase 3: Atracción magnética en el bloque bermellón (4px de desplazamiento cuando el cursor está a < 40px del perímetro)
+  useEffect(() => {
+    if (typeof window === 'undefined' || prefersReducedMotion) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    const handlePointerMove = (e: MouseEvent) => {
+      const btn = contactMagneticRef.current;
+      if (!btn) return;
+      const rect = btn.getBoundingClientRect();
+
+      // Distancia desde el puntero hasta el perímetro del bloque bermellón
+      const dxEdge = Math.max(rect.left - e.clientX, 0, e.clientX - rect.right);
+      const dyEdge = Math.max(rect.top - e.clientY, 0, e.clientY - rect.bottom);
+      const distFromPerimeter = Math.hypot(dxEdge, dyEdge);
+
+      if (distFromPerimeter < HEADER_MAGNETIC_CONFIG.proximityRadiusPx) {
+        const centerX = rect.left + rect.width * 0.5;
+        const centerY = rect.top + rect.height * 0.5;
+        const normX = Math.max(-1, Math.min(1, (e.clientX - centerX) / (rect.width * 0.5 + HEADER_MAGNETIC_CONFIG.proximityRadiusPx)));
+        const normY = Math.max(-1, Math.min(1, (e.clientY - centerY) / (rect.height * 0.5 + HEADER_MAGNETIC_CONFIG.proximityRadiusPx)));
+        const proximityStrength = 1 - distFromPerimeter / HEADER_MAGNETIC_CONFIG.proximityRadiusPx;
+
+        magX.set(normX * HEADER_MAGNETIC_CONFIG.maxDisplacementPx * Math.max(0.35, proximityStrength));
+        magY.set(normY * HEADER_MAGNETIC_CONFIG.maxDisplacementPx * Math.max(0.35, proximityStrength));
+      } else {
+        magX.set(0);
+        magY.set(0);
+      }
+    };
+
+    const handlePointerLeave = () => {
+      magX.set(0);
+      magY.set(0);
+    };
+
+    window.addEventListener('mousemove', handlePointerMove, { passive: true });
+    document.addEventListener('mouseleave', handlePointerLeave);
+    return () => {
+      window.removeEventListener('mousemove', handlePointerMove);
+      document.removeEventListener('mouseleave', handlePointerLeave);
+    };
+  }, [prefersReducedMotion, magX, magY]);
 
   // Live Buenos Aires [HH:MM:SS] clock
   useEffect(() => {
@@ -300,31 +360,39 @@ export const Header: React.FC = () => {
             </svg>
           </div>
 
-          {/* Celda 4 (15% del ancho — Bloque Bermellón #FF3B30): Contact / Inquire → */}
+          {/* Celda 4 (15% del ancho — Bloque Bermellón #FF3B30 con Atracción Magnética 4px / <40px): Contact / Inquire → */}
           <Link
+            ref={contactMagneticRef}
             href="/#contact"
             onClick={(e) => handleLinkClick(e, '/#contact')}
             aria-label="CONTACT / INQUIRE"
+            data-magnetic-shift="4px"
+            data-magnetic-proximity="40px"
             className="w-full h-full m-0 px-[16px] bg-[#FF3B30] hover:bg-[#FF4A1C] active:scale-[0.99] text-white flex flex-col justify-center items-start rounded-none transition-colors duration-150 group"
           >
-            <span
-              data-label="CONTACT /"
-              className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case leading-[1.2] text-white/90 block"
+            <motion.div
+              style={prefersReducedMotion ? undefined : { transform: magneticTransform }}
+              className="flex flex-col justify-center items-start will-change-transform"
             >
-              Contact /
-            </span>
-            <span
-              data-label="INQUIRE"
-              className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case leading-[1.2] text-white inline-flex items-center space-x-1"
-            >
-              <span>Inquire</span>
               <span
-                aria-hidden="true"
-                className="inline-block transition-transform duration-150 group-hover:translate-x-1"
+                data-label="CONTACT /"
+                className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case leading-[1.2] text-white/90 block"
               >
-                &#8594;
+                Contact /
               </span>
-            </span>
+              <span
+                data-label="INQUIRE"
+                className="font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case leading-[1.2] text-white inline-flex items-center space-x-1"
+              >
+                <span>Inquire</span>
+                <span
+                  aria-hidden="true"
+                  className="inline-block transition-transform duration-150 group-hover:translate-x-1"
+                >
+                  &#8594;
+                </span>
+              </span>
+            </motion.div>
           </Link>
         </div>
 

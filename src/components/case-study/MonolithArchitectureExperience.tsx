@@ -215,7 +215,11 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
           aria-label="Monolith Studio Hero"
         >
           {/* Monumental Architectural Photographic Backdrop */}
-          <div className="absolute inset-0 z-0">
+          <motion.div
+            layoutId={`case-study-image-${project.slug}`}
+            style={{ viewTransitionName: `case-study-image-${project.slug}` }}
+            className="absolute inset-0 z-0"
+          >
             <Image
               src="/images/monolith-hero.webp"
               alt="Monolith Studio - Spaces shaped by light - Board-formed concrete residence in nature"
@@ -226,7 +230,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
             />
             {/* Atmospheric gradient overlay respecting light/dark mode readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/35" />
-          </div>
+          </motion.div>
 
           {/* Top Hero Coordinate & Datum Bar */}
           <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
@@ -258,6 +262,8 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
               </motion.div>
 
               <motion.h1
+                layoutId={`case-study-title-${project.slug}`}
+                style={{ viewTransitionName: `case-study-title-${project.slug}` }}
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}

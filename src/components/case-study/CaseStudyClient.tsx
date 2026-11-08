@@ -170,7 +170,11 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6"
           aria-label="AURA Sanctuary Hero"
         >
-          <div className="relative min-h-[64svh] sm:min-h-[72svh] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-zy-border bg-[#080a0e] flex flex-col justify-between p-6 sm:p-12 lg:p-16">
+          <motion.div
+            layoutId={`case-study-image-${project.slug}`}
+            style={{ viewTransitionName: `case-study-image-${project.slug}` }}
+            className="relative min-h-[64svh] sm:min-h-[72svh] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-zy-border bg-[#080a0e] flex flex-col justify-between p-6 sm:p-12 lg:p-16"
+          >
             <Image
               src={project.coverImage}
               alt={project.title}
@@ -202,6 +206,8 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
             {/* Bottom Hero Editorial Headline & CTAs */}
             <div className="relative z-10 max-w-3xl space-y-5 pt-16 sm:pt-24">
               <motion.h1
+                layoutId={`case-study-title-${project.slug}`}
+                style={{ viewTransitionName: `case-study-title-${project.slug}` }}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -245,7 +251,7 @@ export const CaseStudyClient: React.FC<CaseStudyClientProps> = ({ project }) => 
                 </a>
               </motion.div>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* 3. SUITES SECTION */}

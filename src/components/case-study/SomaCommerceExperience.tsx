@@ -318,7 +318,11 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
           aria-label="SOMA Hero"
         >
           {/* Photographic Background Asset */}
-          <div className="absolute inset-0 z-0">
+          <motion.div
+            layoutId={`case-study-image-${project.slug}`}
+            style={{ viewTransitionName: `case-study-image-${project.slug}` }}
+            className="absolute inset-0 z-0"
+          >
             <Image
               src="/images/soma-hero-editorial.webp"
               alt="SOMA Formulations - Botanical cellular biotechnology and biophotonic miron glass bottles"
@@ -328,7 +332,7 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
               className="object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/30" />
-          </div>
+          </motion.div>
 
           {/* Top Coordinate Bar */}
           <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14">
@@ -360,6 +364,8 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
               </motion.div>
 
               <motion.h1
+                layoutId={`case-study-title-${project.slug}`}
+                style={{ viewTransitionName: `case-study-title-${project.slug}` }}
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}

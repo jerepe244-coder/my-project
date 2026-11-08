@@ -809,4 +809,136 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       'Acto 03 header must not contain double numeric label 02 / Capabilities'
     );
   });
+
+  test('Fase 3 — Cinemática Visual, Scroll Anclado, WebGL 3D (IOR 2.42), Parallax Multicapa, CAD Grid Drawing y Shared Element Morph', async () => {
+    const sculptureTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'ui', 'ObsidianSculpture.tsx'),
+      'utf-8'
+    );
+    const heroTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Hero.tsx'),
+      'utf-8'
+    );
+    const portfolioTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Portfolio.tsx'),
+      'utf-8'
+    );
+    const servicesTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'Services.tsx'),
+      'utf-8'
+    );
+    const headerTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'layout', 'Header.tsx'),
+      'utf-8'
+    );
+    const caseStudyClientTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'CaseStudyClient.tsx'),
+      'utf-8'
+    );
+
+    // 1. Física e interacción de la escultura central (Hero 3D WebGL):
+    // - lerp: 0.05, inclinación restringida a ±15° en X y ±25° en Y
+    // - Three.js MeshPhysicalMaterial con ior: 2.42, transmission: 1.0, roughness: 0.03 y núcleo #0A0A0C
+    // - Levitación continua (0.4 Hz, 6 px) y rotación pasiva (0.15 rad/s)
+    assert.ok(sculptureTsx.includes('lerp: 0.05'), 'ObsidianSculpture must use lerp: 0.05 inertial interpolation');
+    assert.ok(
+      sculptureTsx.includes('maxTiltXDeg: 15') && sculptureTsx.includes('maxTiltYDeg: 25'),
+      'ObsidianSculpture must clamp tilt to ±15° on X and ±25° on Y'
+    );
+    assert.ok(
+      sculptureTsx.includes('ior: 2.42') &&
+        sculptureTsx.includes('transmission: 1.0') &&
+        sculptureTsx.includes('roughness: 0.03') &&
+        sculptureTsx.includes('#0A0A0C'),
+      'ObsidianSculpture must configure Three.js physical crystal (ior: 2.42, transmission: 1.0, roughness: 0.03) and #0A0A0C obsidian core'
+    );
+    assert.ok(
+      sculptureTsx.includes('levitationFrequencyHz: 0.4') &&
+        sculptureTsx.includes('levitationAmplitudePx: 6') &&
+        sculptureTsx.includes('passiveRotationRadPerSec: 0.15'),
+      'ObsidianSculpture must program 0.4 Hz / 6 px levitation and 0.15 rad/s passive rotation'
+    );
+
+    // 2. Scroll anclado (Pinned Scroll Scrubbing) estilo Apple en Hero:
+    // - pin: true, scrub: 1 durante 100vh de recorrido
+    // - Secuencia en 3 tiempos: (0-35% scale: 0.85 + Z recede), (30-70% y: -40, stagger: 0.08), (60-100% grid release & plate entry)
+    assert.ok(
+      heroTsx.includes('pin: true') && heroTsx.includes('scrub: 1'),
+      'Hero must configure GSAP ScrollTrigger with pin: true and scrub: 1'
+    );
+    assert.ok(
+      heroTsx.includes('scale: 0.85') &&
+        heroTsx.includes('y: -40') &&
+        heroTsx.includes('stagger: 0.08'),
+      'Hero must implement the 3-stage exit scrub sequence (scale: 0.85, y: -40, stagger: 0.08)'
+    );
+
+    // 3. Revelado arquitectónico y Parallax multicapa en láminas de proyectos:
+    // - clip-path: inset(100% 0 0 0) -> inset(0% 0 0 0) con cubic-bezier(0.16, 1, 0.3, 1)
+    // - Fotografía (yPercent: -8, scale: 1.06 -> 1.0) y numeración monumental con factor 0.25x
+    assert.ok(
+      portfolioTsx.includes('inset(100% 0 0 0)') && portfolioTsx.includes('inset(0% 0 0 0)'),
+      'Portfolio plates must reveal via vertical clip-path mask inset(100% 0 0 0) -> inset(0% 0 0 0)'
+    );
+    assert.ok(
+      portfolioTsx.includes('yPercent: -8') &&
+        portfolioTsx.includes('scaleFrom: 1.06') &&
+        portfolioTsx.includes('watermarkParallaxFactor: 0.25'),
+      'Portfolio must apply -8% yPercent / 1.06->1.0 photo parallax and 0.25x watermark parallax'
+    );
+
+    // 4. Trazado vivo de líneas de retícula (Grid Line Drawing) en Acto 03:
+    // - Horizontales scaleX: 0 -> 1 (origin left), verticales scaleY: 0 -> 1 (origin top), 0.6s, stagger 0.05s
+    assert.ok(
+      servicesTsx.includes('scaleX: 0') &&
+        servicesTsx.includes('scaleX: 1') &&
+        servicesTsx.includes('scaleY: 0') &&
+        servicesTsx.includes('scaleY: 1') &&
+        servicesTsx.includes('durationSec: 0.6') &&
+        servicesTsx.includes('cellStaggerSec: 0.05'),
+      'Services (Acto 03) must draw 0.5px CAD grid lines with scaleX/scaleY in 0.6s with 0.05s stagger'
+    );
+
+    // 5. Transición continua hacia los casos de estudio (Shared Element Morph):
+    assert.ok(
+      portfolioTsx.includes('layoutId={`case-study-image-${project.slug}`}') &&
+        portfolioTsx.includes('layoutId={`case-study-title-${project.slug}`}') &&
+        caseStudyClientTsx.includes('layoutId={`case-study-image-${project.slug}`}'),
+      'Portfolio and CaseStudyClient must share layoutId for continuous image and title morphing'
+    );
+
+    // 6. Microinteracciones de precisión táctil:
+    // - Atracción magnética de 4px a < 40px en CONTACT / INQUIRE →
+    // - Desplazamiento cinético de 3px en diagonal en la flecha de EXPLORAR CASO DE ESTUDIO ↗
+    assert.ok(
+      headerTsx.includes('proximityRadiusPx: 40') && headerTsx.includes('maxDisplacementPx: 4'),
+      'Header CONTACT / INQUIRE block must implement 4px magnetic attraction within 40px proximity'
+    );
+    assert.ok(
+      portfolioTsx.includes('group-hover/cta:translate-x-[3px]') &&
+        portfolioTsx.includes('group-hover/cta:-translate-y-[3px]'),
+      'Portfolio CTA arrow must shift 3px diagonally on hover and intensify bottom hairline opacity'
+    );
+
+    // 7. Salvaguardas de rendimiento y accesibilidad:
+    // - Desactivación de anclaje en móviles (< 768px)
+    // - Respeto a prefers-reduced-motion
+    // - FPS Throttle (< 50 FPS) a material estático optimizado
+    // - Limpieza de memoria WebGL (.dispose()) y observadores de scroll
+    assert.ok(
+      heroTsx.includes('mobileBreakpointPx: 768'),
+      'Hero pinning must be disabled below 768px mobile breakpoint'
+    );
+    assert.ok(
+      sculptureTsx.includes('fpsThrottleThreshold: 50') &&
+        sculptureTsx.includes('staticOptimizedMaterial'),
+      'ObsidianSculpture must throttle to staticOptimizedMaterial when FPS drops below 50'
+    );
+    assert.ok(
+      sculptureTsx.includes('renderer.dispose()') &&
+        sculptureTsx.includes('obsidianGeometry.dispose()') &&
+        sculptureTsx.includes('crystalGeometry.dispose()'),
+      'ObsidianSculpture must dispose Three.js geometries, materials, and WebGLRenderer on unmount'
+    );
+  });
 });

@@ -1,8 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'motion/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLanguage } from '@/context/LanguageContext';
 import { SymbolLogo } from '@/components/ui/SymbolLogo';
 import { ObsidianSculpture } from '@/components/ui/ObsidianSculpture';
@@ -22,9 +24,28 @@ const RegistrationCross: React.FC<{ className?: string }> = ({ className = '' })
   </svg>
 );
 
+export const HERO_PINNED_SCRUB_CONFIG = {
+  pin: true,
+  scrub: 1,
+  virtualScrollDistance: '100vh',
+  mobileBreakpointPx: 768,
+  stages: {
+    sculptureRecede: { start: 0.0, end: 0.35, scale: 0.85, z: -120 },
+    headlineAndManifestoFade: { start: 0.30, end: 0.70, y: -40, stagger: 0.08 },
+    gridReleaseAndPlateEntry: { start: 0.60, end: 1.0 },
+  },
+} as const;
+
 export const Hero: React.FC = () => {
   const { language } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
+
+  const heroSectionRef = useRef<HTMLElement | null>(null);
+  const sculptureWrapperRef = useRef<HTMLDivElement | null>(null);
+  const headlineWrapperRef = useRef<HTMLHeadingElement | null>(null);
+  const manifestoTextRef = useRef<HTMLParagraphElement | null>(null);
+  const heroGridFrameRef = useRef<HTMLDivElement | null>(null);
+  const bottomPlinthRef = useRef<HTMLDivElement | null>(null);
 
   const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -33,6 +54,111 @@ export const Hero: React.FC = () => {
     floatingHeaderOffset: '120px',
     legacySpacingToken: 'pt-28 sm:pt-32',
   };
+
+  // ===========================================================================
+  // FASE 3 — SCROLL ANCLADO (PINNED SCROLL SCRUBBING) ESTILO APPLE:
+  // - Ancla temporalmente el Hero durante 100vh de recorrido (pin: true, scrub: 1)
+  // - Desactivado automáticamente en móviles (< 768px) y prefers-reduced-motion
+  // - Secuencia de salida escalonada en 3 tiempos:
+  //   (1) 0% -> 35%: Escultura 3D reduce escala (scale: 0.85) y retrocede en Z con fundido suave
+  //   (2) 30% -> 70%: Titular ZYRVAE y manifiesto en serif itálica se desvanecen hacia arriba (y: -40px, stagger: 0.08s)
+  //   (3) 60% -> 100%: Líneas de retícula del Hero liberan la pantalla y la primera lámina (AURA Sanctuary) entra desde la base
+  // ===========================================================================
+  useEffect(() => {
+    if (typeof window === 'undefined' || prefersReducedMotion) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Salvaguarda móvil: en pantallas menores a 768px se suprime el pinning del Hero
+    const mm = gsap.matchMedia();
+
+    mm.add(`(min-width: ${HERO_PINNED_SCRUB_CONFIG.mobileBreakpointPx}px) and (prefers-reduced-motion: no-preference)`, () => {
+      const sectionEl = heroSectionRef.current;
+      const sculptureEl = sculptureWrapperRef.current;
+      const headlineEl = headlineWrapperRef.current;
+      const manifestoEl = manifestoTextRef.current;
+      const gridFrameEl = heroGridFrameRef.current;
+      const plinthEl = bottomPlinthRef.current;
+      const firstPlateEl = document.querySelector<HTMLElement>('[data-plate="01"]');
+
+      if (!sectionEl || !sculptureEl || !headlineEl || !manifestoEl) return;
+
+      gsap.set(sculptureEl, { transformPerspective: 1000, transformOrigin: 'center center' });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionEl,
+          start: 'top top',
+          end: '+=100%',
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Tiempo 1 (0% a 35% del recorrido):
+      // La escultura 3D reduce su escala levemente (scale: 0.85) y se desplaza hacia atrás en Z con fundido suave
+      tl.to(
+        sculptureEl,
+        {
+          scale: 0.85,
+          z: -120,
+          opacity: 0.28,
+          duration: 0.35,
+          ease: 'power2.out',
+        },
+        0.0
+      );
+
+      // Tiempo 2 (30% a 70% del recorrido):
+      // El titular ZYRVAE y el manifiesto en serif itálica se desvanecen hacia arriba (y: -40px, stagger: 0.08s)
+      tl.to(
+        [headlineEl, manifestoEl],
+        {
+          y: -40,
+          opacity: 0,
+          duration: 0.40,
+          stagger: 0.08,
+          ease: 'power2.inOut',
+        },
+        0.30
+      );
+
+      // Tiempo 3 (60% a 100% del recorrido):
+      // Las líneas de retícula del Hero liberan la pantalla y la primera lámina (AURA Sanctuary) entra desde la base
+      if (gridFrameEl && plinthEl) {
+        tl.to(
+          [gridFrameEl, plinthEl],
+          {
+            y: -24,
+            opacity: 0.15,
+            duration: 0.40,
+            ease: 'power2.inOut',
+          },
+          0.60
+        );
+      }
+
+      if (firstPlateEl) {
+        tl.fromTo(
+          firstPlateEl,
+          { y: 64 },
+          { y: 0, duration: 0.40, ease: 'power3.out' },
+          0.60
+        );
+      }
+
+      return () => {
+        tl.kill();
+      };
+    });
+
+    // Limpieza de observadores de scroll al abandonar la página
+    return () => {
+      mm.revert();
+    };
+  }, [prefersReducedMotion]);
 
   const demoShortcuts = [
     {
@@ -104,8 +230,11 @@ export const Hero: React.FC = () => {
 
   return (
     <section
+      ref={heroSectionRef}
       id="hero"
       data-act="01"
+      data-pinned-scroll="100vh-scrub"
+      data-mobile-pin-disabled="768px"
       data-clearance={legacyClearanceConfig.floatingHeaderOffset}
       data-spacing-token={legacyClearanceConfig.legacySpacingToken}
       className="relative w-full min-h-[100svh] pt-[56px] sm:pt-[60px] flex flex-col justify-between bg-zy-bg text-zy-fg select-none rounded-none"
@@ -117,7 +246,10 @@ export const Hero: React.FC = () => {
           óptico/geométrico del Hero, montada directamente sobre la intersección
           entre el titular monumental ZYRVAE y la frase en Instrument Serif Italic.
           ===================================================================== */}
-      <div className="relative w-full flex-1 min-h-[68vh] lg:min-h-[74vh] flex flex-col justify-between px-4 sm:px-8 lg:px-10 py-4 sm:py-5 border-b border-zy-grid-line monolith-hairline rounded-none overflow-hidden">
+      <div
+        ref={heroGridFrameRef}
+        className="relative w-full flex-1 min-h-[68vh] lg:min-h-[74vh] flex flex-col justify-between px-4 sm:px-8 lg:px-10 py-4 sm:py-5 border-b border-zy-grid-line monolith-hairline rounded-none overflow-hidden"
+      >
         {/* Corner Registration Crosses & Blueprint Cotas (#94A3B8) */}
         <RegistrationCross className="absolute top-[6px] left-[6px]" />
         <RegistrationCross className="absolute top-[6px] right-[6px]" />
@@ -173,7 +305,9 @@ export const Hero: React.FC = () => {
         <div className="relative my-auto py-1 sm:py-2 w-full flex flex-col items-center justify-center">
           {/* 1. Monumental Display Wordmark (ZYRVAE) */}
           <h1
-            className="relative z-10 w-full font-monument font-black uppercase text-zy-fg tracking-[-0.04em] leading-[0.85] select-none"
+            ref={headlineWrapperRef}
+            data-scrub-target="hero-headline"
+            className="relative z-10 w-full font-monument font-black uppercase text-zy-fg tracking-[-0.04em] leading-[0.85] select-none will-change-transform"
             aria-label="ZYRVAE — An avant-garde independent digital studio based in Buenos Aires, Argentina."
           >
             <motion.span
@@ -206,7 +340,11 @@ export const Hero: React.FC = () => {
             className="relative z-20 w-full flex flex-col items-center justify-center"
           >
             {/* Optical Axis Hairline & Registration Cota */}
-            <div className="relative flex items-center justify-center">
+            <div
+              ref={sculptureWrapperRef}
+              data-scrub-target="hero-sculpture-3d"
+              className="relative flex items-center justify-center will-change-transform"
+            >
               <span
                 aria-hidden="true"
                 className="font-cota hidden md:inline-block mr-6 text-[#94A3B8] select-none"
@@ -227,13 +365,15 @@ export const Hero: React.FC = () => {
             {/* 3. Manifiesto Editorial en Instrument Serif Italic integrado en la intersección */}
             <div className="relative z-30 -mt-2 sm:-mt-3 w-full pt-2 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
               <motion.p
+                ref={manifestoTextRef}
+                data-scrub-target="hero-manifesto"
                 initial={prefersReducedMotion ? false : { y: 12, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.75, delay: 0.1, ease: easeOutExpo }}
                 style={{
                   fontSize: 'clamp(1.65rem, 2.75vw, 3.25rem)',
                 }}
-                className="font-serif-editorial italic font-normal text-zy-fg leading-[1.06] tracking-[-0.01em] max-w-[34ch]"
+                className="font-serif-editorial italic font-normal text-zy-fg leading-[1.06] tracking-[-0.01em] max-w-[34ch] will-change-transform"
               >
                 An avant-garde independent digital studio based in Buenos Aires, Argentina.
               </motion.p>
@@ -259,7 +399,11 @@ export const Hero: React.FC = () => {
           al centro geométrico del Hero), manteniendo la síntesis técnica, el índice
           de láminas y el sello circular de 70px en un único golpe de vista.
           ===================================================================== */}
-      <div className="relative w-full grid grid-cols-1 lg:grid-cols-[40%_35%_25%] items-stretch border-b border-zy-grid-line monolith-hairline rounded-none">
+      <div
+        ref={bottomPlinthRef}
+        data-scrub-target="hero-grid-plinth"
+        className="relative w-full grid grid-cols-1 lg:grid-cols-[40%_35%_25%] items-stretch border-b border-zy-grid-line monolith-hairline rounded-none"
+      >
         {/* CELDA 1 (40% del ancho): Módulo 01 / Capabilities */}
         <div
           aria-label="01 / CAPABILITIES"

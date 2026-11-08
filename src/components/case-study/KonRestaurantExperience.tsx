@@ -205,7 +205,11 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 scroll-mt-24"
         aria-label="KÔN Atelier Hero"
       >
-        <div className="relative min-h-[64svh] sm:min-h-[74svh] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-zy-warm-border bg-[#0a0907] flex flex-col justify-between p-6 sm:p-12 lg:p-16">
+        <motion.div
+          layoutId={`case-study-image-${project.slug}`}
+          style={{ viewTransitionName: `case-study-image-${project.slug}` }}
+          className="relative min-h-[64svh] sm:min-h-[74svh] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-zy-warm-border bg-[#0a0907] flex flex-col justify-between p-6 sm:p-12 lg:p-16"
+        >
           <Image
             src={project.coverImage || '/images/kon-hero.webp'}
             alt="KÔN Atelier - Avant-garde seasonal gastronomy dish with hearth fire glow"
@@ -246,9 +250,13 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
               <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#d49b57]">
                 ATELIER CULINARIO
               </span>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-sans font-bold tracking-[-0.03em] leading-[1.02] text-white text-balance">
+              <motion.h1
+                layoutId={`case-study-title-${project.slug}`}
+                style={{ viewTransitionName: `case-study-title-${project.slug}` }}
+                className="text-4xl sm:text-6xl lg:text-7xl font-sans font-bold tracking-[-0.03em] leading-[1.02] text-white text-balance"
+              >
                 {project.title}
-              </h1>
+              </motion.h1>
             </motion.div>
 
             <motion.p
@@ -286,7 +294,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
               </a>
             </motion.div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 3. PRESENTATION OF THE CONCEPT: Philosophy, Pillars & Architectural Stone Hall */}

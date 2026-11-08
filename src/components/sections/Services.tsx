@@ -6,6 +6,29 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
 
 /**
+ * Configuración de Fase 3 para el Trazado Vivo de Líneas de Retícula en CAD (Acto 03):
+ * - Líneas divisorias de 0.5 px dibujadas progresivamente al entrar en el Acto 03
+ * - Líneas horizontales: scaleX: 0 -> 1 con transformOrigin: 'left'
+ * - Líneas verticales: scaleY: 0 -> 1 con transformOrigin: 'top'
+ * - Duración: 0.6 segundos con desfase progresivo de 0.05 s por celda
+ */
+export const GRID_CAD_DRAWING_CONFIG = {
+  hairlineThickness: '0.5px',
+  durationSec: 0.6,
+  cellStaggerSec: 0.05,
+  horizontal: {
+    initialScaleX: 0,
+    targetScaleX: 1,
+    transformOrigin: 'left',
+  },
+  vertical: {
+    initialScaleY: 0,
+    targetScaleY: 1,
+    transformOrigin: 'top',
+  },
+} as const;
+
+/**
  * Cruz de registro tipográfica fina de imprenta suiza para intersecciones de retícula
  */
 const RegistrationCross: React.FC<{ className?: string }> = ({ className = '' }) => (
@@ -21,6 +44,8 @@ const RegistrationCross: React.FC<{ className?: string }> = ({ className = '' })
 export const Services: React.FC = () => {
   const { language } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
+
+  const cadEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   const columns =
     language === 'es'
@@ -145,6 +170,7 @@ export const Services: React.FC = () => {
     <section
       id="services"
       data-act="03"
+      data-cad-grid="0.5px-progressive"
       className="relative w-full bg-zy-bg text-zy-fg border-b border-zy-grid-line monolith-hairline rounded-none scroll-mt-[60px]"
       aria-label="Acto 3 — Capacidades y Filosofía del Estudio (Retícula Suiza de 4 Columnas)"
     >
@@ -160,6 +186,25 @@ export const Services: React.FC = () => {
         <RegistrationCross className="absolute top-[6px] right-[6px]" />
         <RegistrationCross className="absolute bottom-[6px] left-[6px]" />
         <RegistrationCross className="absolute bottom-[6px] right-[6px]" />
+
+        {/* Línea horizontal CAD de cabecera (scaleX: 0 -> 1, origin: left, 0.6s) */}
+        <motion.span
+          aria-hidden="true"
+          data-cad-line="horizontal"
+          initial={prefersReducedMotion ? { opacity: 0 } : { scaleX: 0 }}
+          whileInView={prefersReducedMotion ? { opacity: 1 } : { scaleX: 1 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{
+            duration: GRID_CAD_DRAWING_CONFIG.durationSec,
+            delay: 0,
+            ease: cadEase,
+          }}
+          style={{
+            height: GRID_CAD_DRAWING_CONFIG.hairlineThickness,
+            transformOrigin: GRID_CAD_DRAWING_CONFIG.horizontal.transformOrigin,
+          }}
+          className="pointer-events-none absolute left-0 right-0 bottom-0 bg-zy-fg/35 z-20"
+        />
 
         <div className="lg:col-span-6 space-y-2">
           <div className="inline-flex items-center space-x-2 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
@@ -191,28 +236,75 @@ export const Services: React.FC = () => {
       </div>
 
       {/* =====================================================================
-          RETÍCULA SUIZA LIMPIA DE 4 COLUMNAS (CAPACIDADES, INGENIERÍA, LAB Y MÉTODO)
+          RETÍCULA SUIZA LIMPIA DE 4 COLUMNAS CON TRAZADO VIVO DE LÍNEAS CAD (0.5 PX):
+          - Líneas horizontales: scaleX: 0 -> 1 (transformOrigin: 'left')
+          - Líneas verticales: scaleY: 0 -> 1 (transformOrigin: 'top')
+          - Duración: 0.6s con desfase progresivo de 0.05s por celda
           ===================================================================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full border-b border-zy-grid-line monolith-hairline rounded-none">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full border-b border-zy-grid-line monolith-hairline rounded-none">
         {columns.map((col, idx) => {
           const borderClasses =
             idx < 3
               ? 'border-b md:border-b lg:border-b-0 md:odd:border-r lg:border-r border-zy-grid-line monolith-hairline'
               : '';
+          const cellDelay = prefersReducedMotion
+            ? 0
+            : idx * GRID_CAD_DRAWING_CONFIG.cellStaggerSec;
 
           return (
             <motion.div
               key={col.num}
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+              data-cad-cell={col.num}
+              initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{
-                duration: 0.5,
-                delay: prefersReducedMotion ? 0 : idx * 0.06,
-                ease: [0.16, 1, 0.3, 1],
+                duration: GRID_CAD_DRAWING_CONFIG.durationSec,
+                delay: cellDelay,
+                ease: cadEase,
               }}
               className={`relative p-5 sm:p-6 lg:p-8 flex flex-col justify-between gap-8 bg-zy-bg text-zy-fg rounded-none overflow-hidden ${borderClasses}`}
             >
+              {/* Línea vertical divisoria CAD de 0.5px (scaleY: 0 -> 1 con origen en top, 0.6s, stagger 0.05s) */}
+              {idx < 3 && (
+                <motion.span
+                  aria-hidden="true"
+                  data-cad-line="vertical"
+                  initial={prefersReducedMotion ? { opacity: 0 } : { scaleY: 0 }}
+                  whileInView={prefersReducedMotion ? { opacity: 1 } : { scaleY: 1 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{
+                    duration: GRID_CAD_DRAWING_CONFIG.durationSec,
+                    delay: cellDelay,
+                    ease: cadEase,
+                  }}
+                  style={{
+                    width: GRID_CAD_DRAWING_CONFIG.hairlineThickness,
+                    transformOrigin: GRID_CAD_DRAWING_CONFIG.vertical.transformOrigin,
+                  }}
+                  className="hidden lg:block pointer-events-none absolute top-0 bottom-0 right-0 bg-zy-fg/40 z-20"
+                />
+              )}
+
+              {/* Línea horizontal inferior CAD de 0.5px (scaleX: 0 -> 1 con origen en left, 0.6s, stagger 0.05s) */}
+              <motion.span
+                aria-hidden="true"
+                data-cad-line="horizontal"
+                initial={prefersReducedMotion ? { opacity: 0 } : { scaleX: 0 }}
+                whileInView={prefersReducedMotion ? { opacity: 1 } : { scaleX: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{
+                  duration: GRID_CAD_DRAWING_CONFIG.durationSec,
+                  delay: cellDelay,
+                  ease: cadEase,
+                }}
+                style={{
+                  height: GRID_CAD_DRAWING_CONFIG.hairlineThickness,
+                  transformOrigin: GRID_CAD_DRAWING_CONFIG.horizontal.transformOrigin,
+                }}
+                className="pointer-events-none absolute left-0 right-0 bottom-0 bg-zy-fg/35 z-20"
+              />
+
               {idx < 3 && (
                 <>
                   <RegistrationCross className="hidden lg:block absolute -top-[4.5px] -right-[4.5px] z-20" />
@@ -229,15 +321,30 @@ export const Services: React.FC = () => {
               </span>
 
               <div className="relative z-10 space-y-5">
-                {/* Column Top Bar */}
-                <div
-                  style={{ borderBottomWidth: '0.5px' }}
-                  className="pb-3 border-b border-zy-grid-line monolith-hairline flex items-center justify-between font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case"
-                >
+                {/* Column Top Bar con trazo horizontal CAD de 0.5px (scaleX: 0 -> 1, origin: left) */}
+                <div className="relative pb-3 flex items-center justify-between font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case">
                   <span className="text-zy-fg">
                     <strong className="text-[#FF3B30] font-semibold">{col.num}</strong> / {col.tag}
                   </span>
                   <span className="font-cota text-[#94A3B8]">{col.cota}</span>
+
+                  <motion.span
+                    aria-hidden="true"
+                    data-cad-line="horizontal"
+                    initial={prefersReducedMotion ? { opacity: 0 } : { scaleX: 0 }}
+                    whileInView={prefersReducedMotion ? { opacity: 1 } : { scaleX: 1 }}
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{
+                      duration: GRID_CAD_DRAWING_CONFIG.durationSec,
+                      delay: cellDelay,
+                      ease: cadEase,
+                    }}
+                    style={{
+                      height: GRID_CAD_DRAWING_CONFIG.hairlineThickness,
+                      transformOrigin: GRID_CAD_DRAWING_CONFIG.horizontal.transformOrigin,
+                    }}
+                    className="pointer-events-none absolute left-0 right-0 bottom-0 bg-zy-grid-line"
+                  />
                 </div>
 
                 {/* Column Title */}
@@ -251,11 +358,26 @@ export const Services: React.FC = () => {
                 </p>
               </div>
 
-              {/* Column Technical Deliverables / Cadence List */}
-              <div
-                style={{ borderTopWidth: '0.5px' }}
-                className="relative z-10 pt-4 border-t border-zy-grid-line monolith-hairline"
-              >
+              {/* Column Technical Deliverables / Cadence List con trazo horizontal CAD de 0.5px */}
+              <div className="relative z-10 pt-4">
+                <motion.span
+                  aria-hidden="true"
+                  data-cad-line="horizontal"
+                  initial={prefersReducedMotion ? { opacity: 0 } : { scaleX: 0 }}
+                  whileInView={prefersReducedMotion ? { opacity: 1 } : { scaleX: 1 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{
+                    duration: GRID_CAD_DRAWING_CONFIG.durationSec,
+                    delay: cellDelay,
+                    ease: cadEase,
+                  }}
+                  style={{
+                    height: GRID_CAD_DRAWING_CONFIG.hairlineThickness,
+                    transformOrigin: GRID_CAD_DRAWING_CONFIG.horizontal.transformOrigin,
+                  }}
+                  className="pointer-events-none absolute left-0 right-0 top-0 bg-zy-grid-line"
+                />
+
                 <ul className="space-y-1.5 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-fg">
                   {col.items.map((item) => (
                     <li key={item} className="leading-[1.45]">
