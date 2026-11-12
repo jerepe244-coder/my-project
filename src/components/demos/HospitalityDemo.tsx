@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
-import { Calendar, Users, Check, Compass, X, Info } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Check, X, Shield, ArrowUpRight, Compass, Layers, Sliders } from 'lucide-react';
 
 export interface HospitalityDemoProps {
   selectedSuiteIndex?: number;
@@ -23,12 +24,16 @@ export const AURA_SUITES: {
   baseRate: number;
   capacity: number;
   amenities: { es: string; en: string }[];
+  azimuth?: string;
+  thermal?: string;
 }[] = [
   {
     id: 'panoramic',
     name: { es: 'Refugio Panorámico', en: 'Panoramic Shelter' },
     area: '84 m²',
     elevation: '1,680 m · Sector Norte',
+    azimuth: '42° N (Exposición Glaciar)',
+    thermal: 'Fachada Basáltica Ventilada R-40',
     image: '/images/aura-suite-panoramic.webp',
     view: { es: 'Horizonte alpino y glaciar', en: 'Alpine horizon & glacier' },
     summary: {
@@ -49,6 +54,8 @@ export const AURA_SUITES: {
     name: { es: 'Suite del Bosque', en: 'Forest Suite' },
     area: '68 m²',
     elevation: '1,540 m · Dosel de Alerces',
+    azimuth: '128° SE (Canopia Nativa)',
+    thermal: 'Triple Acristalamiento Térmico Acústico',
     image: '/images/aura-suite-forest.webp',
     view: { es: 'Canopia de alerces nativos', en: 'Native larch canopy' },
     summary: {
@@ -69,6 +76,8 @@ export const AURA_SUITES: {
     name: { es: 'Cabaña Monolito', en: 'Monolith Cabin' },
     area: '110 m²',
     elevation: '1,790 m · Filo Sur',
+    azimuth: '194° S (Macizo Rocoso Austral)',
+    thermal: 'Hormigón Estructural Pigmentado 35cm',
     image: '/images/aura-suite-monolith.webp',
     view: { es: 'Macizo rocoso y valle sur', en: 'Rock massif & southern valley' },
     summary: {
@@ -94,21 +103,26 @@ export const HospitalityDemo: React.FC<HospitalityDemoProps> = ({
 }) => {
   const { language } = useLanguage();
   const [internalSuite, setInternalSuite] = useState(0);
-  const [internalShowDrawer, setInternalShowDrawer] = useState(false);
+  const [internalShowModal, setInternalShowModal] = useState(false);
   const [nights, setNights] = useState(3);
   const [guests, setGuests] = useState(2);
-  const [extras, setExtras] = useState<{ breakfast: boolean; spa: boolean }>({
-    breakfast: false,
+  const [extras, setExtras] = useState<{ breakfast: boolean; spa: boolean; heli: boolean }>({
+    breakfast: true,
     spa: false,
+    heli: false,
   });
   const [demoSubmitted, setDemoSubmitted] = useState(false);
+  const activeSuiteId = useId();
 
   const selectedSuite = selectedSuiteIndex !== undefined ? selectedSuiteIndex : internalSuite;
-  const showDrawer = showModal !== undefined ? showModal : internalShowDrawer;
+  const isModalOpen = showModal !== undefined ? showModal : internalShowModal;
 
-  const setShowDrawer = (open: boolean) => {
-    setInternalShowDrawer(open);
+  const setModalOpen = (open: boolean) => {
+    setInternalShowModal(open);
     onShowModalChange?.(open);
+    if (!open) {
+      setTimeout(() => setDemoSubmitted(false), 300);
+    }
   };
 
   const handleSuiteChange = (idx: number) => {
@@ -117,533 +131,524 @@ export const HospitalityDemo: React.FC<HospitalityDemoProps> = ({
     setInternalSuite(idx);
     onSelectSuite?.(idx);
     setGuests((prev) => Math.min(Math.max(prev, 1), nextMax));
-    setDemoSubmitted(false);
   };
 
   const EXTRA_RATES = {
-    breakfastPerAdultNight: 35,
-    spaPerAdultStay: 85,
+    breakfastPerNight: 45,
+    spaPerGuestStay: 160,
+    heliTransferFlat: 850,
   };
 
   const current = AURA_SUITES[selectedSuite] ?? AURA_SUITES[0];
-  const minAdults = 1;
-  const maxAdults = current.capacity ?? 4;
-  const activeAdults = Math.min(Math.max(guests, minAdults), maxAdults);
-
-  const suiteSubtotal = current.baseRate * nights;
-  const breakfastSubtotal = extras.breakfast
-    ? EXTRA_RATES.breakfastPerAdultNight * activeAdults * nights
-    : 0;
-  const spaSubtotal = extras.spa ? EXTRA_RATES.spaPerAdultStay * activeAdults : 0;
-  const extrasSubtotal = breakfastSubtotal + spaSubtotal;
-  const totalPrice = suiteSubtotal + extrasSubtotal;
-
-  const toggleExtra = (key: 'breakfast' | 'spa') => {
-    setExtras((prev) => ({ ...prev, [key]: !prev[key] }));
-    setDemoSubmitted(false);
-  };
-
-  const selectedExtrasLabels = [
-    extras.breakfast ? (language === 'es' ? 'Desayuno' : 'Breakfast') : null,
-    extras.spa ? 'Spa' : null,
-  ].filter(Boolean) as string[];
-
-  const adultsLabel =
-    language === 'es'
-      ? `${activeAdults} ${activeAdults === 1 ? 'adulto' : 'adultos'}`
-      : `${activeAdults} ${activeAdults === 1 ? 'adult' : 'adults'}`;
-
-  const nightsLabel =
-    language === 'es'
-      ? `${nights} ${nights === 1 ? 'noche' : 'noches'}`
-      : `${nights} ${nights === 1 ? 'night' : 'nights'}`;
-
-  const handleBookingSim = (e: React.FormEvent) => {
-    e.preventDefault();
-    setDemoSubmitted(true);
-  };
+  const accommodationTotal = current.baseRate * nights;
+  const breakfastTotal = extras.breakfast ? EXTRA_RATES.breakfastPerNight * guests * nights : 0;
+  const spaTotal = extras.spa ? EXTRA_RATES.spaPerGuestStay * guests : 0;
+  const heliTotal = extras.heli ? EXTRA_RATES.heliTransferFlat : 0;
+  const conciergeTotal = breakfastTotal + spaTotal + heliTotal;
+  const preservationLevy = Math.round(accommodationTotal * 0.05); // 5% fondo de preservación alpina
+  const grandTotal = accommodationTotal + conciergeTotal + preservationLevy;
 
   return (
-    <div className="rounded-2xl border border-zy-border bg-zy-card overflow-hidden text-zy-fg font-sans shadow-sm">
-      {/* Subtle Concierge Header Bar */}
-      <div className="bg-zy-surface px-5 sm:px-7 py-3.5 border-b border-zy-border flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
-        <div className="flex items-center space-x-2 text-zy-fg">
-          <Compass size={14} className="text-zy-blue" />
-          <span className="font-semibold uppercase tracking-wider">
-            {language === 'es' ? 'RESERVA PRIVADA · AURA SANCTUARY' : 'PRIVATE STAY · AURA SANCTUARY'}
+    <div className="relative border border-zy-border bg-zy-card text-zy-fg font-swiss rounded-none overflow-hidden select-none">
+      {/* Cruces de Registro Arquitectónico en los 4 Vértices (Monolith Grid) */}
+      <span className="absolute top-1 left-2 font-mono text-[9px] text-[#94A3B8] z-20 pointer-events-none">+</span>
+      <span className="absolute top-1 right-2 font-mono text-[9px] text-[#94A3B8] z-20 pointer-events-none">+</span>
+      <span className="absolute bottom-1 left-2 font-mono text-[9px] text-[#94A3B8] z-20 pointer-events-none">+</span>
+      <span className="absolute bottom-1 right-2 font-mono text-[9px] text-[#94A3B8] z-20 pointer-events-none">+</span>
+
+      {/* 1. Franja Superior de Telemetría Técnica */}
+      <div className="px-4 py-2.5 bg-zy-surface border-b border-zy-border flex flex-wrap items-center justify-between gap-3 text-[10px] font-mono tracking-wider text-[#94A3B8]">
+        <div className="flex items-center space-x-2">
+          <span className="w-1.5 h-1.5 bg-[#FF3B30] inline-block animate-pulse" />
+          <span className="text-zy-fg font-semibold uppercase">
+            Aura Sanctuary · {language === 'es' ? 'Terminal de Reserva' : 'Booking Terminal'}
+          </span>
+          <span className="hidden sm:inline text-zy-muted">/</span>
+          <span className="hidden sm:inline">[REF // AS-01]</span>
+        </div>
+        <div className="flex items-center space-x-4">
+          <span className="hidden md:inline">{current.elevation}</span>
+          <span className="hidden md:inline">VIENTO: 14 KM/H · -2°C</span>
+          <span className="text-[#FF3B30] font-medium uppercase tracking-widest">
+            ● {language === 'es' ? 'EN LÍNEA' : 'ONLINE'}
           </span>
         </div>
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-zy-control text-zy-muted text-[10px] border border-zy-border-subtle">
-          {language === 'es' ? 'Estadía conceptual · Sin cobros reales' : 'Conceptual stay · No real charges'}
-        </span>
       </div>
 
-      <div className="p-5 sm:p-8">
-        {/* Suite Selector Tabs */}
-        <div
-          role="tablist"
-          aria-label={language === 'es' ? 'Seleccionar suite' : 'Select suite'}
-          className="flex flex-wrap gap-2 pb-6 border-b border-zy-border-subtle"
-        >
-          {AURA_SUITES.map((suite, idx) => (
-            <button
-              key={suite.id}
-              type="button"
-              role="tab"
-              aria-selected={selectedSuite === idx}
-              onClick={() => handleSuiteChange(idx)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-mono transition-all flex items-center space-x-2 ${
-                selectedSuite === idx
-                  ? 'bg-zy-blue text-white font-semibold shadow-[0_0_15px_rgba(10,92,255,0.35)]'
-                  : 'bg-zy-surface text-zy-muted hover:text-zy-fg hover:bg-zy-surface-hover border border-zy-border-subtle'
-              }`}
-            >
-              <span>{suite.name[language]}</span>
-              <span className={selectedSuite === idx ? 'text-white/80' : 'text-zy-dim'}>
-                · ${suite.baseRate}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* Selected Suite Detailed Inspector & Booking Summary */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6 items-start">
-          <div className="lg:col-span-7 space-y-6">
-            {/* Suite Photographic Showcase */}
-            <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-zy-border bg-[#090b0f] shadow-lg">
-              <Image
-                key={current.image}
-                src={current.image}
-                alt={current.name[language]}
-                fill
-                sizes="(max-width: 1024px) 100vw, 640px"
-                className="object-cover object-center transition-all duration-500"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#090b0f]/85 via-[#090b0f]/20 to-transparent" />
-              <div className="pointer-events-none absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2">
-                <span className="px-2.5 py-1 rounded-md bg-[#0a0c10]/80 backdrop-blur-md border border-white/10 font-mono text-[10px] text-[#cbd4e6] tracking-wider uppercase">
-                  {current.elevation}
-                </span>
-                <span className="px-2.5 py-1 rounded-md bg-zy-blue/25 backdrop-blur-md border border-zy-blue/50 font-mono text-[10px] text-white font-semibold">
-                  {current.area}
-                </span>
-              </div>
-              <div className="pointer-events-none absolute bottom-3.5 left-4 right-4 flex items-end justify-between gap-3">
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#9ba3b8] block">
-                    {language === 'es' ? 'Orientación panorámica' : 'Panoramic orientation'}
+      {/* 2. Retícula Monolítica Principal (60% Ficha Técnica | 40% Consola) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12">
+        {/* COLUMNA IZQUIERDA: Lámina Arquitectónica y Especificaciones (lg:col-span-7) */}
+        <div className="lg:col-span-7 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-zy-border bg-zy-bg">
+          {/* Selector de Suite en Celdas a 90° con Motion FLIP */}
+          <div className="grid grid-cols-3 border-b border-zy-border bg-zy-surface">
+            {AURA_SUITES.map((suite, idx) => {
+              const isCurrent = selectedSuite === idx;
+              return (
+                <button
+                  key={suite.id}
+                  type="button"
+                  onClick={() => handleSuiteChange(idx)}
+                  className={`relative p-3 sm:p-4 text-left border-r last:border-r-0 border-zy-border transition-colors duration-150 ${
+                    isCurrent ? 'bg-zy-card text-zy-fg' : 'text-zy-muted hover:text-zy-fg hover:bg-zy-card/50'
+                  }`}
+                >
+                  {isCurrent && (
+                    <motion.div
+                      layoutId={`aura-active-bar-${activeSuiteId}`}
+                      className="absolute top-0 left-0 right-0 h-[2px] bg-[#FF3B30]"
+                      transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                    />
+                  )}
+                  <span className="block font-mono text-[10px] text-[#94A3B8] mb-1">
+                    0{idx + 1} //
                   </span>
-                  <p className="text-xs sm:text-sm font-medium text-white font-sans">
-                    {current.view[language]}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex flex-wrap items-baseline justify-between gap-3">
-                <div className="flex items-baseline gap-3">
-                  <h4 className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-zy-fg">
-                    {current.name[language]}
-                  </h4>
-                  <span className="font-mono text-xs text-zy-blue border border-zy-blue/30 px-2 py-0.5 rounded">
-                    {current.area}
+                  <span className="block text-xs font-medium tracking-tight truncate">
+                    {suite.name[language as 'es' | 'en']}
                   </span>
-                </div>
-                <span className="font-mono text-xs text-zy-muted">
-                  {language === 'es' ? `Hasta ${maxAdults} adultos` : `Up to ${maxAdults} adults`}
-                </span>
-              </div>
-              <p className="text-sm text-zy-muted font-sans leading-relaxed">
-                {current.summary[language]}
-              </p>
-            </div>
-
-            {/* Amenity checklist */}
-            <div className="space-y-3">
-              <p className="text-xs font-mono uppercase tracking-wider text-zy-dim">
-                {language === 'es' ? 'Incluye en la suite' : 'Included in suite'}
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-zy-fg-secondary">
-                {current.amenities.map((item, i) => (
-                  <div key={i} className="flex items-center space-x-2.5 bg-zy-surface p-3 rounded-lg border border-zy-border-card">
-                    <Check size={14} className="text-zy-blue shrink-0" />
-                    <span>{item[language]}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Pricing & Reservation Configurator Column */}
-          <div className="lg:col-span-5 bg-zy-surface p-5 sm:p-6 rounded-xl border border-zy-border flex flex-col justify-between space-y-5">
-            <div>
-              <div className="flex items-baseline justify-between">
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-zy-dim block">
-                    {language === 'es' ? 'Tarifa por noche' : 'Nightly rate'}
-                  </span>
-                  <div className="flex items-baseline space-x-1 mt-1">
-                    <span className="text-3xl font-bold text-zy-fg font-sans">${current.baseRate}</span>
-                    <span className="text-xs text-zy-muted font-mono">USD / {language === 'es' ? 'noche' : 'night'}</span>
-                  </div>
+          {/* Fotografía Arquitectónica a Sangre */}
+          <div className="relative aspect-[16/10] w-full bg-[#08090B] overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current.id}
+                initial={{ opacity: 0, scale: 1.02 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="relative w-full h-full"
+              >
+                <Image
+                  src={current.image}
+                  alt={current.name[language as 'es' | 'en']}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+                {/* Sellos de Cota Arquitectónica Superpuestos */}
+                <div className="absolute top-3 left-3 px-2 py-1 bg-black/60 backdrop-blur-sm border border-white/10 font-mono text-[9px] text-[#94A3B8]">
+                  COTA {current.elevation.split('·')[0]}
                 </div>
-                <span className="text-[11px] font-mono text-zy-blue bg-zy-accent-soft px-2.5 py-1 rounded-md border border-zy-blue/20">
+                <div className="absolute top-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-sm border border-white/10 font-mono text-[9px] text-[#FF3B30] font-semibold">
                   {current.area}
-                </span>
-              </div>
-
-              <div className="mt-5 pt-4 border-t border-zy-border-card space-y-3.5 text-xs">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center space-x-2 text-zy-fg-secondary font-medium">
-                    <Calendar size={14} className="text-zy-blue" />
-                    <span>{language === 'es' ? 'Noches de estadía' : 'Stay duration'}</span>
-                  </span>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      type="button"
-                      disabled={nights <= 1}
-                      aria-label={language === 'es' ? 'Disminuir noches' : 'Decrease nights'}
-                      onClick={() => {
-                        setNights((prev) => Math.max(1, prev - 1));
-                        setDemoSubmitted(false);
-                      }}
-                      className="w-7 h-7 rounded-lg bg-zy-control border border-zy-border text-zy-fg flex items-center justify-center font-mono hover:bg-zy-control-hover disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      -
-                    </button>
-                    <span className="font-mono text-zy-fg font-semibold w-5 text-center">{nights}</span>
-                    <button
-                      type="button"
-                      aria-label={language === 'es' ? 'Aumentar noches' : 'Increase nights'}
-                      onClick={() => {
-                        setNights((prev) => prev + 1);
-                        setDemoSubmitted(false);
-                      }}
-                      className="w-7 h-7 rounded-lg bg-zy-control border border-zy-border text-zy-fg flex items-center justify-center font-mono hover:bg-zy-control-hover"
-                    >
-                      +
-                    </button>
-                  </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center space-x-2 text-zy-fg-secondary font-medium">
-                    <Users size={14} className="text-zy-blue" />
-                    <span>
-                      {language === 'es' ? 'Huéspedes adultos' : 'Adult guests'}{' '}
-                      <span className="text-[10px] font-mono text-zy-dim font-normal">
-                        ({language === 'es' ? `máx. ${maxAdults}` : `max. ${maxAdults}`})
-                      </span>
+                <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
+                  <div>
+                    <span className="block font-mono text-[9px] text-[#94A3B8] tracking-widest uppercase">
+                      {current.view[language as 'es' | 'en']}
                     </span>
-                  </span>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      type="button"
-                      disabled={activeAdults <= minAdults}
-                      aria-label={language === 'es' ? 'Disminuir adultos' : 'Decrease adults'}
-                      onClick={() => {
-                        setGuests((prev) => Math.max(minAdults, prev - 1));
-                        setDemoSubmitted(false);
-                      }}
-                      className="w-7 h-7 rounded-lg bg-zy-control border border-zy-border text-zy-fg flex items-center justify-center font-mono hover:bg-zy-control-hover disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      -
-                    </button>
-                    <span className="font-mono text-zy-fg font-semibold w-5 text-center">{activeAdults}</span>
-                    <button
-                      type="button"
-                      disabled={activeAdults >= maxAdults}
-                      aria-label={language === 'es' ? 'Aumentar adultos' : 'Increase adults'}
-                      onClick={() => {
-                        setGuests((prev) => Math.min(maxAdults, prev + 1));
-                        setDemoSubmitted(false);
-                      }}
-                      className="w-7 h-7 rounded-lg bg-zy-control border border-zy-border text-zy-fg flex items-center justify-center font-mono hover:bg-zy-control-hover disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      +
-                    </button>
+                    <h3 className="text-base sm:text-lg font-medium tracking-tight">
+                      {current.name[language as 'es' | 'en']}
+                    </h3>
                   </div>
+                  <span className="font-mono text-xs text-[#EDEDED] font-semibold">
+                    ${current.baseRate} USD <span className="text-[10px] text-[#94A3B8] font-normal">/ {language === 'es' ? 'noche' : 'night'}</span>
+                  </span>
                 </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Tabla Suiza de Especificaciones Arquitectónicas */}
+          <div className="border-t border-zy-border bg-zy-card p-4 sm:p-5">
+            <span className="block font-mono text-[9px] uppercase tracking-widest text-[#94A3B8] mb-3">
+              [ {language === 'es' ? 'FICHA TÉCNICA DEL PABELLÓN' : 'PAVILION ARCHITECTURAL DATUM'} ]
+            </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="border-b sm:border-b-0 sm:border-r border-zy-border pb-2 sm:pb-0 sm:pr-3">
+                <span className="block text-[10px] text-zy-muted uppercase font-mono">{language === 'es' ? 'Orientación Solar' : 'Solar Azimuth'}</span>
+                <span className="font-mono text-[11px] text-zy-fg">{current.azimuth ?? '42° N'}</span>
               </div>
-
-              {/* Optional Experiences Selector */}
-              <div className="mt-4 pt-4 border-t border-zy-border-card space-y-2.5">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-zy-dim block">
-                  {language === 'es' ? 'Experiencias adicionales' : 'Curated add-ons'}
-                </span>
-
-                <button
-                  type="button"
-                  aria-pressed={extras.breakfast}
-                  onClick={() => toggleExtra('breakfast')}
-                  className={`w-full p-3 rounded-xl border text-left transition-all flex items-center justify-between gap-2 text-xs ${
-                    extras.breakfast
-                      ? 'bg-zy-accent-soft border-zy-blue text-zy-fg'
-                      : 'bg-zy-card border-zy-border-card text-zy-muted hover:border-zy-border-strong hover:text-zy-fg'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2.5 min-w-0">
-                    <span
-                      className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
-                        extras.breakfast
-                          ? 'bg-zy-blue border-zy-blue text-white'
-                          : 'border-zy-border-strong bg-zy-surface'
-                      }`}
-                    >
-                      {extras.breakfast && <Check size={11} />}
-                    </span>
-                    <div className="truncate">
-                      <span className="font-medium block truncate">
-                        {language === 'es' ? 'Desayuno botánico' : 'Botanical breakfast'}
-                      </span>
-                      <span className="text-[10px] font-mono text-zy-muted block">
-                        ${EXTRA_RATES.breakfastPerAdultNight}{' '}
-                        {language === 'es' ? '/ adulto · noche' : '/ adult · night'}
-                      </span>
-                    </div>
-                  </div>
-                  <span className="font-mono text-[11px] text-zy-fg-secondary shrink-0">
-                    +${EXTRA_RATES.breakfastPerAdultNight * activeAdults * nights}
-                  </span>
-                </button>
-
-                <button
-                  type="button"
-                  aria-pressed={extras.spa}
-                  onClick={() => toggleExtra('spa')}
-                  className={`w-full p-3 rounded-xl border text-left transition-all flex items-center justify-between gap-2 text-xs ${
-                    extras.spa
-                      ? 'bg-zy-accent-soft border-zy-blue text-zy-fg'
-                      : 'bg-zy-card border-zy-border-card text-zy-muted hover:border-zy-border-strong hover:text-zy-fg'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2.5 min-w-0">
-                    <span
-                      className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
-                        extras.spa
-                          ? 'bg-zy-blue border-zy-blue text-white'
-                          : 'border-zy-border-strong bg-zy-surface'
-                      }`}
-                    >
-                      {extras.spa && <Check size={11} />}
-                    </span>
-                    <div className="truncate">
-                      <span className="font-medium block truncate">
-                        {language === 'es' ? 'Circuito de Spa termal' : 'Thermal Spa circuit'}
-                      </span>
-                      <span className="text-[10px] font-mono text-zy-muted block">
-                        ${EXTRA_RATES.spaPerAdultStay}{' '}
-                        {language === 'es' ? '/ adulto · estadía' : '/ adult · stay'}
-                      </span>
-                    </div>
-                  </div>
-                  <span className="font-mono text-[11px] text-zy-fg-secondary shrink-0">
-                    +${EXTRA_RATES.spaPerAdultStay * activeAdults}
-                  </span>
-                </button>
+              <div>
+                <span className="block text-[10px] text-zy-muted uppercase font-mono">{language === 'es' ? 'Confort Térmico' : 'Thermal Enclosure'}</span>
+                <span className="font-mono text-[11px] text-zy-fg">{current.thermal ?? 'R-40 Basalto'}</span>
               </div>
             </div>
 
-            {/* Dynamic Summary & Breakdown */}
-            <div className="pt-4 border-t border-zy-border-card space-y-3.5">
-              <div className="p-3.5 rounded-xl bg-zy-card border border-zy-border-card text-[11px] font-mono space-y-1.5">
-                <div className="flex justify-between gap-2">
-                  <span className="text-zy-muted">{language === 'es' ? 'Suite:' : 'Suite:'}</span>
-                  <span className="text-zy-fg font-semibold text-right">{current.name[language]}</span>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <span className="text-zy-muted">{language === 'es' ? 'Huéspedes:' : 'Guests:'}</span>
-                  <span className="text-zy-fg text-right">
-                    {adultsLabel} · {nightsLabel}
-                  </span>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <span className="text-zy-muted">{language === 'es' ? 'Extras:' : 'Extras:'}</span>
-                  <span className="text-zy-fg-secondary text-right">
-                    {selectedExtrasLabels.length > 0
-                      ? selectedExtrasLabels.join(', ')
-                      : language === 'es'
-                        ? 'Ninguno'
-                        : 'None'}
-                  </span>
-                </div>
+            <p className="mt-3 text-xs text-zy-muted leading-relaxed font-sans border-t border-zy-border/60 pt-3">
+              {current.summary[language as 'es' | 'en']}
+            </p>
 
-                <div className="pt-1.5 mt-1.5 border-t border-zy-border-subtle space-y-1">
-                  <div className="flex justify-between text-zy-muted">
-                    <span>
-                      {language === 'es' ? 'Suite' : 'Suite'} (${current.baseRate} × {nights}n)
-                    </span>
-                    <span className="text-zy-fg-secondary">${suiteSubtotal} USD</span>
+            <div className="mt-3 flex flex-wrap gap-2 pt-2">
+              {current.amenities.map((amenity, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center px-2 py-1 bg-zy-surface border border-zy-border text-[10px] font-mono text-zy-fg-secondary"
+                >
+                  <span className="text-[#FF3B30] mr-1.5">▪</span>
+                  {amenity[language as 'es' | 'en']}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* COLUMNA DERECHA: Consola de Reserva y Liquidación (lg:col-span-5) */}
+        <div className="lg:col-span-5 p-5 sm:p-6 bg-zy-card flex flex-col justify-between space-y-6">
+          <div className="space-y-6">
+            {/* Encabezado de la Consola */}
+            <div className="border-b border-zy-border pb-3 flex items-center justify-between">
+              <div>
+                <span className="font-mono text-[9px] uppercase tracking-widest text-[#94A3B8] block">
+                  {language === 'es' ? 'CONSOLA DE CONCIERGE' : 'CONCIERGE DESK'}
+                </span>
+                <h4 className="text-sm font-semibold tracking-tight text-zy-fg mt-0.5">
+                  {language === 'es' ? 'Configurar Estancia' : 'Configure Stay'}
+                </h4>
+              </div>
+              <span className="font-mono text-[10px] text-[#94A3B8]">
+                ID // AS-2026
+              </span>
+            </div>
+
+            {/* Parámetros: Noches y Huéspedes con botones milimétricos */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="border border-zy-border p-3 bg-zy-surface">
+                <span className="block text-[10px] font-mono uppercase text-[#94A3B8] mb-2">
+                  {language === 'es' ? 'Duración (Noches)' : 'Duration (Nights)'}
+                </span>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xl font-bold text-zy-fg">
+                    {nights} <span className="text-xs text-zy-muted font-normal">{language === 'es' ? 'n' : 'n'}</span>
+                  </span>
+                  <div className="flex space-x-1">
+                    <button
+                      type="button"
+                      onClick={() => setNights((n) => Math.max(1, n - 1))}
+                      disabled={nights <= 1}
+                      className="w-7 h-7 bg-zy-card border border-zy-border hover:bg-[#FF3B30] hover:text-white disabled:opacity-30 disabled:hover:bg-zy-card disabled:hover:text-zy-fg font-mono text-sm transition-colors duration-150 flex items-center justify-center"
+                    >
+                      -
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNights((n) => Math.min(14, n + 1))}
+                      disabled={nights >= 14}
+                      className="w-7 h-7 bg-zy-card border border-zy-border hover:bg-[#FF3B30] hover:text-white disabled:opacity-30 font-mono text-sm transition-colors duration-150 flex items-center justify-center"
+                    >
+                      +
+                    </button>
                   </div>
-                  {extras.breakfast && (
-                    <div className="flex justify-between text-zy-muted">
-                      <span>
-                        {language === 'es' ? 'Desayuno' : 'Breakfast'} (${EXTRA_RATES.breakfastPerAdultNight} × {activeAdults} × {nights}n)
-                      </span>
-                      <span className="text-zy-fg-secondary">+${breakfastSubtotal} USD</span>
-                    </div>
-                  )}
-                  {extras.spa && (
-                    <div className="flex justify-between text-zy-muted">
-                      <span>
-                        {language === 'es' ? 'Spa termal' : 'Thermal spa'} (${EXTRA_RATES.spaPerAdultStay} × {activeAdults})
-                      </span>
-                      <span className="text-zy-fg-secondary">+${spaSubtotal} USD</span>
-                    </div>
-                  )}
                 </div>
               </div>
 
-              <div className="flex justify-between items-baseline px-0.5">
-                <span className="text-xs text-zy-muted">{language === 'es' ? 'Total estimado:' : 'Estimated total:'}</span>
-                <span className="text-xl font-bold text-zy-fg font-sans">${totalPrice} USD</span>
+              <div className="border border-zy-border p-3 bg-zy-surface">
+                <span className="block text-[10px] font-mono uppercase text-[#94A3B8] mb-2">
+                  {language === 'es' ? 'Huéspedes' : 'Guests'}
+                </span>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xl font-bold text-zy-fg">
+                    {guests} <span className="text-xs text-zy-muted font-normal">/ {current.capacity}</span>
+                  </span>
+                  <div className="flex space-x-1">
+                    <button
+                      type="button"
+                      onClick={() => setGuests((g) => Math.max(1, g - 1))}
+                      disabled={guests <= 1}
+                      className="w-7 h-7 bg-zy-card border border-zy-border hover:bg-[#FF3B30] hover:text-white disabled:opacity-30 disabled:hover:bg-zy-card disabled:hover:text-zy-fg font-mono text-sm transition-colors duration-150 flex items-center justify-center"
+                    >
+                      -
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGuests((g) => Math.min(current.capacity, g + 1))}
+                      disabled={guests >= current.capacity}
+                      className="w-7 h-7 bg-zy-card border border-zy-border hover:bg-[#FF3B30] hover:text-white disabled:opacity-30 font-mono text-sm transition-colors duration-150 flex items-center justify-center"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
               </div>
+            </div>
 
+            {/* Servicios Curados de Concierge (Toggles a 90°) */}
+            <div className="space-y-2">
+              <span className="block font-mono text-[9px] uppercase tracking-widest text-[#94A3B8]">
+                [ {language === 'es' ? 'SERVICIOS ADICIONALES DE MONTAÑA' : 'BESPOKE MOUNTAIN CONCIERGE'} ]
+              </span>
+
+              {/* Extra 1: Desayuno */}
               <button
                 type="button"
-                onClick={() => setShowDrawer(true)}
-                className="w-full py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs font-medium font-sans transition-all"
+                onClick={() => setExtras((prev) => ({ ...prev, breakfast: !prev.breakfast }))}
+                className={`w-full p-2.5 text-left border flex items-center justify-between transition-colors duration-150 ${
+                  extras.breakfast
+                    ? 'border-[#FF3B30] bg-[#FF3B30]/5 text-zy-fg'
+                    : 'border-zy-border bg-zy-surface hover:border-zy-border-hover text-zy-muted'
+                }`}
               >
-                {language === 'es' ? 'Solicitar reserva de estadía' : 'Request stay reservation'}
+                <div className="flex items-center space-x-2.5 text-xs">
+                  <div
+                    className={`w-3.5 h-3.5 border flex items-center justify-center transition-colors ${
+                      extras.breakfast ? 'border-[#FF3B30] bg-[#FF3B30] text-white' : 'border-zy-border bg-zy-card'
+                    }`}
+                  >
+                    {extras.breakfast && <Check size={10} strokeWidth={3} />}
+                  </div>
+                  <span className="font-medium text-zy-fg">
+                    {language === 'es' ? 'Desayuno botánico alpino en suite' : 'Alpine botanical in-suite breakfast'}
+                  </span>
+                </div>
+                <span className="font-mono text-[10px] text-zy-fg-secondary">
+                  +${EXTRA_RATES.breakfastPerNight}/n
+                </span>
+              </button>
+
+              {/* Extra 2: Termas Privadas */}
+              <button
+                type="button"
+                onClick={() => setExtras((prev) => ({ ...prev, spa: !prev.spa }))}
+                className={`w-full p-2.5 text-left border flex items-center justify-between transition-colors duration-150 ${
+                  extras.spa
+                    ? 'border-[#FF3B30] bg-[#FF3B30]/5 text-zy-fg'
+                    : 'border-zy-border bg-zy-surface hover:border-zy-border-hover text-zy-muted'
+                }`}
+              >
+                <div className="flex items-center space-x-2.5 text-xs">
+                  <div
+                    className={`w-3.5 h-3.5 border flex items-center justify-center transition-colors ${
+                      extras.spa ? 'border-[#FF3B30] bg-[#FF3B30] text-white' : 'border-zy-border bg-zy-card'
+                    }`}
+                  >
+                    {extras.spa && <Check size={10} strokeWidth={3} />}
+                  </div>
+                  <span className="font-medium text-zy-fg">
+                    {language === 'es' ? 'Pase nocturno privado a termas' : 'Private night thermal bath access'}
+                  </span>
+                </div>
+                <span className="font-mono text-[10px] text-zy-fg-secondary">
+                  +${EXTRA_RATES.spaPerGuestStay}
+                </span>
+              </button>
+
+              {/* Extra 3: Helicóptero */}
+              <button
+                type="button"
+                onClick={() => setExtras((prev) => ({ ...prev, heli: !prev.heli }))}
+                className={`w-full p-2.5 text-left border flex items-center justify-between transition-colors duration-150 ${
+                  extras.heli
+                    ? 'border-[#FF3B30] bg-[#FF3B30]/5 text-zy-fg'
+                    : 'border-zy-border bg-zy-surface hover:border-zy-border-hover text-zy-muted'
+                }`}
+              >
+                <div className="flex items-center space-x-2.5 text-xs">
+                  <div
+                    className={`w-3.5 h-3.5 border flex items-center justify-center transition-colors ${
+                      extras.heli ? 'border-[#FF3B30] bg-[#FF3B30] text-white' : 'border-zy-border bg-zy-card'
+                    }`}
+                  >
+                    {extras.heli && <Check size={10} strokeWidth={3} />}
+                  </div>
+                  <span className="font-medium text-zy-fg">
+                    {language === 'es' ? 'Ascenso en helicóptero alpino' : 'Alpine helicopter valley transfer'}
+                  </span>
+                </div>
+                <span className="font-mono text-[10px] text-zy-fg-secondary">
+                  +${EXTRA_RATES.heliTransferFlat}
+                </span>
               </button>
             </div>
           </div>
+
+          {/* Pliego de Liquidación / Recibo Criptográfico */}
+          <div className="border border-zy-border bg-zy-surface p-4 space-y-3 font-mono text-[11px]">
+            <div className="flex justify-between items-center text-[#94A3B8] border-b border-zy-border pb-2 text-[10px]">
+              <span>[ORDEN // AS-{nights}N-{guests}P]</span>
+              <span>VALUTAZIONE FISCALE</span>
+            </div>
+
+            <div className="space-y-1.5 text-zy-muted">
+              <div className="flex justify-between">
+                <span>{current.name[language as 'es' | 'en']} ({nights}n × ${current.baseRate})</span>
+                <span className="text-zy-fg">${accommodationTotal} USD</span>
+              </div>
+              {extras.breakfast && (
+                <div className="flex justify-between">
+                  <span>{language === 'es' ? 'Desayuno botánico' : 'Botanical breakfast'} ({nights}n × {guests}p)</span>
+                  <span className="text-zy-fg">+${breakfastTotal} USD</span>
+                </div>
+              )}
+              {extras.spa && (
+                <div className="flex justify-between">
+                  <span>{language === 'es' ? 'Termas nocturnas' : 'Thermal bath pass'} ({guests}p)</span>
+                  <span className="text-zy-fg">+${spaTotal} USD</span>
+                </div>
+              )}
+              {extras.heli && (
+                <div className="flex justify-between">
+                  <span>{language === 'es' ? 'Helicóptero privado' : 'Helicopter transfer'}</span>
+                  <span className="text-zy-fg">+${heliTotal} USD</span>
+                </div>
+              )}
+              <div className="flex justify-between">
+                <span>{language === 'es' ? 'Fondo preservación glaciar (5%)' : 'Glacier preservation levy (5%)'}</span>
+                <span className="text-zy-fg">+${preservationLevy} USD</span>
+              </div>
+            </div>
+
+            {/* Total Monumental con Instrument Serif */}
+            <div className="pt-3 border-t border-zy-border flex items-baseline justify-between">
+              <div>
+                <span className="block font-mono text-[9px] uppercase tracking-wider text-[#94A3B8]">
+                  {language === 'es' ? 'TARIFA FINAL LIQUIDADA' : 'FINAL SETTLED RATE'}
+                </span>
+                <span className="text-[10px] text-zy-muted font-mono">{language === 'es' ? 'Impuestos incluidos' : 'Taxes included'}</span>
+              </div>
+              <div className="text-right">
+                <span className="font-serif-editorial italic text-3xl sm:text-4xl text-zy-fg font-bold tracking-tight">
+                  ${grandTotal.toLocaleString('en-US')}
+                </span>
+                <span className="font-mono text-[10px] text-[#94A3B8] ml-1">USD</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Botón de Acción Maestro (Security Vermilion) */}
+          <button
+            type="button"
+            onClick={() => setModalOpen(true)}
+            className="w-full py-4 bg-[#FF3B30] hover:bg-[#FF4A1C] active:scale-[0.99] text-white font-swiss text-xs font-semibold tracking-[0.08em] uppercase transition-all duration-150 flex items-center justify-center space-x-2 rounded-none cursor-pointer"
+          >
+            <span>{language === 'es' ? 'SOLICITAR PROTOCOLO DE RESERVA' : 'DISPATCH RESERVATION ORDER'}</span>
+            <ArrowUpRight size={16} />
+          </button>
         </div>
       </div>
 
-      {/* Interactive Modal Drawer for Mock Reservation */}
-      {showDrawer && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          style={{ backgroundColor: 'var(--zy-modal-backdrop)' }}
-          className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm p-4"
-        >
-          <div className="bg-zy-card border border-zy-border rounded-2xl max-w-md w-full p-6 text-zy-fg relative shadow-2xl">
-            <button
-              type="button"
-              onClick={() => setShowDrawer(false)}
-              aria-label={language === 'es' ? 'Cerrar modal' : 'Close modal'}
-              className="absolute top-4 right-4 p-1.5 rounded-full text-zy-muted hover:text-zy-fg hover:bg-zy-control"
+      {/* MODAL EDITORIAL: Protocolo de Confirmación Criptográfica */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 16 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-lg bg-zy-card border border-zy-border p-6 sm:p-8 rounded-none shadow-2xl space-y-6"
             >
-              <X size={16} />
-            </button>
+              {/* Cruces de esquina */}
+              <span className="absolute top-2 left-2 font-mono text-[9px] text-[#94A3B8]">+</span>
+              <span className="absolute top-2 right-2 font-mono text-[9px] text-[#94A3B8]">+</span>
+              <span className="absolute bottom-2 left-2 font-mono text-[9px] text-[#94A3B8]">+</span>
+              <span className="absolute bottom-2 right-2 font-mono text-[9px] text-[#94A3B8]">+</span>
 
-            <div className="flex items-center space-x-2 text-zy-blue text-xs font-mono mb-2">
-              <Info size={14} />
-              <span>{language === 'es' ? 'CONSERJERÍA AURA · DEMO CONCEPTUAL' : 'AURA CONCIERGE · CONCEPT DEMO'}</span>
-            </div>
-
-            {!demoSubmitted ? (
-              <form onSubmit={handleBookingSim} className="space-y-4">
-                <h3 className="text-xl font-bold font-sans text-zy-fg">
-                  {language === 'es' ? 'Solicitar estadía en' : 'Inquire stay at'} {current.name[language]}
-                </h3>
-
-                <div className="p-3 bg-zy-surface rounded-lg border border-zy-border text-xs font-mono space-y-1.5">
-                  <div className="flex justify-between">
-                    <span className="text-zy-muted">{language === 'es' ? 'Suite:' : 'Suite:'}</span>
-                    <span className="text-zy-fg font-semibold">{current.name[language]}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-zy-muted">{language === 'es' ? 'Duración:' : 'Length:'}</span>
-                    <span className="text-zy-fg">{nightsLabel}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-zy-muted">{language === 'es' ? 'Huéspedes:' : 'Guests:'}</span>
-                    <span className="text-zy-fg">{adultsLabel}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-zy-muted">{language === 'es' ? 'Extras:' : 'Extras:'}</span>
-                    <span className="text-zy-fg">
-                      {selectedExtrasLabels.length > 0
-                        ? selectedExtrasLabels.join(', ')
-                        : language === 'es'
-                          ? 'Ninguno'
-                          : 'None'}
-                    </span>
-                  </div>
-                  <div className="pt-1.5 border-t border-zy-border space-y-1 text-[11px]">
-                    <div className="flex justify-between text-zy-muted">
-                      <span>
-                        {language === 'es' ? 'Alojamiento' : 'Stay'} (${current.baseRate} × {nights}n)
-                      </span>
-                      <span className="text-zy-fg-secondary">${suiteSubtotal} USD</span>
-                    </div>
-                    {extras.breakfast && (
-                      <div className="flex justify-between text-zy-muted">
-                        <span>
-                          {language === 'es' ? 'Desayuno' : 'Breakfast'} (${EXTRA_RATES.breakfastPerAdultNight} × {activeAdults} × {nights}n)
-                        </span>
-                        <span className="text-zy-fg-secondary">+${breakfastSubtotal} USD</span>
-                      </div>
-                    )}
-                    {extras.spa && (
-                      <div className="flex justify-between text-zy-muted">
-                        <span>
-                          {language === 'es' ? 'Spa termal' : 'Thermal spa'} (${EXTRA_RATES.spaPerAdultStay} × {activeAdults})
-                        </span>
-                        <span className="text-zy-fg-secondary">+${spaSubtotal} USD</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex justify-between text-zy-blue font-semibold pt-1.5 border-t border-zy-border">
-                    <span>{language === 'es' ? 'Total estimado:' : 'Estimated total:'}</span>
-                    <span>${totalPrice} USD</span>
-                  </div>
+              <div className="flex items-start justify-between border-b border-zy-border pb-4">
+                <div>
+                  <span className="font-mono text-[9px] text-[#FF3B30] uppercase tracking-widest block font-bold">
+                    [ PROTOCOLO AURA // REF-2026 ]
+                  </span>
+                  <h3 className="text-lg font-bold font-swiss text-zy-fg mt-1">
+                    {language === 'es' ? 'Despacho de Reserva Arquitectónica' : 'Architectural Reservation Dispatch'}
+                  </h3>
                 </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-mono text-zy-fg-secondary">
-                    {language === 'es' ? 'Nombre del huésped (simulado):' : 'Guest name (simulated):'}
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    defaultValue="Alex Mercer"
-                    className="w-full px-3 py-2 bg-zy-surface border border-zy-border rounded-lg text-xs text-zy-fg focus:outline-none focus:border-zy-blue"
-                  />
-                </div>
-
-                <p className="text-[11px] text-zy-muted leading-relaxed">
-                  {language === 'es'
-                    ? 'Esta es una simulación visual creada por ZYRVAE para demostrar flujos de reserva boutique. No se realizará ningún cobro ni reserva real.'
-                    : 'This is a visual concept simulation built by ZYRVAE to showcase boutique reservation flows. No real reservation or payment will occur.'}
-                </p>
-
-                <button
-                  type="submit"
-                  className="w-full py-2.5 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white text-xs font-medium font-sans transition-all"
-                >
-                  {language === 'es' ? 'Confirmar solicitud demostrativa' : 'Confirm demonstration inquiry'}
-                </button>
-              </form>
-            ) : (
-              <div className="text-center py-6 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-zy-blue/20 text-zy-blue flex items-center justify-center mx-auto border border-zy-blue/40">
-                  <Check size={24} />
-                </div>
-                <h3 className="text-lg font-bold font-sans text-zy-fg">
-                  {language === 'es' ? 'Solicitud registrada (Simulación)' : 'Inquiry registered (Simulation)'}
-                </h3>
-                <p className="text-xs text-zy-muted leading-relaxed">
-                  {language === 'es'
-                    ? 'En un entorno de producción, esta acción conectaría directamente con el motor de reservas del hotel o enviaría el pedido a conserjería.'
-                    : 'In production, this interaction connects directly to the property PMS or dispatches a priority concierge request.'}
-                </p>
                 <button
                   type="button"
-                  onClick={() => setShowDrawer(false)}
-                  className="px-4 py-2 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-xs font-mono text-zy-fg"
+                  onClick={() => setModalOpen(false)}
+                  className="w-8 h-8 border border-zy-border flex items-center justify-center text-zy-muted hover:text-zy-fg hover:bg-zy-surface transition-colors"
                 >
-                  {language === 'es' ? 'Volver a AURA Sanctuary' : 'Return to AURA Sanctuary'}
+                  <X size={16} />
                 </button>
               </div>
-            )}
+
+              {!demoSubmitted ? (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setDemoSubmitted(true);
+                  }}
+                  className="space-y-4"
+                >
+                  <div className="p-3 bg-zy-surface border border-zy-border font-mono text-xs space-y-1">
+                    <div className="flex justify-between text-zy-muted">
+                      <span>{language === 'es' ? 'Suite Asignada:' : 'Assigned Suite:'}</span>
+                      <span className="text-zy-fg font-semibold">{current.name[language as 'es' | 'en']}</span>
+                    </div>
+                    <div className="flex justify-between text-zy-muted">
+                      <span>{language === 'es' ? 'Estancia:' : 'Duration:'}</span>
+                      <span className="text-zy-fg">{nights} {language === 'es' ? 'noches' : 'nights'} · {guests} {language === 'es' ? 'huéspedes' : 'guests'}</span>
+                    </div>
+                    <div className="flex justify-between text-zy-muted pt-1 border-t border-zy-border">
+                      <span className="text-[#FF3B30] font-semibold">{language === 'es' ? 'Liquidación Total:' : 'Total Amount:'}</span>
+                      <span className="text-zy-fg font-bold">${grandTotal.toLocaleString('en-US')} USD</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block font-mono text-[10px] text-[#94A3B8] uppercase">
+                      {language === 'es' ? 'Nombre Completo del Huésped' : 'Guest Full Name'}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      defaultValue="Alexandre von Mercer"
+                      className="w-full px-3 py-2.5 bg-zy-surface border border-zy-border text-xs text-zy-fg focus:outline-none focus:border-[#FF3B30] rounded-none font-mono"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block font-mono text-[10px] text-[#94A3B8] uppercase">
+                      {language === 'es' ? 'Correo de Contacto Privado' : 'Private Concierge Email'}
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      defaultValue="mercer@mercer-holdings.ch"
+                      className="w-full px-3 py-2.5 bg-zy-surface border border-zy-border text-xs text-zy-fg focus:outline-none focus:border-[#FF3B30] rounded-none font-mono"
+                    />
+                  </div>
+
+                  <p className="text-[10px] text-zy-muted leading-relaxed font-sans pt-1">
+                    {language === 'es'
+                      ? 'Prototipo interactivo desarrollado por ZYRVAE para exhibición de experiencia de usuario boutique. No se realiza ningún cobro real.'
+                      : 'Interactive functional prototype crafted by ZYRVAE for boutique client presentation. No financial charges incurred.'}
+                  </p>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3.5 bg-[#FF3B30] hover:bg-[#FF4A1C] active:scale-[0.99] text-white font-swiss text-xs font-semibold tracking-wider uppercase transition-all duration-150 rounded-none cursor-pointer"
+                  >
+                    {language === 'es' ? 'CONFIRMAR Y EMITIR COMPROBANTE // ↗' : 'CONFIRM & DISPATCH MANIFESTO // ↗'}
+                  </button>
+                </form>
+              ) : (
+                <div className="py-6 text-center space-y-4">
+                  <div className="w-12 h-12 border-2 border-[#FF3B30] text-[#FF3B30] flex items-center justify-center mx-auto">
+                    <Check size={24} strokeWidth={2.5} />
+                  </div>
+                  <div>
+                    <span className="font-mono text-[10px] text-[#94A3B8] tracking-widest uppercase block">
+                      SELLO // ORDEN AS-8841-B CONFIRMADA
+                    </span>
+                    <h4 className="text-base font-bold font-swiss text-zy-fg mt-1">
+                      {language === 'es' ? 'Protocolo de Reserva Emitido con Éxito' : 'Reservation Protocol Dispatched'}
+                    </h4>
+                  </div>
+                  <p className="text-xs text-zy-muted max-w-sm mx-auto leading-relaxed">
+                    {language === 'es'
+                      ? 'En entorno de producción, este evento conecta directamente con el PMS del hotel o notifica al mayordomo en suite con los requerimientos técnicos.'
+                      : 'In production, this event connects to the property management system and triggers biometric key provisioning.'}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setModalOpen(false)}
+                    className="px-6 py-2.5 bg-zy-surface hover:bg-zy-card border border-zy-border text-xs font-mono text-zy-fg uppercase tracking-wider rounded-none transition-colors"
+                  >
+                    {language === 'es' ? 'CERRAR VENTANA' : 'CLOSE MANIFESTO'}
+                  </button>
+                </div>
+              )}
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </div>
   );
 };
