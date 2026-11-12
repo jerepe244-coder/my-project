@@ -350,25 +350,25 @@ export const KON_AMBIENCE_SPACES: AmbienceSpace[] = [
 export const KON_TABLE_ZONES: TableZone[] = [
   {
     id: 'hearth',
-    name: { es: 'The Open Hearth (Barra frente al fuego)', en: 'The Open Hearth (Fire counter)' },
-    capacity: { es: '1 a 2 comensales · 8 banquetas', en: '1 to 2 guests · 8 counter seats' },
+    name: { es: 'La Barra del Fuego', en: 'The Fire Counter' },
+    capacity: { es: '1 a 2 comensales por reserva (8 banquetas en total)', en: '1 to 2 guests per party (8 counter seats total)' },
     atmosphere: { es: 'Vista directa al fuego vivo y brigada de cocina', en: 'Direct view of live hearth fire and culinary brigade' },
   },
   {
     id: 'stone',
-    name: { es: 'The Stone Hall (Salón de piedra volcánica)', en: 'The Stone Hall (Basalt dining room)' },
+    name: { es: 'La Sala de Piedra', en: 'The Stone Hall' },
     capacity: { es: '2 a 4 comensales · Mesas privadas', en: '2 to 4 guests · Private tables' },
     atmosphere: { es: 'Ambiente íntimo, luz tenue y acústica silenciosa', en: 'Intimate setting, candlelit, acoustic quiet' },
   },
   {
     id: 'alcove',
-    name: { es: 'The Botanical Alcove (Jardín interior)', en: 'The Botanical Alcove (Indoor garden)' },
+    name: { es: 'El Rincón Botánico', en: 'The Botanical Alcove' },
     capacity: { es: '2 a 6 comensales · Banqueta corrida', en: '2 to 6 guests · Garden banquette' },
     atmosphere: { es: 'Rodeado de flora nativa andina y hierbas frescas', en: 'Surrounded by native Andean flora and fresh herbs' },
   },
   {
     id: 'vault',
-    name: { es: 'The Private Vault (Cava de vinos)', en: 'The Private Vault (Wine cellar table)' },
+    name: { es: 'La Cava Privada', en: 'The Private Vault' },
     capacity: { es: '4 a 6 comensales · Mesa exclusiva', en: '4 to 6 guests · Exclusive cellar table' },
     atmosphere: { es: 'Privacidad absoluta entre barricas y botellas de guarda', en: 'Absolute privacy among oak barrels and library vintages' },
   },

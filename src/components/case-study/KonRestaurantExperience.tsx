@@ -33,6 +33,13 @@ interface KonRestaurantExperienceProps {
   project: ProjectDetail;
 }
 
+const ALLOWED_GUESTS_BY_ZONE: Record<string, number[]> = {
+  hearth: [1, 2],
+  stone: [2, 4],
+  alcove: [2, 4, 6],
+  vault: [4, 6],
+};
+
 export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = ({ project }) => {
   const { language } = useLanguage();
 
@@ -61,6 +68,14 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
     if (el) {
       e.preventDefault();
       el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleZoneChange = (zoneId: string) => {
+    setSelectedZone(zoneId);
+    const allowed = ALLOWED_GUESTS_BY_ZONE[zoneId] || [1, 2, 4, 6];
+    if (!allowed.includes(guestCount)) {
+      setGuestCount(allowed[0]);
     }
   };
 
@@ -96,12 +111,12 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
     <div className="min-h-screen min-h-svh bg-[#0C0B0A] text-[#F4F1EA] pt-16 sm:pt-20 pb-16 sm:pb-20 font-swiss">
       {/* 1. RESTAURANT EXPEDIENT HEADER: Swiss 0.5px Continuous Folio Bar */}
       <header className="sticky top-16 z-30 bg-[#121110]/95 backdrop-blur-md border-b border-white/10 text-[#F4F1EA] font-swiss">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0 flex items-stretch justify-between h-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0 flex items-stretch justify-between h-12 gap-2">
           {/* Izquierda: Volver a Zyrvae */}
-          <div className="flex items-center">
+          <div className="flex items-center shrink-0">
             <Link
               href="/#work"
-              className="inline-flex items-center space-x-2 text-xs font-mono text-[#94A3B8] hover:text-white transition-colors pr-4 border-r border-white/10 h-full"
+              className="inline-flex items-center space-x-2 text-xs font-mono text-[#94A3B8] hover:text-white transition-colors pr-3 sm:pr-4 border-r border-white/10 h-full whitespace-nowrap"
             >
               <ArrowLeft size={13} />
               <span>{language === 'es' ? 'Volver a Zyrvae' : 'Back to Zyrvae'}</span>
@@ -109,14 +124,14 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
           </div>
 
           {/* Centro: 02 / Kôn Atelier — Fuego & Raíces */}
-          <div className="hidden md:flex items-center px-4 font-swiss text-xs font-medium text-[#F4F1EA]/90 tracking-[0.015em]">
+          <div className="hidden md:flex items-center px-2 lg:px-4 font-swiss text-xs font-medium text-[#F4F1EA]/90 tracking-[0.015em] truncate">
             <span>02 / Kôn Atelier — Fuego & Raíces</span>
           </div>
 
           {/* Navegación Interior Simplificada */}
           <nav
             aria-label={language === 'es' ? 'Navegación de Kôn Atelier' : 'Kôn Atelier navigation'}
-            className="hidden lg:flex items-center space-x-7 text-xs text-[#94A3B8] font-swiss"
+            className="hidden lg:flex items-center space-x-6 text-xs text-[#94A3B8] font-swiss whitespace-nowrap"
           >
             <a
               href="#kon-concept"
@@ -141,12 +156,12 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
             </a>
           </nav>
 
-          {/* Derecha: Reservar mesa en bloque sólido rectangular (0px de radio) */}
-          <div className="flex items-stretch">
+          {/* Derecha: Reservar mesa (sin recortes, shrink-0 y whitespace-nowrap) */}
+          <div className="flex items-stretch shrink-0">
             <a
               href="#kon-booking"
               onClick={(e) => scrollToSection(e, 'kon-booking')}
-              className="inline-flex items-center px-5 bg-[#8C3B2B] hover:bg-white hover:text-black text-white text-xs font-swiss font-medium tracking-wider transition-colors border-l border-white/10"
+              className="inline-flex items-center px-4 sm:px-5 bg-[#8C3B2B] hover:bg-white hover:text-black text-white text-xs font-swiss font-medium tracking-wider transition-colors border-l border-white/10 whitespace-nowrap shrink-0"
             >
               <span>{language === 'es' ? 'Reservar mesa ↓' : 'Book a table ↓'}</span>
             </a>
@@ -375,14 +390,14 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             {/* Conmutador 7 vs 11 Pasos */}
             <div className="flex items-center space-x-3">
-              <span className="text-xs font-mono text-[#94A3B8] uppercase">
+              <span className="text-xs font-swiss text-[#94A3B8]">
                 {language === 'es' ? 'Recorrido:' : 'Experience:'}
               </span>
               <div className="inline-flex rounded-none bg-[#0C0B0A] p-0.5 border border-white/10">
                 <button
                   type="button"
                   onClick={() => setCourseCount(7)}
-                  className={`px-4 py-2 text-xs font-mono transition-colors rounded-none cursor-pointer ${
+                  className={`px-4 py-2 text-xs font-swiss transition-colors rounded-none cursor-pointer ${
                     courseCount === 7
                       ? 'bg-[#8C3B2B] text-white font-medium'
                       : 'text-[#94A3B8] hover:text-white'
@@ -393,7 +408,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                 <button
                   type="button"
                   onClick={() => setCourseCount(11)}
-                  className={`px-4 py-2 text-xs font-mono transition-colors rounded-none cursor-pointer ${
+                  className={`px-4 py-2 text-xs font-swiss transition-colors rounded-none cursor-pointer ${
                     courseCount === 11
                       ? 'bg-[#8C3B2B] text-white font-medium'
                       : 'text-[#94A3B8] hover:text-white'
@@ -409,7 +424,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
               <button
                 type="button"
                 onClick={() => setPairingActive(!pairingActive)}
-                className={`inline-flex items-center space-x-2 px-4 py-2 border text-xs font-mono rounded-none transition-colors cursor-pointer ${
+                className={`inline-flex items-center space-x-2 px-4 py-2 border text-xs font-swiss rounded-none transition-colors cursor-pointer ${
                   pairingActive
                     ? 'bg-[#181614] border-[#8C3B2B] text-white'
                     : 'bg-[#0C0B0A] border-white/10 text-[#94A3B8]'
@@ -427,16 +442,15 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                 </span>
               </button>
 
-              <div className="px-4 py-2 bg-[#0C0B0A] border border-white/10 font-mono text-xs flex items-center space-x-2 rounded-none">
-                <span className="text-[#94A3B8]">{language === 'es' ? 'Total estimado:' : 'Rate:'}</span>
-                <span className="font-bold text-white">${perPersonTotal} USD</span>
-                <span className="text-[10px] text-[#94A3B8]">/ {language === 'es' ? 'comensal' : 'guest'}</span>
+              <div className="px-4 py-2 bg-[#0C0B0A] border border-white/10 font-swiss text-xs flex items-center space-x-2 rounded-none">
+                <span className="text-[#94A3B8]">{language === 'es' ? 'Total comensal:' : 'Guest rate:'}</span>
+                <span className="font-bold text-white font-mono">${perPersonTotal} USD</span>
               </div>
             </div>
           </div>
 
           {/* Filtros Dietéticos como Línea Tipográfica Continua con barras | */}
-          <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+          <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs font-swiss">
             {/* Categorías */}
             <div className="flex items-center space-x-2 overflow-x-auto pb-1 sm:pb-0">
               {KON_CATEGORIES.map((cat, idx) => (
@@ -458,8 +472,8 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
             </div>
 
             {/* Preferencias Dietéticas en Línea */}
-            <div className="flex items-center space-x-2 text-xs font-mono text-[#94A3B8]">
-              <span className="uppercase text-[10px] text-white/50">{language === 'es' ? 'Dieta:' : 'Diet:'}</span>
+            <div className="flex items-center space-x-2 text-xs font-swiss text-[#94A3B8]">
+              <span className="text-[11px] text-white/50">{language === 'es' ? 'Filtro:' : 'Diet:'}</span>
               <button
                 type="button"
                 onClick={() => setDietaryFilter('all')}
@@ -503,64 +517,67 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
           </div>
         </div>
 
-        {/* Platos en Filas Horizontales Continuas Separadas por Filetes de 0.5px (Estilo Carta 3 Estrellas) */}
+        {/* Platos en Filas Horizontales Continuas Separadas por Filetes de 0.5px (Renumeración Continua 01..07) */}
         <div className="mt-8 border-t border-b border-white/10 divide-y divide-white/10">
           {filteredDishes.length === 0 ? (
-            <div className="py-12 text-center text-xs font-mono text-[#94A3B8]">
+            <div className="py-12 text-center text-xs font-swiss text-[#94A3B8]">
               {language === 'es'
                 ? 'No se encontraron platos que coincidan con la combinación de filtros seleccionada.'
                 : 'No dishes found matching the selected combination of filters.'}
             </div>
           ) : (
-            filteredDishes.map((dish) => (
-              <article
-                key={dish.id}
-                onClick={() => setInspectDish(dish)}
-                className="py-6 sm:py-7 flex flex-col md:flex-row md:items-start justify-between gap-6 group cursor-pointer hover:bg-white/[0.02] transition-colors px-2 sm:px-4"
-              >
-                <div className="flex items-start space-x-5 sm:space-x-8 max-w-3xl">
-                  {/* Step Number in Serif */}
-                  <span className="font-serif-editorial italic text-2xl sm:text-3xl text-[#94A3B8] group-hover:text-white transition-colors shrink-0 w-8">
-                    {dish.num}
-                  </span>
+            filteredDishes.map((dish, idx) => {
+              const displayNum = String(idx + 1).padStart(2, '0');
+              return (
+                <article
+                  key={dish.id}
+                  onClick={() => setInspectDish(dish)}
+                  className="py-6 sm:py-7 flex flex-col md:flex-row md:items-start justify-between gap-6 group cursor-pointer hover:bg-white/[0.02] transition-colors px-2 sm:px-4"
+                >
+                  <div className="flex items-start space-x-5 sm:space-x-8 max-w-3xl">
+                    {/* Step Number in Serif (Renumerado continuo 01..07 o 01..11) */}
+                    <span className="font-serif-editorial italic text-2xl sm:text-3xl text-[#94A3B8] group-hover:text-white transition-colors shrink-0 w-8">
+                      {displayNum}
+                    </span>
 
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-baseline gap-3">
-                      <h3 className="text-lg sm:text-xl font-swiss font-medium text-white group-hover:text-[#d49b57] transition-colors">
-                        {dish.title[language]}
-                      </h3>
-                      {dish.isSignature && (
-                        <span className="font-mono text-[9px] uppercase tracking-widest text-[#8C3B2B] border border-[#8C3B2B]/40 px-1.5 py-0.5">
-                          {language === 'es' ? 'Emblemático' : 'Signature'}
-                        </span>
-                      )}
-                    </div>
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <h3 className="text-lg sm:text-xl font-swiss font-medium text-white group-hover:text-[#d49b57] transition-colors">
+                          {dish.title[language]}
+                        </h3>
+                        {dish.isSignature && (
+                          <span className="font-swiss text-[10px] text-[#8C3B2B] border border-[#8C3B2B]/40 px-1.5 py-0.5">
+                            {language === 'es' ? 'Emblemático' : 'Signature'}
+                          </span>
+                        )}
+                      </div>
 
-                    <p className="text-xs sm:text-sm text-[#94A3B8] font-sans leading-relaxed max-w-2xl">
-                      {dish.desc[language]}
-                    </p>
+                      <p className="text-xs sm:text-sm text-[#94A3B8] font-sans leading-relaxed max-w-2xl">
+                        {dish.desc[language]}
+                      </p>
 
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-[#94A3B8]/70 pt-1">
-                      <span>{dish.provenance[language]}</span>
-                      {pairingActive && (
-                        <span className="text-[#d49b57]/90 flex items-center space-x-1">
-                          <Wine size={12} className="shrink-0" />
-                          <span>{dish.pairing[language]}</span>
-                        </span>
-                      )}
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-swiss text-[#94A3B8]/80 pt-1">
+                        <span>{dish.provenance[language]}</span>
+                        {pairingActive && (
+                          <span className="text-[#d49b57]/90 flex items-center space-x-1">
+                            <Wine size={12} className="shrink-0" />
+                            <span>{dish.pairing[language]}</span>
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex md:flex-col items-baseline md:items-end justify-between md:justify-start shrink-0 text-right space-y-1 pl-12 md:pl-0">
-                  <span className="font-mono text-sm text-white font-medium">${dish.price} USD</span>
-                  <span className="text-[11px] font-mono text-[#94A3B8] group-hover:text-white transition-colors inline-flex items-center space-x-1">
-                    <span>{language === 'es' ? 'Ver bodegón' : 'Inspect plate'}</span>
-                    <ChevronRight size={13} />
-                  </span>
-                </div>
-              </article>
-            ))
+                  <div className="flex md:flex-col items-baseline md:items-end justify-between md:justify-start shrink-0 text-right space-y-1 pl-12 md:pl-0">
+                    <span className="font-mono text-sm text-white font-medium">${dish.price} USD</span>
+                    <span className="text-[11px] font-swiss text-[#94A3B8] group-hover:text-white transition-colors inline-flex items-center space-x-1">
+                      <span>{language === 'es' ? 'Ver bodegón' : 'Inspect plate'}</span>
+                      <ChevronRight size={13} />
+                    </span>
+                  </div>
+                </article>
+              );
+            })
           )}
         </div>
       </section>
@@ -685,7 +702,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
               </div>
 
               <div className="p-5 pt-0 border-t border-white/5 pt-3">
-                <span className="text-[10px] font-mono text-[#94A3B8] block">
+                <span className="text-[11px] font-swiss text-[#94A3B8] block">
                   {space.specs[language]}
                 </span>
               </div>
@@ -705,24 +722,24 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
             {/* Form Left Side */}
             <div className="lg:col-span-7 space-y-6">
               <div>
-                <span className="font-mono text-xs uppercase tracking-widest text-[#94A3B8]">
-                  {language === 'es' ? '04 // SOLICITUD DE MESA' : '04 // TABLE REQUEST'}
+                <span className="font-swiss text-xs uppercase tracking-widest text-[#94A3B8]">
+                  {language === 'es' ? '04 // Solicitud de mesa' : '04 // Table request'}
                 </span>
                 <h3 className="text-2xl sm:text-4xl font-swiss font-medium text-white mt-1 text-balance">
                   {language === 'es' ? 'Configurar experiencia en sala' : 'Configure dining experience'}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#94A3B8] mt-2">
+                <p className="text-xs sm:text-sm text-[#94A3B8] mt-2 font-swiss">
                   {language === 'es'
-                    ? 'Selecciona el espacio, turno, recorrido y maridaje para emitir la comanda estimada.'
-                    : 'Select space, seating turn, tasting journey, and wine pairing to simulate the intake.'}
+                    ? 'Selecciona el espacio, turno, recorrido y comensales permitidos para emitir la comanda estimada.'
+                    : 'Select space, seating turn, tasting journey, and allowed party size to simulate the intake.'}
                 </p>
               </div>
 
               {!simulationConfirmed ? (
                 <form onSubmit={handleConfirmSimulation} className="space-y-5">
-                  {/* Zona de Mesa en Celdas Rectangulares */}
+                  {/* Zona de Mesa en Celdas Rectangulares (Nombres unificados) */}
                   <div className="space-y-2">
-                    <label className="text-xs font-mono uppercase text-[#94A3B8] block">
+                    <label className="text-xs font-swiss text-[#94A3B8] block">
                       {language === 'es' ? '1. Espacio y zona deseada:' : '1. Seating space & zone:'}
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -732,7 +749,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                           <button
                             key={zone.id}
                             type="button"
-                            onClick={() => setSelectedZone(zone.id)}
+                            onClick={() => handleZoneChange(zone.id)}
                             className={`p-3.5 border text-left transition-colors rounded-none cursor-pointer ${
                               isSelected
                                 ? 'bg-[#181614] border-[#8C3B2B] text-white'
@@ -742,7 +759,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                             <span className="text-xs font-swiss font-medium text-white block">
                               {zone.name[language]}
                             </span>
-                            <span className="text-[10px] font-mono text-[#94A3B8] block mt-1">
+                            <span className="text-[11px] font-swiss text-[#94A3B8] block mt-1">
                               {zone.capacity[language]}
                             </span>
                           </button>
@@ -751,17 +768,17 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                     </div>
                   </div>
 
-                  {/* Turno de Sala y Comensales */}
+                  {/* Turno de Sala y Comensales con Validación Estricta de Capacidad */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-mono uppercase text-[#94A3B8] block">
+                      <label className="text-xs font-swiss text-[#94A3B8] block">
                         {language === 'es' ? '2. Turno de sala:' : '2. Seating turn:'}
                       </label>
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           type="button"
                           onClick={() => setSelectedTurn('early')}
-                          className={`p-3 border font-mono text-xs transition-colors rounded-none cursor-pointer ${
+                          className={`p-3 border font-swiss text-xs transition-colors rounded-none cursor-pointer ${
                             selectedTurn === 'early'
                               ? 'bg-[#8C3B2B] text-white font-medium border-[#8C3B2B]'
                               : 'bg-[#0C0B0A] border-white/10 text-[#94A3B8]'
@@ -772,7 +789,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                         <button
                           type="button"
                           onClick={() => setSelectedTurn('late')}
-                          className={`p-3 border font-mono text-xs transition-colors rounded-none cursor-pointer ${
+                          className={`p-3 border font-swiss text-xs transition-colors rounded-none cursor-pointer ${
                             selectedTurn === 'late'
                               ? 'bg-[#8C3B2B] text-white font-medium border-[#8C3B2B]'
                               : 'bg-[#0C0B0A] border-white/10 text-[#94A3B8]'
@@ -784,31 +801,38 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-xs font-mono uppercase text-[#94A3B8] block">
+                      <label className="text-xs font-swiss text-[#94A3B8] block">
                         {language === 'es' ? '3. Comensales:' : '3. Guests:'}
                       </label>
                       <div className="grid grid-cols-4 gap-2">
-                        {[1, 2, 4, 6].map((num) => (
-                          <button
-                            key={num}
-                            type="button"
-                            onClick={() => setGuestCount(num)}
-                            className={`p-3 border font-mono text-xs transition-colors rounded-none cursor-pointer ${
-                              guestCount === num
-                                ? 'bg-white text-black font-semibold border-white'
-                                : 'bg-[#0C0B0A] border-white/10 text-[#94A3B8]'
-                            }`}
-                          >
-                            {num}
-                          </button>
-                        ))}
+                        {[1, 2, 4, 6].map((num) => {
+                          const allowed = ALLOWED_GUESTS_BY_ZONE[selectedZone] || [1, 2, 4, 6];
+                          const isAllowed = allowed.includes(num);
+                          return (
+                            <button
+                              key={num}
+                              type="button"
+                              disabled={!isAllowed}
+                              onClick={() => setGuestCount(num)}
+                              className={`p-3 border font-swiss text-xs transition-colors rounded-none ${
+                                !isAllowed
+                                  ? 'opacity-20 cursor-not-allowed bg-[#0C0B0A] border-white/5 text-[#94A3B8]/30'
+                                  : guestCount === num
+                                  ? 'bg-white text-black font-semibold border-white cursor-pointer'
+                                  : 'bg-[#0C0B0A] border-white/10 text-[#94A3B8] hover:border-white/30 cursor-pointer'
+                              }`}
+                            >
+                              {num}
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
 
                   {/* Fecha de Visita */}
                   <div className="space-y-2">
-                    <label className="text-xs font-mono uppercase text-[#94A3B8] block">
+                    <label className="text-xs font-swiss text-[#94A3B8] block">
                       {language === 'es' ? '4. Fecha de visita:' : '4. Visit date:'}
                     </label>
                     <input
@@ -822,7 +846,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                   {/* Datos del Comensal */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="text-[10px] font-mono uppercase text-[#94A3B8] block">
+                      <label className="text-[11px] font-swiss text-[#94A3B8] block">
                         {language === 'es' ? 'Nombre completo:' : 'Full name:'}
                       </label>
                       <input
@@ -831,11 +855,11 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                         value={guestName}
                         onChange={(e) => setGuestName(e.target.value)}
                         placeholder="Elena Vance"
-                        className="w-full px-3.5 py-2.5 bg-[#0C0B0A] border border-white/10 text-xs text-white focus:outline-none focus:border-white rounded-none font-mono"
+                        className="w-full px-3.5 py-2.5 bg-[#0C0B0A] border border-white/10 text-xs text-white focus:outline-none focus:border-white rounded-none font-swiss"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-mono uppercase text-[#94A3B8] block">
+                      <label className="text-[11px] font-swiss text-[#94A3B8] block">
                         {language === 'es' ? 'Correo electrónico:' : 'Email address:'}
                       </label>
                       <input
@@ -850,7 +874,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-[10px] font-mono uppercase text-[#94A3B8] block">
+                    <label className="text-[11px] font-swiss text-[#94A3B8] block">
                       {language === 'es' ? 'Alergias o requerimientos dietéticos:' : 'Allergies & dietary notes:'}
                     </label>
                     <textarea
@@ -858,7 +882,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                       value={dietaryNotes}
                       onChange={(e) => setDietaryNotes(e.target.value)}
                       placeholder={language === 'es' ? 'Indicar preferencias botánicas o alergias...' : 'Note allergies or botanical preferences...'}
-                      className="w-full px-3.5 py-2 bg-[#0C0B0A] border border-white/10 text-xs text-white focus:outline-none focus:border-white rounded-none font-mono resize-none"
+                      className="w-full px-3.5 py-2 bg-[#0C0B0A] border border-white/10 text-xs text-white focus:outline-none focus:border-white rounded-none font-swiss resize-none"
                     />
                   </div>
 
@@ -882,7 +906,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                       {language === 'es' ? 'Solicitud registrada correctamente' : 'Table request registered'}
                     </h4>
                   </div>
-                  <p className="text-xs text-[#94A3B8] max-w-sm mx-auto leading-relaxed">
+                  <p className="text-xs text-[#94A3B8] max-w-sm mx-auto leading-relaxed font-swiss">
                     {language === 'es'
                       ? 'En producción, este flujo confirma en tiempo real la disponibilidad y envía los detalles de recepción.'
                       : 'In production, this interaction links with dining PMS for seat assignment and reception dispatch.'}
@@ -890,7 +914,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                   <button
                     type="button"
                     onClick={() => setSimulationConfirmed(false)}
-                    className="px-6 py-2.5 bg-[#181614] hover:bg-white/10 border border-white/15 text-xs font-mono text-white uppercase tracking-wider rounded-none transition-colors cursor-pointer"
+                    className="px-6 py-2.5 bg-[#181614] hover:bg-white/10 border border-white/15 text-xs font-swiss text-white uppercase tracking-wider rounded-none transition-colors cursor-pointer"
                   >
                     {language === 'es' ? 'Modificar datos' : 'Modify request'}
                   </button>
@@ -900,10 +924,10 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
 
             {/* Recibo Editorial Right Side */}
             <div className="lg:col-span-5 bg-[#0C0B0A] border border-white/10 p-6 sm:p-7 flex flex-col justify-between space-y-6 rounded-none">
-              <div className="space-y-4 font-mono text-xs">
+              <div className="space-y-4 text-xs font-swiss">
                 <div className="flex justify-between items-center text-[#94A3B8] border-b border-white/10 pb-3 text-[11px]">
                   <span>{language === 'es' ? 'Desglose de comanda' : 'Order breakdown'}</span>
-                  <span>{selectedDate} · {selectedTurn === 'early' ? '19:30 hs' : '21:45 hs'}</span>
+                  <span className="font-mono">{selectedDate} · {selectedTurn === 'early' ? '19:30 hs' : '21:45 hs'}</span>
                 </div>
 
                 <div className="space-y-2 text-[#94A3B8]">
@@ -911,18 +935,18 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                     <span>
                       {courseCount} {language === 'es' ? 'Pasos' : 'Courses'} (${baseMenuPrice} × {guestCount}p)
                     </span>
-                    <span className="text-white">${baseMenuPrice * guestCount} USD</span>
+                    <span className="text-white font-mono">${baseMenuPrice * guestCount} USD</span>
                   </div>
                   {pairingActive && (
                     <div className="flex justify-between">
                       <span>
-                        {language === 'es' ? 'Maridaje' : 'Wine Pairing'} (${courseCount === 7 ? 55 : 80} × {guestCount}p)
+                        {language === 'es' ? 'Maridaje de vinos' : 'Wine pairing'} (${courseCount === 7 ? 55 : 80} × {guestCount}p)
                       </span>
-                      <span className="text-white">+${winePairingPrice * guestCount} USD</span>
+                      <span className="text-white font-mono">+${winePairingPrice * guestCount} USD</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-white/50 text-[11px] pt-1 border-t border-white/5">
-                    <span>{language === 'es' ? 'Zona' : 'Seating'}:</span>
+                  <div className="flex justify-between text-white/50 text-[11px] pt-1.5 border-t border-white/5">
+                    <span>{language === 'es' ? 'Espacio asignado' : 'Assigned zone'}:</span>
                     <span className="text-[#F4F1EA]">
                       {KON_TABLE_ZONES.find((z) => z.id === selectedZone)?.name[language]}
                     </span>
@@ -931,11 +955,11 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
 
                 <div className="pt-4 border-t border-white/10 flex items-baseline justify-between">
                   <div>
-                    <span className="block font-mono text-[10px] uppercase tracking-wider text-[#94A3B8]">
+                    <span className="block text-[11px] text-[#94A3B8]">
                       {language === 'es' ? 'Total estimado' : 'Estimated total'}
                     </span>
-                    <span className="text-[10px] text-[#94A3B8]/60 font-mono">
-                      {guestCount} {language === 'es' ? 'comensales' : 'guests'}
+                    <span className="text-[10px] text-[#94A3B8]/60 font-swiss">
+                      {guestCount} {language === 'es' ? 'comensales' : 'guests'} · {language === 'es' ? 'Servicio incluido' : 'Service included'}
                     </span>
                   </div>
                   <div className="text-right">
@@ -947,7 +971,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
                 </div>
               </div>
 
-              <div className="border-t border-white/10 pt-4 text-[11px] text-[#94A3B8] leading-relaxed">
+              <div className="border-t border-white/10 pt-4 text-[11px] text-[#94A3B8] leading-relaxed font-swiss">
                 {language === 'es'
                   ? 'KÔN Atelier dispone de política de cancelación de 48 hs. Rogamos puntualidad para garantizar la sincronía del servicio.'
                   : 'KÔN Atelier maintains a 48-hour cancellation policy. We kindly request punctual arrival to ensure synchronized service.'}
@@ -974,7 +998,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-b border-l border-white/10 pt-0">
           <div className="p-6 border-r border-t border-white/10 bg-[#0C0B0A] space-y-2">
-            <span className="block text-[11px] font-mono text-[#94A3B8] uppercase">
+            <span className="block text-[11px] font-swiss text-[#94A3B8]">
               {language === 'es' ? 'Ubicación' : 'Location'}
             </span>
             <p className="text-sm font-swiss font-medium text-white">
@@ -986,19 +1010,19 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
           </div>
 
           <div className="p-6 border-r border-t border-white/10 bg-[#0C0B0A] space-y-2">
-            <span className="block text-[11px] font-mono text-[#94A3B8] uppercase">
+            <span className="block text-[11px] font-swiss text-[#94A3B8]">
               {language === 'es' ? 'Servicios de Sala' : 'Services'}
             </span>
             <p className="text-sm font-swiss font-medium text-white">
               {language === 'es' ? 'Martes a Domingo' : 'Tuesday to Sunday'}
             </p>
-            <p className="text-xs text-[#94A3B8] font-mono">
+            <p className="text-xs text-[#94A3B8] font-swiss">
               19:30 hs & 21:45 hs
             </p>
           </div>
 
           <div className="p-6 border-r border-t border-white/10 bg-[#0C0B0A] space-y-2">
-            <span className="block text-[11px] font-mono text-[#94A3B8] uppercase">
+            <span className="block text-[11px] font-swiss text-[#94A3B8]">
               {language === 'es' ? 'Filosofía de Cava' : 'Cellar Policy'}
             </span>
             <p className="text-sm font-swiss font-medium text-white">
@@ -1010,7 +1034,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
           </div>
 
           <div className="p-6 border-r border-t border-white/10 bg-[#0C0B0A] space-y-2">
-            <span className="block text-[11px] font-mono text-[#94A3B8] uppercase">
+            <span className="block text-[11px] font-swiss text-[#94A3B8]">
               {language === 'es' ? 'Alcance Conceptual' : 'Conceptual Scope'}
             </span>
             <p className="text-sm font-swiss font-medium text-white">
