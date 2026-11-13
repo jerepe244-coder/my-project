@@ -182,10 +182,22 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Legal Text & Back to Top Strip */}
-        <div className="pt-3 border-t border-zy-grid-line monolith-hairline flex flex-col sm:flex-row items-center justify-between gap-3 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
-          <p>
-            © {currentYear} ZYRVAE Digital Studio · Buenos Aires, Argentina. {t.footer.rights}
-          </p>
+        <div className="pt-3 border-t border-zy-grid-line monolith-hairline flex flex-col md:flex-row items-center justify-between gap-3 font-editorial-micro text-[10px] font-medium tracking-[0.015em] normal-case text-zy-muted">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1.5">
+            <p>
+              © {currentYear} ZYRVAE Digital Studio · Buenos Aires, Argentina. {t.footer.rights}
+            </p>
+            <span className="text-zy-grid-line" aria-hidden="true">|</span>
+            <nav aria-label="Legal navigation" className="inline-flex items-center gap-x-3">
+              <Link href="/terms" className="hover:text-zy-fg transition-colors">
+                {language === 'es' ? 'Términos y Condiciones' : 'Terms & Conditions'}
+              </Link>
+              <span className="text-zy-grid-line" aria-hidden="true">/</span>
+              <Link href="/privacy" className="hover:text-zy-fg transition-colors">
+                {language === 'es' ? 'Política de Privacidad' : 'Privacy Policy'}
+              </Link>
+            </nav>
+          </div>
 
           <button
             type="button"

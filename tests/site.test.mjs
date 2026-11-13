@@ -1072,4 +1072,77 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       '#capabilities container must include id="capabilities", scroll-mt-24 and scroll-margin-top: 90px'
     );
   });
+
+  test('Closing prompt: Resend contact API, Monolith /terms & /privacy legal routes, and Sōma UV SpotLight + radial halo', () => {
+    const pkgJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
+    assert.ok(pkgJson.dependencies?.resend, 'package.json must include resend dependency');
+
+    const contactApi = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'app', 'api', 'contact', 'route.ts'),
+      'utf-8'
+    );
+    for (const token of [
+      "from 'resend'",
+      'RESEND_API_KEY',
+      'zyrvae.co@gmail.com',
+      'ZYRVAE Studio <onboarding@resend.dev>',
+      'replyTo',
+      'SPAM_DETECTED',
+      'VALIDATION_FAILED',
+      'escapeHtml',
+    ]) {
+      assert.ok(contactApi.includes(token), `POST /api/contact must include ${token}`);
+    }
+
+    const contactForm = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'sections', 'ContactForm.tsx'),
+      'utf-8'
+    );
+    assert.equal(contactForm.includes('rounded-xl'), false, 'ContactForm must not use rounded-xl');
+    assert.equal(contactForm.includes('zy-blue'), false, 'ContactForm must not use electric blue zy-blue');
+    assert.equal(contactForm.includes('font-mono'), false, 'ContactForm must not use font-mono');
+    assert.ok(contactForm.includes('isSubmitting') && contactForm.includes('submitError') && contactForm.includes('submitSuccess'));
+
+    for (const routeFile of [
+      path.join(process.cwd(), 'src', 'app', 'terms', 'page.tsx'),
+      path.join(process.cwd(), 'src', 'app', 'privacy', 'page.tsx'),
+    ]) {
+      assert.ok(fs.existsSync(routeFile), `Missing legal route ${routeFile}`);
+    }
+
+    const legalView = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'legal', 'LegalDocumentView.tsx'),
+      'utf-8'
+    );
+    for (const term of [
+      'Aura Sanctuary',
+      'Kôn Atelier',
+      'Monolith Studio',
+      'Sōma Formulations',
+      'Buenos Aires, Argentina',
+      'no vende',
+    ]) {
+      assert.ok(legalView.includes(term), `LegalDocumentView must include ${term}`);
+    }
+    assert.equal(legalView.includes('font-mono'), false, 'LegalDocumentView must not use font-mono in prose');
+
+    const footerTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'layout', 'Footer.tsx'),
+      'utf-8'
+    );
+    assert.ok(footerTsx.includes('href="/terms"') && footerTsx.includes('href="/privacy"'), 'Footer must link to /terms and /privacy');
+
+    const somaViewer = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'soma', 'SomaProductViewer3D.tsx'),
+      'utf-8'
+    );
+    assert.equal(somaViewer.includes('beamMesh'), false, 'SomaProductViewer3D must remove square UV PlaneGeometry beamMesh');
+    assert.ok(somaViewer.includes('0x7c3aed') && somaViewer.includes('SpotLight'), 'SomaProductViewer3D must use #7C3AED SpotLight for UV mode');
+
+    const somaShowcase = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'soma', 'Soma3DShowcase.tsx'),
+      'utf-8'
+    );
+    assert.ok(somaShowcase.includes('radial-gradient'), 'Soma3DShowcase must render soft CSS radial-gradient backdrop for UV mode');
+  });
 });

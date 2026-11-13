@@ -176,6 +176,18 @@ export const Soma3DShowcase: React.FC<Soma3DShowcaseProps> = React.memo(({ langu
 
         {/* Lienzo 3D WebGL (carga diferida al entrar en pantalla) */}
         <div className="relative h-[380px] sm:h-[460px] w-full overflow-hidden">
+          {/* Halo espectral UV difuminado a 0% en CSS sin bordes geométricos */}
+          <div
+            aria-hidden="true"
+            className={`pointer-events-none absolute inset-0 transition-opacity duration-500 ${
+              mode === 'uv' ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              background:
+                'radial-gradient(circle at 50% 48%, rgba(124, 58, 237, 0.28) 0%, rgba(124, 58, 237, 0.1) 36%, rgba(124, 58, 237, 0) 70%)',
+            }}
+          />
+
           {hasIntersected ? (
             <SomaProductViewer3D mode={mode} language={language} />
           ) : (

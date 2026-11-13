@@ -58,6 +58,7 @@ export const ContactForm: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submittedId, setSubmittedId] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<{
     code: string;
     message: string;
@@ -153,7 +154,14 @@ export const ContactForm: React.FC = () => {
     if (currentStep === 2) {
       if (!formData.projectType.trim()) newErrors.projectType = t.errors.required;
       if (!formData.mainGoal.trim()) newErrors.mainGoal = t.errors.required;
-      if (!formData.projectDescription.trim()) newErrors.projectDescription = t.errors.required;
+      if (!formData.projectDescription.trim()) {
+        newErrors.projectDescription = t.errors.required;
+      } else if (formData.projectDescription.trim().length < 5) {
+        newErrors.projectDescription =
+          language === 'es'
+            ? 'Ingresá una descripción de al menos 5 caracteres.'
+            : 'Please enter at least 5 characters.';
+      }
     }
 
     if (currentStep === 3) {
@@ -181,8 +189,18 @@ export const ContactForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateStep(1) || !validateStep(2) || !validateStep(3)) {
+    if (isSubmitting) return;
+
+    if (!validateStep(1)) {
       setStep(1);
+      return;
+    }
+    if (!validateStep(2)) {
+      setStep(2);
+      return;
+    }
+    if (!validateStep(3)) {
+      setStep(3);
       return;
     }
 
@@ -196,21 +214,19 @@ export const ContactForm: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
 
       if (response.ok && data.ok) {
+        setSubmittedId(typeof data.id === 'string' ? data.id : null);
         setSubmitSuccess(true);
       } else {
-        // Documented honest handling of submission response
         setSubmitError({
-          code: data.error || 'DISPATCH_PENDING',
+          code: data.error || 'DISPATCH_FAILED',
           message:
-            language === 'es'
-              ? data.error === 'CONFIG_PENDING'
-                ? 'El backend está verificado y a la espera de la API key de correo (RESEND_API_KEY). Podés enviar este brief directamente a zyrvae.co@gmail.com con el botón inferior.'
-                : data.message || t.errors.generic
-              : data.error === 'CONFIG_PENDING'
-              ? 'Server endpoint is validated and awaiting email provider key (RESEND_API_KEY). You can dispatch this brief directly to zyrvae.co@gmail.com below.'
+            data.error === 'CONFIG_PENDING'
+              ? language === 'es'
+                ? 'El endpoint /api/contact validó tu brief correctamente, pero falta configurar RESEND_API_KEY en el entorno del servidor. Podés enviarlo directo a zyrvae.co@gmail.com.'
+                : 'The /api/contact endpoint validated your brief, but RESEND_API_KEY is missing on the server. You can send this brief directly to zyrvae.co@gmail.com below.'
               : data.message || t.errors.generic,
           briefText: data.briefText,
         });
@@ -348,27 +364,16 @@ export const ContactForm: React.FC = () => {
           className="lg:col-span-7 overflow-hidden bg-zy-card/40 p-5 sm:p-8 lg:p-10 relative scroll-mt-20"
         >
           <BorderBeamOverlay size={520} showSurfaceGlow={false} />
-        {/* Anti-spam honeypot */}
-        <input
-          type="text"
-          name="hp_field"
-          value={formData.hp_field}
-          onChange={handleInputChange}
-          className="hidden"
-          tabIndex={-1}
-          autoComplete="off"
-          aria-hidden="true"
-        />
-
         {/* Success Confirmation View */}
         {submitSuccess ? (
-          <div className="py-12 text-center max-w-lg mx-auto space-y-6">
-            <div className="w-16 h-16 rounded-full bg-zy-blue/20 text-zy-blue flex items-center justify-center mx-auto border border-zy-blue/40 shadow-[0_0_30px_rgba(10,92,255,0.3)]">
-              <Check size={32} />
+          <div className="relative z-10 py-10 sm:py-14 max-w-xl mx-auto space-y-8 rounded-none">
+            <div className="inline-flex items-center space-x-2 text-xs font-swiss font-medium text-[#FF3B30] tabular-nums">
+              <span className="w-2 h-2 bg-[#FF3B30] inline-block" />
+              <span>{language === 'es' ? 'Expediente transmitido' : 'Brief transmitted'}</span>
             </div>
 
-            <div className="space-y-2">
-              <h3 className="text-2xl sm:text-3xl font-sans font-bold text-zy-fg">
+            <div className="space-y-3 border-b border-zy-grid-line monolith-hairline pb-6">
+              <h3 className="font-serif-editorial italic text-3xl sm:text-4xl text-zy-fg leading-tight">
                 {t.success.title}
               </h3>
               <p className="text-sm text-zy-muted font-sans leading-relaxed">
@@ -376,20 +381,49 @@ export const ContactForm: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-4 bg-zy-surface rounded-xl border border-zy-border text-xs font-mono text-zy-fg-secondary">
-              <span className="text-zy-blue font-semibold block mb-1">
-                // {t.success.detailsSummary}
-              </span>
-              <span>{formData.name} — {formData.brand} ({formData.email})</span>
+            <div className="border border-zy-grid-line monolith-hairline bg-zy-surface divide-y divide-zy-grid-line text-xs font-swiss tabular-nums rounded-none">
+              <div className="px-4 py-3 flex items-center justify-between gap-4">
+                <span className="text-zy-muted">{t.success.detailsSummary}</span>
+                <Check size={14} className="text-[#FF3B30] shrink-0" />
+              </div>
+              <div className="px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-zy-muted">{language === 'es' ? 'Remitente' : 'Sender'}</span>
+                <span className="text-zy-fg font-medium">
+                  {formData.name} — {formData.brand} ({formData.email})
+                </span>
+              </div>
+              {submittedId && (
+                <div className="px-4 py-3 flex items-center justify-between gap-2">
+                  <span className="text-zy-muted">{language === 'es' ? 'Referencia de envío' : 'Dispatch reference'}</span>
+                  <span className="text-zy-fg font-medium">{submittedId}</span>
+                </div>
+              )}
             </div>
 
             <button
               type="button"
               onClick={() => {
                 setSubmitSuccess(false);
+                setSubmittedId(null);
                 setStep(1);
+                setFormData({
+                  name: '',
+                  email: '',
+                  brand: '',
+                  country: '',
+                  projectType: 'hospitality',
+                  mainGoal: '',
+                  targetAudience: '',
+                  features: [],
+                  projectDescription: '',
+                  references: '',
+                  budgetRange: 'tier2',
+                  timeline: 'medium',
+                  additionalNotes: '',
+                  hp_field: '',
+                });
               }}
-              className="text-xs font-mono text-zy-muted hover:text-zy-fg underline"
+              className="px-5 py-3 border border-zy-grid-line monolith-hairline bg-zy-bg hover:bg-zy-fg hover:text-zy-bg text-xs font-swiss font-medium text-zy-fg transition-colors rounded-none"
             >
               {t.success.restart}
             </button>
@@ -397,16 +431,16 @@ export const ContactForm: React.FC = () => {
         ) : (
           <div>
             {/* Step Progress Indicator Bar */}
-            <div className="relative z-10 mb-10 pb-6 border-b border-zy-border-card space-y-4">
-              <div className="flex items-center justify-between text-xs text-zy-muted">
+            <div className="relative z-10 mb-10 pb-6 border-b border-zy-grid-line monolith-hairline space-y-4">
+              <div className="flex items-center justify-between text-xs text-zy-muted tabular-nums">
                 <span className="font-swiss tracking-wide text-zy-fg font-semibold">
                   {step === 1 && t.step1Title}
                   {step === 2 && t.step2Title}
                   {step === 3 && t.step3Title}
                   {step === 4 && t.stepReviewTitle}
                 </span>
-                <span className="font-mono text-zy-blue font-semibold">
-                  0{step} // 04
+                <span className="font-swiss text-[#FF3B30] font-semibold">
+                  0{step} / 04
                 </span>
               </div>
 
@@ -415,8 +449,8 @@ export const ContactForm: React.FC = () => {
                 {[1, 2, 3, 4].map((s) => (
                   <div
                     key={s}
-                    className={`h-1.5 rounded-full transition-colors duration-300 ${
-                      s <= step ? 'bg-zy-blue' : 'bg-zy-surface border border-zy-border-subtle'
+                    className={`h-1 rounded-none transition-colors duration-300 ${
+                      s <= step ? 'bg-zy-fg' : 'bg-zy-surface border border-zy-border-subtle'
                     }`}
                   />
                 ))}
@@ -425,12 +459,12 @@ export const ContactForm: React.FC = () => {
 
             {/* Error Banner if any */}
             {submitError && (
-              <div className="mb-8 p-5 bg-zy-error-bg border border-zy-error-border rounded-xl space-y-3 text-xs">
+              <div className="relative z-10 mb-8 p-5 bg-zy-error-bg border border-[#FF3B30] rounded-none space-y-3 text-xs font-swiss">
                 <div className="flex items-start space-x-3 text-zy-error-fg">
-                  <AlertCircle size={18} className="shrink-0 mt-0.5" />
+                  <AlertCircle size={16} className="shrink-0 mt-0.5" />
                   <div className="space-y-1">
-                    <span className="font-mono font-semibold block">
-                      {language === 'es' ? 'AVISO DEL SISTEMA DE ENVÍO' : 'DISPATCH STATUS NOTICE'}
+                    <span className="font-semibold block">
+                      {language === 'es' ? 'Error en el envío del brief' : 'Brief dispatch error'}
                     </span>
                     <p className="text-zy-error-text leading-relaxed">{submitError.message}</p>
                   </div>
@@ -440,12 +474,12 @@ export const ContactForm: React.FC = () => {
                 <div className="pt-3 border-t border-zy-error-divider flex flex-wrap gap-3">
                   <a
                     href={`mailto:zyrvae.co@gmail.com?subject=${encodeURIComponent(
-                      `[Brief Proyecto] ${formData.brand} — ${formData.name}`
+                      `[Brief Proyecto] ${formData.brand || formData.name} — ${formData.name}`
                     )}&body=${encodeURIComponent(
                       submitError.briefText ||
-                        `Nombre: ${formData.name}\nEmail: ${formData.email}\nMarca: ${formData.brand}\nPaís: ${formData.country}\nTipo: ${formData.projectType}\nObjetivo: ${formData.mainGoal}\nDescripción:\n${formData.projectDescription}`
+                        `Nombre: ${formData.name}\nEmail: ${formData.email}\nMarca: ${formData.brand}\nPaís: ${formData.country}\nTipo: ${formData.projectType}\nPresupuesto: ${formData.budgetRange}\nObjetivo: ${formData.mainGoal}\nDescripción:\n${formData.projectDescription}`
                     )}`}
-                    className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-zy-blue hover:bg-zy-blue-hover text-white font-mono text-xs transition-colors"
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-none bg-zy-fg hover:bg-[#FF3B30] text-zy-bg hover:text-white font-swiss font-medium text-xs transition-colors"
                   >
                     <Mail size={13} />
                     <span>
@@ -460,7 +494,7 @@ export const ContactForm: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleCopyBrief(submitError.briefText!)}
-                      className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-zy-fg font-mono text-xs transition-colors"
+                      className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-none bg-zy-control hover:bg-zy-control-hover border border-zy-border text-zy-fg font-swiss font-medium text-xs transition-colors"
                     >
                       <Copy size={13} />
                       <span>
@@ -476,6 +510,24 @@ export const ContactForm: React.FC = () => {
 
             {/* FORM STEPS */}
             <form onSubmit={handleSubmit} noValidate>
+              {/* Anti-spam honeypot invisible */}
+              <input
+                type="text"
+                name="hp_field"
+                value={formData.hp_field}
+                onChange={handleInputChange}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  left: '-9999px',
+                  width: '1px',
+                  height: '1px',
+                  opacity: 0,
+                  pointerEvents: 'none',
+                }}
+              />
               {/* STEP 1: Essential Info */}
               {step === 1 && (
                 <div className="relative z-10 space-y-6">
@@ -496,10 +548,10 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.namePlaceholder}
                         aria-invalid={!!errors.name}
                         aria-describedby={errors.name ? 'err-name' : undefined}
-                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-none text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.name
                             ? 'border-red-500 focus:ring-1 focus:ring-red-500'
-                            : 'border-zy-border focus:border-zy-blue'
+                            : 'border-zy-border focus:border-zy-fg'
                         }`}
                       />
                       {errors.name && (
@@ -523,10 +575,10 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.emailPlaceholder}
                         aria-invalid={!!errors.email}
                         aria-describedby={errors.email ? 'err-email' : undefined}
-                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-none text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.email
                             ? 'border-red-500 focus:ring-1 focus:ring-red-500'
-                            : 'border-zy-border focus:border-zy-blue'
+                            : 'border-zy-border focus:border-zy-fg'
                         }`}
                       />
                       {errors.email && (
@@ -550,10 +602,10 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.brandPlaceholder}
                         aria-invalid={!!errors.brand}
                         aria-describedby={errors.brand ? 'err-brand' : undefined}
-                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-none text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.brand
                             ? 'border-red-500 focus:ring-1 focus:ring-red-500'
-                            : 'border-zy-border focus:border-zy-blue'
+                            : 'border-zy-border focus:border-zy-fg'
                         }`}
                       />
                       {errors.brand && (
@@ -577,10 +629,10 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.countryPlaceholder}
                         aria-invalid={!!errors.country}
                         aria-describedby={errors.country ? 'err-country' : undefined}
-                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-none text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.country
                             ? 'border-red-500 focus:ring-1 focus:ring-red-500'
-                            : 'border-zy-border focus:border-zy-blue'
+                            : 'border-zy-border focus:border-zy-fg'
                         }`}
                       />
                       {errors.country && (
@@ -609,7 +661,7 @@ export const ContactForm: React.FC = () => {
                         name="projectType"
                         value={formData.projectType}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-xl text-sm text-zy-fg focus:border-zy-blue outline-none"
+                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-none text-sm text-zy-fg focus:border-zy-fg outline-none"
                       >
                         <option value="hospitality">{t.fields.projectTypeOptions.hospitality}</option>
                         <option value="gastronomy">{t.fields.projectTypeOptions.gastronomy}</option>
@@ -635,10 +687,10 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.mainGoalPlaceholder}
                         aria-invalid={!!errors.mainGoal}
                         aria-describedby={errors.mainGoal ? 'err-mainGoal' : undefined}
-                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-none text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.mainGoal
                             ? 'border-red-500 focus:ring-1 focus:ring-red-500'
-                            : 'border-zy-border focus:border-zy-blue'
+                            : 'border-zy-border focus:border-zy-fg'
                         }`}
                       />
                       {errors.mainGoal && (
@@ -660,7 +712,7 @@ export const ContactForm: React.FC = () => {
                         value={formData.targetAudience}
                         onChange={handleInputChange}
                         placeholder={t.fields.targetAudiencePlaceholder}
-                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none focus:border-zy-blue"
+                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-none text-sm text-zy-fg placeholder-zy-dim outline-none focus:border-zy-fg"
                       />
                     </div>
 
@@ -679,17 +731,17 @@ export const ContactForm: React.FC = () => {
                               key={feat.id}
                               type="button"
                               onClick={() => toggleFeature(label)}
-                              className={`p-3 rounded-xl border text-left text-xs font-swiss tracking-wide transition-all flex items-center justify-between ${
+                              className={`p-3 rounded-none border text-left text-xs font-swiss tracking-wide transition-all flex items-center justify-between ${
                                 selected
-                                  ? 'bg-zy-accent-soft border-zy-blue text-zy-fg font-semibold shadow-sm'
+                                  ? 'bg-zy-accent-soft border-[#FF3B30] text-zy-fg font-semibold'
                                   : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg hover:border-zy-border-strong'
                               }`}
                             >
                               <span>{label}</span>
                               <div
-                                className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 ml-2 ${
+                                className={`w-4 h-4 rounded-none border flex items-center justify-center shrink-0 ml-2 ${
                                   selected
-                                    ? 'bg-zy-blue border-zy-blue text-white'
+                                    ? 'bg-[#FF3B30] border-[#FF3B30] text-white'
                                     : 'border-zy-border-strong'
                                 }`}
                               >
@@ -715,10 +767,10 @@ export const ContactForm: React.FC = () => {
                         placeholder={t.fields.projectDescriptionPlaceholder}
                         aria-invalid={!!errors.projectDescription}
                         aria-describedby={errors.projectDescription ? 'err-desc' : undefined}
-                        className={`w-full px-4 py-3 bg-zy-surface border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
+                        className={`w-full px-4 py-3 bg-zy-surface border rounded-none text-sm text-zy-fg placeholder-zy-dim outline-none transition-colors ${
                           errors.projectDescription
                             ? 'border-red-500 focus:ring-1 focus:ring-red-500'
-                            : 'border-zy-border focus:border-zy-blue'
+                            : 'border-zy-border focus:border-zy-fg'
                         }`}
                       />
                       {errors.projectDescription && (
@@ -740,7 +792,7 @@ export const ContactForm: React.FC = () => {
                         value={formData.references}
                         onChange={handleInputChange}
                         placeholder={t.fields.referencesPlaceholder}
-                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none focus:border-zy-blue"
+                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-none text-sm text-zy-fg placeholder-zy-dim outline-none focus:border-zy-fg"
                       />
                     </div>
                   </div>
@@ -766,16 +818,16 @@ export const ContactForm: React.FC = () => {
                               key={key}
                               type="button"
                               onClick={() => setFormData((p) => ({ ...p, budgetRange: key }))}
-                              className={`p-3.5 rounded-xl border text-left text-xs font-mono transition-all flex items-center justify-between ${
+                              className={`p-3.5 rounded-none border text-left text-xs font-swiss tabular-nums transition-all flex items-center justify-between ${
                                 isChecked
-                                  ? 'bg-zy-accent-soft border-zy-blue text-zy-fg font-semibold'
+                                  ? 'bg-zy-accent-soft border-[#FF3B30] text-zy-fg font-semibold'
                                   : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg'
                               }`}
                             >
                               <span>{label}</span>
                               <div
-                                className={`w-3.5 h-3.5 rounded-full border ${
-                                  isChecked ? 'border-zy-blue bg-zy-blue' : 'border-zy-border-strong'
+                                className={`w-3.5 h-3.5 rounded-none border ${
+                                  isChecked ? 'border-[#FF3B30] bg-[#FF3B30]' : 'border-zy-border-strong'
                                 }`}
                               />
                             </button>
@@ -797,16 +849,16 @@ export const ContactForm: React.FC = () => {
                               key={key}
                               type="button"
                               onClick={() => setFormData((p) => ({ ...p, timeline: key }))}
-                              className={`p-3.5 rounded-xl border text-left text-xs font-swiss tracking-wide transition-all flex items-center justify-between ${
+                              className={`p-3.5 rounded-none border text-left text-xs font-swiss tracking-wide transition-all flex items-center justify-between ${
                                 isChecked
-                                  ? 'bg-zy-accent-soft border-zy-blue text-zy-fg font-semibold'
+                                  ? 'bg-zy-accent-soft border-[#FF3B30] text-zy-fg font-semibold'
                                   : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg'
                               }`}
                             >
                               <span>{label}</span>
                               <div
-                                className={`w-3.5 h-3.5 rounded-full border ${
-                                  isChecked ? 'border-zy-blue bg-zy-blue' : 'border-zy-border-strong'
+                                className={`w-3.5 h-3.5 rounded-none border ${
+                                  isChecked ? 'border-[#FF3B30] bg-[#FF3B30]' : 'border-zy-border-strong'
                                 }`}
                               />
                             </button>
@@ -827,7 +879,7 @@ export const ContactForm: React.FC = () => {
                         value={formData.additionalNotes}
                         onChange={handleInputChange}
                         placeholder={t.fields.additionalNotesPlaceholder}
-                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-xl text-sm text-zy-fg placeholder-zy-dim outline-none focus:border-zy-blue"
+                        className="w-full px-4 py-3 bg-zy-surface border border-zy-border rounded-none text-sm text-zy-fg placeholder-zy-dim outline-none focus:border-zy-fg"
                       />
                     </div>
                   </div>
@@ -841,10 +893,10 @@ export const ContactForm: React.FC = () => {
 
                   <div className="space-y-4">
                     {/* Section 1 Review */}
-                    <div className="p-4 bg-zy-surface rounded-xl border border-zy-border flex justify-between items-start">
+                    <div className="p-4 bg-zy-surface rounded-none border border-zy-border flex justify-between items-start">
                       <div className="text-xs space-y-1">
-                        <span className="font-swiss tracking-wide text-zy-blue font-semibold block">
-                          <span className="font-mono">01.</span> {language === 'es' ? 'Contacto' : 'Contact'}
+                        <span className="font-swiss tracking-wide text-[#FF3B30] font-semibold block tabular-nums">
+                          01. {language === 'es' ? 'Contacto' : 'Contact'}
                         </span>
                         <p className="text-zy-fg font-sans font-medium">{formData.name} — {formData.brand}</p>
                         <p className="text-zy-muted font-swiss tracking-wide">{formData.email} · {formData.country}</p>
@@ -852,7 +904,7 @@ export const ContactForm: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setStep(1)}
-                        className="text-xs font-swiss tracking-wide text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1"
+                        className="text-xs font-swiss tracking-wide text-zy-muted hover:text-[#FF3B30] inline-flex items-center space-x-1"
                       >
                         <Edit2 size={12} />
                         <span>{t.buttons.edit}</span>
@@ -860,10 +912,10 @@ export const ContactForm: React.FC = () => {
                     </div>
 
                     {/* Section 2 Review */}
-                    <div className="p-4 bg-zy-surface rounded-xl border border-zy-border flex justify-between items-start">
+                    <div className="p-4 bg-zy-surface rounded-none border border-zy-border flex justify-between items-start">
                       <div className="text-xs space-y-1 max-w-lg">
-                        <span className="font-swiss tracking-wide text-zy-blue font-semibold block">
-                          <span className="font-mono">02.</span> {language === 'es' ? 'Proyecto' : 'Project'}
+                        <span className="font-swiss tracking-wide text-[#FF3B30] font-semibold block tabular-nums">
+                          02. {language === 'es' ? 'Proyecto' : 'Project'}
                         </span>
                         <p className="text-zy-fg font-medium font-swiss tracking-wide">
                           {t.fields.projectTypeOptions[
@@ -875,7 +927,7 @@ export const ContactForm: React.FC = () => {
                         {formData.features.length > 0 && (
                           <div className="flex flex-wrap gap-1 pt-1">
                             {formData.features.map((f, i) => (
-                              <span key={i} className="text-[11px] font-swiss tracking-wide bg-zy-card border border-zy-border text-zy-fg-secondary px-2 py-0.5 rounded">
+                              <span key={i} className="text-[11px] font-swiss tracking-wide bg-zy-card border border-zy-border text-zy-fg-secondary px-2 py-0.5 rounded-none">
                                 {f}
                               </span>
                             ))}
@@ -885,7 +937,7 @@ export const ContactForm: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setStep(2)}
-                        className="text-xs font-swiss tracking-wide text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1 shrink-0 ml-2"
+                        className="text-xs font-swiss tracking-wide text-zy-muted hover:text-[#FF3B30] inline-flex items-center space-x-1 shrink-0 ml-2"
                       >
                         <Edit2 size={12} />
                         <span>{t.buttons.edit}</span>
@@ -893,13 +945,13 @@ export const ContactForm: React.FC = () => {
                     </div>
 
                     {/* Section 3 Review */}
-                    <div className="p-4 bg-zy-surface rounded-xl border border-zy-border flex justify-between items-start">
+                    <div className="p-4 bg-zy-surface rounded-none border border-zy-border flex justify-between items-start">
                       <div className="text-xs space-y-1">
-                        <span className="font-swiss tracking-wide text-zy-blue font-semibold block">
-                          <span className="font-mono">03.</span> {language === 'es' ? 'Alcance' : 'Scope'}
+                        <span className="font-swiss tracking-wide text-[#FF3B30] font-semibold block tabular-nums">
+                          03. {language === 'es' ? 'Alcance' : 'Scope'}
                         </span>
-                        <p className="text-zy-fg font-mono">
-                          <span className="font-swiss tracking-wide text-zy-muted">
+                        <p className="text-zy-fg font-swiss tabular-nums">
+                          <span className="text-zy-muted">
                             {language === 'es' ? 'Inversión:' : 'Budget:'}
                           </span>{' '}
                           {t.fields.budgetOptions[
@@ -916,7 +968,7 @@ export const ContactForm: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setStep(3)}
-                        className="text-xs font-swiss tracking-wide text-zy-muted hover:text-zy-blue inline-flex items-center space-x-1"
+                        className="text-xs font-swiss tracking-wide text-zy-muted hover:text-[#FF3B30] inline-flex items-center space-x-1"
                       >
                         <Edit2 size={12} />
                         <span>{t.buttons.edit}</span>
@@ -927,13 +979,13 @@ export const ContactForm: React.FC = () => {
               )}
 
               {/* Navigation & Submission Controls */}
-              <div className="relative z-10 mt-10 pt-6 border-t border-zy-border-card flex items-center justify-between">
+              <div className="relative z-10 mt-10 pt-6 border-t border-zy-grid-line monolith-hairline flex items-center justify-between">
                 {step > 1 ? (
                   <button
                     type="button"
                     onClick={prevStep}
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-zy-surface hover:bg-zy-surface-hover active:scale-[0.98] border border-zy-border text-xs font-swiss tracking-wide font-medium text-zy-muted hover:text-zy-fg transition-all"
+                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-none bg-zy-surface hover:bg-zy-surface-hover active:scale-[0.98] border border-zy-border text-xs font-swiss tracking-wide font-medium text-zy-muted hover:text-zy-fg transition-all"
                   >
                     <ArrowLeft size={13} />
                     <span>{t.buttons.back}</span>
@@ -950,7 +1002,7 @@ export const ContactForm: React.FC = () => {
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] text-white text-xs font-swiss font-medium tracking-wide transition-all"
+                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-none bg-zy-fg hover:bg-[#FF3B30] text-zy-bg hover:text-white active:scale-[0.98] text-xs font-swiss font-medium tracking-wide transition-colors"
                   >
                     <span>{t.buttons.next}</span>
                     <ArrowRight size={14} />
@@ -959,11 +1011,11 @@ export const ContactForm: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-xl bg-zy-blue hover:bg-zy-blue-hover active:scale-[0.98] disabled:bg-zy-control text-white text-xs font-swiss font-medium tracking-wide transition-all disabled:opacity-50"
+                    className="inline-flex items-center space-x-2 px-8 py-3 rounded-none bg-zy-fg hover:bg-[#FF3B30] active:scale-[0.98] disabled:bg-zy-control text-zy-bg hover:text-white text-xs font-swiss font-medium tracking-wide transition-colors disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
-                        <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span className="w-3.5 h-3.5 border-2 border-current/30 border-t-current animate-spin" />
                         <span>{t.buttons.submitting}</span>
                       </>
                     ) : (

@@ -248,9 +248,9 @@ export const SomaProductViewer3D: React.FC<SomaProductViewer3DProps> = ({ mode, 
     const rimLight = new THREE.DirectionalLight(0xf6d3b8, 2.1);
     rimLight.position.set(2.5, -1, -4.5);
 
-    // Mode 02: Spectral UV Inspection Raking Beam + Botanical Serum Glow
-    const uvSpotLight = new THREE.SpotLight(0x9333ea, 0, 14, Math.PI / 5.5, 0.65, 1.2);
-    uvSpotLight.position.set(-3.4, 2.4, 2.8);
+    // Mode 02: Spectral UV Inspection Focal Light (#7C3AED) + Botanical Serum Glow
+    const uvSpotLight = new THREE.SpotLight(0x7c3aed, 0, 16, Math.PI / 4.2, 0.88, 1.1);
+    uvSpotLight.position.set(-2.9, 2.3, 2.5);
     scene.add(uvSpotLight.target);
 
     const serumGlowLight = new THREE.PointLight(0xc87d55, 0.2, 4.5);
@@ -467,21 +467,6 @@ export const SomaProductViewer3D: React.FC<SomaProductViewer3DProps> = ({ mode, 
     labelMesh.position.y = -0.46;
     bottleGroup.add(labelMesh);
 
-    // 7. Subtle UV Spectral Raking Beam Plane behind bottle (visible only in mode 'uv')
-    const beamGeo = new THREE.PlaneGeometry(3.4, 4.0);
-    const beamMat = new THREE.MeshBasicMaterial({
-      color: new THREE.Color('#7e22ce'),
-      transparent: true,
-      opacity: 0,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      side: THREE.DoubleSide,
-    });
-    const beamMesh = new THREE.Mesh(beamGeo, beamMat);
-    beamMesh.position.set(-0.2, 0.1, -1.2);
-    beamMesh.rotation.z = -0.35;
-    scene.add(beamMesh);
-
     // Function to apply mode state cleanly
     const applyModeVisuals = (activeMode: SomaViewerMode) => {
       if (activeMode === 'miron') {
@@ -500,7 +485,6 @@ export const SomaProductViewer3D: React.FC<SomaProductViewer3DProps> = ({ mode, 
         uvSpotLight.intensity = 0;
         serumGlowLight.intensity = 0.25;
         serumMat.emissiveIntensity = 0.18;
-        beamMat.opacity = 0;
       } else if (activeMode === 'uv') {
         bottleMesh.material = uvMaterial;
         pipetteTube.visible = true;
@@ -514,10 +498,9 @@ export const SomaProductViewer3D: React.FC<SomaProductViewer3DProps> = ({ mode, 
         keyLight.intensity = 0.7;
         fillLight.intensity = 0.5;
         rimLight.intensity = 1.4;
-        uvSpotLight.intensity = 15.0;
+        uvSpotLight.intensity = 22.0;
         serumGlowLight.intensity = 3.8;
         serumMat.emissiveIntensity = 0.95;
-        beamMat.opacity = 0.14;
       } else {
         // Eco-Refill Recycled Aluminum Capsule
         bottleMesh.material = refillAluminumMaterial;
@@ -534,7 +517,6 @@ export const SomaProductViewer3D: React.FC<SomaProductViewer3DProps> = ({ mode, 
         rimLight.intensity = 2.8;
         uvSpotLight.intensity = 0;
         serumGlowLight.intensity = 0;
-        beamMat.opacity = 0;
       }
     };
 
@@ -672,7 +654,6 @@ export const SomaProductViewer3D: React.FC<SomaProductViewer3DProps> = ({ mode, 
       dropGeo.dispose();
       serumGeo.dispose();
       labelGeo.dispose();
-      beamGeo.dispose();
 
       labelTex.dispose();
       brushedTex.dispose();
@@ -688,7 +669,6 @@ export const SomaProductViewer3D: React.FC<SomaProductViewer3DProps> = ({ mode, 
       pipetteMat.dispose();
       serumMat.dispose();
       labelMat.dispose();
-      beamMat.dispose();
 
       renderer.dispose();
     };
