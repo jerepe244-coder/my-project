@@ -12,25 +12,17 @@ import {
   MONOLITH_PROJECTS,
   MONOLITH_MATERIALS,
   MONOLITH_GALLERY,
-  MonolithProject,
   MonolithGalleryFrame,
 } from '@/data/architecture';
 import {
   ArrowLeft,
-  ArrowUpRight,
   ArrowDown,
   Check,
-  Layers,
-  Box,
-  Download,
   X,
   Maximize2,
   Sun,
   Moon,
-  ChevronRight,
   ShieldCheck,
-  MapPin,
-  Compass,
 } from 'lucide-react';
 
 interface MonolithArchitectureExperienceProps {
@@ -51,9 +43,6 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   // Active Project for Spatial Case Study (Default to Casa Bruma)
   const [selectedProjectId, setSelectedProjectId] = useState<string>('casa-bruma');
   const activeProject = MONOLITH_PROJECTS.find((p) => p.id === selectedProjectId) || MONOLITH_PROJECTS[0];
-
-  // Plan / Drafting Inspector View Mode
-  const [activeDraftingView, setActiveDraftingView] = useState<'axonometric' | 'section' | 'plan'>('axonometric');
 
   // Continuous Solar Simulation (08:00 to 18:45) — FASE 2 PREPARATION
   const [solarMinutes, setSolarMinutes] = useState<number>(750); // Default to Zenith (12:30)
@@ -102,9 +91,6 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   // Gallery Lightbox Modal
   const [lightboxFrame, setLightboxFrame] = useState<MonolithGalleryFrame | null>(null);
 
-  // Project Drawer Detail Modal
-  const [inspectProject, setInspectProject] = useState<MonolithProject | null>(null);
-
   // Commission Simulator State
   const [commissionType, setCommissionType] = useState<string>('residential');
   const [commissionSite, setCommissionSite] = useState<string>('cliff');
@@ -114,14 +100,12 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   const [commissionBrief, setCommissionBrief] = useState<string>('');
   const [simulationConfirmed, setSimulationConfirmed] = useState<boolean>(false);
   const [simulationCode, setSimulationCode] = useState<string>('');
-  const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
 
   // Keyboard navigation for modals
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setLightboxFrame(null);
-        setInspectProject(null);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -146,11 +130,6 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
     const randomCode = `MN-REQ-${Math.floor(1000 + Math.random() * 9000)}`;
     setSimulationCode(randomCode);
     setSimulationConfirmed(true);
-  };
-
-  const handleDownloadSpec = () => {
-    setDownloadSuccess(true);
-    setTimeout(() => setDownloadSuccess(false), 3500);
   };
 
   return (

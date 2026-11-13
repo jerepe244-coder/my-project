@@ -18,14 +18,10 @@ function resolveProject(slug: string) {
 }
 
 export async function generateStaticParams() {
-  const baseParams = projects.map((p) => ({
-    slug: p.slug,
+  const slugs = Array.from(new Set(projects.map((p) => p.slug)));
+  return slugs.map((slug) => ({
+    slug,
   }));
-  return [
-    ...baseParams,
-    { slug: 'vectra-architects' },
-    { slug: 'monolith-studio' },
-  ];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
