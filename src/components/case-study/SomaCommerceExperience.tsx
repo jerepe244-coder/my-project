@@ -21,6 +21,7 @@ import {
 import { SomaBagHeaderButton } from './soma/SomaBagHeaderButton';
 import { SomaCartOverlay } from './soma/SomaCartOverlay';
 import { SomaCatalogSection } from './soma/SomaCatalogSection';
+import { Soma3DShowcase } from './soma/Soma3DShowcase';
 
 interface SomaCommerceExperienceProps {
   project: ProjectDetail;
@@ -668,123 +669,13 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
           </div>
         </section>
 
-        {/* 4. CONTENEDOR DE ESPERA FASE 2: ESCAPARATE VOLUMÉTRICO 3D (#soma-3d-showcase) */}
+        {/* 4. ESCAPARATE VOLUMÉTRICO 3D INTERACTIVO (#soma-3d-showcase) */}
         <section
           id="soma-3d-showcase"
           className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[var(--soma-border)] monolith-hairline scroll-mt-28"
-          aria-label="SOMA 3D Showcase Preparation"
+          aria-label="SOMA 3D Biophotonic Showcase"
         >
-          <div className="border border-[var(--soma-border)] monolith-hairline grid grid-cols-1 lg:grid-cols-12 bg-[var(--soma-bg)] rounded-none">
-            {/* Columna Izquierda: Slot de Montaje para Visor 3D WebGL (Fase 2) */}
-            <div
-              id="soma-3d-canvas-slot"
-              data-phase2-mount="soma-3d-bottle"
-              className="lg:col-span-7 relative min-h-[380px] sm:min-h-[480px] border-b lg:border-b-0 lg:border-r border-[var(--soma-border)] monolith-hairline bg-[var(--soma-surface)] flex flex-col justify-between p-5 sm:p-8 overflow-hidden rounded-none"
-            >
-              {/* Retícula superior */}
-              <div className="relative z-10 flex items-center justify-between text-[11px] font-medium text-[var(--soma-muted)] border-b border-[var(--soma-border)] monolith-hairline pb-3 tabular-nums">
-                <div className="flex items-center space-x-2 text-[var(--soma-fg)]">
-                  <span className="w-1.5 h-1.5 bg-[var(--soma-amber)] inline-block" />
-                  <span>
-                    {language === 'es'
-                      ? 'Escaparate volumétrico · Contenedor Fase 2'
-                      : 'Volumetric showcase · Phase 2 container'}
-                  </span>
-                </div>
-                <span>Miron 30ml / 50ml</span>
-              </div>
-
-              {/* Zona Central Reservada para Canvas WebGL */}
-              <div className="relative flex-grow flex items-center justify-center my-6">
-                <div className="relative w-56 h-56 sm:w-72 sm:h-72 border border-[var(--soma-border)] monolith-hairline bg-[var(--soma-bg)] p-3 flex items-center justify-center overflow-hidden">
-                  <Image
-                    src="/images/soma-01-glass.webp"
-                    alt="Miron biophotonic vessel study ready for 3D viewer mount"
-                    fill
-                    loading="lazy"
-                    decoding="async"
-                    sizes="(max-width: 640px) 224px, 288px"
-                    className="object-cover opacity-90"
-                  />
-                  {/* Marcas de cruz técnicas en el centro óptico */}
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    <div className="w-6 h-[0.5px] bg-[var(--soma-amber)]" />
-                  </div>
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    <div className="h-6 w-[0.5px] bg-[var(--soma-amber)]" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Pie de calibración */}
-              <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 text-[11px] font-medium text-[var(--soma-dim)] border-t border-[var(--soma-border)] monolith-hairline pt-3 tabular-nums">
-                <span>
-                  {language === 'es'
-                    ? 'Nodo de montaje WebGL reservado (#soma-3d-canvas-slot)'
-                    : 'Reserved WebGL mount point (#soma-3d-canvas-slot)'}
-                </span>
-                <span>Escala 1:1 · Refr. 1.52</span>
-              </div>
-            </div>
-
-            {/* Columna Derecha: Especificaciones Técnicas del Envase Biofotónico */}
-            <div className="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between space-y-8">
-              <div className="space-y-4">
-                <span className="text-xs font-medium text-[var(--soma-amber-ink)] block">
-                  {language === 'es' ? 'Arquitectura del frasco' : 'Vessel architecture'}
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-swiss font-semibold tracking-tight text-[var(--soma-fg)]">
-                  {language === 'es'
-                    ? 'Estudio óptico y geométrico Miron.'
-                    : 'Miron optical & geometric study.'}
-                </h2>
-                <p className="text-sm text-[var(--soma-muted)] leading-relaxed">
-                  {language === 'es'
-                    ? 'Espacio estructurado en doble columna para albergar el visor interactivo 3D en la Fase 2, permitiendo inspeccionar la refracción ultravioleta del vidrio biofotónico y el mecanismo de dosificación sin contacto.'
-                    : 'Double-column architectural frame structured to mount the interactive 3D shader vessel viewer in Phase 2, enabling real-time inspection of biophotonic glass refraction and airtight dosing geometry.'}
-                </p>
-              </div>
-
-              {/* Tabla dimensional de precisión (tabular-nums, sin monospace) */}
-              <div className="border-t border-[var(--soma-border)] monolith-hairline divide-y divide-[var(--soma-border)] text-xs tabular-nums">
-                <div className="py-2.5 flex justify-between">
-                  <span className="text-[var(--soma-muted)]">
-                    {language === 'es' ? 'Altura total de ampolla' : 'Total vessel height'}
-                  </span>
-                  <span className="font-medium text-[var(--soma-fg)]">98.4 mm</span>
-                </div>
-                <div className="py-2.5 flex justify-between">
-                  <span className="text-[var(--soma-muted)]">
-                    {language === 'es' ? 'Diámetro cilíndrico' : 'Cylindrical diameter'}
-                  </span>
-                  <span className="font-medium text-[var(--soma-fg)]">Ø 34.0 mm</span>
-                </div>
-                <div className="py-2.5 flex justify-between">
-                  <span className="text-[var(--soma-muted)]">
-                    {language === 'es' ? 'Calibre de rosca farmacéutica' : 'Pharmaceutical thread gauge'}
-                  </span>
-                  <span className="font-medium text-[var(--soma-fg)]">DIN 18 / ISO</span>
-                </div>
-                <div className="py-2.5 flex justify-between">
-                  <span className="text-[var(--soma-muted)]">
-                    {language === 'es' ? 'Espesor de pared violeta' : 'Violet wall thickness'}
-                  </span>
-                  <span className="font-medium text-[var(--soma-amber-ink)]">3.2 mm</span>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <a
-                  href="#soma-catalog"
-                  onClick={(e) => handleNavClick(e, 'soma-catalog')}
-                  className="inline-flex items-center space-x-2 px-5 py-3 bg-[var(--soma-btn-bg)] text-[var(--soma-btn-fg)] hover:bg-[var(--soma-amber)] hover:text-[#0A0A0C] text-xs font-medium transition-colors rounded-none"
-                >
-                  <span>{language === 'es' ? 'Acceder al dispensario' : 'Enter dispensary'}</span>
-                  <ArrowDown size={13} />
-                </a>
-              </div>
-            </div>
-          </div>
+          <Soma3DShowcase language={language} />
         </section>
 
         {/* 5. DISPENSARIO (#soma-catalog) CON SELLO DE LABORATORIO Y CELDAS FARMACÉUTICAS */}

@@ -32,10 +32,10 @@ export const SomaCartOverlay: React.FC<SomaCartOverlayProps> = React.memo(({ lan
   const { items: cart, totalCount: totalCartItems, isCartOpen, checkoutOpen, addedNotice } = useSomaCartState();
 
   const [checkoutStep, setCheckoutStep] = useState<1 | 2 | 3>(1);
-  const [buyerName, setBuyerName] = useState('');
-  const [buyerEmail, setBuyerEmail] = useState('');
-  const [buyerAddress, setBuyerAddress] = useState('');
-  const [buyerCity, setBuyerCity] = useState('');
+  const [buyerName, setBuyerName] = useState('Clara Oswald');
+  const [buyerEmail, setBuyerEmail] = useState('oswald@soma-atelier.com');
+  const [buyerAddress, setBuyerAddress] = useState('Calle de los Aromas 412, Piso 4');
+  const [buyerCity, setBuyerCity] = useState('San Carlos de Bariloche');
   const [discountCode, setDiscountCode] = useState('');
   const [discountApplied, setDiscountApplied] = useState(false);
   const [orderRefCode, setOrderRefCode] = useState('');

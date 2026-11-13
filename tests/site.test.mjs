@@ -365,6 +365,42 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       somaComponentTsx.includes('loading="lazy"') && somaComponentTsx.includes('decoding="async"'),
       'Soma non-hero images must use lazy loading and async decoding'
     );
+    assert.ok(
+      somaComponentTsx.includes('<Soma3DShowcase'),
+      'SomaCommerceExperience.tsx must mount Soma3DShowcase inside #soma-3d-showcase'
+    );
+
+    const somaShowcaseTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'soma', 'Soma3DShowcase.tsx'),
+      'utf-8'
+    );
+    assert.ok(somaShowcaseTsx.includes('ssr: false'), 'Soma3DShowcase must dynamically load 3D viewer with ssr: false');
+    assert.ok(somaShowcaseTsx.includes('IntersectionObserver'), 'Soma3DShowcase must lazy-mount WebGL via IntersectionObserver');
+    for (const modeLabel of [
+      '01 / Vidrio Biofotónico Miron',
+      '02 / Inspección Espectral UV',
+      '03 / Cápsula Eco-Refill',
+      'Añadir formulación a la bolsa +',
+    ]) {
+      assert.ok(somaShowcaseTsx.includes(modeLabel), `Soma3DShowcase must include ${modeLabel}`);
+    }
+    assert.equal(somaShowcaseTsx.includes('font-mono'), false, 'Soma3DShowcase must not use font-mono');
+    assert.equal(somaShowcaseTsx.includes('zy-blue'), false, 'Soma3DShowcase must not use zy-blue');
+
+    const somaViewer3dTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'soma', 'SomaProductViewer3D.tsx'),
+      'utf-8'
+    );
+    for (const token of ['LatheGeometry', 'CylinderGeometry', 'devicePixelRatio', 'IntersectionObserver', 'dispose()']) {
+      assert.ok(somaViewer3dTsx.includes(token), `SomaProductViewer3D must include ${token}`);
+    }
+
+    const somaCartOverlayTsx = fs.readFileSync(
+      path.join(process.cwd(), 'src', 'components', 'case-study', 'soma', 'SomaCartOverlay.tsx'),
+      'utf-8'
+    );
+    assert.ok(somaCartOverlayTsx.includes('Clara Oswald'), 'SomaCartOverlay must pre-fill buyerName');
+    assert.ok(somaCartOverlayTsx.includes('oswald@soma-atelier.com'), 'SomaCartOverlay must pre-fill buyerEmail');
   });
 
   test('Home page sections, geometric monogram blueprint, portfolio demo links, and reduced-motion support', () => {
