@@ -89,35 +89,44 @@ export async function POST(req: NextRequest) {
       : [];
 
     // Validación estricta: nombre, email, tipo de proyecto, presupuesto y mensaje
-    const fieldErrors: Record<string, string> = {};
+    const missingErrors: Record<string, string> = {};
     if (cleanName.length < 2) {
-      fieldErrors.name = 'El nombre debe contener al menos 2 caracteres.';
+      missingErrors.name = 'El nombre debe contener al menos 2 caracteres.';
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    if (!cleanEmail || !emailRegex.test(cleanEmail)) {
-      fieldErrors.email = 'El correo electrónico ingresado no es válido.';
+    if (!cleanEmail) {
+      missingErrors.email = 'Ingresá tu dirección de correo electrónico.';
     }
-
     if (!cleanProjectType) {
-      fieldErrors.projectType = 'Seleccioná el tipo de proyecto.';
+      missingErrors.projectType = 'Seleccioná el tipo de proyecto.';
     }
-
     if (!cleanBudget) {
-      fieldErrors.budgetRange = 'Seleccioná un rango de presupuesto.';
+      missingErrors.budgetRange = 'Seleccioná un rango de presupuesto.';
     }
-
     if (cleanMessage.length < 5) {
-      fieldErrors.projectDescription = 'El mensaje o descripción debe contener al menos 5 caracteres.';
+      missingErrors.projectDescription =
+        'El mensaje o descripción debe contener al menos 5 caracteres.';
     }
 
-    if (Object.keys(fieldErrors).length > 0) {
+    if (Object.keys(missingErrors).length > 0) {
       return NextResponse.json(
         {
           ok: false,
-          error: 'VALIDATION_FAILED',
-          message: Object.values(fieldErrors)[0],
-          fields: fieldErrors,
+          error: 'MISSING_REQUIRED_FIELDS',
+          message: Object.values(missingErrors)[0],
+          fields: missingErrors,
+        },
+        { status: 422 }
+      );
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(cleanEmail)) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: 'INVALID_EMAIL',
+          message: 'El correo electrónico ingresado no es válido.',
+          fields: { email: 'El correo electrónico ingresado no es válido.' },
         },
         { status: 422 }
       );

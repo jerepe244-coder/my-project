@@ -1088,7 +1088,8 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
       'ZYRVAE Studio <onboarding@resend.dev>',
       'replyTo',
       'SPAM_DETECTED',
-      'VALIDATION_FAILED',
+      'MISSING_REQUIRED_FIELDS',
+      'INVALID_EMAIL',
       'escapeHtml',
     ]) {
       assert.ok(contactApi.includes(token), `POST /api/contact must include ${token}`);
