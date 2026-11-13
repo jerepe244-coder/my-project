@@ -51,15 +51,15 @@ export const ArchitectureDemo: React.FC = () => {
   return (
     <div className="rounded-none border border-white/10 bg-[#141517] text-[#F4F1EA] font-swiss">
       {/* Top Demo Bar */}
-      <div className="bg-[#0C0B0A] px-5 py-3 border-b border-white/10 flex items-center justify-between text-xs font-mono">
+      <div className="bg-[#0C0B0A] px-5 py-3 border-b border-white/10 flex items-center justify-between text-xs font-swiss">
         <div className="flex items-center space-x-2 text-white">
           <Sparkles size={14} className="text-[#FF3B30]" />
-          <span className="font-semibold uppercase tracking-wider">
-            {language === 'es' ? 'DEMO INTERACTIVA' : 'INTERACTIVE DEMO'}
+          <span className="font-medium tracking-wide">
+            {language === 'es' ? 'Demo interactiva' : 'Interactive Demo'}
           </span>
-          <span className="text-[#94A3B8]">| MONOLITH STUDIO</span>
+          <span className="text-[#94A3B8]">· Monolith Studio</span>
         </div>
-        <span className="inline-flex items-center px-2 py-0.5 rounded-none bg-white/5 text-[#94A3B8] border border-white/10 text-[10px]">
+        <span className="inline-flex items-center px-2 py-0.5 rounded-none bg-white/5 text-[#94A3B8] border border-white/10 text-[10px] font-swiss">
           {language === 'es' ? 'Explorador espacial y de materiales' : 'Spatial & tectonic visualizer'}
         </span>
       </div>
@@ -132,9 +132,9 @@ export const ArchitectureDemo: React.FC = () => {
           {activeView === 'axonometric' && (
             <div className="w-full flex flex-col items-center space-y-4">
               <div className="w-full max-w-lg aspect-video rounded-none overflow-hidden border border-white/10 bg-[#141517] p-4 flex flex-col justify-between">
-                <div className="flex justify-between text-[11px] font-mono text-[#94A3B8]">
-                  <span>AXIS: X: 30° / Y: 15°</span>
-                  <span className="text-white">DATUM +112.4M</span>
+                <div className="flex justify-between text-[11px] font-swiss tabular-nums text-[#94A3B8]">
+                  <span>Axis: X: 30° / Y: 15°</span>
+                  <span className="text-white">Datum +112.4m</span>
                 </div>
                 {/* SVG Mini Graphic */}
                 <svg viewBox="0 0 300 160" className="w-full h-32 fill-none">
@@ -155,23 +155,23 @@ export const ArchitectureDemo: React.FC = () => {
             <div className="w-full space-y-4">
               <div className="flex justify-between items-center text-xs font-swiss text-[#94A3B8]">
                 <span>{language === 'es' ? 'Corte transversal Este-Oeste' : 'East-West transverse section'}</span>
-                <span className="text-white font-mono">ESCALA 1:100</span>
+                <span className="text-white font-swiss tabular-nums">Escala 1:100</span>
               </div>
               <div className="p-4 bg-[#141517] rounded-none border border-white/10 font-swiss text-xs space-y-2 text-[#F4F1EA]">
                 <div className="flex justify-between py-1 border-b border-white/10">
-                  <span className="font-mono text-[#94A3B8]">NIVEL 04 (+14.40M)</span>
+                  <span className="font-swiss tabular-nums text-[#94A3B8]">Nivel 04 (+14.40m)</span>
                   <span className="text-[#94A3B8]">{language === 'es' ? 'Atrio cenital y mirador acústico' : 'Zenith atrium & acoustic observatory'}</span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-white/10">
-                  <span className="font-mono text-[#94A3B8]">NIVEL 03 (+10.80M)</span>
+                  <span className="font-swiss tabular-nums text-[#94A3B8]">Nivel 03 (+10.80m)</span>
                   <span className="text-[#94A3B8]">{language === 'es' ? 'Salas de investigación y mediateca' : 'Research archives & reading rooms'}</span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-white/10">
-                  <span className="font-mono text-[#94A3B8]">NIVEL 02 (+7.20M)</span>
+                  <span className="font-swiss tabular-nums text-[#94A3B8]">Nivel 02 (+7.20m)</span>
                   <span className="text-[#94A3B8]">{language === 'es' ? 'Galería de exhibición continua' : 'Continuous exhibition hall'}</span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="font-mono text-[#94A3B8]">NIVEL 01 (±0.00M)</span>
+                  <span className="font-swiss tabular-nums text-[#94A3B8]">Nivel 01 (±0.00m)</span>
                   <span className="text-[#94A3B8]">{language === 'es' ? 'Pórtico cívico y plaza cubierta' : 'Civic colonnade & covered plaza'}</span>
                 </div>
               </div>
@@ -186,7 +186,7 @@ export const ArchitectureDemo: React.FC = () => {
                     key={mat}
                     type="button"
                     onClick={() => setActiveMaterial(mat)}
-                    className={`px-3 py-1.5 rounded-none text-xs font-mono transition-all ${
+                    className={`px-3 py-1.5 rounded-none text-xs font-swiss tabular-nums transition-all ${
                       activeMaterial === mat
                         ? 'bg-[#F4F1EA] text-[#0C0B0A] font-semibold'
                         : 'bg-[#141517] border border-white/10 text-[#94A3B8] hover:text-white'
@@ -199,10 +199,10 @@ export const ArchitectureDemo: React.FC = () => {
 
               <div className="p-4 bg-[#141517] rounded-none border border-white/10 space-y-3">
                 <div className="flex items-baseline justify-between border-b border-white/10 pb-2">
-                  <h6 className="font-swiss font-bold text-white text-base">
+                  <h6 className="font-swiss font-medium text-white text-base">
                     {materials[activeMaterial].name[language]}
                   </h6>
-                  <span className="font-mono text-xs text-[#94A3B8]">
+                  <span className="font-swiss tabular-nums text-xs text-[#94A3B8]">
                     {materials[activeMaterial].code}
                   </span>
                 </div>
@@ -210,11 +210,11 @@ export const ArchitectureDemo: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-swiss">
                   <div className="p-2 bg-[#0C0B0A] rounded-none border border-white/5">
                     <span className="text-[#94A3B8] block text-[10px]">{language === 'es' ? 'Densidad:' : 'Density:'}</span>
-                    <span className="text-white font-mono">{materials[activeMaterial].properties.density}</span>
+                    <span className="text-white font-swiss tabular-nums">{materials[activeMaterial].properties.density}</span>
                   </div>
                   <div className="p-2 bg-[#0C0B0A] rounded-none border border-white/5">
                     <span className="text-[#94A3B8] block text-[10px]">{language === 'es' ? 'Comportamiento acústico:' : 'Acoustics:'}</span>
-                    <span className="text-white font-mono">{materials[activeMaterial].properties.acoustic}</span>
+                    <span className="text-white font-swiss tabular-nums">{materials[activeMaterial].properties.acoustic}</span>
                   </div>
                   <div className="p-2 bg-[#0C0B0A] rounded-none border border-white/5 sm:col-span-2">
                     <span className="text-[#94A3B8] block text-[10px]">{language === 'es' ? 'Tratamiento superficial:' : 'Surface finish:'}</span>

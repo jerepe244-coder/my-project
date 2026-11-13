@@ -76,6 +76,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   const solarAltitude = Math.round(16 + 58 * Math.sin(solarProgress * Math.PI));
   const solarAzimuth = Math.round(102 + solarProgress * (276 - 102));
   const solarLux = Math.round(190 + Math.sin(solarProgress * Math.PI) * 1230);
+  const thermalInertiaHours = (9.4 + Math.sin(solarProgress * Math.PI) * 0.8).toFixed(1);
 
   // Inercia térmica dinámica según hora solar
   const thermalMassReadout = {
@@ -155,7 +156,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
           <div className="flex items-center shrink-0">
             <Link
               href="/#work"
-              className="inline-flex items-center space-x-2 text-xs font-mono text-[#94A3B8] hover:text-white transition-colors pr-3 sm:pr-4 border-r border-white/10 h-full whitespace-nowrap"
+              className="inline-flex items-center space-x-2 text-xs font-swiss text-[#94A3B8] hover:text-white transition-colors pr-3 sm:pr-4 border-r border-white/10 h-full whitespace-nowrap"
             >
               <ArrowLeft size={13} />
               <span>{language === 'es' ? 'Volver a Zyrvae' : 'Back to Zyrvae'}</span>
@@ -242,15 +243,15 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
 
           {/* Cota Superior: Datos de Posicionamiento Geográfico impresos sobre la retícula (Sin pills) */}
           <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
-            <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[#94A3B8] border-b border-white/10 pb-3">
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-swiss text-[#94A3B8] border-b border-white/10 pb-3 tabular-nums">
               <div className="flex items-center space-x-2 text-[#F4F1EA]">
                 <span className="w-1.5 h-1.5 bg-[#FF3B30] inline-block" />
-                <span className="tracking-widest uppercase font-swiss text-[11px] font-medium">
+                <span className="tracking-wide uppercase font-swiss text-[11px] font-medium">
                   {language === 'es' ? 'Práctica Arquitectónica Tectónica' : 'Tectonic Architectural Practice'}
                 </span>
               </div>
-              <div className="text-[11px] tracking-wider text-[#94A3B8]">
-                49°18′S · 72°53′W · ELEV +48M // REF. MN-2025
+              <div className="text-[11px] font-swiss tracking-wide text-[#94A3B8] tabular-nums">
+                49°18′S · 72°53′W · Elev +48m · Ref. MN-2025
               </div>
             </div>
           </div>
@@ -309,7 +310,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 <span className="text-white/20">/</span>
                 <span>Patagonia (AR)</span>
                 <span className="text-white/20">|</span>
-                <span className="text-[#94A3B8] font-mono text-[11px]">Hormigón Visto · Piedra Fósil · Passivhaus</span>
+                <span className="text-[#94A3B8] font-swiss text-[11px] tracking-wide">Hormigón visto · Piedra fósil · Passivhaus</span>
               </div>
 
               <a
@@ -363,7 +364,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 className="p-6 sm:p-8 border-r border-t border-white/10 bg-[#141517] flex flex-col justify-between space-y-8"
               >
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between text-xs font-mono text-[#94A3B8] border-b border-white/10 pb-2">
+                  <div className="flex items-center justify-between text-xs font-swiss text-[#94A3B8] border-b border-white/10 pb-2 tabular-nums">
                     <span className="text-white font-medium">{pillar.code}</span>
                     <span>{pillar.number} / 04</span>
                   </div>
@@ -377,7 +378,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-white/10 text-[11px] font-mono text-[#CBD5E1]">
+                <div className="pt-3 border-t border-white/10 text-[11px] font-swiss text-[#CBD5E1] tabular-nums">
                   {pillar.metric}
                 </div>
               </div>
@@ -403,12 +404,12 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
             <div className="p-3.5 sm:p-4 bg-[#0C0B0A] border border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
               <div className="inline-flex items-center space-x-2.5">
                 <span className="w-2 h-2 bg-[#FF3B30]" aria-hidden="true" />
-                <span className="font-swiss text-[11px] font-medium tracking-wider uppercase text-white">
+                <span className="font-swiss text-[11px] font-medium tracking-wide uppercase text-white">
                   Laboratorio Técnico & Prototipo Funcional
                 </span>
               </div>
-              <span className="font-mono text-[11px] text-[#94A3B8]">
-                SPEC // MN-SOLAR-03 · AZIMUT {solarAzimuth}° · ELEVACIÓN {solarAltitude}° · {solarLux} LUX
+              <span className="font-swiss text-[11px] text-[#94A3B8] tabular-nums tracking-wide">
+                Estudio heliodónico · Casa Bruma — Azimut {solarAzimuth}° · Elevación {solarAltitude}° · {solarLux} lux · Inercia {thermalInertiaHours} h
               </span>
             </div>
 
@@ -416,10 +417,10 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-6">
               <div className="space-y-2 max-w-2xl">
                 <span className="font-swiss text-xs text-[#94A3B8] uppercase tracking-widest block">
-                  {language === 'es' ? 'Simulador Solar & Heliodón Digital' : 'Solar Simulator & Digital Heliodon'}
+                  {language === 'es' ? 'Simulador Solar Fotográfico' : 'Photographic Solar Simulator'}
                 </span>
                 <h3 className="text-2xl sm:text-4xl font-swiss font-medium text-white tracking-tight">
-                  {language === 'es' ? 'Incidencia rasante, azimut y sombras volumétricas' : 'Raking daylight incidence, azimuth & volumetric shadow study'}
+                  {language === 'es' ? 'Estudio heliodónico · Casa Bruma' : 'Heliodonic Study · Casa Bruma'}
                 </h3>
                 <p className="text-xs sm:text-sm text-[#94A3B8] font-swiss leading-relaxed">
                   {language === 'es'
@@ -483,15 +484,15 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   <span className="font-medium">
                     {language === 'es' ? 'Hora solar activa:' : 'Active solar time:'}
                   </span>
-                  <span className="font-mono text-[#F4F1EA] text-sm bg-white/10 px-2 py-0.5 border border-white/15">
+                  <span className="font-swiss tabular-nums text-[#F4F1EA] text-sm bg-white/10 px-2 py-0.5 border border-white/15">
                     {timeStr}
                   </span>
                 </div>
 
-                <div className="flex items-center space-x-4 text-[11px] font-mono text-[#94A3B8]">
-                  <span>AZIMUT: {solarAzimuth}°</span>
-                  <span>ALTITUD: {solarAltitude}°</span>
-                  <span className="text-[#F4F1EA] font-semibold">{solarLux} LUX</span>
+                <div className="flex items-center space-x-4 text-[11px] font-swiss tabular-nums text-[#94A3B8]">
+                  <span>Azimut: {solarAzimuth}°</span>
+                  <span>Altitud: {solarAltitude}°</span>
+                  <span className="text-[#F4F1EA] font-semibold">{solarLux} lux</span>
                 </div>
               </div>
 
@@ -509,13 +510,13 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 />
 
                 {/* Marcas de Regla Horaria Graduada */}
-                <div className="flex justify-between items-center text-[10px] font-mono text-[#94A3B8] pt-2 select-none">
+                <div className="flex justify-between items-center text-[10px] font-swiss tabular-nums text-[#94A3B8] pt-2 select-none">
                   <span>08:00</span>
                   <span className="hidden sm:inline">10:00</span>
-                  <span className="text-white font-medium">12:30 CENIT</span>
+                  <span className="text-white font-medium">12:30 Cenit</span>
                   <span className="hidden sm:inline">15:00</span>
                   <span className="hidden sm:inline">17:00</span>
-                  <span>18:45 OCASO</span>
+                  <span>18:45 Ocaso</span>
                 </div>
               </div>
             </div>
@@ -549,35 +550,22 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 style={{ opacity: opacitySunset }}
               />
 
-              {/* Velo de Tonalidad Térmica Dinámica */}
-              <div
-                className="absolute inset-0 pointer-events-none transition-colors duration-200"
-                style={{
-                  backgroundColor:
-                    solarMinutes <= 600
-                      ? 'rgba(217, 119, 6, 0.12)' // Calidez matinal ambarina
-                      : solarMinutes >= 950
-                      ? 'rgba(180, 83, 9, 0.16)' // Terracota cálido de ocaso
-                      : 'rgba(255, 255, 255, 0.04)', // Neutralidad cenital
-                }}
-              />
-
-              {/* Mira de Cota Arquitectónica & Retículo Técnico en 0.5px Líneas Blancas */}
+              {/* Retículo Técnico en 0.5px Líneas Blancas con Cotas y Vector Solar */}
               <div className="absolute inset-0 pointer-events-none p-4 sm:p-6 flex flex-col justify-between">
                 {/* Cotas Superiores en Esquinas */}
-                <div className="flex items-start justify-between font-mono text-[10px] text-white/90">
-                  <div className="flex items-center space-x-2 bg-black/60 backdrop-blur-md px-3 py-1 border border-white/10">
+                <div className="flex items-start justify-between font-swiss text-[11px] text-white/90 tabular-nums">
+                  <div className="flex items-center space-x-2 bg-black/60 backdrop-blur-md px-3 py-1.5 border border-white/10">
                     <span className="w-1.5 h-1.5 bg-[#FF3B30] inline-block" />
-                    <span>DATUM ±0.00M // CASA BRUMA</span>
+                    <span className="font-medium tracking-wide">Casa Bruma · Patagonia Sur</span>
                   </div>
-                  <div className="bg-black/60 backdrop-blur-md px-3 py-1 border border-white/10">
-                    49°18′S · 72°53′W · EL CHALTÉN
+                  <div className="bg-black/60 backdrop-blur-md px-3 py-1.5 border border-white/10 text-[#CBD5E1]">
+                    49°18′S · 72°53′W · El Chaltén
                   </div>
                 </div>
 
                 {/* Retículo Central Sutil con Vector de Incidencia Solar */}
                 <div className="flex items-center justify-center">
-                  <svg viewBox="0 0 120 120" className="w-20 h-20 text-white/40" aria-hidden="true">
+                  <svg viewBox="0 0 120 120" className="w-20 h-20 text-white/30" aria-hidden="true">
                     {/* Círculo graduado de heliodón */}
                     <circle cx="60" cy="60" r="38" stroke="currentColor" strokeWidth="0.5" fill="none" strokeDasharray="2,2" />
                     <line x1="60" y1="12" x2="60" y2="108" stroke="currentColor" strokeWidth="0.5" />
@@ -594,25 +582,34 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   </svg>
                 </div>
 
-                {/* HUD de Información Inferior */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 font-mono text-[11px] text-white">
-                  <div className="bg-black/75 backdrop-blur-md p-3 border border-white/10 space-y-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-[#FF3B30] font-bold">AZIMUT:</span>
-                      <span>{solarAzimuth}°</span>
-                      <span className="text-white/30">|</span>
-                      <span className="text-[#FF3B30] font-bold">ELEVACIÓN:</span>
-                      <span>{solarAltitude}°</span>
-                      <span className="text-white/30">|</span>
-                      <span className="text-white font-bold">{solarLux} LUX</span>
+                {/* HUD de Información Inferior con las 4 Métricas Técnicas */}
+                <div className="space-y-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-swiss text-[11px] tabular-nums text-white">
+                    <div className="bg-black/80 backdrop-blur-md px-3 py-2 border border-white/10">
+                      <span className="text-[#94A3B8] block text-[10px] tracking-wide">ÁNGULO SOLAR</span>
+                      <span className="font-medium text-white">{solarAltitude}°</span>
                     </div>
-                    <div className="text-[10px] text-[#CBD5E1] font-swiss">
-                      {thermalMassReadout[language]}
+                    <div className="bg-black/80 backdrop-blur-md px-3 py-2 border border-white/10">
+                      <span className="text-[#94A3B8] block text-[10px] tracking-wide">AZIMUT SOLAR</span>
+                      <span className="font-medium text-white">{solarAzimuth}°</span>
+                    </div>
+                    <div className="bg-black/80 backdrop-blur-md px-3 py-2 border border-white/10">
+                      <span className="text-[#94A3B8] block text-[10px] tracking-wide">ILUMINANCIA</span>
+                      <span className="font-medium text-white">{solarLux} lux</span>
+                    </div>
+                    <div className="bg-black/80 backdrop-blur-md px-3 py-2 border border-white/10">
+                      <span className="text-[#94A3B8] block text-[10px] tracking-wide">INERCIA TÉRMICA</span>
+                      <span className="font-medium text-[#F4F1EA]">{thermalInertiaHours} horas</span>
                     </div>
                   </div>
 
-                  <div className="bg-black/75 backdrop-blur-md px-3 py-1.5 border border-white/10 text-[10px] text-[#94A3B8]">
-                    Crossfade interpolado: {Math.round(opacityDawn * 100)}% Amanecer / {Math.round(opacityZenith * 100)}% Cenit / {Math.round(opacitySunset * 100)}% Ocaso
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 font-swiss text-[10px] text-[#94A3B8]">
+                    <div className="bg-black/80 backdrop-blur-md px-3 py-1 border border-white/10 text-[#CBD5E1]">
+                      {thermalMassReadout[language]}
+                    </div>
+                    <div className="bg-black/80 backdrop-blur-md px-3 py-1 border border-white/10 tabular-nums">
+                      Crossfade continuo: {Math.round(opacityDawn * 100)}% Amanecer · {Math.round(opacityZenith * 100)}% Cenit · {Math.round(opacitySunset * 100)}% Ocaso
+                    </div>
                   </div>
                 </div>
               </div>
@@ -725,10 +722,10 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   sizes="(max-width: 1024px) 100vw, 60vw"
                   className="object-cover object-center"
                 />
-                <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 border border-white/10 text-xs font-mono text-white">
+                <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 border border-white/10 text-xs font-swiss font-medium text-white tabular-nums">
                   {activeProject.code} · {activeProject.title[language]}
                 </div>
-                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-baseline text-white text-xs font-mono bg-black/75 backdrop-blur-md px-4 py-2 border border-white/10">
+                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-baseline text-white text-xs font-swiss tabular-nums bg-black/75 backdrop-blur-md px-4 py-2 border border-white/10">
                   <span>{activeProject.location}</span>
                   <span className="text-[#94A3B8]">{activeProject.area}</span>
                 </div>
@@ -738,10 +735,10 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
               <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#141517]">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <span className="text-xs font-mono text-[#FF3B30] uppercase font-semibold">
-                      {activeProject.code} // {activeProject.categoryLabel[language]}
+                    <span className="text-xs font-swiss text-[#FF3B30] font-medium tracking-wide uppercase tabular-nums">
+                      {activeProject.code} · {activeProject.categoryLabel[language]}
                     </span>
-                    <span className="text-xs font-mono text-[#94A3B8]">{activeProject.year}</span>
+                    <span className="text-xs font-swiss text-[#94A3B8] tabular-nums">{activeProject.year}</span>
                   </div>
 
                   <h3 className="text-2xl sm:text-3xl font-swiss font-medium text-white">
@@ -757,21 +754,21 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 </div>
 
                 {/* Especificaciones Técnicas */}
-                <div className="space-y-2 border-t border-white/10 pt-4 font-mono text-xs">
+                <div className="space-y-2 border-t border-white/10 pt-4 font-swiss text-xs tabular-nums">
                   <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-[#94A3B8] font-swiss">{language === 'es' ? 'Coordenadas:' : 'Coordinates:'}</span>
+                    <span className="text-[#94A3B8]">{language === 'es' ? 'Coordenadas:' : 'Coordinates:'}</span>
                     <span className="text-white">{activeProject.coordinates}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-[#94A3B8] font-swiss">{language === 'es' ? 'Superficie:' : 'Floor Area:'}</span>
+                    <span className="text-[#94A3B8]">{language === 'es' ? 'Superficie:' : 'Floor Area:'}</span>
                     <span className="text-white">{activeProject.area}</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-[#94A3B8] font-swiss">{language === 'es' ? 'Elevación:' : 'Elevation:'}</span>
+                    <span className="text-[#94A3B8]">{language === 'es' ? 'Elevación:' : 'Elevation:'}</span>
                     <span className="text-white">{activeProject.elevation}</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-[#94A3B8] font-swiss">{language === 'es' ? 'Materia prima:' : 'Primary material:'}</span>
+                    <span className="text-[#94A3B8]">{language === 'es' ? 'Materia prima:' : 'Primary material:'}</span>
                     <span className="text-white">{activeProject.primaryMaterial[language]}</span>
                   </div>
                 </div>
@@ -784,7 +781,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   <div className="space-y-1.5 text-xs font-swiss text-[#CBD5E1]">
                     {activeProject.spatialDecisions.slice(0, 2).map((d) => (
                       <div key={d.num} className="p-2.5 bg-[#0C0B0A] border border-white/5">
-                        <span className="text-[#FF3B30] font-mono mr-1.5">{d.num}.</span>
+                        <span className="text-[#FF3B30] font-swiss font-medium mr-1.5 tabular-nums">{d.num}.</span>
                         <strong className="text-white font-medium">{d.title[language]}:</strong> {d.desc[language]}
                       </div>
                     ))}
@@ -812,13 +809,13 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
                   />
-                  <div className="absolute top-2 left-2 bg-black/75 px-2 py-0.5 text-[10px] font-mono text-white border border-white/10">
+                  <div className="absolute top-2 left-2 bg-black/75 px-2 py-0.5 text-[10px] font-swiss font-medium text-white border border-white/10 tabular-nums">
                     {proj.code}
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <div className="flex justify-between items-baseline text-xs font-mono text-[#94A3B8]">
+                  <div className="flex justify-between items-baseline text-xs font-swiss tabular-nums text-[#94A3B8]">
                     <span>{proj.location}</span>
                     <span>{proj.year}</span>
                   </div>
@@ -830,9 +827,9 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   </p>
                 </div>
 
-                <div className="pt-2 flex justify-between items-center text-xs font-swiss text-[#CBD5E1]">
+                <div className="pt-2 flex justify-between items-center text-xs font-swiss text-[#CBD5E1] tabular-nums">
                   <span>{proj.area}</span>
-                  <span className="text-[#FF3B30] font-mono text-[11px]">
+                  <span className="text-[#FF3B30] font-swiss text-[11px] font-medium">
                     {selectedProjectId === proj.id ? '● Activo en visor' : 'Inspeccionar →'}
                   </span>
                 </div>
@@ -881,7 +878,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                       : 'bg-[#121110] border-white/10 text-[#94A3B8] hover:text-white'
                   }`}
                 >
-                  <span className="font-mono mr-1.5">{mat.code}</span>
+                  <span className="font-swiss font-medium mr-1.5 tabular-nums">{mat.code}</span>
                   <span>{mat.name[language].split(' ')[0]}</span>
                 </button>
               ))}
@@ -900,19 +897,19 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                       sizes="(max-width: 1024px) 100vw, 40vw"
                       className="object-cover"
                     />
-                    <div className="absolute top-3 left-3 bg-black/80 px-2.5 py-1 border border-white/10 text-[10px] font-mono text-white">
+                    <div className="absolute top-3 left-3 bg-black/80 px-2.5 py-1 border border-white/10 text-[10px] font-swiss font-medium text-white tabular-nums">
                       {activeMaterial.code}
                     </div>
                   </div>
-                  <div className="text-[11px] font-mono text-[#94A3B8] text-center">
-                    {language === 'es' ? 'PROBETA MACRO DE TEXTURA SUPERFICIAL' : 'SURFACE TEXTURE MACRO SPECIMEN'}
+                  <div className="text-[11px] font-swiss text-[#94A3B8] text-center tabular-nums">
+                    {language === 'es' ? 'Probeta macro de textura superficial' : 'Surface texture macro specimen'}
                   </div>
                 </div>
 
                 {/* Matriz de Especificaciones Físicas */}
                 <div className="lg:col-span-7 space-y-6">
                   <div className="border-b border-white/10 pb-4 space-y-1">
-                    <span className="text-xs font-mono text-[#FF3B30] uppercase">
+                    <span className="text-xs font-swiss text-[#FF3B30] font-medium uppercase tabular-nums">
                       {activeMaterial.category[language]}
                     </span>
                     <h3 className="text-2xl sm:text-3xl font-swiss font-medium text-white">
@@ -926,7 +923,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                       <span className="text-[#94A3B8] block text-[10px] uppercase">
                         {language === 'es' ? 'Densidad aparente:' : 'Apparent density:'}
                       </span>
-                      <span className="text-white font-mono font-medium block">
+                      <span className="text-white font-swiss font-medium block tabular-nums">
                         {activeMaterial.properties.density}
                       </span>
                     </div>
@@ -935,7 +932,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                       <span className="text-[#94A3B8] block text-[10px] uppercase">
                         {language === 'es' ? 'Comportamiento acústico:' : 'Acoustic rating:'}
                       </span>
-                      <span className="text-white font-mono font-medium block">
+                      <span className="text-white font-swiss font-medium block tabular-nums">
                         {activeMaterial.properties.acoustic}
                       </span>
                     </div>
@@ -961,8 +958,8 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
 
                   {/* Nota de Ensamble Tectónico */}
                   <div className="p-4 bg-[#0C0B0A] border border-white/10 text-xs font-swiss text-[#CBD5E1] space-y-1">
-                    <span className="text-white font-medium block uppercase text-[10px] font-mono">
-                      {language === 'es' ? 'NOTA DE ENSAMBLE TECTÓNICO' : 'TECTONIC DETAILING NOTE'}
+                    <span className="text-white font-medium block uppercase text-[10px] font-swiss tracking-wide">
+                      {language === 'es' ? 'Nota de ensamble tectónico' : 'Tectonic detailing note'}
                     </span>
                     <p className="leading-relaxed">
                       {activeMaterial.tectonicNotes[language]}
@@ -996,8 +993,8 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 </p>
               </div>
 
-              <span className="text-xs font-mono text-[#94A3B8] self-start md:self-end">
-                {language === 'es' ? 'HACÉ CLIC PARA AMPLIAR EN ALTA RESOLUCIÓN' : 'CLICK TO EXPAND HIGH-RESOLUTION VIEW'}
+              <span className="text-xs font-swiss text-[#94A3B8] self-start md:self-end">
+                {language === 'es' ? 'Hacé clic para ampliar en alta resolución' : 'Click to expand high-resolution view'}
               </span>
             </div>
 
@@ -1011,7 +1008,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                     onClick={() => setLightboxFrame(frame)}
                     className={`${
                       isWide ? 'sm:col-span-2' : 'sm:col-span-1'
-                    } group relative aspect-[16/11] border-r border-t border-white/10 bg-[#0C0B0A] cursor-pointer overflow-hidden rounded-none`}
+                    } group flex flex-col border-r border-t border-white/10 bg-[#0C0B0A] cursor-pointer rounded-none`}
                     tabIndex={0}
                     role="button"
                     aria-label={`Open photography: ${frame.title[language]}`}
@@ -1022,34 +1019,45 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                       }
                     }}
                   >
-                    <Image
-                      src={frame.image}
-                      alt={frame.title[language]}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
+                    {/* Fotografía limpia sin badges flotantes */}
+                    <div className="relative aspect-[16/10] overflow-hidden bg-[#141517]">
+                      <Image
+                        src={frame.image}
+                        alt={frame.title[language]}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
 
-                    {/* Velo Cinematográfico */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
-
-                    {/* Metadatos EXIF */}
-                    <div className="absolute top-3 left-3 right-3 flex justify-between items-center text-[10px] font-mono text-white/90">
-                      <span className="px-2 py-0.5 bg-black/80 border border-white/10 uppercase">
-                        {frame.meta.focalLength} · {frame.meta.aperture}
-                      </span>
-                      <span className="p-1 bg-black/80 border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Maximize2 size={12} />
-                      </span>
+                      {/* Icono discreto de ampliación en hover */}
+                      <div className="absolute top-3 right-3 p-1.5 bg-black/60 backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity text-white">
+                        <Maximize2 size={13} />
+                      </div>
                     </div>
 
-                    <div className="absolute bottom-3 left-3 right-3 text-white space-y-1">
-                      <span className="font-mono text-[10px] text-[#94A3B8] block uppercase">
-                        {frame.location}
-                      </span>
-                      <h4 className="font-swiss font-medium text-sm line-clamp-1">
-                        {frame.title[language]}
-                      </h4>
+                    {/* Fila Inferior de Retícula: Título, Ubicación y Metadatos Ópticos Limpios */}
+                    <div className="p-4 sm:p-5 border-t border-white/10 bg-[#0C0B0A] space-y-2 flex-grow flex flex-col justify-between">
+                      <div className="space-y-1">
+                        <span className="font-swiss text-[11px] font-medium tracking-wide text-[#94A3B8] block">
+                          {frame.location}
+                        </span>
+                        <h4 className="font-swiss font-medium text-sm text-white line-clamp-1 group-hover:text-[#F4F1EA] transition-colors">
+                          {frame.title[language]}
+                        </h4>
+                        <p className="font-swiss text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">
+                          {frame.subject[language]}
+                        </p>
+                      </div>
+
+                      {/* Datos Ópticos en Fila de Retícula Dedicada */}
+                      <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-swiss tabular-nums text-[#94A3B8]">
+                        <span className="text-white/80 font-medium">
+                          {frame.meta.focalLength} · {frame.meta.aperture}
+                        </span>
+                        <span className="text-[#94A3B8] text-[10px]">
+                          {frame.meta.orientation}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 );
@@ -1087,13 +1095,13 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   {language === 'es' ? 'Sedes del estudio:' : 'Studio locations:'}
                 </span>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-swiss text-xs tabular-nums">
                   {MONOLITH_STUDIO_META.offices.map((office) => (
                     <div
                       key={office.city}
                       className="p-3 bg-[#121110] border border-white/10 space-y-1 rounded-none"
                     >
-                      <span className="text-white font-bold block">{office.city}</span>
+                      <span className="text-white font-medium block">{office.city}</span>
                       <span className="text-[#94A3B8] text-[10px] block">{office.coords}</span>
                     </div>
                   ))}
@@ -1124,14 +1132,14 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                     </div>
 
                     <div className="space-y-2">
-                      <span className="text-xs font-swiss text-[#FF3B30] uppercase tracking-widest">
+                      <span className="text-xs font-swiss text-[#FF3B30] uppercase tracking-wide">
                         {language === 'es' ? 'Registro demostrativo exitoso' : 'Demo inquiry registered'}
                       </span>
                       <h3 className="text-2xl sm:text-3xl font-swiss font-medium text-white">
                         {language === 'es' ? 'Encargo Registrado' : 'Commission Registered'}
                       </h3>
-                      <p className="font-mono text-xs text-[#94A3B8]">
-                        EXPEDIENTE: <span className="text-white font-bold">{simulationCode}</span>
+                      <p className="font-swiss text-xs text-[#94A3B8] tabular-nums">
+                        {language === 'es' ? 'Expediente demostrativo:' : 'Simulated record:'} <span className="text-white font-medium">{simulationCode}</span>
                       </p>
                     </div>
 
@@ -1339,7 +1347,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
 
               <Link
                 href="/#work"
-                className="inline-flex items-center space-x-2 px-6 py-4 bg-transparent hover:bg-white/5 border border-white/15 text-xs font-mono text-[#94A3B8] hover:text-white transition-colors rounded-none"
+                className="inline-flex items-center space-x-2 px-6 py-4 bg-transparent hover:bg-white/5 border border-white/15 text-xs font-swiss text-[#94A3B8] hover:text-white transition-colors rounded-none"
               >
                 <span>{language === 'es' ? '← Volver al portafolio' : '← Back to portfolio'}</span>
               </Link>
@@ -1358,11 +1366,11 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
             className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-8 font-swiss"
           >
             {/* Barra Superior del Lightbox */}
-            <div className="flex items-center justify-between text-xs font-mono text-white/80 border-b border-white/10 pb-4">
+            <div className="flex items-center justify-between text-xs font-swiss text-white/90 border-b border-white/10 pb-4">
               <div className="flex items-center space-x-3">
-                <span className="text-white font-bold">MONOLITH // REGISTRO</span>
-                <span>—</span>
-                <span className="uppercase text-[#94A3B8]">{lightboxFrame.location}</span>
+                <span className="text-white font-medium">Monolith Studio — Registro Fotográfico</span>
+                <span className="text-white/40">·</span>
+                <span className="text-[#CBD5E1]">{lightboxFrame.location}</span>
               </div>
 
               <button
@@ -1399,7 +1407,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 </p>
               </div>
 
-              <div className="font-mono text-xs text-white">
+              <div className="font-swiss text-xs tabular-nums text-white/90">
                 {lightboxFrame.meta.focalLength} · {lightboxFrame.meta.aperture} · {lightboxFrame.meta.orientation} · {lightboxFrame.meta.lightCondition[language]}
               </div>
             </div>
