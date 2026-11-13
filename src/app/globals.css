@@ -166,6 +166,70 @@ html[data-theme="dark"] {
   --zy-warm-dim: #8c7f6d;
 }
 
+/* ==========================================================================
+   SŌMA FORMULATIONS — APOTECARIO MOLECULAR SUIZO (Aesop / Le Labo + Miron)
+   - Modo Claro: Papel de filtro crudo (#F3F1EC), tinta (#0A0A0C), ámbar (#C87D55)
+   - Modo Oscuro: Obsidiana violeta Miron (#09080D), hueso (#F3F1EC), ámbar (#C87D55)
+   ========================================================================== */
+html.light .soma-apothecary,
+html[data-theme="light"] .soma-apothecary {
+  --soma-bg: #F3F1EC;
+  --soma-surface: #ECEAE3;
+  --soma-card: #E6E3DA;
+  --soma-fg: #0A0A0C;
+  --soma-muted: #52504A;
+  --soma-dim: #6C6961;
+  --soma-border: #D2CEC3;
+  --soma-border-strong: #0A0A0C;
+  --soma-amber: #C87D55;
+  --soma-amber-ink: #8E4E2E;
+  --soma-btn-bg: #0A0A0C;
+  --soma-btn-fg: #F3F1EC;
+  --soma-header-bg: rgba(243, 241, 236, 0.96);
+}
+
+html.dark .soma-apothecary,
+html[data-theme="dark"] .soma-apothecary {
+  --soma-bg: #09080D;
+  --soma-surface: #100E17;
+  --soma-card: #15121E;
+  --soma-fg: #F3F1EC;
+  --soma-muted: #9E9AA8;
+  --soma-dim: #7C7887;
+  --soma-border: rgba(255, 255, 255, 0.11);
+  --soma-border-strong: #F3F1EC;
+  --soma-amber: #C87D55;
+  --soma-amber-ink: #C87D55;
+  --soma-btn-bg: #F3F1EC;
+  --soma-btn-fg: #09080D;
+  --soma-header-bg: rgba(9, 8, 13, 0.96);
+}
+
+.soma-apothecary .soma-line-input {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 0.5px solid var(--soma-border-strong);
+  border-radius: 0;
+  padding: 0.5rem 0 0.4rem;
+  color: var(--soma-fg);
+  font-size: 0.875rem;
+  line-height: 1.35;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.soma-apothecary .soma-line-input::placeholder {
+  color: var(--soma-muted);
+  opacity: 0.65;
+}
+.soma-apothecary .soma-line-input:focus,
+.soma-apothecary .soma-line-input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--soma-amber);
+  box-shadow: 0 0.5px 0 0 var(--soma-amber);
+}
+
 @theme inline {
   --color-brand-graphite: var(--zy-card);
   --color-brand-black: var(--zy-bg);

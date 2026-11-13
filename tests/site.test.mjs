@@ -346,6 +346,7 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     for (const sectionId of [
       'soma-hero',
       'soma-philosophy',
+      'soma-3d-showcase',
       'soma-catalog',
       'soma-science',
       'soma-rituals',
@@ -356,6 +357,14 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
         `SomaCommerceExperience.tsx must include #${sectionId} store section`
       );
     }
+
+    assert.equal(somaComponentTsx.includes('font-mono'), false, 'Soma must not use font-mono classes');
+    assert.equal(somaComponentTsx.includes('zy-blue'), false, 'Soma must not use electric blue zy-blue classes');
+    assert.equal(somaComponentTsx.includes('REFILLABLE'), false, 'Soma must not render bright green REFILLABLE badges');
+    assert.ok(
+      somaComponentTsx.includes('loading="lazy"') && somaComponentTsx.includes('decoding="async"'),
+      'Soma non-hero images must use lazy loading and async decoding'
+    );
   });
 
   test('Home page sections, geometric monogram blueprint, portfolio demo links, and reduced-motion support', () => {

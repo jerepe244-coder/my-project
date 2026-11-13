@@ -1,323 +1,501 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { ProjectDetail } from '@/types';
 import { useLanguage } from '@/context/LanguageContext';
+import { SOMA_STUDIO_META } from '@/data/commerce';
 import {
-  SOMA_PRODUCTS,
-  SOMA_STUDIO_META,
-  SomaProduct,
-  SomaCartItem,
-} from '@/data/commerce';
-import {
+  ArrowDown,
   ArrowLeft,
-  ArrowUpRight,
-  ShoppingBag,
-  Plus,
-  Minus,
-  Trash2,
-  Check,
-  X,
-  Search,
-  Sparkles,
-  ShieldCheck,
-  Leaf,
-  Truck,
-  ChevronRight,
   ArrowRight,
+  ArrowUp,
+  Check,
+  Leaf,
+  ShieldCheck,
+  Sparkles,
+  Truck,
 } from 'lucide-react';
+import { SomaBagHeaderButton } from './soma/SomaBagHeaderButton';
+import { SomaCartOverlay } from './soma/SomaCartOverlay';
+import { SomaCatalogSection } from './soma/SomaCatalogSection';
 
 interface SomaCommerceExperienceProps {
   project: ProjectDetail;
 }
 
-export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ project }) => {
-  const { language } = useLanguage();
-
-  // Search & Filter State
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
-
-  // Product Inspection Modal
-  const [inspectProduct, setInspectProduct] = useState<SomaProduct | null>(null);
-  const [modalSizeIdx, setModalSizeIdx] = useState<number>(0);
-  const [modalVesselIdx, setModalVesselIdx] = useState<number>(0);
-  const [modalQuantity, setModalQuantity] = useState<number>(1);
-
-  // Cart State
-  const [cart, setCart] = useState<SomaCartItem[]>([
-    {
-      id: 'soma-01-30ml-glass',
-      productId: 'soma-01',
-      title: {
-        es: 'Néctar Celular Regenerativo',
-        en: 'Regenerative Cellular Nectar',
-      },
-      categoryLabel: {
-        es: 'Suero Bioactivo Reparador',
-        en: 'Bioactive Repair Serum',
-      },
-      size: '30ml',
-      vesselId: 'glass',
-      vesselName: {
-        es: 'Vidrio Biofotónico Miron (30ml)',
-        en: 'Miron Biophotonic Glass (30ml)',
-      },
-      unitPrice: 78,
-      quantity: 1,
-      image: '/images/soma-product-01.webp',
-    },
-  ]);
-
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [addedNotice, setAddedNotice] = useState<string | null>(null);
-
-  // Checkout Form State
-  const [checkoutStep, setCheckoutStep] = useState<1 | 2 | 3>(1);
-  const [buyerName, setBuyerName] = useState('');
-  const [buyerEmail, setBuyerEmail] = useState('');
-  const [buyerAddress, setBuyerAddress] = useState('');
-  const [buyerCity, setBuyerCity] = useState('');
-  const [discountCode, setDiscountCode] = useState('');
-  const [discountApplied, setDiscountApplied] = useState(false);
-  const [orderRefCode, setOrderRefCode] = useState('');
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setInspectProduct(null);
-        setIsCartOpen(false);
-        setCheckoutOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      e.preventDefault();
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  // Filter & Sort Products
-  const filteredProducts = SOMA_PRODUCTS.filter((prod) => {
-    if (activeCategory !== 'all' && prod.category !== activeCategory) {
-      return false;
-    }
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      const matchTitle = prod.title[language].toLowerCase().includes(q);
-      const matchTagline = prod.tagline[language].toLowerCase().includes(q);
-      const matchActives = prod.actives.some((a) => a.name.toLowerCase().includes(q));
-      if (!matchTitle && !matchTagline && !matchActives) return false;
-    }
-    return true;
-  }).sort((a, b) => {
-    if (sortBy === 'price-asc') return a.basePrice - b.basePrice;
-    if (sortBy === 'price-desc') return b.basePrice - a.basePrice;
-    return 0;
-  });
-
-  // Cart Calculations
-  const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const cartSubtotal = cart.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
-  const freeShippingThreshold = 120;
-  const isFreeShipping = cartSubtotal >= freeShippingThreshold;
-  const shippingCost = cart.length === 0 ? 0 : isFreeShipping ? 0 : 12;
-  const discountAmount = discountApplied ? Math.round(cartSubtotal * 0.1) : 0;
-  const cartTotal = Math.max(0, cartSubtotal + shippingCost - discountAmount);
-
-  // Cart Management
-  const handleAddToCart = (product: SomaProduct, sizeStr: string, vesselObj: SomaProduct['vessels'][0], qty: number = 1) => {
-    const sizeDelta = product.sizeDelta[sizeStr] ?? 0;
-    const unitPrice = product.basePrice + sizeDelta + vesselObj.delta;
-    const itemKey = `${product.id}-${sizeStr}-${vesselObj.id}`;
-
-    setCart((prev) => {
-      const existing = prev.find((i) => i.id === itemKey);
-      if (existing) {
-        return prev.map((i) => (i.id === itemKey ? { ...i, quantity: i.quantity + qty } : i));
-      }
-      return [
-        ...prev,
-        {
-          id: itemKey,
-          productId: product.id,
-          title: product.title,
-          categoryLabel: product.categoryLabel,
-          size: sizeStr,
-          vesselId: vesselObj.id,
-          vesselName: vesselObj.name,
-          unitPrice,
-          quantity: qty,
-          image: product.images.primary,
-        },
-      ];
-    });
-
-    setAddedNotice(product.title[language]);
-    setTimeout(() => setAddedNotice(null), 2500);
-  };
-
-  const updateCartQuantity = (itemId: string, delta: number) => {
-    setCart((prev) =>
-      prev
-        .map((item) => {
-          if (item.id === itemId) {
-            const nextQty = item.quantity + delta;
-            return nextQty > 0 ? { ...item, quantity: nextQty } : null;
-          }
-          return item;
-        })
-        .filter(Boolean) as SomaCartItem[]
-    );
-  };
-
-  const removeCartItem = (itemId: string) => {
-    setCart((prev) => prev.filter((item) => item.id !== itemId));
-  };
-
-  const openProductInspector = (prod: SomaProduct) => {
-    setInspectProduct(prod);
-    setModalSizeIdx(0);
-    setModalVesselIdx(0);
-    setModalQuantity(1);
-  };
-
-  const handleApplyDiscount = (e: React.FormEvent) => {
+function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  const el = document.getElementById(id);
+  if (el) {
     e.preventDefault();
-    if (discountCode.trim().toUpperCase() === 'ZYRVAE10' || discountCode.trim().toUpperCase() === 'SOMA10') {
-      setDiscountApplied(true);
-    }
-  };
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 
-  const handleCompleteOrder = (e: React.FormEvent) => {
+/* Subcomponente aislado del Cuaderno de Laboratorio para evitar re-renders del resto de la página */
+const SomaLabJournalForm: React.FC<{ language: 'es' | 'en' }> = React.memo(({ language }) => {
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const orderCode = `SOMA-${Math.floor(100000 + Math.random() * 900000)}`;
-    setOrderRefCode(orderCode);
-    setCheckoutStep(3);
-    setCart([]);
+    if (!email.trim()) return;
+    setSubscribed(true);
+    setEmail('');
   };
 
   return (
-    <div className="min-h-screen min-h-svh bg-zy-bg text-zy-fg transition-colors duration-200">
-      {/* 1. STORE HEADER & IDENTITY */}
-      <header className="sticky top-16 z-30 bg-zy-bg/95 backdrop-blur-md border-b border-zy-border-subtle transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center space-x-3 sm:space-x-5">
-            <Link
-              href="/#work"
-              className="inline-flex items-center space-x-1.5 text-xs font-mono text-zy-muted hover:text-zy-fg transition-colors pr-3 border-r border-zy-border"
-              aria-label="Return to ZYRVAE portfolio"
-            >
-              <ArrowLeft size={13} />
-              <span>ZYRVAE</span>
-            </Link>
+    <div className="p-6 sm:p-10 bg-[var(--soma-surface)] border border-[var(--soma-border)] monolith-hairline space-y-6 rounded-none">
+      <div className="space-y-1.5">
+        <span className="text-[11px] font-medium text-[var(--soma-amber-ink)] block">
+          {language === 'es' ? 'Cuaderno de laboratorio' : 'Laboratory journal'}
+        </span>
+        <h3 className="text-2xl font-swiss font-semibold tracking-tight text-[var(--soma-fg)]">
+          {language === 'es'
+            ? 'Recibí estudios de formulación y notas de cosecha'
+            : 'Receive formulation digests and harvest notes'}
+        </h3>
+        <p className="text-xs text-[var(--soma-muted)]">
+          {language === 'es'
+            ? 'Simulación de despacho editorial privado sin envíos reales.'
+            : 'Private editorial dispatch simulation without real mailings.'}
+        </p>
+      </div>
 
-            <a
-              href="#soma-hero"
-              onClick={(e) => scrollToSection(e, 'soma-hero')}
-              className="flex items-baseline space-x-2 text-zy-fg group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue rounded"
-            >
-              <span className="font-sans font-extrabold text-base tracking-widest uppercase">
-                SŌMA
-              </span>
-              <span className="font-mono text-[11px] text-zy-muted tracking-widest uppercase hidden sm:inline">
-                // FORMULATIONS
-              </span>
-            </a>
+      {subscribed ? (
+        <div className="p-4 border border-[var(--soma-amber)] bg-[var(--soma-bg)] flex items-center justify-between gap-4 text-xs">
+          <div className="flex items-center space-x-2.5 text-[var(--soma-fg)] font-medium">
+            <Check size={14} className="text-[var(--soma-amber-ink)] shrink-0" />
+            <span>
+              {language === 'es'
+                ? 'Registro confirmado en el cuaderno de laboratorio (Demo Zyrvae).'
+                : 'Laboratory journal dispatch registered (Zyrvae Demo).'}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setSubscribed(false)}
+            className="text-[11px] text-[var(--soma-amber-ink)] hover:underline underline-offset-4 shrink-0"
+          >
+            {language === 'es' ? 'Reiniciar' : 'Reset'}
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row sm:items-end gap-4">
+          <div className="flex-grow space-y-1">
+            <label htmlFor="soma-journal-email" className="block text-[11px] font-medium text-[var(--soma-muted)]">
+              {language === 'es' ? 'Dirección de correo' : 'Email address'}
+            </label>
+            <input
+              id="soma-journal-email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="botanical@atelier.com"
+              className="soma-line-input font-swiss"
+            />
+          </div>
+          <button
+            type="submit"
+            className="px-6 py-2.5 bg-[var(--soma-btn-bg)] text-[var(--soma-btn-fg)] hover:bg-[var(--soma-amber)] hover:text-[#0A0A0C] text-xs font-swiss font-medium transition-colors whitespace-nowrap rounded-none"
+          >
+            {language === 'es' ? 'Suscribirme' : 'Subscribe'}
+          </button>
+        </form>
+      )}
+
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-4 border-t border-[var(--soma-border)] monolith-hairline text-[11px] font-medium text-[var(--soma-dim)]">
+        <span>{language === 'es' ? 'Certificación vegana' : 'Vegan certified'}</span>
+        <span>·</span>
+        <span>{language === 'es' ? 'Vidrio violeta Miron' : 'Miron violet glass'}</span>
+        <span>·</span>
+        <span>{language === 'es' ? 'Recargas 100% compostables' : '100% compostable refills'}</span>
+      </div>
+    </div>
+  );
+});
+SomaLabJournalForm.displayName = 'SomaLabJournalForm';
+
+/* Secciones estáticas/memorizadas aisladas para evitar re-renders cuando cambia el estado del Drawer o Bolsa */
+const SomaStaticSectionsAfterCatalog: React.FC<{
+  language: 'es' | 'en';
+  projectTitle: string;
+}> = React.memo(({ language, projectTitle }) => {
+  return (
+    <>
+      {/* 5. CIENCIA BIOFOTÓNICA: EL VIDRIO MIRON */}
+      <section
+        id="soma-science"
+        className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[var(--soma-border)] monolith-hairline scroll-mt-28"
+        aria-label="Miron Glass Science"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Fotografía científica limpia en marco 0.5px (lazy + decoding async) */}
+          <div className="lg:col-span-5 border border-[var(--soma-border)] monolith-hairline bg-[var(--soma-surface)] rounded-none">
+            <div className="relative aspect-square overflow-hidden bg-[var(--soma-card)]">
+              <Image
+                src="/images/soma-vessel-miron.webp"
+                alt="Miron violet biophotonic glass preserving active botanical ingredients"
+                fill
+                loading="lazy"
+                decoding="async"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="px-4 py-3 border-t border-[var(--soma-border)] monolith-hairline flex items-center justify-between text-[11px] font-medium text-[var(--soma-muted)] tabular-nums">
+              <span>{language === 'es' ? 'Vidrio violeta Miron · Patente óptica' : 'Miron Violetglas · Optical patent'}</span>
+              <span className="text-[var(--soma-amber-ink)]">380–750 nm</span>
+            </div>
           </div>
 
-          {/* In-page navigation links */}
+          {/* Explicación Biofísica */}
+          <div className="lg:col-span-7 space-y-8">
+            <div className="space-y-3">
+              <span className="text-xs font-medium text-[var(--soma-amber-ink)] block">
+                {language === 'es' ? 'Ciencia de preservación' : 'Preservation biophysics'}
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-swiss font-semibold tracking-tight text-[var(--soma-fg)]">
+                {language === 'es' ? 'La membrana biofotónica.' : 'The biophotonic membrane.'}
+              </h2>
+              <p className="text-base sm:text-lg text-[var(--soma-muted)] font-swiss leading-relaxed">
+                {language === 'es'
+                  ? 'La luz solar visible acelera la oxidación molecular de los aceites botánicos y degrada las vitaminas activas. El vidrio violeta Miron actúa como un filtro espectral selectivo que bloquea el espectro visible nocivo y admite únicamente las frecuencias violeta e infrarrojas regeneradoras.'
+                  : 'Visible sunlight drastically accelerates molecular decay in natural plant oils and destabilizes bioactive vitamins. Miron violet glass acts as a selective optical filter, admitting only beneficial violet and far-infrared wavelengths.'}
+              </p>
+            </div>
+
+            {/* Tabla Espectral en Retícula Continua 0.5px */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 border-l border-t border-[var(--soma-border)] monolith-hairline text-xs">
+              <div className="p-5 bg-[var(--soma-bg)] border-r border-b border-[var(--soma-border)] monolith-hairline space-y-1.5">
+                <span className="text-[var(--soma-dim)] block text-[11px] font-medium tabular-nums">
+                  {language === 'es' ? 'Luz visible (400–700 nm)' : 'Visible light (400–700 nm)'}
+                </span>
+                <span className="text-[var(--soma-fg)] font-semibold block text-sm tabular-nums">
+                  {language === 'es' ? '0% paso (Bloqueo total)' : '0% transmission'}
+                </span>
+                <p className="text-[var(--soma-muted)] text-[11px] leading-relaxed">
+                  {language === 'es' ? 'Evita la foto-oxidación lipídica' : 'Prevents lipid photo-oxidation'}
+                </p>
+              </div>
+
+              <div className="p-5 bg-[var(--soma-bg)] border-r border-b border-[var(--soma-border)] monolith-hairline space-y-1.5">
+                <span className="text-[var(--soma-dim)] block text-[11px] font-medium tabular-nums">
+                  {language === 'es' ? 'Espectro violeta (380–420 nm)' : 'Violet spectrum (380–420 nm)'}
+                </span>
+                <span className="text-[var(--soma-amber-ink)] font-semibold block text-sm tabular-nums">
+                  {language === 'es' ? '25–45% transmisión' : '25–45% transmission'}
+                </span>
+                <p className="text-[var(--soma-muted)] text-[11px] leading-relaxed">
+                  {language === 'es' ? 'Preserva la vitalidad celular' : 'Sustains vital bio-frequency'}
+                </p>
+              </div>
+
+              <div className="p-5 bg-[var(--soma-bg)] border-r border-b border-[var(--soma-border)] monolith-hairline space-y-1.5">
+                <span className="text-[var(--soma-dim)] block text-[11px] font-medium tabular-nums">
+                  {language === 'es' ? 'Infrarrojo cercano (>750 nm)' : 'Near infrared (>750 nm)'}
+                </span>
+                <span className="text-[var(--soma-fg)] font-semibold block text-sm tabular-nums">
+                  {language === 'es' ? '60–70% transmisión' : '60–70% transmission'}
+                </span>
+                <p className="text-[var(--soma-muted)] text-[11px] leading-relaxed">
+                  {language === 'es' ? 'Estabilidad superior a 24 meses' : '24+ month bio-stability'}
+                </p>
+              </div>
+            </div>
+
+            {/* Bandera Circular de Recargas */}
+            <div className="p-5 sm:p-6 bg-[var(--soma-surface)] border border-[var(--soma-border)] monolith-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-none">
+              <div className="space-y-1.5">
+                <div className="flex items-center space-x-2 text-[var(--soma-fg)] font-medium text-sm">
+                  <Leaf size={14} className="text-[var(--soma-amber-ink)] shrink-0" />
+                  <span>{language === 'es' ? 'Sistema circular de recargas' : 'Circular refill system'}</span>
+                </div>
+                <p className="text-xs text-[var(--soma-muted)] leading-relaxed max-w-xl">
+                  {language === 'es'
+                    ? 'Conservá tu frasco biofotónico de por vida. Cada sobre compostable ahorra $8 USD y reduce un 82% la huella de transporte.'
+                    : 'Keep your biophotonic glass jar for life. Every compostable refill saves $8 USD and cuts freight footprint by 82%.'}
+                </p>
+              </div>
+
+              <a
+                href="#soma-catalog"
+                onClick={(e) => scrollToSection(e, 'soma-catalog')}
+                className="px-4 py-2.5 bg-[var(--soma-btn-bg)] text-[var(--soma-btn-fg)] hover:bg-[var(--soma-amber)] hover:text-[#0A0A0C] text-xs font-medium whitespace-nowrap self-start sm:self-auto transition-colors rounded-none"
+              >
+                {language === 'es' ? 'Ver recargas' : 'Shop refills'}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. SECUENCIA CUTÁNEA / RITUALES */}
+      <section
+        id="soma-rituals"
+        className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[var(--soma-border)] monolith-hairline scroll-mt-28"
+        aria-label="SOMA Rituals"
+      >
+        <div className="space-y-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--soma-border)] monolith-hairline pb-8">
+            <div className="space-y-2">
+              <span className="text-xs font-medium text-[var(--soma-amber-ink)] block">
+                {language === 'es' ? 'Secuencia de aplicación' : 'Cellular application ritual'}
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-swiss font-semibold tracking-tight text-[var(--soma-fg)]">
+                {language === 'es' ? 'El ritual celular diario.' : 'The daily cellular ritual.'}
+              </h2>
+              <p className="text-sm sm:text-base text-[var(--soma-muted)] font-swiss max-w-xl leading-relaxed">
+                {language === 'es'
+                  ? 'Cuatro pasos calibrados según el ritmo circadiano para optimizar la absorción osmótica de menor a mayor densidad lipídica.'
+                  : 'Four steps calibrated with your circadian rhythm for progressive osmotic absorption by ascending lipid density.'}
+              </p>
+            </div>
+
+            <span className="text-xs font-medium text-[var(--soma-muted)] self-start md:self-end">
+              {language === 'es' ? 'Orden de menor a mayor densidad lipídica' : 'Ordered by ascending lipid density'}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-l border-t border-[var(--soma-border)] monolith-hairline">
+            {[
+              {
+                step: '01',
+                time: { es: 'Día y noche', en: 'Day & night' },
+                title: { es: 'Purificación & Equilibrio', en: 'Purify & Rebalance' },
+                product: 'FORM-05/CLN · Emulsión Limpiadora',
+                desc: {
+                  es: 'Disuelve impurezas con aceite de jojoba y reishi sin retirar el manto ácido protector.',
+                  en: 'Dissolves impurities with jojoba and reishi without stripping the protective mantle.',
+                },
+              },
+              {
+                step: '02',
+                time: { es: 'Día y noche', en: 'Day & night' },
+                title: { es: 'Saturación Hídrica', en: 'Hydric Saturation' },
+                product: 'FORM-03/HYD · Bruma Biofotónica',
+                desc: {
+                  es: 'Aporta ácido poliglutámico y electrolitos que multiplican por 5 la absorción del suero.',
+                  en: 'Delivers polyglutamic acid and electrolytes priming the skin to absorb serums.',
+                },
+              },
+              {
+                step: '03',
+                time: { es: 'Noche · Reparación', en: 'Night · Repair' },
+                title: { es: 'Regeneración Celular', en: 'Cellular Regeneration' },
+                product: 'FORM-01/REG · Néctar Celular',
+                desc: {
+                  es: 'Fitopéptidos concentrados y mirra silvestre que activan la síntesis de colágeno durante el sueño.',
+                  en: 'Concentrated phyto-peptides and wild myrrh accelerating nocturnal repair.',
+                },
+              },
+              {
+                step: '04',
+                time: { es: 'Sellado lipídico', en: 'Lipid seal' },
+                title: { es: 'Barrera Lipídica', en: 'Barrier Fortification' },
+                product: 'FORM-02/LIP · Bálsamo Botánico',
+                desc: {
+                  es: 'Tres ceramidas biocompatibles que sellan los activos y evitan la pérdida transepidérmica de agua.',
+                  en: 'Three bio-identical ceramides locking in actives and preventing moisture loss.',
+                },
+              },
+            ].map((rit) => (
+              <div
+                key={rit.step}
+                className="p-6 bg-[var(--soma-bg)] border-r border-b border-[var(--soma-border)] monolith-hairline flex flex-col justify-between space-y-5 rounded-none"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-[11px] font-medium text-[var(--soma-muted)] border-b border-[var(--soma-border)] monolith-hairline pb-2.5 tabular-nums">
+                    <span className="text-[var(--soma-amber-ink)] font-semibold">
+                      {language === 'es' ? `Paso ${rit.step}` : `Step ${rit.step}`}
+                    </span>
+                    <span>{rit.time[language]}</span>
+                  </div>
+
+                  <h3 className="font-swiss font-semibold text-lg text-[var(--soma-fg)] tracking-tight">
+                    {rit.title[language]}
+                  </h3>
+
+                  <p className="text-[11px] font-medium text-[var(--soma-amber-ink)] tabular-nums">
+                    {rit.product}
+                  </p>
+
+                  <p className="text-xs text-[var(--soma-muted)] leading-relaxed">{rit.desc[language]}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. ATELIER, CUADERNO DE LABORATORIO & BANDA DE RETORNO A ZYRVAE */}
+      <section
+        id="soma-footer"
+        className="pt-24 sm:pt-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28"
+        aria-label="SOMA Footer and Return Navigation"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start pb-20">
+          <div className="lg:col-span-5 space-y-6">
+            <span className="text-xs font-medium text-[var(--soma-amber-ink)] block">
+              {language === 'es' ? 'Atelier & Dispensario' : 'Atelier & Dispensary'}
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-swiss font-semibold tracking-tight text-[var(--soma-fg)]">
+              {language === 'es' ? 'La pureza botánica en tu piel.' : 'Pure botanicals on your skin.'}
+            </h2>
+            <p className="text-sm text-[var(--soma-muted)] font-swiss leading-relaxed">
+              {SOMA_STUDIO_META.mission[language]}
+            </p>
+
+            {/* Declaración honesta en retícula limpia */}
+            <div className="p-5 bg-[var(--soma-surface)] border border-[var(--soma-border)] monolith-hairline text-xs space-y-2 text-[var(--soma-muted)] rounded-none">
+              <div className="flex items-center space-x-2 text-[var(--soma-fg)] font-medium">
+                <ShieldCheck size={14} className="text-[var(--soma-amber-ink)] shrink-0" />
+                <span>
+                  {language === 'es' ? 'Declaración de proyecto conceptual' : 'Conceptual project declaration'}
+                </span>
+              </div>
+              <p className="leading-relaxed">
+                {language === 'es'
+                  ? `${projectTitle} es una experiencia de comercio electrónico conceptual diseñada por Zyrvae Digital Studio. Todos los productos, formulaciones y albaranes de pago se presentan con fines demostrativos sin cobros reales.`
+                  : `${projectTitle} is a conceptual e-commerce architecture crafted by Zyrvae Digital Studio. All products, formulations, and laboratory slips operate in demonstration mode with zero real charges.`}
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7">
+            <SomaLabJournalForm language={language} />
+          </div>
+        </div>
+
+        {/* Banda de retícula continua de retorno al portafolio general de Zyrvae */}
+        <div className="border-t border-b border-[var(--soma-border)] monolith-hairline grid grid-cols-1 md:grid-cols-12 bg-[var(--soma-surface)]/40 rounded-none">
+          <Link
+            href="/#work"
+            className="md:col-span-8 p-6 sm:p-8 border-b md:border-b-0 md:border-r border-[var(--soma-border)] monolith-hairline flex items-center justify-between gap-4 group hover:bg-[var(--soma-surface)] transition-colors rounded-none"
+          >
+            <div className="space-y-1">
+              <span className="text-[11px] font-medium text-[var(--soma-amber-ink)] block">
+                {language === 'es' ? 'Archivo general del estudio' : 'Studio main index'}
+              </span>
+              <span className="text-lg sm:text-2xl font-swiss font-semibold text-[var(--soma-fg)] tracking-tight block">
+                {language === 'es'
+                  ? '← Volver al portafolio de Zyrvae'
+                  : '← Return to Zyrvae portfolio'}
+              </span>
+            </div>
+            <ArrowRight
+              size={18}
+              className="text-[var(--soma-muted)] group-hover:text-[var(--soma-fg)] group-hover:translate-x-1 transition-all shrink-0"
+            />
+          </Link>
+
+          <a
+            href="#soma-hero"
+            onClick={(e) => scrollToSection(e, 'soma-hero')}
+            className="md:col-span-4 p-6 sm:p-8 flex items-center justify-between gap-4 group hover:bg-[var(--soma-surface)] transition-colors rounded-none"
+          >
+            <div className="space-y-1">
+              <span className="text-[11px] font-medium text-[var(--soma-muted)] block tabular-nums">
+                04 / Sōma Formulations
+              </span>
+              <span className="text-sm font-swiss font-medium text-[var(--soma-fg)] block">
+                {language === 'es' ? 'Volver arriba' : 'Back to top'}
+              </span>
+            </div>
+            <ArrowUp
+              size={16}
+              className="text-[var(--soma-muted)] group-hover:text-[var(--soma-fg)] group-hover:-translate-y-0.5 transition-all shrink-0"
+            />
+          </a>
+        </div>
+      </section>
+    </>
+  );
+});
+SomaStaticSectionsAfterCatalog.displayName = 'SomaStaticSectionsAfterCatalog';
+
+export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ project }) => {
+  const { language } = useLanguage();
+
+  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    scrollToSection(e, id);
+  }, []);
+
+  return (
+    <div className="soma-apothecary min-h-screen min-h-svh bg-[var(--soma-bg)] text-[var(--soma-fg)] pt-[56px] sm:pt-[60px] pb-16 sm:pb-24 font-swiss transition-colors duration-200 selection:bg-[#C87D55]/25 selection:text-[var(--soma-fg)] rounded-none">
+      {/* 1. SUB-HEADER CONTINUO DE RETÍCULA (0.5px, bordes rectos 0px) */}
+      <header className="sticky top-[56px] sm:top-[60px] z-30 bg-[var(--soma-header-bg)] backdrop-blur-md border-b border-[var(--soma-border)] monolith-hairline text-[var(--soma-fg)] font-swiss rounded-none">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0 flex items-stretch justify-between h-12 gap-2">
+          {/* Izquierda: Volver a Zyrvae */}
+          <div className="flex items-center shrink-0">
+            <Link
+              href="/#work"
+              className="inline-flex items-center space-x-2 text-xs font-swiss font-medium text-[var(--soma-muted)] hover:text-[var(--soma-fg)] transition-colors pr-3 sm:pr-4 border-r border-[var(--soma-border)] monolith-hairline h-full whitespace-nowrap rounded-none"
+              aria-label="Return to Zyrvae portfolio"
+            >
+              <ArrowLeft size={13} />
+              <span>{language === 'es' ? 'Volver a Zyrvae' : 'Back to Zyrvae'}</span>
+            </Link>
+          </div>
+
+          {/* Centro: 04 / Sōma Formulations — Apotecario Celular */}
+          <div className="hidden md:flex items-center px-2 lg:px-4 font-swiss text-xs font-medium text-[var(--soma-fg)]/90 tracking-[0.015em] truncate tabular-nums">
+            <span>04 / Sōma Formulations — Apotecario Celular</span>
+          </div>
+
+          {/* Enlaces Internos Limpios */}
           <nav
             aria-label="Store Navigation"
-            className="hidden md:flex items-center space-x-6 text-xs font-mono text-zy-muted"
+            className="hidden lg:flex items-center space-x-6 text-xs font-swiss font-medium text-[var(--soma-muted)] whitespace-nowrap"
           >
             <a
               href="#soma-philosophy"
-              onClick={(e) => scrollToSection(e, 'soma-philosophy')}
-              className="hover:text-zy-fg transition-colors"
+              onClick={(e) => handleNavClick(e, 'soma-philosophy')}
+              className="hover:text-[var(--soma-fg)] transition-colors"
             >
-              {language === 'es' ? '01 // FILOSOFÍA' : '01 // PHILOSOPHY'}
+              {language === 'es' ? 'Manifiesto' : 'Manifesto'}
+            </a>
+            <a
+              href="#soma-3d-showcase"
+              onClick={(e) => handleNavClick(e, 'soma-3d-showcase')}
+              className="hover:text-[var(--soma-fg)] transition-colors"
+            >
+              {language === 'es' ? 'Escaparate 3D' : '3D Showcase'}
             </a>
             <a
               href="#soma-catalog"
-              onClick={(e) => scrollToSection(e, 'soma-catalog')}
-              className="hover:text-zy-fg transition-colors"
+              onClick={(e) => handleNavClick(e, 'soma-catalog')}
+              className="hover:text-[var(--soma-fg)] transition-colors"
             >
-              {language === 'es' ? '02 // CATÁLOGO' : '02 // CATALOG'}
+              {language === 'es' ? 'Dispensario' : 'Dispensary'}
             </a>
             <a
               href="#soma-science"
-              onClick={(e) => scrollToSection(e, 'soma-science')}
-              className="hover:text-zy-fg transition-colors"
+              onClick={(e) => handleNavClick(e, 'soma-science')}
+              className="hover:text-[var(--soma-fg)] transition-colors"
             >
-              {language === 'es' ? '03 // VIDRIO MIRON' : '03 // MIRON GLASS'}
-            </a>
-            <a
-              href="#soma-rituals"
-              onClick={(e) => scrollToSection(e, 'soma-rituals')}
-              className="hover:text-zy-fg transition-colors"
-            >
-              {language === 'es' ? '04 // RITUALES' : '04 // RITUALS'}
+              {language === 'es' ? 'Ciencia Miron' : 'Miron Science'}
             </a>
           </nav>
 
-          {/* Action: Cart Trigger & Honest Concept Badge */}
-          <div className="flex items-center space-x-2.5">
-            <span className="hidden xl:inline-flex items-center px-2 py-0.5 rounded bg-zy-surface border border-zy-border text-[10px] font-mono text-zy-dim uppercase tracking-wider">
-              [ CONCEPT PROJECT ]
-            </span>
-
-            {/* Shopping Bag Button */}
-            <button
-              type="button"
-              onClick={() => setIsCartOpen(true)}
-              className="relative inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-semibold hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue shadow-sm"
-              aria-label={`Open shopping cart with ${totalCartItems} items`}
-            >
-              <ShoppingBag size={14} />
-              <span>{language === 'es' ? 'BOLSA' : 'BAG'}</span>
-              <span className="ml-1 px-1.5 py-0.2 rounded-full bg-zy-blue text-white text-[10px] font-bold">
-                {totalCartItems}
-              </span>
-            </button>
+          {/* Derecha: Botón recto Bolsa (n) aislado para evitar re-renders del resto de la página */}
+          <div className="flex items-stretch shrink-0">
+            <SomaBagHeaderButton language={language} />
           </div>
         </div>
       </header>
 
-      {/* Added to cart toast notification */}
-      <AnimatePresence>
-        {addedNotice && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed top-20 right-4 z-40 bg-zy-fg text-zy-bg px-4 py-2.5 rounded-xl shadow-xl flex items-center space-x-2.5 text-xs font-mono border border-white/10"
-          >
-            <Check size={14} className="text-zy-blue" />
-            <span>{language === 'es' ? `Añadido a la bolsa: ${addedNotice}` : `Added to bag: ${addedNotice}`}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <main>
-        {/* 2. HERO EDITORIAL A GRAN ESCALA */}
+        {/* 2. HERO EDITORIAL: SŌMA + Instrument Serif Itálica + Cero Pills Flotantes */}
         <section
           id="soma-hero"
-          className="relative min-h-[80svh] sm:min-h-[85svh] flex flex-col justify-between overflow-hidden border-b border-zy-border-subtle"
+          className="relative min-h-[82svh] sm:min-h-[86svh] flex flex-col justify-between overflow-hidden border-b border-[var(--soma-border)] monolith-hairline bg-[#09080D]"
           aria-label="SOMA Hero"
         >
-          {/* Photographic Background Asset */}
+          {/* Fotografía Hero (priority para LCP) */}
           <motion.div
             layoutId={`case-study-image-${project.slug}`}
             style={{ viewTransitionName: `case-study-image-${project.slug}` }}
@@ -325,162 +503,163 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
           >
             <Image
               src="/images/soma-hero-editorial.webp"
-              alt="SOMA Formulations - Botanical cellular biotechnology and biophotonic miron glass bottles"
+              alt="SOMA Formulations - Apotecario molecular en vidrio biofotónico Miron"
               fill
               priority
               sizes="100vw"
               className="object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#09080D]/90 via-[#09080D]/55 to-[#09080D]/40" />
           </motion.div>
 
-          {/* Top Coordinate Bar */}
-          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14">
-            <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[#cbd4e6]">
-              <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded bg-[#0b0e14]/75 backdrop-blur-md border border-white/15">
-                <span className="w-1.5 h-1.5 rounded-full bg-zy-blue animate-pulse" />
-                <span className="tracking-wider uppercase">
-                  {language === 'es' ? 'BIOTECNOLOGÍA CELULAR & CUIDADO BOTÁNICO' : 'CELLULAR BIOTECHNOLOGY & BOTANICAL CARE'}
+          {/* Cota Superior en Retícula (Sin cápsulas flotantes) */}
+          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-swiss text-[#B8B4C2] border-b border-white/15 pb-3 tabular-nums">
+              <div className="flex items-center space-x-2 text-[#F3F1EC]">
+                <span className="w-1.5 h-1.5 bg-[#C87D55] inline-block shrink-0" />
+                <span className="text-[11px] font-medium">
+                  {language === 'es'
+                    ? 'Apotecario molecular · Vidrio biofotónico Miron'
+                    : 'Molecular apothecary · Miron biophotonic glass'}
                 </span>
               </div>
-              <div className="px-2.5 py-1 rounded bg-[#0b0e14]/75 backdrop-blur-md border border-white/15 text-[11px] tracking-wider uppercase">
-                MIRON VIOLET GLASS · ECO-REFILL SYSTEM · ZERO CRUELTY
+              <div className="text-[11px] font-medium text-[#B8B4C2] tabular-nums">
+                {language === 'es' ? 'Cosecha 2025 · Lote N° 08 · Basilea / Patagonia' : 'Harvest 2025 · Batch No. 08 · Basel / Patagonia'}
               </div>
             </div>
           </div>
 
-          {/* Hero Center Editorial Copy */}
+          {/* Título Monumental + Subtítulo Serif Itálica */}
           <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-            <div className="max-w-3xl space-y-6">
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="font-mono text-xs text-[#8f520a] dark:text-[#d8a45f] tracking-widest uppercase flex items-center space-x-2"
-              >
-                <span>SŌMA FORMULATIONS</span>
-                <span>—</span>
-                <span>HARVEST 2025 // BATCH N° 08</span>
-              </motion.div>
-
+            <div className="max-w-4xl space-y-6">
               <motion.h1
                 layoutId={`case-study-title-${project.slug}`}
                 style={{ viewTransitionName: `case-study-title-${project.slug}` }}
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="text-3xl sm:text-5xl lg:text-6xl font-sans font-bold tracking-tight text-white leading-[1.08] text-balance"
+                transition={{ duration: 0.65 }}
+                className="text-[#F3F1EC] leading-[1.02] tracking-tight"
               >
-                {language === 'es'
-                  ? 'Biotecnología celular & rituales puros.'
-                  : 'Cellular biotechnology & pure rituals.'}
+                <span className="block text-5xl sm:text-7xl lg:text-9xl font-display-zyrvae font-extrabold uppercase">
+                  SŌMA
+                </span>
+                <span className="block text-2xl sm:text-4xl lg:text-5xl font-serif-editorial italic text-[#F3F1EC]/95 font-normal mt-2">
+                  {language === 'es'
+                    ? '«Biotecnología celular & rituales puros.»'
+                    : '“Cellular biotechnology & pure rituals.”'}
+                </span>
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="text-base sm:text-xl text-[#d4dae8] font-sans max-w-2xl leading-relaxed"
+                transition={{ duration: 0.65, delay: 0.15 }}
+                className="text-base sm:text-lg text-[#D5D1C8] font-swiss font-light max-w-2xl leading-relaxed"
               >
                 {SOMA_STUDIO_META.mission[language]}
               </motion.p>
 
               <motion.div
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono"
+                transition={{ duration: 0.65, delay: 0.25 }}
+                className="pt-2 flex flex-wrap items-center gap-3 text-xs font-swiss font-medium"
               >
                 <a
                   href="#soma-catalog"
-                  onClick={(e) => scrollToSection(e, 'soma-catalog')}
-                  className="px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-neutral-200 transition-colors"
+                  onClick={(e) => handleNavClick(e, 'soma-catalog')}
+                  className="inline-flex items-center space-x-2 px-6 py-3 bg-[#F3F1EC] text-[#0A0A0C] hover:bg-[#C87D55] transition-colors rounded-none"
                 >
-                  {language === 'es' ? 'EXPLORAR CATÁLOGO' : 'EXPLORE CATALOG'}
+                  <span>{language === 'es' ? 'Explorar dispensario' : 'Explore dispensary'}</span>
+                  <ArrowDown size={13} />
                 </a>
 
                 <a
                   href="#soma-science"
-                  onClick={(e) => scrollToSection(e, 'soma-science')}
-                  className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 transition-colors"
+                  onClick={(e) => handleNavClick(e, 'soma-science')}
+                  className="inline-flex items-center px-6 py-3 bg-transparent hover:bg-white/10 text-[#F3F1EC] border border-white/25 transition-colors rounded-none"
                 >
-                  {language === 'es' ? 'VIDRIO BIOFOTÓNICO' : 'BIOPHOTONIC SCIENCE'}
+                  {language === 'es' ? 'Ciencia biofotónica' : 'Biophotonic science'}
                 </a>
               </motion.div>
             </div>
           </div>
 
-          {/* Bottom Hero Anchor Bar */}
-          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12 border-t border-white/10">
-            <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-mono text-[#a6b1c6]">
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
-                <span>FITOPÉPTIDOS</span>
-                <span className="text-white/40">/</span>
-                <span>CERAMIDAS PURAS</span>
-                <span className="text-white/40">/</span>
-                <span>ESCUALANO DE OLIVA</span>
-                <span className="text-white/40">/</span>
-                <span>BAKUCHIOL 2%</span>
+          {/* Fila Inferior de Retícula del Hero */}
+          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 border-t border-white/15">
+            <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-swiss text-[#B8B4C2] tabular-nums">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-medium">
+                <span className="text-[#F3F1EC]">Fitopéptidos</span>
+                <span className="text-white/25">/</span>
+                <span>Ceramidas puras</span>
+                <span className="text-white/25">/</span>
+                <span>Escualano de oliva</span>
+                <span className="text-white/25">/</span>
+                <span>Bakuchiol 2%</span>
               </div>
 
-              <div className="flex items-center space-x-2 text-white">
-                <Truck size={13} className="text-[#8f520a] dark:text-[#d8a45f]" />
+              <div className="flex items-center space-x-2 text-[#F3F1EC] font-medium">
+                <Truck size={13} className="text-[#C87D55] shrink-0" />
                 <span>
                   {language === 'es'
-                    ? 'Envío neutro en carbono sin cargo en pedidos sobre $120 USD'
-                    : 'Free carbon-neutral delivery on orders over $120 USD'}
+                    ? 'Envío neutro en carbono sin cargo desde $120 USD'
+                    : 'Free carbon-neutral delivery from $120 USD'}
                 </span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 3. PRESENTACIÓN BREVE DE LA FILOSOFÍA BOTÁNICA */}
+        {/* 3. MANIFIESTO BIOMOLECULAR */}
         <section
           id="soma-philosophy"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
+          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[var(--soma-border)] monolith-hairline scroll-mt-28"
           aria-label="SOMA Philosophy"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-14 items-baseline pb-14 border-b border-zy-border-subtle">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-14 items-baseline pb-14 border-b border-[var(--soma-border)] monolith-hairline">
             <div className="lg:col-span-4 space-y-2">
-              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                {language === 'es' ? '01 // MANIFIESTO BIOMOLECULAR' : '01 // BIOMOLECULAR MANIFESTO'}
+              <span className="text-xs font-medium text-[var(--soma-amber-ink)] block">
+                {language === 'es' ? 'Manifiesto biomolecular' : 'Biomolecular manifesto'}
               </span>
-              <h2 className="text-3xl sm:text-4xl font-sans font-bold tracking-tight text-zy-fg">
-                {language === 'es' ? 'Activos puros en su máxima potencia celular.' : 'Pure actives at peak cellular potency.'}
+              <h2 className="text-3xl sm:text-4xl font-swiss font-semibold tracking-tight text-[var(--soma-fg)]">
+                {language === 'es'
+                  ? 'Activos puros en su máxima potencia celular.'
+                  : 'Pure actives at peak cellular potency.'}
               </h2>
             </div>
 
             <div className="lg:col-span-8 space-y-5">
-              <p className="text-lg sm:text-2xl font-sans font-light text-zy-fg leading-relaxed">
+              <p className="text-lg sm:text-2xl font-swiss font-light text-[var(--soma-fg)] leading-relaxed">
                 {language === 'es'
                   ? '«No diluimos activos en rellenos sintéticos. Formulamos cosmética biocompatible que dialoga con los receptores celulares de la piel.»'
                   : '“We do not dilute actives with synthetic bulking agents. We engineer biocompatible formulas that communicate directly with cellular receptors.”'}
               </p>
-              <p className="text-sm sm:text-base text-zy-muted font-sans leading-relaxed">
+              <p className="text-sm sm:text-base text-[var(--soma-muted)] font-swiss leading-relaxed">
                 {SOMA_STUDIO_META.tagline[language]}
               </p>
             </div>
           </div>
 
-          {/* 4 Pillars Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pt-14">
-            {SOMA_STUDIO_META.pillars.map((pillar) => (
+          {/* 4 Pilares en Retícula Continua 0.5px */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-l border-t border-[var(--soma-border)] monolith-hairline mt-14">
+            {SOMA_STUDIO_META.pillars.map((pillar, idx) => (
               <div
                 key={pillar.code}
-                className="p-6 rounded-xl bg-zy-card border border-zy-border-card flex flex-col justify-between space-y-6 transition-colors hover:border-zy-border-strong shadow-sm"
+                className="p-6 bg-[var(--soma-bg)] border-r border-b border-[var(--soma-border)] monolith-hairline flex flex-col justify-between space-y-5 rounded-none"
               >
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between font-mono text-xs text-zy-dim border-b border-zy-border-subtle pb-2">
-                    <span className="text-zy-blue font-semibold">{pillar.code}</span>
-                    <Sparkles size={13} className="text-[#8f520a] dark:text-[#d8a45f]" />
+                  <div className="flex items-center justify-between text-[11px] font-medium text-[var(--soma-muted)] border-b border-[var(--soma-border)] monolith-hairline pb-2.5 tabular-nums">
+                    <span className="text-[var(--soma-amber-ink)]">
+                      {pillar.code.replace(' // ', ' · ')}
+                    </span>
+                    <span>0{idx + 1}</span>
                   </div>
 
-                  <h3 className="text-lg font-sans font-bold text-zy-fg">
+                  <h3 className="text-lg font-swiss font-semibold text-[var(--soma-fg)] tracking-tight">
                     {pillar.title[language]}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[var(--soma-muted)] leading-relaxed">
                     {pillar.desc[language]}
                   </p>
                 </div>
@@ -489,1261 +668,158 @@ export const SomaCommerceExperience: React.FC<SomaCommerceExperienceProps> = ({ 
           </div>
         </section>
 
-        {/* 4. CATÁLOGO CON IMÁGENES, NOMBRES, PRECIOS Y FILTROS FUNCIONALES — LABORATORIO TÉCNICO & PROTOTIPO FUNCIONAL */}
+        {/* 4. CONTENEDOR DE ESPERA FASE 2: ESCAPARATE VOLUMÉTRICO 3D (#soma-3d-showcase) */}
         <section
-          id="soma-catalog"
-          data-lab-seal="Laboratorio Técnico & Prototipo Funcional"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
-          aria-label="SOMA Product Catalog — Laboratorio Técnico & Prototipo Funcional"
+          id="soma-3d-showcase"
+          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[var(--soma-border)] monolith-hairline scroll-mt-28"
+          aria-label="SOMA 3D Showcase Preparation"
         >
-          {/* Sello Oficial Fase 2: Laboratorio Técnico & Prototipo Funcional */}
-          <div className="mb-8 p-4 sm:p-5 bg-zy-surface border border-zy-grid-line monolith-hairline flex flex-wrap items-center justify-between gap-3">
-            <div className="inline-flex items-center space-x-2.5">
-              <span className="w-2 h-2 bg-[#FF3B30]" aria-hidden="true" />
-              <span className="font-editorial-micro text-[10px] font-semibold tracking-[0.04em] uppercase text-zy-fg">
-                {language === 'es'
-                  ? 'Laboratorio Técnico & Prototipo Funcional'
-                  : 'Technical Laboratory & Functional Prototype · Laboratorio Técnico & Prototipo Funcional'}
-              </span>
-            </div>
-            <span className="font-cota text-[#94A3B8]">
-              SPEC // SOMA-ENGINE-04 · CATÁLOGO BIOFOTÓNICO &amp; CHECKOUT REACTIVO
-            </span>
-          </div>
-
-          {/* Header & Controls */}
-          <div className="space-y-8 mb-12">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zy-border-subtle pb-8">
-              <div>
-                <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                  {language === 'es' ? '02 // DISPENSARIO CELULAR' : '02 // CELLULAR DISPENSARY'}
-                </span>
-                <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
-                  {language === 'es' ? 'Catálogo de fórmulas.' : 'Formulation catalog.'}
-                </h2>
-                <p className="text-sm sm:text-base text-zy-muted font-sans max-w-xl mt-3">
-                  {language === 'es'
-                    ? 'Explore cada formulación por categoría, principio activo o ritual cutáneo. Cada frasco incluye opción de recarga sustentable.'
-                    : 'Explore each formulation by category, active concentration, or skincare ritual. Every formula features sustainable refill options.'}
-                </p>
-              </div>
-
-              {/* Sort selector */}
-              <div className="flex items-center space-x-2 text-xs font-mono">
-                <span className="text-zy-dim uppercase">{language === 'es' ? 'ORDENAR:' : 'SORT:'}</span>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as 'featured' | 'price-asc' | 'price-desc')}
-                  className="bg-zy-surface border border-zy-border rounded-lg px-3 py-1.5 text-zy-fg text-xs font-mono focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-                  aria-label="Sort product catalog"
-                >
-                  <option value="featured">{language === 'es' ? 'Destacados' : 'Featured'}</option>
-                  <option value="price-asc">{language === 'es' ? 'Precio: Menor a Mayor' : 'Price: Low to High'}</option>
-                  <option value="price-desc">{language === 'es' ? 'Precio: Mayor a Menor' : 'Price: High to Low'}</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Search Input & Category Filters */}
-            <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-              {/* Category Filter Chips */}
-              <div
-                role="tablist"
-                aria-label="Filter catalog by category"
-                className="flex flex-wrap items-center gap-1.5 p-1 bg-zy-control border border-zy-border rounded-lg"
-              >
-                {[
-                  { id: 'all', label: language === 'es' ? 'TODAS (06)' : 'ALL (06)' },
-                  { id: 'serums', label: language === 'es' ? 'SUEROS & ACEITES' : 'SERUMS & OILS' },
-                  { id: 'balms', label: language === 'es' ? 'BÁLSAMOS' : 'BALMS' },
-                  { id: 'mists', label: language === 'es' ? 'BRUMAS' : 'MISTS' },
-                  { id: 'eye', label: language === 'es' ? 'CONTORNO' : 'EYE CARE' },
-                  { id: 'cleansers', label: language === 'es' ? 'LIMPIEZA' : 'CLEANSERS' },
-                ].map((cat) => (
-                  <button
-                    key={cat.id}
-                    role="tab"
-                    aria-selected={activeCategory === cat.id}
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`px-3 sm:px-3.5 py-1.5 rounded-md text-xs font-mono transition-colors duration-150 outline-none focus-visible:ring-1 focus-visible:ring-zy-blue ${
-                      activeCategory === cat.id
-                        ? 'bg-zy-control-active text-zy-fg font-semibold border border-zy-border shadow-sm'
-                        : 'text-zy-muted hover:text-zy-fg'
-                    }`}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Real-time search box */}
-              <div className="relative min-w-[280px]">
-                <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zy-dim" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={
-                    language === 'es'
-                      ? 'Buscar por activo, fórmula...'
-                      : 'Search by active ingredient...'
-                  }
-                  className="w-full pl-9 pr-8 py-2 rounded-lg bg-zy-surface border border-zy-border text-xs font-mono text-zy-fg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue placeholder:text-zy-dim"
-                />
-                {searchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zy-dim hover:text-zy-fg"
-                    aria-label="Clear search"
-                  >
-                    <X size={13} />
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Product Grid */}
-          {filteredProducts.length === 0 ? (
-            <div className="text-center py-20 border border-zy-border rounded-2xl bg-zy-card space-y-4">
-              <Sparkles size={24} className="mx-auto text-zy-dim" />
-              <p className="font-mono text-sm text-zy-muted">
-                {language === 'es'
-                  ? 'No se encontraron fórmulas que coincidan con la búsqueda.'
-                  : 'No botanical formulations match your query.'}
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchQuery('');
-                  setActiveCategory('all');
-                }}
-                className="px-4 py-2 rounded-lg bg-zy-surface border border-zy-border text-xs font-mono hover:text-zy-blue transition-colors"
-              >
-                {language === 'es' ? 'Restablecer filtros' : 'Reset filters'}
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <AnimatePresence>
-                {filteredProducts.map((prod) => (
-                  <motion.article
-                    layout
-                    key={prod.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4 }}
-                    className="group rounded-2xl bg-zy-card border border-zy-border-card hover:border-zy-border-strong transition-all flex flex-col justify-between shadow-sm overflow-hidden"
-                  >
-                    {/* Visual Asset Aspect Box */}
-                    <div className="relative aspect-[4/3] bg-zy-surface overflow-hidden">
-                      <Image
-                        src={prod.images.primary}
-                        alt={prod.title[language]}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
-
-                      {/* Top Badges */}
-                      <div className="absolute top-3 left-3 right-3 flex items-center justify-between text-[10px] font-mono pointer-events-none">
-                        <span className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md border border-white/15 text-white uppercase tracking-wider">
-                          {prod.code}
-                        </span>
-                        <span className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md border border-white/15 text-[#d8a45f] font-semibold uppercase">
-                          {prod.actives[0].name.split(' ')[0]} {prod.actives[0].concentration}
-                        </span>
-                      </div>
-
-                      {/* Eco Refill Flag */}
-                      <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md border border-white/10 px-2 py-0.5 rounded text-[10px] font-mono text-emerald-400 flex items-center space-x-1">
-                        <Leaf size={10} />
-                        <span>REFILLABLE (-$8)</span>
-                      </div>
-                    </div>
-
-                    {/* Card Body */}
-                    <div className="p-6 flex flex-col justify-between flex-grow space-y-6">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-xs font-mono text-zy-muted">
-                          <span className="text-zy-blue">{prod.categoryLabel[language]}</span>
-                          <span className="font-bold text-zy-fg text-sm">${prod.basePrice} USD</span>
-                        </div>
-
-                        <h3 className="text-xl font-sans font-bold text-zy-fg group-hover:text-zy-blue transition-colors">
-                          {prod.title[language]}
-                        </h3>
-
-                        <p className="text-xs text-zy-muted font-sans line-clamp-2 leading-relaxed">
-                          {prod.tagline[language]}
-                        </p>
-                      </div>
-
-                      {/* Key Actives Pill List */}
-                      <div className="space-y-1.5 pt-3 border-t border-zy-border-subtle">
-                        <span className="text-[10px] font-mono text-zy-dim uppercase block">
-                          {language === 'es' ? 'CONCENTRACIÓN BIOACTIVA:' : 'BIOACTIVE PROFILE:'}
-                        </span>
-                        <div className="flex flex-wrap gap-1 text-[11px] font-mono">
-                          {prod.actives.slice(0, 2).map((act, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-0.5 rounded bg-zy-surface border border-zy-border-subtle text-zy-fg-secondary"
-                            >
-                              {act.name} · {act.concentration}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Card Bottom Actions */}
-                      <div className="pt-4 border-t border-zy-border-subtle flex items-center justify-between gap-3">
-                        <button
-                          type="button"
-                          onClick={() => openProductInspector(prod)}
-                          className="inline-flex items-center space-x-1 text-xs font-mono text-zy-blue hover:underline"
-                        >
-                          <span>{language === 'es' ? 'Ficha y variantes' : 'Specs & variants'}</span>
-                          <ChevronRight size={13} />
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => handleAddToCart(prod, prod.sizes[0], prod.vessels[0], 1)}
-                          className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-semibold hover:opacity-90 transition-opacity"
-                          aria-label={`Add ${prod.title[language]} to shopping bag`}
-                        >
-                          <Plus size={13} />
-                          <span>{language === 'es' ? 'Añadir' : 'Add to Bag'}</span>
-                        </button>
-                      </div>
-                    </div>
-                  </motion.article>
-                ))}
-              </AnimatePresence>
-            </div>
-          )}
-        </section>
-
-        {/* 5. CIENCIA BIOFOTÓNICA: EL VIDRIO MIRON */}
-        <section
-          id="soma-science"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
-          aria-label="Miron Glass Science"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Visual Photography of Miron Glass */}
-            <div className="lg:col-span-5 space-y-3">
-              <div className="relative aspect-square rounded-2xl overflow-hidden border border-zy-border bg-zy-surface shadow-sm">
-                <Image
-                  src="/images/soma-vessel-miron.webp"
-                  alt="Miron violet biophotonic glass preserving active botanical ingredients"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
-                />
-                <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10 text-xs font-mono text-white">
-                  MIRON VIOLETGLAS // PATENTED
-                </div>
-              </div>
-              <p className="font-mono text-[11px] text-zy-dim text-center">
-                {language === 'es'
-                  ? 'FOTOGRAFÍA CIENTÍFICA: BARRERA ESPECTRAL CONTRA LA DEGRADACIÓN SOLAR'
-                  : 'SCIENTIFIC SPECTRAL BARRIER PREVENTING PHOTONIC DEGRADATION'}
-              </p>
-            </div>
-
-            {/* Science Explanations */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="space-y-2">
-                <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                  {language === 'es' ? '03 // CIENCIA DE PRESERVACIÓN' : '03 // PRESERVATION BIOPHYSICS'}
-                </span>
-                <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg">
-                  {language === 'es' ? 'La membrana biofotónica.' : 'The biophotonic membrane.'}
-                </h2>
-                <p className="text-base sm:text-lg text-zy-muted font-sans leading-relaxed">
-                  {language === 'es'
-                    ? 'La luz solar visible acelera el envejecimiento molecular de los aceites botánicos y destruye las vitaminas activas. El vidrio violeta Miron actúa como un filtro natural que bloquea todo el espectro visible excepto la luz violeta y los rayos infrarrojos lejanos.'
-                    : 'Visible sunlight drastically accelerates molecular decay in natural plant oils and destabilizes bioactive vitamins. Miron violet glass acts as an organic optical filter, admitting only beneficial violet and far-infrared wavelengths.'}
-                </p>
-              </div>
-
-              {/* Spectral Comparison Table */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
-                <div className="p-4 bg-zy-card rounded-xl border border-zy-border space-y-1">
-                  <span className="text-zy-dim block uppercase text-[10px]">
-                    {language === 'es' ? 'Luz Visible (400-700nm)' : 'Visible Light (400-700nm)'}
-                  </span>
-                  <span className="text-rose-700 dark:text-rose-400 font-bold block text-sm">0% Paso (Bloqueo Total)</span>
-                  <p className="text-zy-muted text-[11px] font-sans">
-                    {language === 'es' ? 'Evita la oxidación de lípidos' : 'Prevents lipid photo-oxidation'}
-                  </p>
-                </div>
-
-                <div className="p-4 bg-zy-card rounded-xl border border-zy-border space-y-1">
-                  <span className="text-zy-dim block uppercase text-[10px]">
-                    {language === 'es' ? 'Espectro Violeta (380-420nm)' : 'Violet Spectrum (380-420nm)'}
-                  </span>
-                  <span className="text-purple-700 dark:text-purple-400 font-bold block text-sm">25-45% Transmisión</span>
-                  <p className="text-zy-muted text-[11px] font-sans">
-                    {language === 'es' ? 'Preserva la energía celular' : 'Sustains vital bio-frequency'}
-                  </p>
-                </div>
-
-                <div className="p-4 bg-zy-card rounded-xl border border-zy-border space-y-1">
-                  <span className="text-zy-dim block uppercase text-[10px]">
-                    {language === 'es' ? 'Infrarrojo Cercano (>750nm)' : 'Near Infrared (>750nm)'}
-                  </span>
-                  <span className="text-emerald-700 dark:text-emerald-400 font-bold block text-sm">60-70% Transmisión</span>
-                  <p className="text-zy-muted text-[11px] font-sans">
-                    {language === 'es' ? 'Estabilidad por 24+ meses' : '24+ month bio-stability'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Refill Eco System Callout */}
-              <div className="p-5 bg-zy-surface rounded-xl border border-zy-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="space-y-1">
-                  <div className="flex items-center space-x-2 text-zy-fg font-semibold text-sm">
-                    <Leaf size={16} className="text-emerald-700 dark:text-emerald-400" />
-                    <span>{language === 'es' ? 'Iniciativa Circular de Recargas' : 'Circular Refill Initiative'}</span>
-                  </div>
-                  <p className="text-xs text-zy-muted font-sans leading-relaxed">
+          <div className="border border-[var(--soma-border)] monolith-hairline grid grid-cols-1 lg:grid-cols-12 bg-[var(--soma-bg)] rounded-none">
+            {/* Columna Izquierda: Slot de Montaje para Visor 3D WebGL (Fase 2) */}
+            <div
+              id="soma-3d-canvas-slot"
+              data-phase2-mount="soma-3d-bottle"
+              className="lg:col-span-7 relative min-h-[380px] sm:min-h-[480px] border-b lg:border-b-0 lg:border-r border-[var(--soma-border)] monolith-hairline bg-[var(--soma-surface)] flex flex-col justify-between p-5 sm:p-8 overflow-hidden rounded-none"
+            >
+              {/* Retícula superior */}
+              <div className="relative z-10 flex items-center justify-between text-[11px] font-medium text-[var(--soma-muted)] border-b border-[var(--soma-border)] monolith-hairline pb-3 tabular-nums">
+                <div className="flex items-center space-x-2 text-[var(--soma-fg)]">
+                  <span className="w-1.5 h-1.5 bg-[var(--soma-amber)] inline-block" />
+                  <span>
                     {language === 'es'
-                      ? 'Reutilizá tu frasco de vidrio de por vida. Cada sobre compostable ahorra $8 USD en tu compra y elimina el peso de flete marítimo.'
-                      : 'Reuse your biophotonic violet jar for life. Every compostable pouch saves $8 USD and eliminates freight emissions.'}
-                  </p>
+                      ? 'Escaparate volumétrico · Contenedor Fase 2'
+                      : 'Volumetric showcase · Phase 2 container'}
+                  </span>
                 </div>
+                <span>Miron 30ml / 50ml</span>
+              </div>
 
+              {/* Zona Central Reservada para Canvas WebGL */}
+              <div className="relative flex-grow flex items-center justify-center my-6">
+                <div className="relative w-56 h-56 sm:w-72 sm:h-72 border border-[var(--soma-border)] monolith-hairline bg-[var(--soma-bg)] p-3 flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="/images/soma-01-glass.webp"
+                    alt="Miron biophotonic vessel study ready for 3D viewer mount"
+                    fill
+                    loading="lazy"
+                    decoding="async"
+                    sizes="(max-width: 640px) 224px, 288px"
+                    className="object-cover opacity-90"
+                  />
+                  {/* Marcas de cruz técnicas en el centro óptico */}
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                    <div className="w-6 h-[0.5px] bg-[var(--soma-amber)]" />
+                  </div>
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                    <div className="h-6 w-[0.5px] bg-[var(--soma-amber)]" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Pie de calibración */}
+              <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 text-[11px] font-medium text-[var(--soma-dim)] border-t border-[var(--soma-border)] monolith-hairline pt-3 tabular-nums">
+                <span>
+                  {language === 'es'
+                    ? 'Nodo de montaje WebGL reservado (#soma-3d-canvas-slot)'
+                    : 'Reserved WebGL mount point (#soma-3d-canvas-slot)'}
+                </span>
+                <span>Escala 1:1 · Refr. 1.52</span>
+              </div>
+            </div>
+
+            {/* Columna Derecha: Especificaciones Técnicas del Envase Biofotónico */}
+            <div className="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between space-y-8">
+              <div className="space-y-4">
+                <span className="text-xs font-medium text-[var(--soma-amber-ink)] block">
+                  {language === 'es' ? 'Arquitectura del frasco' : 'Vessel architecture'}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-swiss font-semibold tracking-tight text-[var(--soma-fg)]">
+                  {language === 'es'
+                    ? 'Estudio óptico y geométrico Miron.'
+                    : 'Miron optical & geometric study.'}
+                </h2>
+                <p className="text-sm text-[var(--soma-muted)] leading-relaxed">
+                  {language === 'es'
+                    ? 'Espacio estructurado en doble columna para albergar el visor interactivo 3D en la Fase 2, permitiendo inspeccionar la refracción ultravioleta del vidrio biofotónico y el mecanismo de dosificación sin contacto.'
+                    : 'Double-column architectural frame structured to mount the interactive 3D shader vessel viewer in Phase 2, enabling real-time inspection of biophotonic glass refraction and airtight dosing geometry.'}
+                </p>
+              </div>
+
+              {/* Tabla dimensional de precisión (tabular-nums, sin monospace) */}
+              <div className="border-t border-[var(--soma-border)] monolith-hairline divide-y divide-[var(--soma-border)] text-xs tabular-nums">
+                <div className="py-2.5 flex justify-between">
+                  <span className="text-[var(--soma-muted)]">
+                    {language === 'es' ? 'Altura total de ampolla' : 'Total vessel height'}
+                  </span>
+                  <span className="font-medium text-[var(--soma-fg)]">98.4 mm</span>
+                </div>
+                <div className="py-2.5 flex justify-between">
+                  <span className="text-[var(--soma-muted)]">
+                    {language === 'es' ? 'Diámetro cilíndrico' : 'Cylindrical diameter'}
+                  </span>
+                  <span className="font-medium text-[var(--soma-fg)]">Ø 34.0 mm</span>
+                </div>
+                <div className="py-2.5 flex justify-between">
+                  <span className="text-[var(--soma-muted)]">
+                    {language === 'es' ? 'Calibre de rosca farmacéutica' : 'Pharmaceutical thread gauge'}
+                  </span>
+                  <span className="font-medium text-[var(--soma-fg)]">DIN 18 / ISO</span>
+                </div>
+                <div className="py-2.5 flex justify-between">
+                  <span className="text-[var(--soma-muted)]">
+                    {language === 'es' ? 'Espesor de pared violeta' : 'Violet wall thickness'}
+                  </span>
+                  <span className="font-medium text-[var(--soma-amber-ink)]">3.2 mm</span>
+                </div>
+              </div>
+
+              <div className="pt-2">
                 <a
                   href="#soma-catalog"
-                  onClick={(e) => scrollToSection(e, 'soma-catalog')}
-                  className="px-4 py-2 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-semibold whitespace-nowrap self-start sm:self-auto hover:opacity-90 transition-opacity"
+                  onClick={(e) => handleNavClick(e, 'soma-catalog')}
+                  className="inline-flex items-center space-x-2 px-5 py-3 bg-[var(--soma-btn-bg)] text-[var(--soma-btn-fg)] hover:bg-[var(--soma-amber)] hover:text-[#0A0A0C] text-xs font-medium transition-colors rounded-none"
                 >
-                  {language === 'es' ? 'Ver recargas' : 'Shop refills'}
+                  <span>{language === 'es' ? 'Acceder al dispensario' : 'Enter dispensary'}</span>
+                  <ArrowDown size={13} />
                 </a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 6. GUÍA DE RITUALES Y SECUENCIA CUTÁNEA */}
+        {/* 5. DISPENSARIO (#soma-catalog) CON SELLO DE LABORATORIO Y CELDAS FARMACÉUTICAS */}
         <section
-          id="soma-rituals"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
-          aria-label="SOMA Rituals"
+          id="soma-catalog"
+          data-lab-seal="Laboratorio Técnico & Prototipo Funcional"
+          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[var(--soma-border)] monolith-hairline scroll-mt-28"
+          aria-label="SOMA Product Catalog — Laboratorio Técnico & Prototipo Funcional"
         >
-          <div className="space-y-12">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zy-border-subtle pb-8">
-              <div>
-                <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                  {language === 'es' ? '04 // SECUENCIA DE APLICACIÓN' : '04 // CELLULAR APPLICATION RITUAL'}
-                </span>
-                <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2">
-                  {language === 'es' ? 'El ritual celular diario.' : 'The daily cellular ritual.'}
-                </h2>
-                <p className="text-sm sm:text-base text-zy-muted font-sans max-w-xl mt-3">
-                  {language === 'es'
-                    ? 'Cuatro pasos diseñados para respetar el ritmo circadiano y permitir la absorción osmótica progresiva de cada principio activo.'
-                    : 'Four curated steps aligned with your circadian rhythm for progressive osmotic absorption of every bioactive active.'}
-                </p>
-              </div>
-
-              <span className="text-xs font-mono text-zy-dim self-start md:self-end">
-                {language === 'es' ? 'ORDEN DE MENOR A MAYOR DENSIDAD LIPÍDICA' : 'ORDERED BY ASCENDING LIPID DENSITY'}
+          {/* Banda de sello técnico en tipografía editorial limpia */}
+          <div className="mb-10 px-4 py-3 bg-[var(--soma-surface)] border border-[var(--soma-border)] monolith-hairline flex flex-wrap items-center justify-between gap-3 rounded-none">
+            <div className="inline-flex items-center space-x-2.5">
+              <Sparkles size={13} className="text-[var(--soma-amber-ink)] shrink-0" />
+              <span className="text-[11px] font-medium text-[var(--soma-fg)]">
+                {language === 'es'
+                  ? 'Laboratorio Técnico & Prototipo Funcional'
+                  : 'Technical Laboratory & Functional Prototype · Laboratorio Técnico & Prototipo Funcional'}
               </span>
             </div>
-
-            {/* Ritual Steps Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  step: '01',
-                  time: { es: 'DÍA & NOCHE', en: 'DAY & NIGHT' },
-                  title: { es: 'Purificación & Equilibrio', en: 'Purify & Rebalance' },
-                  product: 'FORM-05 // Cleansing Emulsion',
-                  desc: {
-                    es: 'Disuelve impurezas con aceite de jojoba y reishi sin retirar el manto ácido protector.',
-                    en: 'Dissolves impurities with jojoba and reishi without stripping the protective mantle.',
-                  },
-                },
-                {
-                  step: '02',
-                  time: { es: 'DÍA & NOCHE', en: 'DAY & NIGHT' },
-                  title: { es: 'Saturación Hídrica', en: 'Hydric Saturation' },
-                  product: 'FORM-03 // Biophotonic Mist',
-                  desc: {
-                    es: 'Aporta ácido poliglutámico y electrolitos que multiplican por 5 la absorción del suero.',
-                    en: 'Delivers polyglutamic acid and electrolytes priming the skin to absorb serums.',
-                  },
-                },
-                {
-                  step: '03',
-                  time: { es: 'NOCHE / REPARACIÓN', en: 'NIGHT / REPAIR' },
-                  title: { es: 'Regeneración Celular', en: 'Cellular Regeneration' },
-                  product: 'FORM-01 // Cellular Nectar',
-                  desc: {
-                    es: 'Fitopéptidos concentrados y mirra silvestre que activan la síntesis de colágeno durante el sueño.',
-                    en: 'Concentrated phyto-peptides and wild myrrh accelerating nocturnal repair.',
-                  },
-                },
-                {
-                  step: '04',
-                  time: { es: 'SELLADO PROTECTOR', en: 'LIPID SEAL' },
-                  title: { es: 'Barrera Lipídica', en: 'Barrier Fortification' },
-                  product: 'FORM-02 // Botanical Balm',
-                  desc: {
-                    es: 'Tres ceramidas biocompatibles que sellan los activos y evitan la pérdida transepidérmica de agua.',
-                    en: 'Three bio-identical ceramides locking in actives and preventing moisture loss.',
-                  },
-                },
-              ].map((rit) => (
-                <div
-                  key={rit.step}
-                  className="p-6 rounded-2xl bg-zy-card border border-zy-border space-y-4 flex flex-col justify-between shadow-sm"
-                >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between font-mono text-xs text-zy-dim border-b border-zy-border-subtle pb-2">
-                      <span className="text-zy-blue font-bold">PASO {rit.step}</span>
-                      <span>{rit.time[language]}</span>
-                    </div>
-
-                    <h3 className="font-sans font-bold text-lg text-zy-fg">
-                      {rit.title[language]}
-                    </h3>
-
-                    <p className="font-mono text-xs text-[#8f520a] dark:text-[#d8a45f]">
-                      {rit.product}
-                    </p>
-
-                    <p className="text-xs text-zy-muted font-sans leading-relaxed">
-                      {rit.desc[language]}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <span className="text-[11px] font-medium text-[var(--soma-muted)] tabular-nums">
+              {language === 'es'
+                ? 'Dispensario biofotónico · Albarán reactivo'
+                : 'Biophotonic dispensary · Reactive slip'}
+            </span>
           </div>
+
+          <SomaCatalogSection language={language} />
         </section>
 
-        {/* 7. CTA & FOOTER COHERENTE */}
-        <section
-          id="soma-footer"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
-          aria-label="SOMA Footer and Concept Disclosure"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start border-b border-zy-border-subtle pb-16">
-            <div className="lg:col-span-5 space-y-6">
-              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                {language === 'es' ? '05 // ATELIER & DISPENSARIO' : '05 // ATELIER & LAB'}
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-sans font-bold tracking-tight text-zy-fg">
-                {language === 'es' ? 'La pureza botánica en tu piel.' : 'Pure botanicals on your skin.'}
-              </h2>
-              <p className="text-sm text-zy-muted font-sans leading-relaxed">
-                {SOMA_STUDIO_META.mission[language]}
-              </p>
-
-              {/* Honest Concept Notice */}
-              <div className="p-4 rounded-xl bg-zy-surface border border-zy-border text-xs font-mono space-y-2 text-zy-muted">
-                <div className="flex items-center space-x-2 text-zy-fg font-semibold">
-                  <ShieldCheck size={14} className="text-zy-blue" />
-                  <span>{language === 'es' ? 'Declaración de Proyecto Conceptual' : 'Conceptual Project Declaration'}</span>
-                </div>
-                <p className="leading-relaxed">
-                  {language === 'es'
-                    ? `${project.title} es una experiencia de comercio electrónico conceptual diseñada y desarrollada por ZYRVAE Digital Studio. Todos los productos, formulaciones botánicas y procesos de checkout se presentan para demostrar diseño digital premium sin cobros reales.`
-                    : `${project.title} is a conceptual luxury e-commerce experience engineered by ZYRVAE Digital Studio. All products, botanical formulations, and checkout flows are presented for digital design demonstration with no real charges.`}
-                </p>
-              </div>
-            </div>
-
-            {/* Newsletter Simulation */}
-            <div className="lg:col-span-7">
-              <div className="p-6 sm:p-10 rounded-2xl bg-zy-card border border-zy-border space-y-6 shadow-sm">
-                <div className="space-y-1">
-                  <span className="text-xs font-mono text-zy-blue uppercase">
-                    {language === 'es' ? 'CUADERNO DE LABORATORIO' : 'LABORATORY JOURNAL'}
-                  </span>
-                  <h3 className="text-2xl font-sans font-bold text-zy-fg">
-                    {language === 'es' ? 'Recibí estudios de formulación y notas de cosecha' : 'Receive formulation digests and harvest notes'}
-                  </h3>
-                  <p className="text-xs font-mono text-zy-muted">
-                    {language === 'es' ? 'Simulación de suscripción editorial privada.' : 'Private editorial dispatch simulation.'}
-                  </p>
-                </div>
-
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    alert(language === 'es' ? 'Suscripción registrada (Demostración ZYRVAE)' : 'Subscription registered (ZYRVAE Demonstration)');
-                  }}
-                  className="flex flex-col sm:flex-row gap-3"
-                >
-                  <input
-                    type="email"
-                    required
-                    placeholder="botanical@atelier.com"
-                    className="flex-grow px-4 py-2.5 rounded-lg bg-zy-surface border border-zy-border text-xs font-mono text-zy-fg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-                  />
-                  <button
-                    type="submit"
-                    className="px-6 py-2.5 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-semibold hover:opacity-90 transition-opacity whitespace-nowrap"
-                  >
-                    {language === 'es' ? 'Suscribirme' : 'Subscribe'}
-                  </button>
-                </form>
-
-                <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-zy-border-subtle text-xs font-mono text-zy-dim">
-                  <span>VEGAN CERTIFIED</span>
-                  <span>·</span>
-                  <span>MIRON VIOLET GLASS</span>
-                  <span>·</span>
-                  <span>100% COMPOSTABLE REFILLS</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Minimalist Colophon Bar */}
-          <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-zy-muted">
-            <div className="flex items-center space-x-3">
-              <span className="font-sans font-bold text-sm text-zy-fg tracking-widest uppercase">
-                SŌMA
-              </span>
-              <span className="text-zy-dim">/</span>
-              <span>{language === 'es' ? 'Atelier de Cosmética Celular' : 'Cellular Skincare Atelier'}</span>
-            </div>
-
-            <div className="flex items-center space-x-6">
-              <a
-                href="#soma-hero"
-                onClick={(e) => scrollToSection(e, 'soma-hero')}
-                className="hover:text-zy-fg transition-colors"
-              >
-                {language === 'es' ? 'Volver arriba' : 'Back to top'}
-              </a>
-              <Link
-                href="/#work"
-                className="text-zy-blue hover:underline flex items-center space-x-1"
-              >
-                <span>{language === 'es' ? 'Explorar ZYRVAE' : 'Explore ZYRVAE'}</span>
-                <ArrowUpRight size={13} />
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* 6. SECCIONES MEMORIZADAS POSTERIORES AL DISPENSARIO */}
+        <SomaStaticSectionsAfterCatalog language={language} projectTitle={project.title} />
       </main>
 
-      {/* 8. SLIDE-OVER SHOPPING BAG / CART DRAWER */}
-      <AnimatePresence>
-        {isCartOpen && (
-          <div className="fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true" aria-label="Shopping Cart Drawer">
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsCartOpen(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            />
-
-            <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-              <motion.div
-                initial={{ x: '100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '100%' }}
-                transition={{ type: 'spring', damping: 28, stiffness: 260 }}
-                className="w-screen max-w-md bg-zy-card border-l border-zy-border shadow-2xl flex flex-col justify-between text-zy-fg"
-              >
-                {/* Cart Drawer Header */}
-                <div className="p-6 border-b border-zy-border-subtle flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <ShoppingBag size={16} className="text-zy-blue" />
-                    <h3 className="font-sans font-bold text-lg">
-                      {language === 'es' ? 'Bolsa de Compra' : 'Your Shopping Bag'}
-                    </h3>
-                    <span className="text-xs font-mono text-zy-muted">
-                      ({totalCartItems} {language === 'es' ? 'fórmulas' : 'items'})
-                    </span>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setIsCartOpen(false)}
-                    className="p-1.5 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-zy-fg transition-colors"
-                    aria-label="Close cart drawer"
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
-
-                {/* Free Shipping Progress Indicator */}
-                <div className="px-6 py-3 bg-zy-surface border-b border-zy-border-subtle text-xs font-mono space-y-1.5">
-                  <div className="flex justify-between items-center">
-                    <span className="text-zy-dim flex items-center space-x-1.5">
-                      <Truck size={12} className="text-zy-blue" />
-                      <span>{language === 'es' ? 'Envío Neutro en Carbono:' : 'Carbon-Neutral Delivery:'}</span>
-                    </span>
-                    <span className="font-bold text-zy-fg">
-                      {isFreeShipping
-                        ? language === 'es' ? '¡Gratis calificado!' : 'Free qualified!'
-                        : `$${freeShippingThreshold - cartSubtotal} USD ${language === 'es' ? 'restante' : 'remaining'}`}
-                    </span>
-                  </div>
-
-                  <div className="w-full h-1.5 rounded-full bg-zy-control overflow-hidden">
-                    <div
-                      className="h-full bg-zy-blue transition-all duration-300"
-                      style={{ width: `${Math.min(100, (cartSubtotal / freeShippingThreshold) * 100)}%` }}
-                    />
-                  </div>
-                </div>
-
-                {/* Cart Items List */}
-                <div className="flex-grow overflow-y-auto p-6 space-y-4">
-                  {cart.length === 0 ? (
-                    <div className="text-center py-16 space-y-3">
-                      <ShoppingBag size={32} className="mx-auto text-zy-dim" />
-                      <p className="font-mono text-sm text-zy-muted">
-                        {language === 'es' ? 'Tu bolsa está vacía.' : 'Your shopping bag is empty.'}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setIsCartOpen(false);
-                          const catEl = document.getElementById('soma-catalog');
-                          if (catEl) catEl.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                        className="px-4 py-2 rounded-lg bg-zy-surface border border-zy-border text-xs font-mono hover:text-zy-blue"
-                      >
-                        {language === 'es' ? 'Ver catálogo de fórmulas' : 'Explore formulation catalog'}
-                      </button>
-                    </div>
-                  ) : (
-                    cart.map((item) => (
-                      <div
-                        key={item.id}
-                        className="p-4 rounded-xl bg-zy-surface border border-zy-border flex items-start space-x-4 shadow-sm"
-                      >
-                        <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-zy-border-subtle bg-zy-card flex-shrink-0">
-                          <Image
-                            src={item.image}
-                            alt={item.title[language]}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-
-                        <div className="flex-grow space-y-1">
-                          <div className="flex items-start justify-between">
-                            <h4 className="font-sans font-bold text-sm text-zy-fg">
-                              {item.title[language]}
-                            </h4>
-                            <button
-                              type="button"
-                              onClick={() => removeCartItem(item.id)}
-                              className="text-zy-dim hover:text-rose-500 transition-colors p-1"
-                              aria-label={`Remove ${item.title[language]}`}
-                            >
-                              <Trash2 size={13} />
-                            </button>
-                          </div>
-
-                          <div className="text-[11px] font-mono text-zy-muted space-x-2">
-                            <span>{item.size}</span>
-                            <span>·</span>
-                            <span className={item.vesselId === 'refill' ? 'text-emerald-700 dark:text-emerald-400 font-semibold' : ''}>
-                              {item.vesselId === 'refill' ? 'Eco-Pouch' : 'Miron Glass'}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center justify-between pt-2">
-                            <div className="flex items-center space-x-1.5 border border-zy-border rounded bg-zy-card px-1.5 py-0.5 text-xs font-mono">
-                              <button
-                                type="button"
-                                onClick={() => updateCartQuantity(item.id, -1)}
-                                className="p-0.5 text-zy-muted hover:text-zy-fg"
-                                aria-label="Decrease quantity"
-                              >
-                                <Minus size={11} />
-                              </button>
-                              <span className="px-2 font-bold">{item.quantity}</span>
-                              <button
-                                type="button"
-                                onClick={() => updateCartQuantity(item.id, 1)}
-                                className="p-0.5 text-zy-muted hover:text-zy-fg"
-                                aria-label="Increase quantity"
-                              >
-                                <Plus size={11} />
-                              </button>
-                            </div>
-
-                            <span className="font-mono text-xs font-bold text-zy-fg">
-                              ${item.unitPrice * item.quantity} USD
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-
-                {/* Cart Drawer Footer & Totals */}
-                {cart.length > 0 && (
-                  <div className="p-6 border-t border-zy-border-subtle bg-zy-surface/50 space-y-4">
-                    <div className="space-y-1.5 text-xs font-mono">
-                      <div className="flex justify-between text-zy-muted">
-                        <span>{language === 'es' ? 'Subtotal:' : 'Subtotal:'}</span>
-                        <span className="text-zy-fg font-semibold">${cartSubtotal} USD</span>
-                      </div>
-
-                      <div className="flex justify-between text-zy-muted">
-                        <span>{language === 'es' ? 'Envío neutro en carbono:' : 'Carbon-neutral shipping:'}</span>
-                        <span className="text-zy-fg">
-                          {isFreeShipping ? (
-                            <span className="text-emerald-700 dark:text-emerald-400 font-bold">{language === 'es' ? 'GRATIS' : 'FREE'}</span>
-                          ) : (
-                            `$${shippingCost} USD`
-                          )}
-                        </span>
-                      </div>
-
-                      {discountApplied && (
-                        <div className="flex justify-between text-emerald-700 dark:text-emerald-400">
-                          <span>{language === 'es' ? 'Descuento ZYRVAE (10%):' : 'ZYRVAE Promo (10%):'}</span>
-                          <span>-${discountAmount} USD</span>
-                        </div>
-                      )}
-
-                      <div className="pt-2 border-t border-zy-border-subtle flex justify-between text-sm font-bold text-zy-fg">
-                        <span>{language === 'es' ? 'Total estimado:' : 'Estimated Total:'}</span>
-                        <span className="text-base text-zy-blue">${cartTotal} USD</span>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsCartOpen(false);
-                        setCheckoutStep(1);
-                        setCheckoutOpen(true);
-                      }}
-                      className="w-full py-3 rounded-xl bg-zy-fg text-zy-bg font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center justify-center space-x-2 shadow-lg"
-                    >
-                      <span>{language === 'es' ? 'Proceder al Checkout (Demo)' : 'Proceed to Checkout (Demo)'}</span>
-                      <ArrowRight size={14} />
-                    </button>
-                  </div>
-                )}
-              </motion.div>
-            </div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* 9. DEEP PRODUCT DETAIL INSPECTOR MODAL */}
-      <AnimatePresence>
-        {inspectProduct && (
-          <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-label={inspectProduct.title[language]}>
-            <motion.div
-              initial={{ scale: 0.96, y: 12, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.98, y: 8, opacity: 0 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-zy-card border border-zy-border rounded-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 space-y-6 shadow-2xl text-zy-fg"
-            >
-              <div className="flex items-start justify-between border-b border-zy-border-subtle pb-4">
-                <div>
-                  <div className="flex items-center space-x-2 text-xs font-mono text-zy-blue mb-1">
-                    <span>{inspectProduct.code}</span>
-                    <span>//</span>
-                    <span>{inspectProduct.categoryLabel[language]}</span>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-sans font-bold">
-                    {inspectProduct.title[language]}
-                  </h3>
-                  <p className="text-xs sm:text-sm font-sans text-zy-muted mt-1">
-                    {inspectProduct.tagline[language]}
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setInspectProduct(null)}
-                  className="p-2 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-zy-fg transition-colors"
-                  aria-label="Close product modal"
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              {/* Inspector Content Layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                {/* Left: Product Images */}
-                <div className="lg:col-span-5 space-y-3">
-                  <div className="relative aspect-square rounded-xl overflow-hidden border border-zy-border bg-zy-surface shadow-sm">
-                    <Image
-                      src={inspectProduct.images.primary}
-                      alt={inspectProduct.title[language]}
-                      fill
-                      sizes="40vw"
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="relative aspect-video rounded-lg overflow-hidden border border-zy-border bg-zy-surface">
-                      <Image
-                        src={inspectProduct.images.secondary}
-                        alt={`${inspectProduct.title[language]} alternate`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    {inspectProduct.images.texture && (
-                      <div className="relative aspect-video rounded-lg overflow-hidden border border-zy-border bg-zy-surface">
-                        <Image
-                          src={inspectProduct.images.texture}
-                          alt={`${inspectProduct.title[language]} texture`}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Right: Dynamic Variants & Formulation Specs */}
-                <div className="lg:col-span-7 space-y-6">
-                  {/* Dynamic Price Display */}
-                  <div className="flex items-baseline justify-between border-b border-zy-border-subtle pb-4">
-                    <div>
-                      <span className="text-[10px] font-mono text-zy-dim uppercase block">
-                        {language === 'es' ? 'PRECIO SEGÚN VARIANTE:' : 'VARIANT PRICING:'}
-                      </span>
-                      <span className="text-3xl font-bold font-mono text-zy-fg">
-                        ${inspectProduct.basePrice + (inspectProduct.sizeDelta[inspectProduct.sizes[modalSizeIdx]] ?? 0) + inspectProduct.vessels[modalVesselIdx].delta} USD
-                      </span>
-                    </div>
-
-                    <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400">
-                      {inspectProduct.vessels[modalVesselIdx].id === 'refill'
-                        ? language === 'es' ? '✓ Incluye descuento de recarga (-$8)' : '✓ Includes eco-refill savings (-$8)'
-                        : 'Miron Biophotonic Glass'}
-                    </span>
-                  </div>
-
-                  {/* 1. Size Variant Selector */}
-                  <div className="space-y-2">
-                    <label className="block text-xs font-mono text-zy-muted uppercase">
-                      {language === 'es' ? '1. Seleccionar Volumen:' : '1. Select Volume:'}
-                    </label>
-                    <div className="flex gap-2">
-                      {inspectProduct.sizes.map((s, idx) => (
-                        <button
-                          key={s}
-                          type="button"
-                          onClick={() => setModalSizeIdx(idx)}
-                          className={`px-4 py-2 rounded-lg text-xs font-mono border transition-all ${
-                            modalSizeIdx === idx
-                              ? 'bg-zy-blue text-white border-zy-blue font-bold shadow-sm'
-                              : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg'
-                          }`}
-                        >
-                          {s} {inspectProduct.sizeDelta[s] ? `(+$${inspectProduct.sizeDelta[s]})` : ''}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* 2. Vessel Packaging Selector */}
-                  <div className="space-y-2">
-                    <label className="block text-xs font-mono text-zy-muted uppercase">
-                      {language === 'es' ? '2. Tipo de Envase:' : '2. Vessel Packaging Type:'}
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
-                      {inspectProduct.vessels.map((v, idx) => (
-                        <button
-                          key={v.id}
-                          type="button"
-                          onClick={() => setModalVesselIdx(idx)}
-                          className={`p-3 rounded-lg border text-left transition-all space-y-1 ${
-                            modalVesselIdx === idx
-                              ? 'bg-zy-surface border-zy-blue text-zy-fg shadow-sm ring-1 ring-zy-blue'
-                              : 'bg-zy-surface/60 border-zy-border text-zy-muted hover:text-zy-fg'
-                          }`}
-                        >
-                          <div className="flex justify-between items-center font-bold">
-                            <span>{v.name[language]}</span>
-                            <span>{v.delta === 0 ? '±$0' : `-$8 USD`}</span>
-                          </div>
-                          <p className="text-[10px] text-zy-dim font-sans leading-tight">
-                            {v.description[language]}
-                          </p>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Actives Breakdown Table */}
-                  <div className="space-y-2">
-                    <span className="text-xs font-mono text-zy-blue uppercase block">
-                      {language === 'es' ? 'PRINCIPIOS ACTIVOS DECLARADOS:' : 'ACTIVE BIOCHEMICAL PROFILE:'}
-                    </span>
-                    <div className="space-y-1 text-xs font-mono">
-                      {inspectProduct.actives.map((act, i) => (
-                        <div
-                          key={i}
-                          className="p-2.5 rounded bg-zy-surface border border-zy-border-subtle flex justify-between items-center"
-                        >
-                          <span className="font-semibold text-zy-fg">{act.name}</span>
-                          <span className="text-[#8f520a] dark:text-[#d8a45f] font-bold">{act.concentration}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Sensory & Origin */}
-                  <div className="p-3.5 bg-zy-surface rounded-xl border border-zy-border text-xs font-mono space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-zy-dim">{language === 'es' ? 'Textura cutánea:' : 'Sensory texture:'}</span>
-                      <span className="text-zy-fg">{inspectProduct.sensory.texture[language]}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zy-dim">{language === 'es' ? 'Perfil aromático:' : 'Botanical aroma:'}</span>
-                      <span className="text-zy-fg">{inspectProduct.sensory.aroma[language]}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zy-dim">{language === 'es' ? 'Origen de cosecha:' : 'Harvest provenance:'}</span>
-                      <span className="text-zy-blue">{inspectProduct.sensory.origin[language]}</span>
-                    </div>
-                  </div>
-
-                  {/* Add to Cart in Modal */}
-                  <div className="pt-4 border-t border-zy-border-subtle flex items-center space-x-3">
-                    <div className="flex items-center space-x-2 border border-zy-border rounded-lg bg-zy-surface px-2.5 py-2 text-xs font-mono">
-                      <button
-                        type="button"
-                        onClick={() => setModalQuantity((q) => Math.max(1, q - 1))}
-                        className="text-zy-muted hover:text-zy-fg"
-                        aria-label="Decrease quantity"
-                      >
-                        <Minus size={13} />
-                      </button>
-                      <span className="px-2 font-bold">{modalQuantity}</span>
-                      <button
-                        type="button"
-                        onClick={() => setModalQuantity((q) => q + 1)}
-                        className="text-zy-muted hover:text-zy-fg"
-                        aria-label="Increase quantity"
-                      >
-                        <Plus size={13} />
-                      </button>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleAddToCart(
-                          inspectProduct,
-                          inspectProduct.sizes[modalSizeIdx],
-                          inspectProduct.vessels[modalVesselIdx],
-                          modalQuantity
-                        );
-                        setInspectProduct(null);
-                        setIsCartOpen(true);
-                      }}
-                      className="flex-grow py-3 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center justify-center space-x-2 shadow-lg"
-                    >
-                      <ShoppingBag size={14} />
-                      <span>{language === 'es' ? 'Añadir a la Bolsa' : 'Add to Shopping Bag'}</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* 10. DEMONSTRATION CHECKOUT MODAL FLOW */}
-      <AnimatePresence>
-        {checkoutOpen && (
-          <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-label="Demo Checkout">
-            <motion.div
-              initial={{ scale: 0.96, y: 12, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.98, y: 8, opacity: 0 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-zy-card border border-zy-border rounded-2xl max-w-2xl w-full overflow-hidden p-6 sm:p-8 space-y-6 shadow-2xl text-zy-fg"
-            >
-              {checkoutStep === 1 && (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setCheckoutStep(2);
-                  }}
-                  className="space-y-5"
-                >
-                  <div className="flex items-center justify-between border-b border-zy-border-subtle pb-4">
-                    <div>
-                      <span className="text-xs font-mono text-zy-blue uppercase tracking-wider">
-                        {language === 'es' ? 'PASO 1 DE 2 // ENVÍO NEUTRO EN CARBONO' : 'STEP 1 OF 2 // CARBON-NEUTRAL SHIPPING'}
-                      </span>
-                      <h3 className="text-xl sm:text-2xl font-sans font-bold">
-                        {language === 'es' ? 'Datos de Entrega' : 'Delivery Details'}
-                      </h3>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setCheckoutOpen(false)}
-                      className="p-1.5 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-zy-fg"
-                      aria-label="Close checkout"
-                    >
-                      <X size={16} />
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-mono text-zy-muted uppercase">
-                        {language === 'es' ? 'Nombre completo:' : 'Full Name:'}
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={buyerName}
-                        onChange={(e) => setBuyerName(e.target.value)}
-                        placeholder="Clara Oswald"
-                        className="w-full px-3.5 py-2 rounded-lg bg-zy-surface border border-zy-border text-xs font-mono text-zy-fg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-mono text-zy-muted uppercase">
-                        {language === 'es' ? 'Correo electrónico:' : 'Email Address:'}
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={buyerEmail}
-                        onChange={(e) => setBuyerEmail(e.target.value)}
-                        placeholder="oswald@soma-atelier.com"
-                        className="w-full px-3.5 py-2 rounded-lg bg-zy-surface border border-zy-border text-xs font-mono text-zy-fg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="block text-xs font-mono text-zy-muted uppercase">
-                      {language === 'es' ? 'Dirección postal de entrega:' : 'Street Address:'}
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={buyerAddress}
-                      onChange={(e) => setBuyerAddress(e.target.value)}
-                      placeholder="Calle de los Aromas 412, Piso 4"
-                      className="w-full px-3.5 py-2 rounded-lg bg-zy-surface border border-zy-border text-xs font-mono text-zy-fg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-mono text-zy-muted uppercase">
-                        {language === 'es' ? 'Ciudad / Localidad:' : 'City / Province:'}
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={buyerCity}
-                        onChange={(e) => setBuyerCity(e.target.value)}
-                        placeholder="San Carlos de Bariloche"
-                        className="w-full px-3.5 py-2 rounded-lg bg-zy-surface border border-zy-border text-xs font-mono text-zy-fg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-mono text-zy-muted uppercase">
-                        {language === 'es' ? 'País de destino:' : 'Country:'}
-                      </label>
-                      <select
-                        className="w-full px-3 py-2 rounded-lg bg-zy-surface border border-zy-border text-xs font-mono text-zy-fg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-                        aria-label="Shipping country"
-                      >
-                        <option>Argentina</option>
-                        <option>Chile</option>
-                        <option>Uruguay</option>
-                        <option>España</option>
-                        <option>Switzerland</option>
-                        <option>United States</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Summary row */}
-                  <div className="p-3 bg-zy-surface rounded-lg border border-zy-border text-xs font-mono flex justify-between items-center">
-                    <span className="text-zy-muted">{language === 'es' ? 'Total de la orden:' : 'Order total:'}</span>
-                    <span className="font-bold text-zy-fg text-sm">${cartTotal} USD</span>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-3 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center justify-center space-x-2"
-                  >
-                    <span>{language === 'es' ? 'Continuar al Pago Simulado' : 'Continue to Mock Payment'}</span>
-                    <ArrowRight size={13} />
-                  </button>
-                </form>
-              )}
-
-              {checkoutStep === 2 && (
-                <form onSubmit={handleCompleteOrder} className="space-y-5">
-                  <div className="flex items-center justify-between border-b border-zy-border-subtle pb-4">
-                    <div>
-                      <span className="text-xs font-mono text-zy-blue uppercase tracking-wider">
-                        {language === 'es' ? 'PASO 2 DE 2 // SIMULACIÓN DE PAGO' : 'STEP 2 OF 2 // PAYMENT SIMULATION'}
-                      </span>
-                      <h3 className="text-xl sm:text-2xl font-sans font-bold">
-                        {language === 'es' ? 'Confirmación de Pago' : 'Payment Confirmation'}
-                      </h3>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setCheckoutStep(1)}
-                      className="text-xs font-mono text-zy-blue hover:underline"
-                    >
-                      {language === 'es' ? 'Volver' : 'Back'}
-                    </button>
-                  </div>
-
-                  {/* Promo Code Input */}
-                  <div className="p-4 bg-zy-surface rounded-xl border border-zy-border space-y-2">
-                    <label className="block text-xs font-mono text-zy-muted uppercase">
-                      {language === 'es' ? 'Código Promocional / Cupón:' : 'Promo / Atelier Code:'}
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={discountCode}
-                        onChange={(e) => setDiscountCode(e.target.value)}
-                        placeholder="ZYRVAE10"
-                        className="flex-grow px-3 py-1.5 rounded-lg bg-zy-card border border-zy-border text-xs font-mono uppercase text-zy-fg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
-                      />
-                      <button
-                        type="button"
-                        onClick={handleApplyDiscount}
-                        className="px-3.5 py-1.5 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-xs font-mono font-semibold"
-                      >
-                        {language === 'es' ? 'Aplicar' : 'Apply'}
-                      </button>
-                    </div>
-                    {discountApplied && (
-                      <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400 block">
-                        {language === 'es' ? '✓ Descuento del 10% aplicado' : '✓ 10% demo discount applied'}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Mock Payment Details */}
-                  <div className="p-4 bg-zy-surface rounded-xl border border-zy-border space-y-3 font-mono text-xs">
-                    <span className="text-zy-dim uppercase text-[10px] block">
-                      {language === 'es' ? 'MÉTODO DE PAGO DEMOSTRATIVO:' : 'SIMULATED DEMO PAYMENT METHOD:'}
-                    </span>
-                    <div className="p-3 bg-zy-card rounded border border-zy-border-subtle flex justify-between items-center text-zy-muted">
-                      <span>•••• •••• •••• 4242</span>
-                      <span>EXP 12/28</span>
-                    </div>
-                    <p className="text-[10px] text-zy-dim leading-tight">
-                      {language === 'es'
-                        ? 'Simulación segura. Ningún cargo se realizará a tu tarjeta de crédito o cuenta bancaria.'
-                        : 'Secure sandbox simulation. Zero real financial charges will ever occur.'}
-                    </p>
-                  </div>
-
-                  {/* Total Breakdown */}
-                  <div className="p-4 bg-zy-surface rounded-xl border border-zy-border text-xs font-mono space-y-1">
-                    <div className="flex justify-between text-zy-muted">
-                      <span>{language === 'es' ? 'Subtotal:' : 'Subtotal:'}</span>
-                      <span>${cartSubtotal} USD</span>
-                    </div>
-                    <div className="flex justify-between text-zy-muted">
-                      <span>{language === 'es' ? 'Envío neutro en carbono:' : 'Carbon-neutral shipping:'}</span>
-                      <span>{isFreeShipping ? 'GRATIS' : `$${shippingCost} USD`}</span>
-                    </div>
-                    {discountApplied && (
-                      <div className="flex justify-between text-emerald-700 dark:text-emerald-400">
-                        <span>{language === 'es' ? 'Descuento 10%:' : 'Promo 10%:'}</span>
-                        <span>-${discountAmount} USD</span>
-                      </div>
-                    )}
-                    <div className="pt-2 border-t border-zy-border-subtle flex justify-between font-bold text-sm text-zy-fg">
-                      <span>{language === 'es' ? 'Total final:' : 'Final Total:'}</span>
-                      <span className="text-zy-blue text-base">${cartTotal} USD</span>
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-3 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity"
-                  >
-                    {language === 'es' ? 'Completar Orden Demostrativa' : 'Complete Demonstration Order'}
-                  </button>
-                </form>
-              )}
-
-              {checkoutStep === 3 && (
-                <div className="text-center py-6 space-y-5">
-                  <div className="w-14 h-14 mx-auto rounded-full bg-zy-blue/10 border border-zy-blue flex items-center justify-center text-zy-blue">
-                    <Check size={28} />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <span className="text-xs font-mono text-zy-blue uppercase tracking-widest">
-                      {language === 'es' ? 'ORDEN DEMOSTRATIVA CONFIRMADA' : 'DEMO ORDER CONFIRMED'}
-                    </span>
-                    <h3 className="text-2xl sm:text-3xl font-sans font-bold text-zy-fg">
-                      {language === 'es' ? '¡Gracias por explorar SŌMA!' : 'Thank you for exploring SŌMA!'}
-                    </h3>
-                    <p className="font-mono text-xs text-zy-muted">
-                      CÓDIGO DE EXPEDIENTE: <span className="text-zy-blue font-bold">{orderRefCode}</span>
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-zy-surface rounded-xl border border-zy-border text-xs font-mono text-zy-muted space-y-2 text-left">
-                    <div className="flex items-center space-x-2 text-zy-fg font-semibold">
-                      <ShieldCheck size={14} className="text-zy-blue" />
-                      <span>{language === 'es' ? 'Aviso del Estudio ZYRVAE' : 'ZYRVAE Studio Notice'}</span>
-                    </div>
-                    <p className="leading-relaxed">
-                      {language === 'es'
-                        ? 'Esta orden fue completada con éxito en modo simulación para verificar el flujo de compra de extremo a extremo (variantes, cálculo de envíos, códigos promocionales y registro de orden).'
-                        : 'This order was completed successfully in simulation mode to verify the end-to-end e-commerce funnel (variants, shipping calculation, promo codes, and order persistence).'}
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setCheckoutOpen(false);
-                      setCheckoutStep(1);
-                    }}
-                    className="px-6 py-2.5 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-semibold hover:opacity-90 transition-opacity"
-                  >
-                    {language === 'es' ? 'Continuar navegando' : 'Continue exploring'}
-                  </button>
-                </div>
-              )}
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      {/* 7. PORTAL AISLADO DE BOLSA (ALBARÁN DE DISPENSARIO) Y CHECKOUT DE LABORATORIO */}
+      <SomaCartOverlay language={language} />
     </div>
   );
 };
