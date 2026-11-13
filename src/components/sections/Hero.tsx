@@ -178,7 +178,7 @@ export const Hero: React.FC = () => {
     {
       index: '03',
       name: 'Monolith',
-      slug: 'vectra-architects',
+      slug: 'monolith-studio', // legacy alias: vectra-architects
       idCode: 'MONOLITH-STUDIO',
       discipline: 'Architecture',
     },

@@ -171,7 +171,8 @@ export const projects: ProjectDetail[] = [
     demoType: 'gastronomy',
   },
   {
-    slug: 'vectra-architects',
+    slug: 'monolith-studio',
+    legacySlug: 'vectra-architects',
     idCode: 'MONOLITH-STUDIO',
     category: 'architecture',
     categoryLabel: {

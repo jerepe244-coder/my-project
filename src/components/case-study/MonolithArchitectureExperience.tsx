@@ -30,12 +30,17 @@ import {
   ChevronRight,
   ShieldCheck,
   MapPin,
-  Grid,
+  Compass,
 } from 'lucide-react';
 
 interface MonolithArchitectureExperienceProps {
   project: ProjectDetail;
 }
+
+// Solar Light Simulation Anchor Minutes (08:00 to 18:45)
+const DAWN_MIN = 480; // 08:00
+const ZENITH_MIN = 750; // 12:30
+const SUNSET_MIN = 1125; // 18:45
 
 export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperienceProps> = ({ project }) => {
   const { language } = useLanguage();
@@ -43,22 +48,51 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   // Active Project Category Filter
   const [activeCategory, setActiveCategory] = useState<'all' | 'residential' | 'cultural' | 'commercial'>('all');
 
-  // Active Project for Spatial Case Study
+  // Active Project for Spatial Case Study (Default to Casa Bruma)
   const [selectedProjectId, setSelectedProjectId] = useState<string>('casa-bruma');
   const activeProject = MONOLITH_PROJECTS.find((p) => p.id === selectedProjectId) || MONOLITH_PROJECTS[0];
 
   // Plan / Drafting Inspector View Mode
   const [activeDraftingView, setActiveDraftingView] = useState<'axonometric' | 'section' | 'plan'>('axonometric');
 
-  // Solar Light Simulation: Dawn (08:00), Zenith (12:30), Dusk (18:45) + Continuous Solar Angle (relocated from Home in Fase 2)
-  const [solarTime, setSolarTime] = useState<'dawn' | 'zenith' | 'dusk'>('dawn');
-  const [solarAngle, setSolarAngle] = useState<number>(22);
+  // Continuous Solar Simulation (08:00 to 18:45) — FASE 2 PREPARATION
+  const [solarMinutes, setSolarMinutes] = useState<number>(750); // Default to Zenith (12:30)
 
-  const handleSolarPresetChange = (preset: 'dawn' | 'zenith' | 'dusk') => {
-    setSolarTime(preset);
-    if (preset === 'dawn') setSolarAngle(22);
-    else if (preset === 'zenith') setSolarAngle(68);
-    else setSolarAngle(16);
+  // Solar Crossfade Calculation across 3 Photorealistic Render Layers
+  let opacityDawn = 0;
+  let opacityZenith = 0;
+  let opacitySunset = 0;
+
+  if (solarMinutes <= ZENITH_MIN) {
+    const alpha = (solarMinutes - DAWN_MIN) / (ZENITH_MIN - DAWN_MIN);
+    opacityDawn = Math.max(0, Math.min(1, 1 - alpha));
+    opacityZenith = Math.max(0, Math.min(1, alpha));
+    opacitySunset = 0;
+  } else {
+    const beta = (solarMinutes - ZENITH_MIN) / (SUNSET_MIN - ZENITH_MIN);
+    opacityDawn = 0;
+    opacityZenith = Math.max(0, Math.min(1, 1 - beta));
+    opacitySunset = Math.max(0, Math.min(1, beta));
+  }
+
+  // Normalized Solar Progress (0.0 to 1.0)
+  const solarProgress = (solarMinutes - DAWN_MIN) / (SUNSET_MIN - DAWN_MIN);
+
+  // Time String: HH:MM hs
+  const hours = Math.floor(solarMinutes / 60);
+  const mins = Math.round(solarMinutes % 60);
+  const timeStr = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')} hs`;
+
+  // Solar Altitude & Azimuth Metrics (Parabolic Arc & Linear Azimuth Path)
+  const solarAltitude = Math.round(16 + 58 * Math.sin(solarProgress * Math.PI));
+  const solarAzimuth = Math.round(102 + solarProgress * (276 - 102));
+  const solarLux = Math.round(190 + Math.sin(solarProgress * Math.PI) * 1230);
+
+  // Solar Preset Buttons Handlers
+  const handleSolarPreset = (preset: 'dawn' | 'zenith' | 'sunset') => {
+    if (preset === 'dawn') setSolarMinutes(DAWN_MIN);
+    else if (preset === 'zenith') setSolarMinutes(ZENITH_MIN);
+    else setSolarMinutes(SUNSET_MIN);
   };
 
   // Active Tectonic Material
@@ -82,7 +116,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   const [simulationCode, setSimulationCode] = useState<string>('');
   const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
 
-  // Keyboard navigation for lightbox
+  // Keyboard navigation for modals
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -120,101 +154,82 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   };
 
   return (
-    <div className="min-h-screen min-h-svh bg-zy-bg text-zy-fg transition-colors duration-200">
-      {/* 1. STUDIO MINIMALIST HEADER & ANCHOR NAVIGATION */}
-      <header className="sticky top-16 z-30 bg-zy-bg/95 backdrop-blur-md border-b border-zy-border-subtle transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center space-x-3 sm:space-x-5">
+    <div className="min-h-screen min-h-svh bg-[#0C0B0A] text-[#F4F1EA] pt-16 sm:pt-20 pb-16 sm:pb-20 font-swiss selection:bg-[#FF3B30]/30 selection:text-white">
+      {/* 1. ARCHITECTURAL EXPEDIENT HEADER: Swiss 0.5px Continuous Folio Bar */}
+      <header className="sticky top-16 z-30 bg-[#121110]/95 backdrop-blur-md border-b border-white/10 text-[#F4F1EA] font-swiss">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0 flex items-stretch justify-between h-12 gap-2">
+          {/* Izquierda: Volver a Zyrvae */}
+          <div className="flex items-center shrink-0">
             <Link
               href="/#work"
-              className="inline-flex items-center space-x-1.5 text-xs font-mono text-zy-muted hover:text-zy-fg transition-colors pr-3 border-r border-zy-border"
-              aria-label="Return to ZYRVAE portfolio"
+              className="inline-flex items-center space-x-2 text-xs font-mono text-[#94A3B8] hover:text-white transition-colors pr-3 sm:pr-4 border-r border-white/10 h-full whitespace-nowrap"
             >
               <ArrowLeft size={13} />
-              <span>ZYRVAE</span>
+              <span>{language === 'es' ? 'Volver a Zyrvae' : 'Back to Zyrvae'}</span>
             </Link>
-
-            <a
-              href="#monolith-hero"
-              onClick={(e) => scrollToSection(e, 'monolith-hero')}
-              className="flex items-baseline space-x-2 text-zy-fg group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue rounded"
-            >
-              <span className="font-sans font-extrabold text-base tracking-widest uppercase">
-                MONOLITH
-              </span>
-              <span className="font-mono text-[11px] text-zy-muted tracking-widest uppercase hidden sm:inline">
-                // STUDIO
-              </span>
-            </a>
           </div>
 
-          {/* In-page navigation links */}
+          {/* Centro: 03 / Monolith Studio — Arquitectura Tectónica */}
+          <div className="hidden md:flex items-center px-2 lg:px-4 font-swiss text-xs font-medium text-[#F4F1EA]/90 tracking-[0.015em] truncate">
+            <span>03 / Monolith Studio — Arquitectura Tectónica</span>
+          </div>
+
+          {/* Navegación Interior Limpia (Sin prefijos 01 // ni badges) */}
           <nav
-            aria-label="Studio Navigation"
-            className="hidden md:flex items-center space-x-6 text-xs font-mono text-zy-muted"
+            aria-label={language === 'es' ? 'Navegación de Monolith Studio' : 'Monolith Studio navigation'}
+            className="hidden lg:flex items-center space-x-6 text-xs text-[#94A3B8] font-swiss whitespace-nowrap"
           >
             <a
               href="#monolith-philosophy"
               onClick={(e) => scrollToSection(e, 'monolith-philosophy')}
-              className="hover:text-zy-fg transition-colors"
+              className="hover:text-white transition-colors"
             >
-              {language === 'es' ? '01 // FILOSOFÍA' : '01 // PHILOSOPHY'}
+              {language === 'es' ? 'Manifiesto' : 'Manifesto'}
+            </a>
+            <a
+              href="#monolith-shadows"
+              onClick={(e) => scrollToSection(e, 'monolith-shadows')}
+              className="hover:text-white transition-colors"
+            >
+              {language === 'es' ? 'Simulador solar' : 'Solar simulator'}
             </a>
             <a
               href="#monolith-works"
               onClick={(e) => scrollToSection(e, 'monolith-works')}
-              className="hover:text-zy-fg transition-colors"
+              className="hover:text-white transition-colors"
             >
-              {language === 'es' ? '02 // OBRAS' : '02 // WORKS'}
+              {language === 'es' ? 'Obra & Materia' : 'Works & Matter'}
             </a>
-            <a
-              href="#monolith-study"
-              onClick={(e) => scrollToSection(e, 'monolith-study')}
-              className="hover:text-zy-fg transition-colors"
-            >
-              {language === 'es' ? '03 // CASO DE ESTUDIO' : '03 // STUDY'}
-            </a>
-            <a
-              href="#monolith-tectonics"
-              onClick={(e) => scrollToSection(e, 'monolith-tectonics')}
-              className="hover:text-zy-fg transition-colors"
-            >
-              {language === 'es' ? '04 // MATERIA' : '04 // TECTONICS'}
-            </a>
-            <a
-              href="#monolith-gallery"
-              onClick={(e) => scrollToSection(e, 'monolith-gallery')}
-              className="hover:text-zy-fg transition-colors"
-            >
-              {language === 'es' ? '05 // GALERÍA' : '05 // GALLERY'}
-            </a>
-          </nav>
-
-          {/* Action & Concept Badge */}
-          <div className="flex items-center space-x-2.5">
-            <span className="hidden xl:inline-flex items-center px-2 py-0.5 rounded bg-zy-surface border border-zy-border text-[10px] font-mono text-zy-dim uppercase tracking-wider">
-              [ CONCEPT PROJECT ]
-            </span>
             <a
               href="#monolith-contact"
               onClick={(e) => scrollToSection(e, 'monolith-contact')}
-              className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-semibold hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
+              className="hover:text-white transition-colors"
             >
-              <span>{language === 'es' ? 'INICIAR ENCARGO' : 'START COMMISSION'}</span>
-              <ArrowDown size={12} />
+              {language === 'es' ? 'Encargos' : 'Commissions'}
+            </a>
+          </nav>
+
+          {/* Derecha: Iniciar diálogo en bloque sólido rectangular (0px de radio) */}
+          <div className="flex items-stretch shrink-0">
+            <a
+              href="#monolith-contact"
+              onClick={(e) => scrollToSection(e, 'monolith-contact')}
+              className="inline-flex items-center px-4 sm:px-5 bg-[#F5F5F0] hover:bg-white text-[#0C0B0A] text-xs font-swiss font-medium tracking-wider transition-colors border-l border-white/10 whitespace-nowrap shrink-0 rounded-none"
+            >
+              <span>{language === 'es' ? 'Iniciar diálogo ↓' : 'Start dialogue ↓'}</span>
             </a>
           </div>
         </div>
       </header>
 
       <main>
-        {/* 2. HERO FOTOGRÁFICO A GRAN ESCALA: "Spaces shaped by light." */}
+        {/* 2. HERO MONUMENTAL DE ARQUITECTURA: "Espacios esculpidos por la luz." */}
         <section
           id="monolith-hero"
-          className="relative min-h-[80svh] sm:min-h-[85svh] flex flex-col justify-between overflow-hidden border-b border-zy-border-subtle"
+          className="relative min-h-[82svh] sm:min-h-[88svh] flex flex-col justify-between overflow-hidden border-b border-white/10 bg-[#0C0B0A]"
           aria-label="Monolith Studio Hero"
         >
-          {/* Monumental Architectural Photographic Backdrop */}
+          {/* Fotografía de Fondo Arquitectónica a Gran Escala */}
           <motion.div
             layoutId={`case-study-image-${project.slug}`}
             style={{ viewTransitionName: `case-study-image-${project.slug}` }}
@@ -222,43 +237,43 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
           >
             <Image
               src="/images/monolith-hero.webp"
-              alt="Monolith Studio - Spaces shaped by light - Board-formed concrete residence in nature"
+              alt="Monolith Studio - Espacios esculpidos por la luz - Residencia en hormigón visto y silencio mineral"
               fill
               priority
               sizes="100vw"
-              className="object-cover object-center"
+              className="object-cover object-center grayscale contrast-105"
             />
-            {/* Atmospheric gradient overlay respecting light/dark mode readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/35" />
+            {/* Velo atmosférico de carbón mineral */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0C0B0A] via-[#0C0B0A]/55 to-black/40" />
           </motion.div>
 
-          {/* Top Hero Coordinate & Datum Bar */}
-          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
-            <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[#cbd4e6]">
-              <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded bg-[#0b0e14]/75 backdrop-blur-md border border-white/15">
-                <span className="w-1.5 h-1.5 rounded-full bg-zy-blue" />
-                <span className="tracking-wider uppercase">
-                  {language === 'es' ? 'ESTUDIO DE ARQUITECTURA CONCEPTUAL' : 'CONCEPTUAL ARCHITECTURE STUDIO'}
+          {/* Cota Superior: Datos de Posicionamiento Geográfico impresos sobre la retícula (Sin pills) */}
+          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[#94A3B8] border-b border-white/10 pb-3">
+              <div className="flex items-center space-x-2 text-[#F4F1EA]">
+                <span className="w-1.5 h-1.5 bg-[#FF3B30] inline-block" />
+                <span className="tracking-widest uppercase font-swiss text-[11px] font-medium">
+                  {language === 'es' ? 'Práctica Arquitectónica Tectónica' : 'Tectonic Architectural Practice'}
                 </span>
               </div>
-              <div className="px-2.5 py-1 rounded bg-[#0b0e14]/75 backdrop-blur-md border border-white/15 text-[11px] tracking-wider uppercase">
-                LAT 49°18&apos;S · ELEV +48M · REF. MN-2025
+              <div className="text-[11px] tracking-wider text-[#94A3B8]">
+                49°18′S · 72°53′W · ELEV +48M // REF. MN-2025
               </div>
             </div>
           </div>
 
-          {/* Hero Center Editorial Typography */}
-          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+          {/* Título Monumental con Tensión Tipográfica: Grotesca Monumental + Serif Itálica */}
+          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
             <div className="max-w-4xl space-y-6">
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="font-mono text-xs text-[#9ba3b8] tracking-widest uppercase flex items-center space-x-2"
+                className="font-swiss text-xs text-[#94A3B8] tracking-widest uppercase flex items-center space-x-2"
               >
                 <span>MONOLITH ARCHITECTURAL PRACTICE</span>
                 <span>—</span>
-                <span>BASEL · OSLO · PATAGONIA</span>
+                <span className="text-[#F4F1EA]">BASEL · OSLO · PATAGONIA</span>
               </motion.div>
 
               <motion.h1
@@ -267,384 +282,436 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-sans font-bold tracking-tight text-white leading-[1.05] text-balance"
+                className="text-white leading-[1.02] tracking-tight"
               >
-                Spaces shaped by light.
+                <span className="block text-5xl sm:text-7xl lg:text-9xl font-display-zyrvae font-extrabold uppercase">
+                  MONOLITH
+                </span>
+                <span className="block text-2xl sm:text-4xl lg:text-5xl font-serif italic text-[#EAEAE6] font-normal mt-2">
+                  {language === 'es' ? '«Espacios esculpidos por la luz.»' : '“Spaces shaped by light.”'}
+                </span>
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
-                className="text-base sm:text-xl text-[#d4dae8] font-sans max-w-2xl leading-relaxed"
+                className="text-base sm:text-lg text-[#CBD5E1] font-swiss max-w-2xl leading-relaxed font-light"
               >
-                {MONOLITH_STUDIO_META.heroTagline[language]}
+                {language === 'es'
+                  ? 'Arquitectura del silencio: volúmenes puros de hormigón visto, luz rasante y roca fósil en simbiosis con el territorio andino.'
+                  : 'Architecture of stillness: pure board-formed concrete volumes, raking daylight, and fossil stone in symbiosis with Andean topography.'}
               </motion.p>
             </div>
           </div>
 
-          {/* Bottom Hero Anchor Bar */}
-          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12 border-t border-white/10">
-            <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-mono text-[#a6b1c6]">
+          {/* Fila Inferior de Retícula: Sedes Tectónicas & Botón Rectangular */}
+          <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 border-t border-white/10">
+            <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-swiss text-[#94A3B8]">
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                <span>VOLUMEN PURO</span>
-                <span className="text-white/40">/</span>
-                <span>HORMIGÓN VISTO</span>
-                <span className="text-white/40">/</span>
-                <span>PIEDRA NATURAL</span>
-                <span className="text-white/40">/</span>
-                <span>LUZ CENITAL</span>
+                <span className="text-white font-medium">Sedes:</span>
+                <span>Basel (CH)</span>
+                <span className="text-white/20">/</span>
+                <span>Oslo (NO)</span>
+                <span className="text-white/20">/</span>
+                <span>Patagonia (AR)</span>
+                <span className="text-white/20">|</span>
+                <span className="text-[#94A3B8] font-mono text-[11px]">Hormigón Visto · Piedra Fósil · Passivhaus</span>
               </div>
 
               <a
                 href="#monolith-philosophy"
                 onClick={(e) => scrollToSection(e, 'monolith-philosophy')}
-                className="inline-flex items-center space-x-2 text-white hover:text-zy-blue transition-colors"
+                className="inline-flex items-center space-x-2 text-white hover:text-[#FF3B30] transition-colors font-swiss"
               >
-                <span>{language === 'es' ? 'DESCUBRIR FILOSOFÍA' : 'EXPLORE PHILOSOPHY'}</span>
+                <span>{language === 'es' ? 'Descubrir manifiesto ↓' : 'Explore manifesto ↓'}</span>
                 <ArrowDown size={13} />
               </a>
             </div>
           </div>
         </section>
 
-        {/* 3. PRESENTACIÓN BREVE DE LA FILOSOFÍA ARQUITECTÓNICA & ESTUDIO SOLAR */}
+        {/* 3. MANIFIESTO TECTÓNICO (Sin duplicación de párrafos, matriz modular continua 0.5px) */}
         <section
           id="monolith-philosophy"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 border-b border-white/10 scroll-mt-20 font-swiss"
           aria-label="Monolith Architectural Philosophy"
         >
-          {/* Editorial Section Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-14 items-baseline pb-14 border-b border-zy-border-subtle">
+          {/* Cabecera Editorial */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-14 items-baseline pb-14 border-b border-white/10">
             <div className="lg:col-span-4 space-y-2">
-              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                {language === 'es' ? '01 // MANIFIESTO TECTÓNICO' : '01 // TECTONIC MANIFESTO'}
+              <span className="font-swiss text-xs uppercase tracking-widest text-[#94A3B8]">
+                {language === 'es' ? 'Manifiesto Tectónico' : 'Tectonic Manifesto'}
               </span>
-              <h2 className="text-3xl sm:text-4xl font-sans font-bold tracking-tight text-zy-fg">
+              <h2 className="text-3xl sm:text-4xl font-swiss font-medium tracking-tight text-white">
                 {language === 'es' ? 'La materia, el silencio y el horizonte.' : 'Matter, silence, and horizon.'}
               </h2>
             </div>
 
             <div className="lg:col-span-8 space-y-5">
-              <p className="text-lg sm:text-2xl font-sans font-light text-zy-fg leading-relaxed">
+              <blockquote className="text-xl sm:text-2xl font-serif italic text-[#F4F1EA] leading-relaxed">
                 {language === 'es'
                   ? '«No añadimos formas innecesarias: sustraemos el ruido visual hasta que solo permanecen la luz, la masa mineral y la quietud del territorio.»'
                   : '“We do not add superfluous shapes: we subtract visual noise until only light, mineral mass, and the stillness of territory remain.”'}
-              </p>
-              <p className="text-sm sm:text-base text-zy-muted font-sans leading-relaxed">
-                {MONOLITH_STUDIO_META.philosophyShort[language]}
+              </blockquote>
+              <p className="text-sm sm:text-base text-[#94A3B8] font-swiss leading-relaxed">
+                {language === 'es'
+                  ? 'Cada proyecto es una pausa espacial duradera concebida para envejecer con dignidad geológica, donde el hormigón visto y la roca fósil absorben la cadencia de las estaciones sin afectación formal.'
+                  : 'Every project is an enduring spatial pause conceived to age with geological dignity, where board-formed concrete and fossil stone quietly register the shifting seasons.'}
               </p>
             </div>
           </div>
 
-          {/* 4 Architectural Pillars Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pt-14 pb-16">
+          {/* Matriz Modular Continua de 4 Pilares Tectónicos (Retícula 0.5 px) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-l border-white/10 pt-0">
             {MONOLITH_PILLARS.map((pillar) => (
               <div
                 key={pillar.number}
-                className="p-6 rounded-xl bg-zy-card border border-zy-border-card flex flex-col justify-between space-y-6 transition-colors hover:border-zy-border-strong shadow-sm"
+                className="p-6 sm:p-8 border-r border-t border-white/10 bg-[#141517] flex flex-col justify-between space-y-8"
               >
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between font-mono text-xs text-zy-dim border-b border-zy-border-subtle pb-2">
-                    <span className="text-zy-blue font-semibold">{pillar.code}</span>
+                  <div className="flex items-center justify-between text-xs font-mono text-[#94A3B8] border-b border-white/10 pb-2">
+                    <span className="text-white font-medium">{pillar.code}</span>
                     <span>{pillar.number} / 04</span>
                   </div>
 
-                  <h3 className="text-lg font-sans font-bold text-zy-fg">
+                  <h3 className="text-lg font-swiss font-medium text-white">
                     {pillar.title[language]}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#94A3B8] font-swiss leading-relaxed">
                     {pillar.desc[language]}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-zy-border-subtle text-[11px] font-mono text-zy-fg-secondary">
+                <div className="pt-3 border-t border-white/10 text-[11px] font-mono text-[#CBD5E1]">
                   {pillar.metric}
                 </div>
               </div>
             ))}
           </div>
+        </section>
 
-          {/* Interactive Daylight & Shadow Simulation Widget — LABORATORIO TÉCNICO & PROTOTIPO FUNCIONAL */}
+        {/* 4. LABORATORIO TÉCNICO & PROTOTIPO FUNCIONAL: SIMULADOR SOLAR INTERPOLADO (#monolith-shadows y #monolith-study) */}
+        <section
+          id="monolith-shadows"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 border-b border-white/10 scroll-mt-20 font-swiss"
+          aria-label={language === 'es' ? 'Simulador solar de Casa Bruma' : 'Bruma Residence solar simulator'}
+        >
+          {/* Target secundario para compatibilidad de suite de tests y anclas */}
+          <div id="monolith-study" className="scroll-mt-20" />
+
+          {/* Sello Oficial Fase 2: Laboratorio Técnico & Prototipo Funcional */}
           <div
             data-lab-seal="Laboratorio Técnico & Prototipo Funcional"
-            className="rounded-2xl border border-zy-border bg-zy-card overflow-hidden p-6 sm:p-8 space-y-6 shadow-sm"
+            className="border border-white/10 bg-[#121110] p-6 sm:p-10 space-y-8 rounded-none"
           >
-            {/* Sello Oficial Fase 2: Laboratorio Técnico & Prototipo Funcional */}
-            <div className="p-3.5 sm:p-4 bg-zy-surface border border-zy-grid-line monolith-hairline flex flex-wrap items-center justify-between gap-3">
+            {/* Folio Técnico Superior */}
+            <div className="p-3.5 sm:p-4 bg-[#0C0B0A] border border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
               <div className="inline-flex items-center space-x-2.5">
                 <span className="w-2 h-2 bg-[#FF3B30]" aria-hidden="true" />
-                <span className="font-editorial-micro text-[10px] font-semibold tracking-[0.04em] uppercase text-zy-fg">
-                  {language === 'es'
-                    ? 'Laboratorio Técnico & Prototipo Funcional'
-                    : 'Technical Laboratory & Functional Prototype · Laboratorio Técnico & Prototipo Funcional'}
+                <span className="font-swiss text-[11px] font-medium tracking-wider uppercase text-white">
+                  Laboratorio Técnico & Prototipo Funcional
                 </span>
               </div>
-              <span className="font-cota text-[#94A3B8]">
-                SPEC // MONOLITH-SOLAR-03 · AZIMUTH {110 + solarAngle}° · {Math.round(280 + solarAngle * 11.5)} LUX
+              <span className="font-mono text-[11px] text-[#94A3B8]">
+                SPEC // MN-SOLAR-03 · AZIMUT {solarAzimuth}° · ELEVACIÓN {solarAltitude}° · {solarLux} LUX
               </span>
             </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zy-border-subtle pb-5">
-              <div className="space-y-1">
-                <span className="font-mono text-xs text-zy-blue uppercase tracking-wider">
-                  {language === 'es' ? 'HERRAMIENTA ESPACIAL // SIMULADOR SOLAR' : 'SPATIAL SIMULATOR // SOLAR CYCLE'}
+            {/* Cabecera del Simulador */}
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-6">
+              <div className="space-y-2 max-w-2xl">
+                <span className="font-swiss text-xs text-[#94A3B8] uppercase tracking-widest block">
+                  {language === 'es' ? 'Simulador Solar & Heliodón Digital' : 'Solar Simulator & Digital Heliodon'}
                 </span>
-                <h4 className="font-sans font-bold text-lg text-zy-fg">
-                  {language === 'es' ? 'Incidencia de luz rasante, azimut y sombras volumétricas' : 'Raking daylight incidence, azimuth & volumetric shadow study'}
-                </h4>
+                <h3 className="text-2xl sm:text-4xl font-swiss font-medium text-white tracking-tight">
+                  {language === 'es' ? 'Incidencia rasante, azimut y sombras volumétricas' : 'Raking daylight incidence, azimuth & volumetric shadow study'}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#94A3B8] font-swiss leading-relaxed">
+                  {language === 'es'
+                    ? 'Interpolación fotométrica continua sobre el núcleo de hormigón encofrado de Casa Bruma (08:00 a 18:45).'
+                    : 'Continuous photometric crossfade over the board-formed concrete mass of Bruma Residence (08:00 to 18:45).'}
+                </p>
               </div>
 
-              {/* Time of Day Switcher */}
+              {/* Botones Preset de Aristas Vivas (0px) */}
               <div
                 role="group"
-                aria-label="Solar time of day"
-                className="inline-flex rounded-lg bg-zy-surface p-1 border border-zy-border self-start sm:self-auto"
+                aria-label="Solar time presets"
+                className="flex items-center gap-1.5 p-1 bg-[#0C0B0A] border border-white/10 self-start lg:self-end rounded-none shrink-0"
               >
                 <button
                   type="button"
-                  onClick={() => handleSolarPresetChange('dawn')}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
-                    solarTime === 'dawn'
-                      ? 'bg-zy-blue text-white font-semibold'
-                      : 'text-zy-muted hover:text-zy-fg'
+                  onClick={() => handleSolarPreset('dawn')}
+                  className={`px-3 py-1.5 text-xs font-swiss transition-colors rounded-none ${
+                    solarMinutes <= 540
+                      ? 'bg-[#F5F5F0] text-[#0C0B0A] font-semibold'
+                      : 'text-[#94A3B8] hover:text-white'
                   }`}
                 >
-                  <Sun size={13} />
-                  <span>{language === 'es' ? 'Amanecer 08:00' : 'Dawn 08:00'}</span>
+                  <Sun size={12} className="inline mr-1" />
+                  <span>{language === 'es' ? 'Amanecer · 08:00' : 'Dawn · 08:00'}</span>
                 </button>
+
                 <button
                   type="button"
-                  onClick={() => handleSolarPresetChange('zenith')}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
-                    solarTime === 'zenith'
-                      ? 'bg-zy-blue text-white font-semibold'
-                      : 'text-zy-muted hover:text-zy-fg'
+                  onClick={() => handleSolarPreset('zenith')}
+                  className={`px-3 py-1.5 text-xs font-swiss transition-colors rounded-none ${
+                    solarMinutes > 540 && solarMinutes < 950
+                      ? 'bg-[#F5F5F0] text-[#0C0B0A] font-semibold'
+                      : 'text-[#94A3B8] hover:text-white'
                   }`}
                 >
-                  <Sun size={13} />
-                  <span>{language === 'es' ? 'Cenit 12:30' : 'Zenith 12:30'}</span>
+                  <Sun size={12} className="inline mr-1" />
+                  <span>{language === 'es' ? 'Cenit · 12:30' : 'Zenith · 12:30'}</span>
                 </button>
+
                 <button
                   type="button"
-                  onClick={() => handleSolarPresetChange('dusk')}
-                  className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
-                    solarTime === 'dusk'
-                      ? 'bg-zy-blue text-white font-semibold'
-                      : 'text-zy-muted hover:text-zy-fg'
+                  onClick={() => handleSolarPreset('sunset')}
+                  className={`px-3 py-1.5 text-xs font-swiss transition-colors rounded-none ${
+                    solarMinutes >= 950
+                      ? 'bg-[#F5F5F0] text-[#0C0B0A] font-semibold'
+                      : 'text-[#94A3B8] hover:text-white'
                   }`}
                 >
-                  <Moon size={13} />
-                  <span>{language === 'es' ? 'Ocaso 18:45' : 'Dusk 18:45'}</span>
+                  <Moon size={12} className="inline mr-1" />
+                  <span>{language === 'es' ? 'Ocaso · 18:45' : 'Sunset · 18:45'}</span>
                 </button>
               </div>
             </div>
 
-            {/* Continuous Solar Altitude & Azimuth Control (Relocated from Home Card to Technical Lab) */}
-            <div className="p-4 bg-zy-surface border border-zy-border flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono">
-              <div className="flex items-center space-x-3 shrink-0">
-                <Sun size={14} className="text-zy-blue" />
-                <span className="text-zy-fg font-semibold">
-                  {language === 'es' ? 'Altitud solar continua:' : 'Continuous solar altitude:'} {solarAngle}°
-                </span>
-                <span className="text-zy-muted">
-                  · AZIMUTH {110 + solarAngle}° · {Math.round(280 + solarAngle * 11.5)} LUX
-                </span>
+            {/* Slider Continuo de Tiempo Solar con Regla Graduada (type="range") */}
+            <div className="p-4 sm:p-5 bg-[#0C0B0A] border border-white/10 space-y-3 rounded-none">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-swiss">
+                <div className="flex items-center space-x-3 text-white">
+                  <Sun size={14} className="text-[#FF3B30] shrink-0" />
+                  <span className="font-medium">
+                    {language === 'es' ? 'Hora solar activa:' : 'Active solar time:'}
+                  </span>
+                  <span className="font-mono text-[#F4F1EA] text-sm bg-white/10 px-2 py-0.5 border border-white/15">
+                    {timeStr}
+                  </span>
+                </div>
+
+                <div className="flex items-center space-x-4 text-[11px] font-mono text-[#94A3B8]">
+                  <span>AZIMUT: {solarAzimuth}°</span>
+                  <span>ALTITUD: {solarAltitude}°</span>
+                  <span className="text-[#F4F1EA] font-semibold">{solarLux} LUX</span>
+                </div>
               </div>
-              <div className="flex items-center space-x-3 w-full sm:max-w-xs">
+
+              {/* Control Deslizante de Rango */}
+              <div className="relative pt-2 pb-1">
                 <input
                   type="range"
-                  min={15}
-                  max={80}
-                  value={solarAngle}
-                  aria-label={language === 'es' ? 'Ajustar ángulo solar y azimut' : 'Adjust solar altitude and azimuth'}
-                  onChange={(e) => {
-                    const val = Number(e.target.value);
-                    setSolarAngle(val);
-                    if (val < 35) setSolarTime('dawn');
-                    else if (val > 52) setSolarTime('zenith');
-                    else setSolarTime('dusk');
-                  }}
-                  className="w-full h-1.5 bg-zy-bg border border-zy-border appearance-none cursor-ew-resize accent-zy-blue"
+                  min={DAWN_MIN}
+                  max={SUNSET_MIN}
+                  step={1}
+                  value={solarMinutes}
+                  aria-label={language === 'es' ? 'Ajustar hora solar continua (08:00 a 18:45)' : 'Adjust solar time (08:00 to 18:45)'}
+                  onChange={(e) => setSolarMinutes(Number(e.target.value))}
+                  className="w-full h-1.5 bg-[#1E2024] appearance-none cursor-ew-resize accent-[#F5F5F0] rounded-none outline-none focus-visible:ring-1 focus-visible:ring-white"
                 />
+
+                {/* Marcas de Regla Horaria Graduada */}
+                <div className="flex justify-between items-center text-[10px] font-mono text-[#94A3B8] pt-2 select-none">
+                  <span>08:00</span>
+                  <span className="hidden sm:inline">10:00</span>
+                  <span className="text-white font-medium">12:30 CENIT</span>
+                  <span className="hidden sm:inline">15:00</span>
+                  <span className="hidden sm:inline">17:00</span>
+                  <span>18:45 OCASO</span>
+                </div>
               </div>
             </div>
 
-            {/* Visual Solar Projection Canvas */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              <div className="lg:col-span-7 bg-zy-surface rounded-xl border border-zy-border p-6 min-h-[260px] flex flex-col justify-between">
-                <div className="flex justify-between items-center text-[11px] font-mono text-zy-muted border-b border-zy-border-subtle pb-3">
-                  <span>
-                    {solarTime === 'dawn' && (language === 'es' ? 'ÁNGULO SOLAR: 16° ESTE · LUZ RASANTE DORADA' : 'SOLAR ELEVATION: 16° EAST · GOLDEN RAKING LIGHT')}
-                    {solarTime === 'zenith' && (language === 'es' ? 'ÁNGULO SOLAR: 74° CENITAL · ALTO CONTRASTE' : 'SOLAR ELEVATION: 74° ZENITH · HIGH MONOCHROME CONTRAST')}
-                    {solarTime === 'dusk' && (language === 'es' ? 'ÁNGULO SOLAR: 8° OESTE · SOMBRAS PROFUNDAS' : 'SOLAR ELEVATION: 8° WEST · DEEP ELONGATED SHADOWS')}
-                  </span>
-                  <span className="text-zy-blue font-semibold">CASA BRUMA</span>
+            {/* Escenario Fotográfico Multicapa con Interpolación Continua (Fase 2 Crossfade) */}
+            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/9] overflow-hidden bg-[#0A0A0C] border border-white/10 select-none">
+              {/* Capa 1: Amanecer (08:00) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/monolith-dawn.webp"
+                alt="Casa Bruma al Amanecer (08:00) - Luz rasante este"
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-75"
+                style={{ opacity: opacityDawn }}
+              />
+
+              {/* Capa 2: Cenit (12:30) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/monolith-zenith.webp"
+                alt="Casa Bruma al Cenit (12:30) - Luz vertical cenital"
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-75"
+                style={{ opacity: opacityZenith }}
+              />
+
+              {/* Capa 3: Ocaso (18:45) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/monolith-sunset.webp"
+                alt="Casa Bruma al Ocaso (18:45) - Sombras alargadas oeste"
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-75"
+                style={{ opacity: opacitySunset }}
+              />
+
+              {/* Velo de Tonalidad Térmica Dinámica */}
+              <div
+                className="absolute inset-0 pointer-events-none transition-colors duration-200"
+                style={{
+                  backgroundColor:
+                    solarMinutes <= 600
+                      ? 'rgba(217, 119, 6, 0.12)' // Calidez matinal ambarina
+                      : solarMinutes >= 950
+                      ? 'rgba(180, 83, 9, 0.16)' // Terracota cálido de ocaso
+                      : 'rgba(255, 255, 255, 0.04)', // Neutralidad cenital
+                }}
+              />
+
+              {/* Mira de Cota Arquitectónica & Retículo Técnico en 0.5px Líneas Blancas */}
+              <div className="absolute inset-0 pointer-events-none p-4 sm:p-6 flex flex-col justify-between">
+                {/* Cotas Superiores en Esquinas */}
+                <div className="flex items-start justify-between font-mono text-[10px] text-white/90">
+                  <div className="flex items-center space-x-2 bg-black/60 backdrop-blur-md px-3 py-1 border border-white/10">
+                    <span className="w-1.5 h-1.5 bg-[#FF3B30] inline-block" />
+                    <span>DATUM ±0.00M // CASA BRUMA</span>
+                  </div>
+                  <div className="bg-black/60 backdrop-blur-md px-3 py-1 border border-white/10">
+                    49°18′S · 72°53′W · EL CHALTÉN
+                  </div>
                 </div>
 
-                {/* SVG Geometric Shadow Visualizer */}
-                <svg viewBox="0 0 500 200" className="w-full h-40 my-2" aria-hidden="true">
-                  {/* Horizon ground datum line */}
-                  <line x1="20" y1="160" x2="480" y2="160" stroke="var(--zy-border-strong)" strokeWidth="1" strokeDasharray="4,4" />
-
-                  {/* Cast shadow polygon dynamically reacting to solar angle */}
-                  {solarTime === 'dawn' && (
-                    <polygon
-                      points="180,160 380,160 450,178 260,178"
-                      fill="var(--zy-blue)"
-                      opacity="0.18"
+                {/* Retículo Central Sutil con Vector de Incidencia Solar */}
+                <div className="flex items-center justify-center">
+                  <svg viewBox="0 0 120 120" className="w-20 h-20 text-white/40" aria-hidden="true">
+                    {/* Círculo graduado de heliodón */}
+                    <circle cx="60" cy="60" r="38" stroke="currentColor" strokeWidth="0.5" fill="none" strokeDasharray="2,2" />
+                    <line x1="60" y1="12" x2="60" y2="108" stroke="currentColor" strokeWidth="0.5" />
+                    <line x1="12" y1="60" x2="108" y2="60" stroke="currentColor" strokeWidth="0.5" />
+                    {/* Vector de Rayo Solar */}
+                    <line
+                      x1="60"
+                      y1="60"
+                      x2={60 + 36 * Math.cos((solarAzimuth - 90) * (Math.PI / 180))}
+                      y2={60 + 36 * Math.sin((solarAzimuth - 90) * (Math.PI / 180))}
+                      stroke="#FF3B30"
+                      strokeWidth="1.5"
                     />
-                  )}
-                  {solarTime === 'zenith' && (
-                    <polygon
-                      points="180,160 380,160 395,166 195,166"
-                      fill="var(--zy-blue)"
-                      opacity="0.30"
-                    />
-                  )}
-                  {solarTime === 'dusk' && (
-                    <polygon
-                      points="180,160 380,160 110,185 40,185"
-                      fill="var(--zy-blue)"
-                      opacity="0.22"
-                    />
-                  )}
+                  </svg>
+                </div>
 
-                  {/* Monolithic architectural massing box */}
-                  {/* Cantilever roof plane */}
-                  <polygon
-                    points="180,90 280,50 380,90 280,130"
-                    fill={solarTime === 'zenith' ? 'var(--zy-card-alt)' : 'var(--zy-card)'}
-                    stroke="var(--zy-fg)"
-                    strokeWidth="1.5"
-                  />
-                  {/* West Facade */}
-                  <polygon
-                    points="180,90 280,130 280,160 180,120"
-                    fill={solarTime === 'dusk' ? 'var(--zy-card-alt)' : 'var(--zy-surface)'}
-                    stroke="var(--zy-fg)"
-                    strokeWidth="1.5"
-                  />
-                  {/* South Facade */}
-                  <polygon
-                    points="280,130 380,90 380,160 280,160"
-                    fill={solarTime === 'dawn' ? 'var(--zy-card-alt)' : 'var(--zy-card)'}
-                    stroke="var(--zy-fg)"
-                    strokeWidth="1.5"
-                  />
+                {/* HUD de Información Inferior */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 font-mono text-[11px] text-white">
+                  <div className="bg-black/75 backdrop-blur-md p-3 border border-white/10 space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-[#FF3B30] font-bold">AZIMUT:</span>
+                      <span>{solarAzimuth}°</span>
+                      <span className="text-white/30">|</span>
+                      <span className="text-[#FF3B30] font-bold">ELEVACIÓN:</span>
+                      <span>{solarAltitude}°</span>
+                      <span className="text-white/30">|</span>
+                      <span className="text-white font-bold">{solarLux} LUX</span>
+                    </div>
+                    <div className="text-[10px] text-[#CBD5E1] font-swiss">
+                      {thermalMassReadout[language]}
+                    </div>
+                  </div>
 
-                  {/* Zenith skylight slit */}
-                  <line x1="260" y1="60" x2="310" y2="80" stroke="var(--zy-blue)" strokeWidth="2.5" />
-
-                  {/* Solar ray indicator */}
-                  {solarTime === 'dawn' && (
-                    <g stroke="var(--zy-blue)" strokeWidth="1" strokeDasharray="3,3" opacity="0.7">
-                      <line x1="80" y1="30" x2="260" y2="100" />
-                      <line x1="120" y1="20" x2="300" y2="90" />
-                    </g>
-                  )}
-                  {solarTime === 'zenith' && (
-                    <g stroke="var(--zy-blue)" strokeWidth="1" strokeDasharray="3,3" opacity="0.7">
-                      <line x1="280" y1="10" x2="280" y2="50" />
-                      <line x1="330" y1="10" x2="330" y2="70" />
-                    </g>
-                  )}
-                  {solarTime === 'dusk' && (
-                    <g stroke="var(--zy-blue)" strokeWidth="1" strokeDasharray="3,3" opacity="0.7">
-                      <line x1="440" y1="40" x2="320" y2="110" />
-                      <line x1="400" y1="30" x2="280" y2="100" />
-                    </g>
-                  )}
-                </svg>
-
-                <div className="flex justify-between items-center text-[10px] font-mono text-zy-dim">
-                  <span>DATUM +14.4M // ESTUDIO DE ENVOLVENTE</span>
-                  <span>ESTÁNDAR PASIVO PASSIVHAUS</span>
+                  <div className="bg-black/75 backdrop-blur-md px-3 py-1.5 border border-white/10 text-[10px] text-[#94A3B8]">
+                    Crossfade interpolado: {Math.round(opacityDawn * 100)}% Amanecer / {Math.round(opacityZenith * 100)}% Cenit / {Math.round(opacitySunset * 100)}% Ocaso
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Solar readout notes */}
-              <div className="lg:col-span-5 space-y-4 text-xs font-mono">
-                <div className="p-4 bg-zy-surface rounded-xl border border-zy-border space-y-2">
-                  <span className="text-zy-blue block uppercase font-semibold">
-                    {language === 'es' ? 'Comportamiento Tectónico' : 'Tectonic Behavior'}
-                  </span>
-                  <p className="text-zy-muted font-sans text-xs leading-relaxed">
-                    {solarTime === 'dawn' && (language === 'es'
-                      ? 'La luz a 16° ingresa horizontalmente por el lucernario este, revelando las rugosidades del encofrado de alerce y calentando térmicamente el núcleo de hormigón.'
-                      : 'Low 16° morning light penetrates horizontally through the east fissure, highlighting the rough timber grain and conductively preheating the concrete core.')}
-                    {solarTime === 'zenith' && (language === 'es'
-                      ? 'La radiación cenital es amortiguada por los aleros volados de 3.2m, manteniendo las estancias en sombra fresca sin carga térmica artificial.'
-                      : 'Zenith overhead glare is naturally intercepted by 3.2m cantilevers, preserving temperate ambient coolness without air conditioning.')}
-                    {solarTime === 'dusk' && (language === 'es'
-                      ? 'Al caer la tarde, el muro de inercia libera el calor acumulado y la iluminación interior cálida transforma el monolito en una linterna sobre el paisaje.'
-                      : 'At dusk, the thermal mass gently dissipates stored warmth while warm low-contrast lighting turns the residence into a lantern.')}
-                  </p>
-                </div>
+            {/* Ficha de Comportamiento Térmico & Tectónico en 3 Celdas Continuas */}
+            <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l border-white/10">
+              <div className="p-5 border-r border-b border-white/10 bg-[#0C0B0A] space-y-2">
+                <span className="text-[11px] font-swiss text-[#94A3B8] uppercase block">
+                  {language === 'es' ? 'Comportamiento de la Envolvente' : 'Envelope Performance'}
+                </span>
+                <p className="text-xs text-white font-swiss leading-relaxed">
+                  {solarMinutes < 600 && (language === 'es'
+                    ? 'La luz baja a 16° penetra horizontalmente por el lucernario rasante este, calentando el muro entablillado de hormigón.'
+                    : 'Low 16° morning light rakes horizontally through the east fissure, conductively preheating the concrete core.')}
+                  {solarMinutes >= 600 && solarMinutes <= 850 && (language === 'es'
+                    ? 'La radiación cenital de mediodía es interceptada por los aleros voladizos de 3.2m, protegiendo las estancias del sobrecalentamiento.'
+                    : 'Zenith overhead glare is naturally intercepted by 3.2m cantilevers, preserving temperate ambient coolness.')}
+                  {solarMinutes > 850 && (language === 'es'
+                    ? 'La luz crepuscular del oeste alarga las sombras minerales y proyecta el calor acumulado hacia el interior durante la noche andina.'
+                    : 'Dusk light elongates shadow cast while the accumulated concrete core radiates stored thermal warmth into living spaces.')}
+                </p>
+              </div>
 
-                <div className="grid grid-cols-2 gap-3 text-center">
-                  <div className="p-3 bg-zy-surface rounded-lg border border-zy-border">
-                    <span className="text-zy-dim block text-[10px] uppercase">
-                      {language === 'es' ? 'Ahorro Lumínico' : 'Daylight Factor'}
-                    </span>
-                    <span className="text-zy-fg font-bold text-sm">94% Natural</span>
-                  </div>
-                  <div className="p-3 bg-zy-surface rounded-lg border border-zy-border">
-                    <span className="text-zy-dim block text-[10px] uppercase">
-                      {language === 'es' ? 'Inercia Térmica' : 'Thermal Lag'}
-                    </span>
-                    <span className="text-zy-blue font-bold text-sm">11.4 Horas</span>
-                  </div>
-                </div>
+              <div className="p-5 border-r border-b border-white/10 bg-[#0C0B0A] space-y-2">
+                <span className="text-[11px] font-swiss text-[#94A3B8] uppercase block">
+                  {language === 'es' ? 'Inercia Térmica Passivhaus' : 'Passivhaus Thermal Inertia'}
+                </span>
+                <p className="text-xs text-white font-swiss leading-relaxed">
+                  {language === 'es'
+                    ? 'Masa mineral de 45 cm de espesor con desfase térmico de 9.4 horas. Coeficiente de transmitancia global U = 0.12 W/(m²K).'
+                    : '45 cm thick mineral mass yielding a 9.4-hour thermal phase shift. Global thermal transmittance U = 0.12 W/(m²K).'}
+                </p>
+              </div>
+
+              <div className="p-5 border-r border-b border-white/10 bg-[#0C0B0A] space-y-2">
+                <span className="text-[11px] font-swiss text-[#94A3B8] uppercase block">
+                  {language === 'es' ? 'Materialidad de Fachada' : 'Facade Materiality'}
+                </span>
+                <p className="text-xs text-white font-swiss leading-relaxed">
+                  {language === 'es'
+                    ? 'Hormigón visto con textura de alerce rugoso + carpinterías de triple vidrio con control solar inteligente Low-E 92%.'
+                    : 'Board-formed concrete cast with rough larch grain + triple acoustic glazing with Low-E 92% solar control.'}
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 4. PORTFOLIO VISUAL DE PROYECTOS (RESIDENCIALES, CULTURALES, COMERCIALES) */}
+        {/* 5. OBRAS SELECCIONADAS: PROTAGONISMO DE CASA BRUMA & MATRIZ DE PLANOS (#monolith-works) */}
         <section
           id="monolith-works"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 border-b border-white/10 scroll-mt-20 font-swiss"
           aria-label="Monolith Selected Works"
         >
-          {/* Section Header with Typological Filter Tabs */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6 border-b border-zy-border-subtle pb-8">
-            <div>
-              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                {language === 'es' ? '02 // PROYECTOS CONCEPTUALES' : '02 // CONCEPT PROJECTS'}
+          {/* Cabecera y Filtros */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6 border-b border-white/10 pb-8">
+            <div className="space-y-2">
+              <span className="font-swiss text-xs uppercase tracking-widest text-[#94A3B8]">
+                {language === 'es' ? 'Proyectos Seleccionados' : 'Selected Projects'}
               </span>
-              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2 text-balance">
-                {language === 'es' ? 'Obras seleccionadas.' : 'Selected works.'}
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-swiss font-medium tracking-tight text-white">
+                {language === 'es' ? 'Obras y práctica territorial.' : 'Selected works & territorial practice.'}
               </h2>
-              <p className="text-sm sm:text-base text-zy-muted font-sans max-w-xl mt-3">
+              <p className="text-sm sm:text-base text-[#94A3B8] font-swiss max-w-xl">
                 {language === 'es'
-                  ? 'Catálogo riguroso de proyectos residenciales, culturales y comerciales concebidos como ejercicios de pureza mineral y espacial.'
-                  : 'A disciplined index of residential, cultural, and commercial projects engineered as studies in mineral mass and spatial clarity.'}
+                  ? 'Catálogo riguroso de proyectos residenciales, culturales y de pabellón concebidos como ejercicios de masa mineral pura.'
+                  : 'A disciplined index of residential, cultural, and pavilion projects engineered as studies in mineral mass.'}
               </p>
             </div>
 
-            {/* Typology Filters */}
+            {/* Filtros Tipológicos en Línea Continua */}
             <div
               role="tablist"
               aria-label="Filter works by typology"
-              className="flex flex-wrap items-center gap-1.5 p-1 bg-zy-control border border-zy-border rounded-lg self-start md:self-end"
+              className="flex flex-wrap items-center gap-1.5 p-1 bg-[#121110] border border-white/10 self-start md:self-end rounded-none"
             >
               {[
-                { id: 'all' as const, label: language === 'es' ? 'TODAS (06)' : 'ALL (06)' },
-                { id: 'residential' as const, label: language === 'es' ? 'RESIDENCIAL (03)' : 'RESIDENTIAL (03)' },
-                { id: 'cultural' as const, label: language === 'es' ? 'CULTURAL (02)' : 'CULTURAL (02)' },
-                { id: 'commercial' as const, label: language === 'es' ? 'COMERCIAL (01)' : 'COMMERCIAL (01)' },
+                { id: 'all' as const, label: language === 'es' ? 'Todas (06)' : 'All (06)' },
+                { id: 'residential' as const, label: language === 'es' ? 'Residencial (03)' : 'Residential (03)' },
+                { id: 'cultural' as const, label: language === 'es' ? 'Cultural (02)' : 'Cultural (02)' },
+                { id: 'commercial' as const, label: language === 'es' ? 'Pabellones (01)' : 'Pavilions (01)' },
               ].map((tab) => (
                 <button
                   key={tab.id}
                   role="tab"
                   aria-selected={activeCategory === tab.id}
                   onClick={() => setActiveCategory(tab.id)}
-                  className={`px-3 sm:px-3.5 py-1.5 rounded-md text-xs font-mono transition-colors duration-150 outline-none focus-visible:ring-1 focus-visible:ring-zy-blue ${
+                  className={`px-3 py-1.5 text-xs font-swiss transition-colors rounded-none ${
                     activeCategory === tab.id
-                      ? 'bg-zy-control-active text-zy-fg font-semibold border border-zy-border shadow-sm'
-                      : 'text-zy-muted hover:text-zy-fg'
+                      ? 'bg-[#F5F5F0] text-[#0C0B0A] font-medium'
+                      : 'text-[#94A3B8] hover:text-white'
                   }`}
                 >
                   {tab.label}
@@ -653,450 +720,160 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
             </div>
           </div>
 
-          {/* Visual Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimatePresence>
-              {filteredProjects.map((proj) => (
-                <motion.article
-                  layout
-                  key={proj.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
-                  className="group rounded-xl bg-zy-card border border-zy-border-card hover:border-zy-border-strong transition-colors overflow-hidden flex flex-col justify-between shadow-sm"
-                >
-                  {/* Project Image Aspect Container */}
-                  <div className="relative w-full aspect-[16/11] overflow-hidden bg-zy-surface">
-                    <Image
-                      src={proj.coverImage}
-                      alt={`${proj.title[language]} - ${proj.subtitle[language]}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
-
-                    {/* Subtle photographic vignette */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-
-                    {/* Metadata Badges Over Image */}
-                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between text-[10px] font-mono pointer-events-none">
-                      <span className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md border border-white/15 text-white uppercase tracking-wider">
-                        {proj.code}
-                      </span>
-                      <span className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md border border-white/15 text-zy-blue font-semibold uppercase">
-                        [ CONCEPT ]
-                      </span>
-                    </div>
-
-                    <div className="absolute bottom-3 left-3 right-3 text-white text-xs font-mono flex justify-between items-baseline">
-                      <span className="text-[#cbd4e6]">{proj.location}</span>
-                      <span className="text-white/80">{proj.year}</span>
-                    </div>
-                  </div>
-
-                  {/* Card Content Body */}
-                  <div className="p-6 flex flex-col justify-between flex-grow space-y-6">
-                    <div className="space-y-2.5">
-                      <div className="flex items-center justify-between text-xs font-mono text-zy-muted">
-                        <span className="text-zy-blue">{proj.categoryLabel[language]}</span>
-                        <span>{proj.area}</span>
-                      </div>
-
-                      <h3 className="text-2xl font-sans font-bold text-zy-fg group-hover:text-zy-blue transition-colors">
-                        {proj.title[language]}
-                      </h3>
-
-                      <p className="text-xs font-mono text-zy-dim uppercase">
-                        {proj.primaryMaterial[language]}
-                      </p>
-
-                      <p className="text-xs sm:text-sm text-zy-muted font-sans leading-relaxed line-clamp-3">
-                        {proj.concept[language]}
-                      </p>
-                    </div>
-
-                    {/* Card Actions: Trigger deep case study or detail modal */}
-                    <div className="pt-4 border-t border-zy-border-subtle flex items-center justify-between">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedProjectId(proj.id);
-                          const studyEl = document.getElementById('monolith-study');
-                          if (studyEl) studyEl.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                        className="inline-flex items-center space-x-1 text-xs font-mono text-zy-blue hover:underline"
-                      >
-                        <span>{language === 'es' ? 'Ficha técnica' : 'Spatial specs'}</span>
-                        <ChevronRight size={13} />
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => setInspectProject(proj)}
-                        className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-xs font-mono text-zy-fg transition-colors"
-                        aria-label={`Open detailed overview of ${proj.title[language]}`}
-                      >
-                        <span>{language === 'es' ? 'Ver proyecto' : 'Inspect project'}</span>
-                        <ArrowUpRight size={13} />
-                      </button>
-                    </div>
-                  </div>
-                </motion.article>
-              ))}
-            </AnimatePresence>
-          </div>
-        </section>
-
-        {/* 5. CASO DE ESTUDIO PROFUNDO (FEATURED SPATIAL STUDY & PLAN DRAFTING INSPECTOR) */}
-        <section
-          id="monolith-study"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
-          aria-label="Monolith Deep Spatial Case Study"
-        >
-          <div className="space-y-12">
-            {/* Header of Active Study Project */}
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-zy-border-subtle pb-8">
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2 font-mono text-xs text-zy-blue">
-                  <span className="w-1.5 h-1.5 rounded-full bg-zy-blue" />
-                  <span className="uppercase tracking-widest">
-                    {language === 'es' ? '03 // CASO DE ESTUDIO TECTÓNICO' : '03 // TECTONIC CASE STUDY'}
-                  </span>
-                  <span className="text-zy-dim">| {activeProject.code}</span>
+          {/* LÁMINA MONUMENTAL PROTAGONISTA: CASA BRUMA (MN-01) */}
+          <div className="border border-white/10 bg-[#121110] mb-12 rounded-none overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              {/* Fotografía a Gran Escala */}
+              <div className="lg:col-span-7 relative aspect-[16/10] lg:aspect-auto min-h-[380px] sm:min-h-[460px] border-b lg:border-b-0 lg:border-r border-white/10 bg-[#0C0B0A]">
+                <Image
+                  src={activeProject.coverImage}
+                  alt={activeProject.title[language]}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 border border-white/10 text-xs font-mono text-white">
+                  {activeProject.code} · {activeProject.title[language]}
                 </div>
-
-                <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg">
-                  {activeProject.title[language]}
-                </h2>
-                <p className="text-base sm:text-xl text-zy-muted font-sans max-w-2xl">
-                  {activeProject.subtitle[language]}
-                </p>
-              </div>
-
-              {/* Geographic & Structural Metadata Drawer */}
-              <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
-                <span className="px-3 py-1.5 rounded-lg bg-zy-surface border border-zy-border text-zy-fg-secondary">
-                  <MapPin size={12} className="inline mr-1 text-zy-blue" />
-                  {activeProject.coordinates}
-                </span>
-                <span className="px-3 py-1.5 rounded-lg bg-zy-surface border border-zy-border text-zy-fg-secondary">
-                  {activeProject.elevation}
-                </span>
-                <span className="px-3 py-1.5 rounded-lg bg-zy-surface border border-zy-border text-zy-fg-secondary">
-                  {activeProject.area}
-                </span>
-              </div>
-            </div>
-
-            {/* Main Spatial Study Layout: Image + Spatial Decisions */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-              {/* Left Column: Visual Photography of Active Project */}
-              <div className="lg:col-span-7 space-y-4">
-                <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-zy-border bg-zy-surface shadow-sm">
-                  <Image
-                    src={activeProject.coverImage}
-                    alt={activeProject.title[language]}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-baseline text-white text-xs font-mono bg-black/70 backdrop-blur-md px-3.5 py-2 rounded-lg border border-white/10">
-                    <span>{activeProject.title[language]} // VISTA EXTERIOR</span>
-                    <span className="text-[#a6b1c6]">{activeProject.location}</span>
-                  </div>
-                </div>
-
-                {/* Sub-gallery of detail images */}
-                <div className="grid grid-cols-3 gap-3">
-                  {activeProject.detailImages.slice(0, 3).map((img, i) => (
-                    <div
-                      key={i}
-                      className="relative aspect-video rounded-lg overflow-hidden border border-zy-border bg-zy-surface"
-                    >
-                      <Image
-                        src={img}
-                        alt={`${activeProject.title[language]} detail ${i + 1}`}
-                        fill
-                        sizes="25vw"
-                        className="object-cover hover:scale-105 transition-transform"
-                      />
-                    </div>
-                  ))}
+                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-baseline text-white text-xs font-mono bg-black/75 backdrop-blur-md px-4 py-2 border border-white/10">
+                  <span>{activeProject.location}</span>
+                  <span className="text-[#94A3B8]">{activeProject.area}</span>
                 </div>
               </div>
 
-              {/* Right Column: Spatial Decisions & Concept Commentary */}
-              <div className="lg:col-span-5 space-y-6">
-                <div className="p-6 bg-zy-card rounded-xl border border-zy-border space-y-4 shadow-sm">
-                  <span className="text-xs font-mono uppercase text-zy-blue block">
-                    {language === 'es' ? 'CONCEPTO ESPACIAL' : 'SPATIAL CONCEPT'}
-                  </span>
-                  <p className="text-sm font-sans text-zy-fg-secondary leading-relaxed">
+              {/* Ficha Técnica de Replanteo y Decisiones Espaciales */}
+              <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[#141517]">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <span className="text-xs font-mono text-[#FF3B30] uppercase font-semibold">
+                      {activeProject.code} // {activeProject.categoryLabel[language]}
+                    </span>
+                    <span className="text-xs font-mono text-[#94A3B8]">{activeProject.year}</span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl font-swiss font-medium text-white">
+                    {activeProject.title[language]}
+                  </h3>
+                  <p className="text-sm font-serif italic text-[#EAEAE6]">
+                    {activeProject.subtitle[language]}
+                  </p>
+
+                  <p className="text-xs sm:text-sm text-[#94A3B8] font-swiss leading-relaxed">
                     {activeProject.concept[language]}
                   </p>
                 </div>
 
-                <div className="space-y-3">
-                  <span className="text-xs font-mono uppercase text-zy-muted block">
-                    {language === 'es' ? 'DECISIONES ESPACIALES CLAVE:' : 'KEY SPATIAL DECISIONS:'}
-                  </span>
-
-                  {activeProject.spatialDecisions.map((decision) => (
-                    <div
-                      key={decision.num}
-                      className="p-4 bg-zy-surface rounded-xl border border-zy-border-subtle space-y-1.5"
-                    >
-                      <div className="flex items-center space-x-2 font-mono text-xs">
-                        <span className="text-zy-blue font-bold">{decision.num}</span>
-                        <span className="font-sans font-semibold text-zy-fg">
-                          {decision.title[language]}
-                        </span>
-                      </div>
-                      <p className="text-xs font-sans text-zy-muted leading-relaxed pl-5">
-                        {decision.desc[language]}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Plan & Drafting Inspector (Axonometric, Section AA, Level 01 Plan) */}
-            <div className="rounded-2xl border border-zy-border bg-zy-card overflow-hidden shadow-sm">
-              <div className="bg-zy-surface px-6 py-4 border-b border-zy-border flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-                <div className="flex items-center space-x-2 text-zy-blue">
-                  <Layers size={14} />
-                  <span className="font-semibold uppercase tracking-wider">
-                    {language === 'es' ? 'DOCUMENTACIÓN PLANIMÉTRICA' : 'TECHNICAL DRAFTING SUITE'}
-                  </span>
-                  <span className="text-zy-dim">| {activeProject.code}</span>
+                {/* Especificaciones Técnicas */}
+                <div className="space-y-2 border-t border-white/10 pt-4 font-mono text-xs">
+                  <div className="flex justify-between py-1 border-b border-white/5">
+                    <span className="text-[#94A3B8] font-swiss">{language === 'es' ? 'Coordenadas:' : 'Coordinates:'}</span>
+                    <span className="text-white">{activeProject.coordinates}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-white/5">
+                    <span className="text-[#94A3B8] font-swiss">{language === 'es' ? 'Superficie:' : 'Floor Area:'}</span>
+                    <span className="text-white">{activeProject.area}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-white/5">
+                    <span className="text-[#94A3B8] font-swiss">{language === 'es' ? 'Elevación:' : 'Elevation:'}</span>
+                    <span className="text-white">{activeProject.elevation}</span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-[#94A3B8] font-swiss">{language === 'es' ? 'Materia prima:' : 'Primary material:'}</span>
+                    <span className="text-white">{activeProject.primaryMaterial[language]}</span>
+                  </div>
                 </div>
 
-                {/* Drafting View Switcher */}
-                <div
-                  role="group"
-                  aria-label="Drafting view modes"
-                  className="inline-flex rounded-lg bg-zy-card p-1 border border-zy-border"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setActiveDraftingView('axonometric')}
-                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
-                      activeDraftingView === 'axonometric'
-                        ? 'bg-zy-blue text-white font-semibold'
-                        : 'text-zy-muted hover:text-zy-fg'
-                    }`}
-                  >
-                    <Box size={13} />
-                    <span>{language === 'es' ? 'Axonometría 3D' : 'Axonometric'}</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveDraftingView('section')}
-                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
-                      activeDraftingView === 'section'
-                        ? 'bg-zy-blue text-white font-semibold'
-                        : 'text-zy-muted hover:text-zy-fg'
-                    }`}
-                  >
-                    <Layers size={13} />
-                    <span>{language === 'es' ? 'Sección AA' : 'Section AA'}</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveDraftingView('plan')}
-                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded text-xs font-mono transition-all ${
-                      activeDraftingView === 'plan'
-                        ? 'bg-zy-blue text-white font-semibold'
-                        : 'text-zy-muted hover:text-zy-fg'
-                    }`}
-                  >
-                    <Grid size={13} />
-                    <span>{language === 'es' ? 'Planta Nivel 01' : 'Level 01 Plan'}</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Dynamic Drafting Canvas */}
-              <div className="p-6 sm:p-8 bg-zy-surface/60">
-                {activeDraftingView === 'axonometric' && (
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center text-xs font-mono text-zy-muted">
-                      <span>{language === 'es' ? 'ESTUDIO VOLUMÉTRICO ISOMÉTRICO (30° / 30°)' : 'ISOMETRIC VOLUMETRIC MASSING (30° / 30°)'}</span>
-                      <span className="text-zy-blue">DATUM +48.0M</span>
-                    </div>
-
-                    <div className="bg-zy-card rounded-xl border border-zy-border p-6 flex flex-col items-center justify-center">
-                      <svg viewBox="0 0 500 240" className="w-full max-w-xl h-56" aria-hidden="true">
-                        {/* Coordinate axes */}
-                        <line x1="250" y1="20" x2="250" y2="220" stroke="var(--zy-border)" strokeDasharray="3,3" />
-                        <line x1="50" y1="120" x2="450" y2="120" stroke="var(--zy-border)" strokeDasharray="3,3" />
-
-                        {/* Cantilever Monolith Mass */}
-                        {/* Upper Roof */}
-                        <polygon
-                          points="250,40 370,100 250,160 130,100"
-                          fill="var(--zy-surface)"
-                          stroke="var(--zy-blue)"
-                          strokeWidth="2"
-                        />
-                        {/* South Face */}
-                        <polygon
-                          points="250,160 370,100 370,190 250,220"
-                          fill="var(--zy-card-alt)"
-                          stroke="var(--zy-border-strong)"
-                          strokeWidth="1.5"
-                        />
-                        {/* West Cantilever Face */}
-                        <polygon
-                          points="130,100 250,160 250,220 130,160"
-                          fill="var(--zy-surface)"
-                          stroke="var(--zy-fg)"
-                          strokeWidth="1.5"
-                        />
-
-                        {/* Cliff Bedrock Strata */}
-                        <path
-                          d="M40,210 Q140,215 250,220 T460,205 L460,235 L40,235 Z"
-                          fill="var(--zy-surface)"
-                          stroke="var(--zy-dim)"
-                          strokeWidth="1"
-                        />
-
-                        {/* Annotations */}
-                        <text x="135" y="90" fill="var(--zy-muted)" fontSize="10" fontFamily="monospace">
-                          VOLADIZO 6.0M
-                        </text>
-                        <text x="310" y="70" fill="var(--zy-blue)" fontSize="10" fontFamily="monospace">
-                          EJE ESTRUCTURAL VIERENDEEL
-                        </text>
-                      </svg>
-                      <p className="font-mono text-xs text-zy-dim text-center mt-2">
-                        {language === 'es'
-                          ? 'Diagrama de masa: equilibrio entre el empotramiento en roca y el voladizo sobre el acantilado'
-                          : 'Massing balance: granite bedrock anchoring counterbalancing the oceanic cliff cantilever'}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {activeDraftingView === 'section' && (
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center text-xs font-mono text-zy-muted">
-                      <span>{language === 'es' ? 'CORTE TRANSVERSAL AA ESTE-OESTE' : 'EAST-WEST TRANSVERSE SECTION AA'}</span>
-                      <span className="text-zy-blue">ESCALA 1:100</span>
-                    </div>
-
-                    <div className="p-6 bg-zy-card rounded-xl border border-zy-border font-mono text-xs space-y-3">
-                      <div className="flex justify-between items-center py-2 border-b border-zy-border-subtle">
-                        <span className="font-bold text-zy-fg">NIVEL +14.40M</span>
-                        <span className="text-zy-blue">{language === 'es' ? 'Lucernario cenital rasante & cubierta vegetal' : 'Linear zenith skylight & sedum green roof'}</span>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b border-zy-border-subtle">
-                        <span className="font-bold text-zy-fg">NIVEL +10.80M</span>
-                        <span className="text-zy-fg-secondary">{language === 'es' ? 'Estudio privado, biblioteca y mirador suspendido' : 'Private studio, spatial library & suspended overlook'}</span>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b border-zy-border-subtle">
-                        <span className="font-bold text-zy-fg">NIVEL +7.20M</span>
-                        <span className="text-zy-fg-secondary">{language === 'es' ? 'Salón diáfano continuo, hogar y terraza en voladizo' : 'Open living pavilion, central hearth & cantilever terrace'}</span>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b border-zy-border-subtle">
-                        <span className="font-bold text-zy-fg">NIVEL ±0.00M</span>
-                        <span className="text-zy-muted">{language === 'es' ? 'Patio sotaventado de abrigo y estanque de basalto' : 'Sheltered leeward courtyard & basalt reflecting pool'}</span>
-                      </div>
-                      <div className="flex justify-between items-center py-2">
-                        <span className="font-bold text-zy-dim">NIVEL -3.60M</span>
-                        <span className="text-zy-dim">{language === 'es' ? 'Cimentación directa sobre estrato de roca granítica' : 'Direct bedrock anchorage on solid granite strata'}</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {activeDraftingView === 'plan' && (
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center text-xs font-mono text-zy-muted">
-                      <span>{language === 'es' ? 'PLANTA GENERAL // NIVEL 01 (+7.20M)' : 'GENERAL FLOOR PLAN // LEVEL 01 (+7.20M)'}</span>
-                      <span className="text-zy-blue">ÁREA 440 M²</span>
-                    </div>
-
-                    <div className="p-6 bg-zy-card rounded-xl border border-zy-border font-mono text-xs space-y-3">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="p-3 bg-zy-surface rounded border border-zy-border-subtle space-y-1">
-                          <span className="text-zy-blue block font-semibold">ZONA 01 // PABELLÓN DE ESTAR</span>
-                          <span className="text-zy-muted text-[11px] block">160 m² · Techo a 4.2m · Suelo de caliza fósil continua</span>
-                        </div>
-                        <div className="p-3 bg-zy-surface rounded border border-zy-border-subtle space-y-1">
-                          <span className="text-zy-blue block font-semibold">ZONA 02 // PATIO CONTEMPLATIVO</span>
-                          <span className="text-zy-muted text-[11px] block">85 m² · Estanque de basalto · Abierto al cielo</span>
-                        </div>
-                        <div className="p-3 bg-zy-surface rounded border border-zy-border-subtle space-y-1">
-                          <span className="text-zy-blue block font-semibold">ZONA 03 // ALAS DE DESCANSO</span>
-                          <span className="text-zy-muted text-[11px] block">120 m² · Aislamiento acústico Rw 51 dB · Vista este</span>
-                        </div>
-                        <div className="p-3 bg-zy-surface rounded border border-zy-border-subtle space-y-1">
-                          <span className="text-zy-blue block font-semibold">ZONA 04 // VOLADIZO MIRADOR</span>
-                          <span className="text-zy-muted text-[11px] block">75 m² · Vuelo libre de 6m sobre el océano</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Technical Download Bar */}
-                <div className="mt-6 pt-5 border-t border-zy-border-subtle flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <span className="text-xs font-mono text-zy-dim text-center sm:text-left">
-                    {language === 'es'
-                      ? 'Documentación técnica completa disponible para comisiones de arquitectura y concursos.'
-                      : 'Comprehensive technical documentation available for commissions and institutional competitions.'}
+                {/* Decisiones Clave */}
+                <div className="space-y-2 pt-2">
+                  <span className="text-[11px] font-swiss uppercase text-[#94A3B8] block">
+                    {language === 'es' ? 'Criterios de implantación:' : 'Implantation criteria:'}
                   </span>
-
-                  <button
-                    type="button"
-                    onClick={handleDownloadSpec}
-                    className="inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-semibold hover:opacity-90 transition-opacity"
-                  >
-                    <Download size={13} />
-                    <span>
-                      {downloadSuccess
-                        ? language === 'es' ? '✓ Monografía generada (Demo)' : '✓ Monograph generated (Demo)'
-                        : language === 'es' ? 'Descargar monografía técnica (PDF)' : 'Download technical monograph (PDF)'}
-                    </span>
-                  </button>
+                  <div className="space-y-1.5 text-xs font-swiss text-[#CBD5E1]">
+                    {activeProject.spatialDecisions.slice(0, 2).map((d) => (
+                      <div key={d.num} className="p-2.5 bg-[#0C0B0A] border border-white/5">
+                        <span className="text-[#FF3B30] font-mono mr-1.5">{d.num}.</span>
+                        <strong className="text-white font-medium">{d.title[language]}:</strong> {d.desc[language]}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Selector de Catálogo de Proyectos (Obras en Retícula Continua 0.5px) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-l border-b border-white/10">
+            {filteredProjects.map((proj) => (
+              <div
+                key={proj.id}
+                onClick={() => setSelectedProjectId(proj.id)}
+                className={`p-6 border-r border-t border-white/10 cursor-pointer transition-colors space-y-4 ${
+                  selectedProjectId === proj.id ? 'bg-[#1C1D21]' : 'bg-[#121110] hover:bg-[#18191D]'
+                }`}
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#0C0B0A] border border-white/10">
+                  <Image
+                    src={proj.coverImage}
+                    alt={proj.title[language]}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute top-2 left-2 bg-black/75 px-2 py-0.5 text-[10px] font-mono text-white border border-white/10">
+                    {proj.code}
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="flex justify-between items-baseline text-xs font-mono text-[#94A3B8]">
+                    <span>{proj.location}</span>
+                    <span>{proj.year}</span>
+                  </div>
+                  <h4 className="font-swiss font-medium text-lg text-white">
+                    {proj.title[language]}
+                  </h4>
+                  <p className="text-xs text-[#94A3B8] font-swiss line-clamp-2 leading-relaxed">
+                    {proj.concept[language]}
+                  </p>
+                </div>
+
+                <div className="pt-2 flex justify-between items-center text-xs font-swiss text-[#CBD5E1]">
+                  <span>{proj.area}</span>
+                  <span className="text-[#FF3B30] font-mono text-[11px]">
+                    {selectedProjectId === proj.id ? '● Activo en visor' : 'Inspeccionar →'}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
-        {/* 6. MATRIZ TECTÓNICA Y MATERIA (CONCRETE, LIMESTONE, WOOD, GLASS) */}
+        {/* 6. HONESTIDAD MATERIAL: MATRIZ TECTÓNICA (#monolith-tectonics) */}
         <section
           id="monolith-tectonics"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 border-b border-white/10 scroll-mt-20 font-swiss"
           aria-label="Monolith Tectonic Material Matrix"
         >
           <div className="space-y-12">
             <div className="max-w-3xl space-y-2">
-              <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                {language === 'es' ? '04 // HONESTIDAD MATERIAL' : '04 // MATERIAL HONESTY'}
+              <span className="font-swiss text-xs uppercase tracking-widest text-[#94A3B8]">
+                {language === 'es' ? 'Honestidad Material' : 'Material Honesty'}
               </span>
-              <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg">
+              <h2 className="text-3xl sm:text-5xl font-swiss font-medium tracking-tight text-white">
                 {language === 'es' ? 'La matriz tectónica.' : 'The tectonic matrix.'}
               </h2>
-              <p className="text-sm sm:text-base text-zy-muted font-sans mt-3">
+              <p className="text-sm sm:text-base text-[#94A3B8] font-swiss">
                 {language === 'es'
-                  ? 'Cada material es elegido por su peso, su capacidad de envejecimiento noble y su interacción táctil con la luz y la sombra.'
+                  ? 'Cada material es especificado por su masa, noble envejecimiento y diálogo táctil con la luz y la sombra.'
                   : 'Every material is specified for its mass, noble weathering capacity, and tactile interaction with light and shadow.'}
               </p>
             </div>
 
-            {/* Material Selector Buttons */}
+            {/* Selector de Materiales en Bloques Rectangulares */}
             <div
               role="tablist"
               aria-label="Material types"
-              className="flex flex-wrap gap-2 pb-2"
+              className="flex flex-wrap gap-2"
             >
               {MONOLITH_MATERIALS.map((mat) => (
                 <button
@@ -1105,133 +882,134 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   role="tab"
                   aria-selected={activeMaterialId === mat.id}
                   onClick={() => setActiveMaterialId(mat.id)}
-                  className={`px-4 py-2.5 rounded-lg text-xs font-mono transition-all flex items-center space-x-2 border ${
+                  className={`px-4 py-2 text-xs font-swiss transition-colors border rounded-none ${
                     activeMaterialId === mat.id
-                      ? 'bg-zy-blue text-white border-zy-blue font-semibold shadow-sm'
-                      : 'bg-zy-card border-zy-border text-zy-muted hover:text-zy-fg'
+                      ? 'bg-[#F5F5F0] text-[#0C0B0A] border-white font-medium'
+                      : 'bg-[#121110] border-white/10 text-[#94A3B8] hover:text-white'
                   }`}
                 >
-                  <span className="opacity-75">{mat.code}</span>
-                  <span>//</span>
+                  <span className="font-mono mr-1.5">{mat.code}</span>
                   <span>{mat.name[language].split(' ')[0]}</span>
                 </button>
               ))}
             </div>
 
-            {/* Active Material Detail Card */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-2xl bg-zy-card border border-zy-border p-6 sm:p-10 shadow-sm">
-              {/* Macro Texture Photo */}
-              <div className="lg:col-span-5 space-y-3">
-                <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-square rounded-xl overflow-hidden border border-zy-border bg-zy-surface shadow-sm">
-                  <Image
-                    src={activeMaterial.image}
-                    alt={activeMaterial.name[language]}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute top-3 left-3 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded border border-white/10 text-[10px] font-mono text-white">
-                    {activeMaterial.code}
+            {/* Ficha Técnica de Material en Retícula Continua 0.5px */}
+            <div className="border border-white/10 bg-[#121110] p-6 sm:p-10 rounded-none">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                {/* Probeta Macrofotográfica */}
+                <div className="lg:col-span-5 space-y-3">
+                  <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-square overflow-hidden border border-white/10 bg-[#0C0B0A]">
+                    <Image
+                      src={activeMaterial.image}
+                      alt={activeMaterial.name[language]}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 40vw"
+                      className="object-cover"
+                    />
+                    <div className="absolute top-3 left-3 bg-black/80 px-2.5 py-1 border border-white/10 text-[10px] font-mono text-white">
+                      {activeMaterial.code}
+                    </div>
                   </div>
-                </div>
-                <div className="text-[11px] font-mono text-zy-dim text-center">
-                  {language === 'es' ? 'FOTOGRAFÍA MACRO DE TEXTURA SUPERFICIAL' : 'SURFACE TEXTURE MACRO PHOTOGRAPHY'}
-                </div>
-              </div>
-
-              {/* Technical Spec Matrix */}
-              <div className="lg:col-span-7 space-y-6">
-                <div className="border-b border-zy-border-subtle pb-4 space-y-1">
-                  <span className="text-xs font-mono text-zy-blue uppercase tracking-wider">
-                    {activeMaterial.category[language]}
-                  </span>
-                  <h3 className="text-2xl sm:text-3xl font-sans font-bold text-zy-fg">
-                    {activeMaterial.name[language]}
-                  </h3>
-                </div>
-
-                {/* Specs Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
-                  <div className="p-3 bg-zy-surface rounded-lg border border-zy-border-subtle">
-                    <span className="text-zy-dim block text-[10px] uppercase">
-                      {language === 'es' ? 'Densidad aparente:' : 'Apparent density:'}
-                    </span>
-                    <span className="text-zy-fg font-semibold mt-0.5 block">
-                      {activeMaterial.properties.density}
-                    </span>
-                  </div>
-
-                  <div className="p-3 bg-zy-surface rounded-lg border border-zy-border-subtle">
-                    <span className="text-zy-dim block text-[10px] uppercase">
-                      {language === 'es' ? 'Comportamiento acústico:' : 'Acoustic rating:'}
-                    </span>
-                    <span className="text-zy-fg font-semibold mt-0.5 block">
-                      {activeMaterial.properties.acoustic}
-                    </span>
-                  </div>
-
-                  <div className="p-3 bg-zy-surface rounded-lg border border-zy-border-subtle sm:col-span-2">
-                    <span className="text-zy-dim block text-[10px] uppercase">
-                      {language === 'es' ? 'Tratamiento superficial y acabado:' : 'Surface finish & treatment:'}
-                    </span>
-                    <span className="text-zy-fg font-sans text-xs mt-1 block">
-                      {activeMaterial.properties.finish[language]}
-                    </span>
-                  </div>
-
-                  <div className="p-3 bg-zy-surface rounded-lg border border-zy-border-subtle sm:col-span-2">
-                    <span className="text-zy-dim block text-[10px] uppercase">
-                      {language === 'es' ? 'Criterio sostenible y huella de carbono:' : 'Sustainability & embodied carbon:'}
-                    </span>
-                    <span className="text-zy-blue font-sans text-xs mt-1 block">
-                      {activeMaterial.properties.sustainability[language]}
-                    </span>
+                  <div className="text-[11px] font-mono text-[#94A3B8] text-center">
+                    {language === 'es' ? 'PROBETA MACRO DE TEXTURA SUPERFICIAL' : 'SURFACE TEXTURE MACRO SPECIMEN'}
                   </div>
                 </div>
 
-                {/* Tectonic Notes */}
-                <div className="p-4 bg-zy-surface/50 rounded-xl border border-zy-border text-xs font-mono text-zy-muted space-y-1">
-                  <span className="text-zy-fg font-semibold block uppercase text-[10px]">
-                    {language === 'es' ? 'NOTA DE ENSAMBLE TECTÓNICO' : 'TECTONIC DETAILING NOTE'}
-                  </span>
-                  <p className="font-sans leading-relaxed">
-                    {activeMaterial.tectonicNotes[language]}
-                  </p>
+                {/* Matriz de Especificaciones Físicas */}
+                <div className="lg:col-span-7 space-y-6">
+                  <div className="border-b border-white/10 pb-4 space-y-1">
+                    <span className="text-xs font-mono text-[#FF3B30] uppercase">
+                      {activeMaterial.category[language]}
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-swiss font-medium text-white">
+                      {activeMaterial.name[language]}
+                    </h3>
+                  </div>
+
+                  {/* Tabla Suiza */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-swiss">
+                    <div className="p-3 bg-[#0C0B0A] border border-white/10 space-y-1">
+                      <span className="text-[#94A3B8] block text-[10px] uppercase">
+                        {language === 'es' ? 'Densidad aparente:' : 'Apparent density:'}
+                      </span>
+                      <span className="text-white font-mono font-medium block">
+                        {activeMaterial.properties.density}
+                      </span>
+                    </div>
+
+                    <div className="p-3 bg-[#0C0B0A] border border-white/10 space-y-1">
+                      <span className="text-[#94A3B8] block text-[10px] uppercase">
+                        {language === 'es' ? 'Comportamiento acústico:' : 'Acoustic rating:'}
+                      </span>
+                      <span className="text-white font-mono font-medium block">
+                        {activeMaterial.properties.acoustic}
+                      </span>
+                    </div>
+
+                    <div className="p-3 bg-[#0C0B0A] border border-white/10 space-y-1 sm:col-span-2">
+                      <span className="text-[#94A3B8] block text-[10px] uppercase">
+                        {language === 'es' ? 'Tratamiento superficial y acabado:' : 'Surface finish & treatment:'}
+                      </span>
+                      <span className="text-white block">
+                        {activeMaterial.properties.finish[language]}
+                      </span>
+                    </div>
+
+                    <div className="p-3 bg-[#0C0B0A] border border-white/10 space-y-1 sm:col-span-2">
+                      <span className="text-[#94A3B8] block text-[10px] uppercase">
+                        {language === 'es' ? 'Criterio sostenible y huella de carbono:' : 'Sustainability & embodied carbon:'}
+                      </span>
+                      <span className="text-[#EAEAE6] block">
+                        {activeMaterial.properties.sustainability[language]}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Nota de Ensamble Tectónico */}
+                  <div className="p-4 bg-[#0C0B0A] border border-white/10 text-xs font-swiss text-[#CBD5E1] space-y-1">
+                    <span className="text-white font-medium block uppercase text-[10px] font-mono">
+                      {language === 'es' ? 'NOTA DE ENSAMBLE TECTÓNICO' : 'TECTONIC DETAILING NOTE'}
+                    </span>
+                    <p className="leading-relaxed">
+                      {activeMaterial.tectonicNotes[language]}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 7. GALERÍA EDITORIAL CINEMATOGRÁFICA CON LIGHTBOX ACCESIBLE */}
+        {/* 7. REGISTRO EDITORIAL CINEMATOGRÁFICO: GALERÍA DE LÁMINAS (#monolith-gallery) */}
         <section
           id="monolith-gallery"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zy-border-subtle scroll-mt-20"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 border-b border-white/10 scroll-mt-20 font-swiss"
           aria-label="Monolith Editorial Gallery"
         >
           <div className="space-y-12">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zy-border-subtle pb-8">
-              <div>
-                <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                  {language === 'es' ? '05 // REGISTRO EDITORIAL' : '05 // EDITORIAL MONOGRAPH'}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+              <div className="space-y-2">
+                <span className="font-swiss text-xs uppercase tracking-widest text-[#94A3B8]">
+                  {language === 'es' ? 'Registro Monográfico' : 'Editorial Monograph'}
                 </span>
-                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold tracking-tight text-zy-fg mt-2 text-balance">
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-swiss font-medium tracking-tight text-white">
                   {language === 'es' ? 'Atmósferas y sombras.' : 'Atmospheres & shadow.'}
                 </h2>
-                <p className="text-sm sm:text-base text-zy-muted font-sans max-w-xl mt-3">
+                <p className="text-sm sm:text-base text-[#94A3B8] font-swiss max-w-xl">
                   {language === 'es'
-                    ? 'Fotografía arquitectónica cinematográfica de patios minerales, escaleras monumentales y encuentros tectónicos.'
+                    ? 'Registro fotográfico arquitectónico de patios minerales, escaleras monumentales y encuentros tectónicos.'
                     : 'Cinematic architectural photography of mineral courtyards, monumental stairs, and tectonic junctions.'}
                 </p>
               </div>
 
-              <span className="text-xs font-mono text-zy-dim self-start md:self-end">
+              <span className="text-xs font-mono text-[#94A3B8] self-start md:self-end">
                 {language === 'es' ? 'HACÉ CLIC PARA AMPLIAR EN ALTA RESOLUCIÓN' : 'CLICK TO EXPAND HIGH-RESOLUTION VIEW'}
               </span>
             </div>
 
-            {/* Asymmetric Architectural Gallery Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Galería en Retícula Continua 0.5px */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-l border-b border-white/10">
               {MONOLITH_GALLERY.map((frame, index) => {
                 const isWide = index === 0 || index === 4;
                 return (
@@ -1240,7 +1018,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                     onClick={() => setLightboxFrame(frame)}
                     className={`${
                       isWide ? 'sm:col-span-2' : 'sm:col-span-1'
-                    } group relative aspect-[16/11] rounded-xl overflow-hidden border border-zy-border-card bg-zy-surface cursor-pointer shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue`}
+                    } group relative aspect-[16/11] border-r border-t border-white/10 bg-[#0C0B0A] cursor-pointer overflow-hidden rounded-none`}
                     tabIndex={0}
                     role="button"
                     aria-label={`Open photography: ${frame.title[language]}`}
@@ -1259,24 +1037,24 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                       className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                     />
 
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
+                    {/* Velo Cinematográfico */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
 
-                    {/* Frame Badges */}
+                    {/* Metadatos EXIF */}
                     <div className="absolute top-3 left-3 right-3 flex justify-between items-center text-[10px] font-mono text-white/90">
-                      <span className="px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 uppercase">
+                      <span className="px-2 py-0.5 bg-black/80 border border-white/10 uppercase">
                         {frame.meta.focalLength} · {frame.meta.aperture}
                       </span>
-                      <span className="p-1 rounded bg-black/70 backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="p-1 bg-black/80 border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
                         <Maximize2 size={12} />
                       </span>
                     </div>
 
                     <div className="absolute bottom-3 left-3 right-3 text-white space-y-1">
-                      <span className="font-mono text-[10px] text-[#9ba3b8] block uppercase">
+                      <span className="font-mono text-[10px] text-[#94A3B8] block uppercase">
                         {frame.location}
                       </span>
-                      <h4 className="font-sans font-semibold text-sm line-clamp-1">
+                      <h4 className="font-swiss font-medium text-sm line-clamp-1">
                         {frame.title[language]}
                       </h4>
                     </div>
@@ -1287,52 +1065,52 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
           </div>
         </section>
 
-        {/* 8. CTA DE ENCARGO ARQUITECTÓNICO & CONTACTO HONESTO */}
+        {/* 8. COMISIONES ARQUITECTÓNICAS & CONTACTO (#monolith-contact) */}
         <section
           id="monolith-contact"
-          className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 border-b border-white/10 scroll-mt-20 font-swiss"
           aria-label="Commission Monolith Architecture"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            {/* Left: Studio Intent & Practice Colophon */}
+            {/* Columna Izquierda: Intención y Sedes */}
             <div className="lg:col-span-5 space-y-8">
               <div className="space-y-3">
-                <span className="font-mono text-xs uppercase tracking-widest text-zy-blue">
-                  {language === 'es' ? '06 // COMISIONES & CONTACTO' : '06 // COMMISSIONS & CONTACT'}
+                <span className="font-swiss text-xs uppercase tracking-widest text-[#94A3B8]">
+                  {language === 'es' ? 'Comisiones & Contacto' : 'Commissions & Contact'}
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-sans font-bold tracking-tight text-zy-fg">
+                <h2 className="text-3xl sm:text-5xl font-swiss font-medium tracking-tight text-white">
                   {language === 'es' ? 'Iniciar diálogo espacial.' : 'Begin spatial dialogue.'}
                 </h2>
-                <p className="text-sm sm:text-base text-zy-muted font-sans leading-relaxed">
+                <p className="text-sm sm:text-base text-[#94A3B8] font-swiss leading-relaxed">
                   {language === 'es'
-                    ? 'Aceptamos un número limitado de encargos privados e institucionales por año para garantizar un rigor tectónico exhaustivo en cada fase de proyecto.'
+                    ? 'Aceptamos un número limitado de encargos privados e institucionales por año para garantizar un rigor tectónico exhaustivo en cada fase de obra.'
                     : 'We accept a limited number of private and institutional commissions annually to ensure exhaustive tectonic rigor across every project phase.'}
                 </p>
               </div>
 
-              {/* Studio Offices */}
-              <div className="space-y-4 pt-4 border-t border-zy-border-subtle">
-                <span className="text-xs font-mono text-zy-dim uppercase block">
-                  {language === 'es' ? 'SEDES CONCEPTUALES:' : 'STUDIO LOCATIONS:'}
+              {/* Sedes Físicas */}
+              <div className="space-y-3 pt-4 border-t border-white/10">
+                <span className="text-xs font-swiss text-[#94A3B8] uppercase block">
+                  {language === 'es' ? 'Sedes del estudio:' : 'Studio locations:'}
                 </span>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
                   {MONOLITH_STUDIO_META.offices.map((office) => (
                     <div
                       key={office.city}
-                      className="p-3 bg-zy-card rounded-lg border border-zy-border space-y-1"
+                      className="p-3 bg-[#121110] border border-white/10 space-y-1 rounded-none"
                     >
-                      <span className="text-zy-blue font-bold block">{office.city}</span>
-                      <span className="text-zy-dim text-[10px] block">{office.coords}</span>
+                      <span className="text-white font-bold block">{office.city}</span>
+                      <span className="text-[#94A3B8] text-[10px] block">{office.coords}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Honest Concept Notice */}
-              <div className="p-4 rounded-xl bg-zy-surface border border-zy-border text-xs font-mono space-y-2 text-zy-muted">
-                <div className="flex items-center space-x-2 text-zy-fg font-semibold">
-                  <ShieldCheck size={14} className="text-zy-blue" />
+              {/* Declaración de Proyecto Conceptual */}
+              <div className="p-4 bg-[#121110] border border-white/10 text-xs font-swiss space-y-2 text-[#94A3B8] rounded-none">
+                <div className="flex items-center space-x-2 text-white font-medium">
+                  <ShieldCheck size={14} className="text-[#FF3B30]" />
                   <span>{language === 'es' ? 'Declaración de Proyecto Conceptual' : 'Conceptual Project Declaration'}</span>
                 </div>
                 <p className="leading-relaxed">
@@ -1343,28 +1121,28 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
               </div>
             </div>
 
-            {/* Right: Architectural Commission Simulator Form */}
+            {/* Columna Derecha: Formulario de Encargo */}
             <div className="lg:col-span-7">
-              <div className="rounded-2xl bg-zy-card border border-zy-border p-6 sm:p-10 shadow-sm">
+              <div className="bg-[#121110] border border-white/10 p-6 sm:p-10 rounded-none">
                 {simulationConfirmed ? (
                   <div className="space-y-6 text-center py-8">
-                    <div className="w-14 h-14 mx-auto rounded-full bg-zy-blue/10 border border-zy-blue flex items-center justify-center text-zy-blue">
+                    <div className="w-14 h-14 mx-auto bg-white/5 border border-white/20 flex items-center justify-center text-white rounded-none">
                       <Check size={28} />
                     </div>
 
                     <div className="space-y-2">
-                      <span className="text-xs font-mono text-zy-blue uppercase tracking-widest">
-                        {language === 'es' ? 'REGISTRO DE DEMOSTRACIÓN EXITOSO' : 'DEMO INQUIRY REGISTERED'}
+                      <span className="text-xs font-swiss text-[#FF3B30] uppercase tracking-widest">
+                        {language === 'es' ? 'Registro demostrativo exitoso' : 'Demo inquiry registered'}
                       </span>
-                      <h3 className="text-2xl sm:text-3xl font-sans font-bold text-zy-fg">
+                      <h3 className="text-2xl sm:text-3xl font-swiss font-medium text-white">
                         {language === 'es' ? 'Encargo Registrado' : 'Commission Registered'}
                       </h3>
-                      <p className="font-mono text-xs text-zy-muted">
-                        EXPEDIENTE: <span className="text-zy-blue font-bold">{simulationCode}</span>
+                      <p className="font-mono text-xs text-[#94A3B8]">
+                        EXPEDIENTE: <span className="text-white font-bold">{simulationCode}</span>
                       </p>
                     </div>
 
-                    <p className="text-sm text-zy-muted font-sans max-w-md mx-auto leading-relaxed">
+                    <p className="text-sm text-[#94A3B8] font-swiss max-w-md mx-auto leading-relaxed">
                       {language === 'es'
                         ? 'Esta simulación confirma el flujo de consulta arquitectónica de MONOLITH STUDIO. Ninguna comisión real ha sido contratada.'
                         : 'This simulation confirms MONOLITH STUDIO’s commission funnel. No real contractual commitment has been incurred.'}
@@ -1376,30 +1154,30 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                         setSimulationConfirmed(false);
                         setSimulationCode('');
                       }}
-                      className="px-5 py-2.5 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-xs font-mono text-zy-fg transition-colors"
+                      className="px-6 py-3 bg-[#0C0B0A] hover:bg-white/10 border border-white/10 text-xs font-swiss text-white transition-colors rounded-none"
                     >
                       {language === 'es' ? 'Simular otra consulta' : 'Simulate another inquiry'}
                     </button>
                   </div>
                 ) : (
                   <form onSubmit={handleConfirmSimulation} className="space-y-6">
-                    <div className="border-b border-zy-border-subtle pb-4">
-                      <h3 className="text-xl font-sans font-bold text-zy-fg">
+                    <div className="border-b border-white/10 pb-4">
+                      <h3 className="text-xl font-swiss font-medium text-white">
                         {language === 'es' ? 'Simular solicitud de encargo' : 'Simulate project commission'}
                       </h3>
-                      <p className="text-xs font-mono text-zy-muted mt-1">
+                      <p className="text-xs font-swiss text-[#94A3B8] mt-1">
                         {language === 'es'
                           ? 'Completá los parámetros del proyecto para generar el expediente demostrativo.'
                           : 'Complete architectural project parameters to generate simulated record.'}
                       </p>
                     </div>
 
-                    {/* Typology Select */}
+                    {/* Selección de Tipología */}
                     <div className="space-y-2">
-                      <label className="block text-xs font-mono text-zy-muted uppercase">
+                      <label className="block text-xs font-swiss text-[#CBD5E1]">
                         {language === 'es' ? '1. Tipología de proyecto:' : '1. Project typology:'}
                       </label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-mono">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-swiss">
                         {[
                           { id: 'residential', label: language === 'es' ? 'Residencial' : 'Residential' },
                           { id: 'cultural', label: language === 'es' ? 'Cultural' : 'Cultural' },
@@ -1409,10 +1187,10 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                             key={typ.id}
                             type="button"
                             onClick={() => setCommissionType(typ.id)}
-                            className={`p-2.5 rounded-lg border text-center transition-all ${
+                            className={`p-3 border text-center transition-colors rounded-none ${
                               commissionType === typ.id
-                                ? 'bg-zy-blue text-white border-zy-blue font-semibold shadow-sm'
-                                : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg'
+                                ? 'bg-[#F5F5F0] text-[#0C0B0A] border-white font-medium'
+                                : 'bg-[#0C0B0A] border-white/10 text-[#94A3B8] hover:text-white'
                             }`}
                           >
                             {typ.label}
@@ -1421,12 +1199,12 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                       </div>
                     </div>
 
-                    {/* Site Context Select */}
+                    {/* Contexto Geográfico */}
                     <div className="space-y-2">
-                      <label className="block text-xs font-mono text-zy-muted uppercase">
+                      <label className="block text-xs font-swiss text-[#CBD5E1]">
                         {language === 'es' ? '2. Contexto geográfico del terreno:' : '2. Site geography:'}
                       </label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-mono">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-swiss">
                         {[
                           { id: 'cliff', label: language === 'es' ? 'Acantilado / Costa' : 'Coast / Cliff' },
                           { id: 'alpine', label: language === 'es' ? 'Montaña / Nieve' : 'Alpine / Snow' },
@@ -1436,10 +1214,10 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                             key={site.id}
                             type="button"
                             onClick={() => setCommissionSite(site.id)}
-                            className={`p-2.5 rounded-lg border text-center transition-all ${
+                            className={`p-3 border text-center transition-colors rounded-none ${
                               commissionSite === site.id
-                                ? 'bg-zy-blue text-white border-zy-blue font-semibold shadow-sm'
-                                : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg'
+                                ? 'bg-[#F5F5F0] text-[#0C0B0A] border-white font-medium'
+                                : 'bg-[#0C0B0A] border-white/10 text-[#94A3B8] hover:text-white'
                             }`}
                           >
                             {site.label}
@@ -1448,25 +1226,25 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                       </div>
                     </div>
 
-                    {/* Scale Select */}
+                    {/* Escala Estimada */}
                     <div className="space-y-2">
-                      <label className="block text-xs font-mono text-zy-muted uppercase">
+                      <label className="block text-xs font-swiss text-[#CBD5E1]">
                         {language === 'es' ? '3. Escala estimada:' : '3. Estimated scale:'}
                       </label>
-                      <div className="grid grid-cols-3 gap-2 text-xs font-mono">
+                      <div className="grid grid-cols-3 gap-2 text-xs font-swiss">
                         {[
                           { id: 'small', label: '< 400 m²' },
-                          { id: 'medium', label: '400–1,200 m²' },
-                          { id: 'monumental', label: '> 1,200 m²' },
+                          { id: 'medium', label: '400–1.200 m²' },
+                          { id: 'monumental', label: '> 1.200 m²' },
                         ].map((sc) => (
                           <button
                             key={sc.id}
                             type="button"
                             onClick={() => setCommissionScale(sc.id)}
-                            className={`p-2.5 rounded-lg border text-center transition-all ${
+                            className={`p-3 border text-center transition-colors rounded-none ${
                               commissionScale === sc.id
-                                ? 'bg-zy-blue text-white border-zy-blue font-semibold shadow-sm'
-                                : 'bg-zy-surface border-zy-border text-zy-muted hover:text-zy-fg'
+                                ? 'bg-[#F5F5F0] text-[#0C0B0A] border-white font-medium'
+                                : 'bg-[#0C0B0A] border-white/10 text-[#94A3B8] hover:text-white'
                             }`}
                           >
                             {sc.label}
@@ -1475,10 +1253,10 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                       </div>
                     </div>
 
-                    {/* Client Name & Contact */}
+                    {/* Datos de Contacto */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <label className="block text-xs font-mono text-zy-muted uppercase">
+                        <label className="block text-xs font-swiss text-[#CBD5E1]">
                           {language === 'es' ? 'Comitente / Nombre:' : 'Client Name:'}
                         </label>
                         <input
@@ -1487,12 +1265,12 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                           value={commissionName}
                           onChange={(e) => setCommissionName(e.target.value)}
                           placeholder="Elena Vance"
-                          className="w-full px-3.5 py-2 rounded-lg bg-zy-surface border border-zy-border text-zy-fg text-xs font-mono focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
+                          className="w-full px-3.5 py-2.5 bg-[#0C0B0A] border border-white/10 text-white text-xs font-swiss focus:outline-none focus:border-white rounded-none"
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <label className="block text-xs font-mono text-zy-muted uppercase">
+                        <label className="block text-xs font-swiss text-[#CBD5E1]">
                           {language === 'es' ? 'Correo electrónico:' : 'Email:'}
                         </label>
                         <input
@@ -1501,15 +1279,15 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                           value={commissionEmail}
                           onChange={(e) => setCommissionEmail(e.target.value)}
                           placeholder="vance@studio.ch"
-                          className="w-full px-3.5 py-2 rounded-lg bg-zy-surface border border-zy-border text-zy-fg text-xs font-mono focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue"
+                          className="w-full px-3.5 py-2.5 bg-[#0C0B0A] border border-white/10 text-white text-xs font-swiss focus:outline-none focus:border-white rounded-none"
                         />
                       </div>
                     </div>
 
-                    {/* Brief Note */}
+                    {/* Memoria de Aspiraciones */}
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-mono text-zy-muted uppercase">
-                        {language === 'es' ? 'Aspiraciones arquitectónicas / Brief:' : 'Architectural aspirations / Brief:'}
+                      <label className="block text-xs font-swiss text-[#CBD5E1]">
+                        {language === 'es' ? 'Aspiraciones arquitectónicas / Memoria:' : 'Architectural aspirations / Brief:'}
                       </label>
                       <textarea
                         rows={3}
@@ -1517,19 +1295,19 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                         onChange={(e) => setCommissionBrief(e.target.value)}
                         placeholder={
                           language === 'es'
-                            ? 'Buscamos una residencia de hormigón en voladizo con luz cenital rasante...'
-                            : 'We seek a cantilevered concrete retreat with continuous zenith raking light...'
+                            ? 'Buscamos una residencia de hormigón visto con luz cenital rasante en Patagonia...'
+                            : 'We seek a cantilevered concrete retreat with continuous zenith raking light in Patagonia...'
                         }
-                        className="w-full px-3.5 py-2 rounded-lg bg-zy-surface border border-zy-border text-zy-fg text-xs font-mono focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zy-blue resize-none"
+                        className="w-full px-3.5 py-2.5 bg-[#0C0B0A] border border-white/10 text-white text-xs font-swiss focus:outline-none focus:border-white rounded-none resize-none"
                       />
                     </div>
 
-                    {/* Submit Button */}
+                    {/* Botón de Envío en Bloque Sólido */}
                     <button
                       type="submit"
-                      className="w-full py-3 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zy-blue"
+                      className="w-full py-4 bg-[#F5F5F0] hover:bg-white text-[#0C0B0A] font-swiss text-xs font-semibold uppercase tracking-wider transition-colors rounded-none"
                     >
-                      {language === 'es' ? 'Registrar consulta (Simulación)' : 'Submit commission (Simulation)'}
+                      {language === 'es' ? 'Registrar consulta (Simulación) ↗' : 'Submit commission (Simulation) ↗'}
                     </button>
                   </form>
                 )}
@@ -1537,69 +1315,74 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
             </div>
           </div>
         </section>
+
+        {/* 9. TRANSICIÓN MONOLÍTICA AL SIGUIENTE CASO DE ESTUDIO: 04 / SŌMA FORMULATIONS */}
+        <section
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12 font-swiss"
+          aria-label={language === 'es' ? 'Transición de proyecto' : 'Project transition'}
+        >
+          <div className="border border-white/10 bg-[#121110] p-8 sm:p-14 flex flex-col lg:flex-row lg:items-center justify-between gap-8 rounded-none">
+            <div className="space-y-3 max-w-xl">
+              <span className="font-swiss text-xs text-[#94A3B8] uppercase tracking-widest block">
+                {language === 'es' ? 'Siguiente caso de estudio' : 'Next case study'}
+              </span>
+              <h3 className="text-3xl sm:text-5xl font-swiss font-medium text-white tracking-tight">
+                04 / Sōma Formulations
+              </h3>
+              <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed font-swiss">
+                {language === 'es'
+                  ? 'Laboratorio de perfumería molecular, biobotánica y comercio digital de lujo.'
+                  : 'Cellular skincare apothecary, biophotonic commerce, and sustainable formulation matrix.'}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                href="/case-study/soma-formulations"
+                className="inline-flex items-center space-x-2.5 px-7 py-4 bg-[#F4F1EA] hover:bg-white text-[#121110] text-xs font-swiss font-semibold tracking-wider uppercase transition-colors rounded-none"
+              >
+                <span>{language === 'es' ? 'Explorar Sōma Formulations →' : 'Explore Sōma Formulations →'}</span>
+              </Link>
+
+              <Link
+                href="/#work"
+                className="inline-flex items-center space-x-2 px-6 py-4 bg-transparent hover:bg-white/5 border border-white/15 text-xs font-mono text-[#94A3B8] hover:text-white transition-colors rounded-none"
+              >
+                <span>{language === 'es' ? '← Volver al portafolio' : '← Back to portfolio'}</span>
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
 
-      {/* 9. STUDIO MINIMALIST FOOTER & RETURN TO ZYRVAE */}
-      <footer className="border-t border-zy-border-subtle bg-zy-surface py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono text-zy-muted">
-          <div className="flex items-center space-x-3">
-            <span className="font-sans font-bold text-sm text-zy-fg tracking-widest uppercase">
-              MONOLITH
-            </span>
-            <span className="text-zy-dim">/</span>
-            <span>{MONOLITH_STUDIO_META.descriptor[language]}</span>
-          </div>
-
-          <div className="flex items-center space-x-6">
-            <a
-              href="#monolith-hero"
-              onClick={(e) => scrollToSection(e, 'monolith-hero')}
-              className="hover:text-zy-fg transition-colors"
-            >
-              {language === 'es' ? 'Volver arriba' : 'Back to top'}
-            </a>
-            <Link
-              href="/#work"
-              className="text-zy-blue hover:underline flex items-center space-x-1"
-            >
-              <span>{language === 'es' ? 'Explorar ZYRVAE' : 'Explore ZYRVAE'}</span>
-              <ArrowUpRight size={13} />
-            </Link>
-          </div>
-        </div>
-      </footer>
-
-      {/* 10. LIGHTBOX MODAL */}
+      {/* 10. MODAL LIGHTBOX DE FOTOGRAFÍA ARQUITECTÓNICA */}
       <AnimatePresence>
         {lightboxFrame && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-8"
+          <div
             role="dialog"
             aria-modal="true"
             aria-label={lightboxFrame.title[language]}
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-8 font-swiss"
           >
-            {/* Top Lightbox Bar */}
+            {/* Barra Superior del Lightbox */}
             <div className="flex items-center justify-between text-xs font-mono text-white/80 border-b border-white/10 pb-4">
               <div className="flex items-center space-x-3">
-                <span className="text-zy-blue font-bold">MONOLITH // REGISTRO</span>
+                <span className="text-white font-bold">MONOLITH // REGISTRO</span>
                 <span>—</span>
-                <span className="uppercase">{lightboxFrame.location}</span>
+                <span className="uppercase text-[#94A3B8]">{lightboxFrame.location}</span>
               </div>
 
               <button
                 type="button"
                 onClick={() => setLightboxFrame(null)}
-                className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white"
-                aria-label="Close image modal"
+                className="p-2 bg-white/10 hover:bg-white/20 text-white transition-colors rounded-none"
+                aria-label="Cerrar modal"
               >
                 <X size={18} />
               </button>
             </div>
 
-            {/* Lightbox Center Image */}
+            {/* Imagen Central */}
             <div className="relative flex-grow my-4 flex items-center justify-center min-h-[300px]">
               <div className="relative w-full h-full max-h-[75vh] aspect-[16/10]">
                 <Image
@@ -1612,124 +1395,22 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
               </div>
             </div>
 
-            {/* Bottom Lightbox Meta Bar */}
-            <div className="border-t border-white/10 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono text-white/80">
+            {/* Pie del Lightbox */}
+            <div className="border-t border-white/10 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-swiss text-[#94A3B8]">
               <div>
-                <h4 className="font-sans font-bold text-base text-white">
+                <h4 className="font-swiss font-medium text-base text-white">
                   {lightboxFrame.title[language]}
                 </h4>
-                <p className="text-white/60 font-sans text-xs mt-0.5">
-                  {lightboxFrame.subject[language]}
+                <p className="text-xs text-[#94A3B8]">
+                  {lightboxFrame.description[language]}
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#a6b1c6]">
-                <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10">
-                  {lightboxFrame.meta.focalLength}
-                </span>
-                <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10">
-                  {lightboxFrame.meta.aperture}
-                </span>
-                <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10">
-                  {lightboxFrame.meta.orientation}
-                </span>
-                <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10">
-                  {lightboxFrame.meta.lightCondition[language]}
-                </span>
+              <div className="font-mono text-xs text-white">
+                {lightboxFrame.meta.focalLength} · {lightboxFrame.meta.aperture} · {lightboxFrame.meta.iso} · {lightboxFrame.meta.shutter}
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* 11. PROJECT INSPECT DRAWER / MODAL */}
-      <AnimatePresence>
-        {inspectProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
-            role="dialog"
-            aria-modal="true"
-            aria-label={inspectProject.title[language]}
-          >
-            <motion.div
-              initial={{ scale: 0.95, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
-              className="bg-zy-card border border-zy-border rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6 shadow-2xl text-zy-fg"
-            >
-              <div className="flex items-start justify-between border-b border-zy-border-subtle pb-4">
-                <div>
-                  <div className="flex items-center space-x-2 text-xs font-mono text-zy-blue mb-1">
-                    <span>{inspectProject.code}</span>
-                    <span>//</span>
-                    <span>{inspectProject.categoryLabel[language]}</span>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-sans font-bold">
-                    {inspectProject.title[language]}
-                  </h3>
-                  <p className="text-sm font-sans text-zy-muted">
-                    {inspectProject.subtitle[language]}
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setInspectProject(null)}
-                  className="p-2 rounded-lg bg-zy-control hover:bg-zy-control-hover border border-zy-border text-zy-fg transition-colors"
-                  aria-label="Close project modal"
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              {/* Cover in Modal */}
-              <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-zy-border bg-zy-surface">
-                <Image
-                  src={inspectProject.coverImage}
-                  alt={inspectProject.title[language]}
-                  fill
-                  sizes="80vw"
-                  className="object-cover"
-                />
-              </div>
-
-              <div className="space-y-4">
-                <span className="text-xs font-mono text-zy-blue uppercase tracking-wider block">
-                  {language === 'es' ? 'MEMORIA ARQUITECTÓNICA' : 'ARCHITECTURAL MEMORANDUM'}
-                </span>
-                <p className="text-sm font-sans text-zy-fg-secondary leading-relaxed">
-                  {inspectProject.concept[language]}
-                </p>
-              </div>
-
-              {/* Specifications List */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono pt-4 border-t border-zy-border-subtle">
-                {inspectProject.specifications.map((spec, i) => (
-                  <div key={i} className="p-3 bg-zy-surface rounded-lg border border-zy-border-subtle">
-                    <span className="text-zy-dim block text-[10px] uppercase">
-                      {spec.label[language]}
-                    </span>
-                    <span className="text-zy-fg font-semibold mt-0.5 block">
-                      {spec.value}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="pt-4 border-t border-zy-border-subtle flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setInspectProject(null)}
-                  className="px-5 py-2 rounded-lg bg-zy-fg text-zy-bg font-mono text-xs font-semibold hover:opacity-90 transition-opacity"
-                >
-                  {language === 'es' ? 'Cerrar ficha' : 'Close project'}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>

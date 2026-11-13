@@ -8,12 +8,13 @@ interface PageProps {
 }
 
 const SLUG_ALIASES: Record<string, string> = {
-  'monolith-studio': 'vectra-architects',
+  'vectra-architects': 'monolith-studio',
+  'monolith-studio': 'monolith-studio',
 };
 
 function resolveProject(slug: string) {
   const targetSlug = SLUG_ALIASES[slug] || slug;
-  return projects.find((p) => p.slug === targetSlug);
+  return projects.find((p) => p.slug === targetSlug || p.slug === slug);
 }
 
 export async function generateStaticParams() {
@@ -22,6 +23,7 @@ export async function generateStaticParams() {
   }));
   return [
     ...baseParams,
+    { slug: 'vectra-architects' },
     { slug: 'monolith-studio' },
   ];
 }

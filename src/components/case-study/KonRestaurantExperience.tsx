@@ -1071,7 +1071,7 @@ export const KonRestaurantExperience: React.FC<KonRestaurantExperienceProps> = (
 
           <div className="flex flex-wrap items-center gap-4">
             <Link
-              href="/case-study/vectra-architects"
+              href="/case-study/monolith-studio"
               className="inline-flex items-center space-x-2.5 px-7 py-4 bg-[#F4F1EA] hover:bg-white text-[#121110] text-xs font-swiss font-semibold tracking-wider uppercase transition-colors rounded-none"
             >
               <span>{language === 'es' ? 'Explorar Monolith Studio →' : 'Explore Monolith Studio →'}</span>

@@ -12,6 +12,15 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/case-study/vectra-architects',
+        destination: '/case-study/monolith-studio',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

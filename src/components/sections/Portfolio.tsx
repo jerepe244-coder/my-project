@@ -111,6 +111,29 @@ const CASE_STUDY_LAB_REGISTRY: Record<
     layoutMode: 'diptych-left',
     cota: '41.16°S · 02.110',
   },
+  'monolith-studio': {
+    labAnchor: 'monolith-study',
+    clientAndTypology: {
+      es: 'MONOLITH STUDIO · Spatial Architecture & Monograph',
+      en: 'MONOLITH STUDIO · Spatial Architecture & Monograph',
+    },
+    editorialSynthesis: {
+      es: 'Monografía arquitectónica suiza con visor planimétrico, matriz tectónica Passivhaus y simulador solar de sombras volumétricas rasantes.',
+      en: 'Swiss architectural monograph featuring drafting inspection, Passivhaus tectonic matrix, and raking volumetric solar shadow simulation.',
+    },
+    location: {
+      es: 'Zurich / Atacama',
+      en: 'Zurich / Atacama',
+    },
+    discipline: {
+      es: 'Spatial Monograph & Solar Engine',
+      en: 'Spatial Monograph & Solar Engine',
+    },
+    gridSpanClass: 'lg:col-span-5',
+    imageAspectClass: 'aspect-[16/10] lg:aspect-[4/3]',
+    layoutMode: 'diptych-right',
+    cota: '47.37°N · 03.680',
+  },
   'vectra-architects': {
     labAnchor: 'monolith-study',
     clientAndTypology: {
