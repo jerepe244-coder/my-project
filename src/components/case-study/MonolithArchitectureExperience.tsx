@@ -77,6 +77,20 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
   const solarAzimuth = Math.round(102 + solarProgress * (276 - 102));
   const solarLux = Math.round(190 + Math.sin(solarProgress * Math.PI) * 1230);
 
+  // Inercia térmica dinámica según hora solar
+  const thermalMassReadout = {
+    es: solarMinutes < 600
+      ? 'Acumulación térmica inicial · Inercia baja (14.2°C)'
+      : solarMinutes <= 850
+      ? 'Masa de hormigón estabilizada · Amortiguación activa (21.4°C)'
+      : 'Disipación nocturna retardada · Retención radiante (18.6°C)',
+    en: solarMinutes < 600
+      ? 'Initial thermal capture · Low mass dampening (14.2°C)'
+      : solarMinutes <= 850
+      ? 'Stabilized concrete mass · Active climate dampening (21.4°C)'
+      : 'Delayed nocturnal release · Radiant core retention (18.6°C)',
+  };
+
   // Solar Preset Buttons Handlers
   const handleSolarPreset = (preset: 'dawn' | 'zenith' | 'sunset') => {
     if (preset === 'dawn') setSolarMinutes(DAWN_MIN);
