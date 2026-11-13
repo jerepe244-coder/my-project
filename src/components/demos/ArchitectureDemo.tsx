@@ -232,13 +232,4 @@ export const ArchitectureDemo: React.FC = () => {
       </div>
     </div>
   );
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
 };
