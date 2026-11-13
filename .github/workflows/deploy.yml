@@ -55,6 +55,8 @@ jobs:
           if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
             echo "Vercel Deploy Hook successfully dispatched (HTTP $HTTP_STATUS)."
             echo "Vercel Job response: $BODY"
+          elif [ "$HTTP_STATUS" -eq 404 ]; then
+            echo "::warning::Deploy hook ID returned 404 (native Vercel Git integration handles automated deployments on push). Skipping webhook."
           else
             echo "::error::Deploy hook returned error HTTP status $HTTP_STATUS"
             echo "Response: $BODY"
