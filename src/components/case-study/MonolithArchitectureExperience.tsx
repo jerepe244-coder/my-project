@@ -1381,12 +1381,12 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                   {lightboxFrame.title[language]}
                 </h4>
                 <p className="text-xs text-[#94A3B8]">
-                  {lightboxFrame.description[language]}
+                  {lightboxFrame.subject[language]}
                 </p>
               </div>
 
               <div className="font-mono text-xs text-white">
-                {lightboxFrame.meta.focalLength} · {lightboxFrame.meta.aperture} · {lightboxFrame.meta.iso} · {lightboxFrame.meta.shutter}
+                {lightboxFrame.meta.focalLength} · {lightboxFrame.meta.aperture} · {lightboxFrame.meta.orientation} · {lightboxFrame.meta.lightCondition[language]}
               </div>
             </div>
           </div>
