@@ -227,7 +227,7 @@ describe('ZYRVAE Digital Studio Quality & Integrity Verification', () => {
     assert.equal(MONOLITH_PILLARS.length, 4, 'Must define 4 tectonic philosophy pillars');
     assert.equal(MONOLITH_PROJECTS.length, 6, 'Must define 6 concept architectural projects');
     assert.equal(MONOLITH_MATERIALS.length, 4, 'Must define 4 tectonic materials');
-    assert.equal(MONOLITH_GALLERY.length, 8, 'Must define 8 architectural gallery frames');
+    assert.equal(MONOLITH_GALLERY.length, 6, 'Must define 6 architectural gallery frames');
 
     // Verify all images referenced by MONOLITH exist on disk and are optimized WebPs
     const requiredMonolithImages = [

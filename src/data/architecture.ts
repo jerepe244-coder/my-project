@@ -611,9 +611,9 @@ export const MONOLITH_MATERIALS: MonolithMaterial[] = [
 export const MONOLITH_GALLERY: MonolithGalleryFrame[] = [
   {
     id: 'gal-01',
-    title: { es: 'Residencia en Acantilado al Atardecer', en: 'Cliffside Monolith at Dusk' },
+    title: { es: 'Residencia en Acantilado', en: 'Cliffside Residence' },
     location: 'Patagonia Sur',
-    subject: { es: 'Volumetría exterior y linterna cálida sobre el océano', en: 'Exterior massing and warm interior lantern above ocean' },
+    subject: { es: 'Volumetría de hormigón en voladizo sobre el rompiente del Pacífico', en: 'Cantilevered raw concrete volume above Pacific surf' },
     image: '/images/monolith-hero.webp',
     aspect: 'wide',
     meta: {
@@ -625,9 +625,9 @@ export const MONOLITH_GALLERY: MonolithGalleryFrame[] = [
   },
   {
     id: 'gal-02',
-    title: { es: 'Escalera Monumental en Hormigón', en: 'Monumental Concrete Staircase' },
+    title: { es: 'Escalera Monumental', en: 'Monumental Staircase' },
     location: 'Kyoto Cultural Center',
-    subject: { es: 'Geometría diagonal y proyección de sombras cenitales', en: 'Diagonal geometry and zenith shadow projection' },
+    subject: { es: 'Escalera suspendida y proyección de sombras cenitales', en: 'Suspended staircase and zenith shadow projection' },
     image: '/images/monolith-staircase.webp',
     aspect: 'tall',
     meta: {
@@ -639,9 +639,9 @@ export const MONOLITH_GALLERY: MonolithGalleryFrame[] = [
   },
   {
     id: 'gal-03',
-    title: { es: 'Atrio con Luz Rasante sobre Muro Entablillado', en: 'Atrium Raking Light on Board-Formed Wall' },
+    title: { es: 'Atrio con Luz Rasante', en: 'Raking Light Atrium' },
     location: 'Casa Bruma',
-    subject: { es: 'Textura mineral revelada por el rayo solar matutino', en: 'Mineral texture illuminated by morning raking ray' },
+    subject: { es: 'Textura mineral de encofrado bañada por luz solar matutina', en: 'Board-formed concrete texture bathed in morning raking sunlight' },
     image: '/images/monolith-interior-light.webp',
     aspect: 'wide',
     meta: {
@@ -653,9 +653,9 @@ export const MONOLITH_GALLERY: MonolithGalleryFrame[] = [
   },
   {
     id: 'gal-04',
-    title: { es: 'Patio Mineral con Olivo Escultórico', en: 'Mineral Courtyard with Solitary Olive Tree' },
+    title: { es: 'Patio Mineral con Olivo', en: 'Mineral Courtyard with Olive' },
     location: 'Casa de Piedra & Sombra',
-    subject: { es: 'Piedra caliza, banco pétreo y silencio arquitectónico', en: 'Limestone walls, stone bench and architectural silence' },
+    subject: { es: 'Muros de piedra caliza, banco pétreo y olivo escultórico', en: 'Limestone walls, stone bench and sculptural olive tree' },
     image: '/images/monolith-courtyard.webp',
     aspect: 'square',
     meta: {
@@ -667,9 +667,9 @@ export const MONOLITH_GALLERY: MonolithGalleryFrame[] = [
   },
   {
     id: 'gal-05',
-    title: { es: 'Perspectiva Crepuscular en Terraza de Hormigón', en: 'Twilight Terrace in Raw Concrete' },
+    title: { es: 'Terraza al Crepúsculo', en: 'Twilight Terrace' },
     location: 'Pabellón del Fiordo',
-    subject: { es: 'Reflejo de luz interior cálida sobre la piedra húmeda', en: 'Warm interior illumination reflecting on wet stone' },
+    subject: { es: 'Reflejo de luz interior cálida sobre la piedra y el fiordo', en: 'Warm interior illumination reflecting on stone and fjord' },
     image: '/images/monolith-gallery-1.webp',
     aspect: 'wide',
     meta: {
@@ -681,9 +681,9 @@ export const MONOLITH_GALLERY: MonolithGalleryFrame[] = [
   },
   {
     id: 'gal-06',
-    title: { es: 'Columnata Monumental & Ritmo Estructural', en: 'Structural Colonnade & Shadow Rhythm' },
+    title: { es: 'Columnata Monumental', en: 'Monumental Colonnade' },
     location: 'Centro Cultural Nómada',
-    subject: { es: 'Pilares monolíticos de hormigón y fuga geométrica', en: 'Monolithic concrete pillars and vanishing point' },
+    subject: { es: 'Pilares masivos de hormigón visto y sombras rítmicas en el suelo', en: 'Massive concrete pillars and rhythmic ground shadows' },
     image: '/images/monolith-gallery-2.webp',
     aspect: 'tall',
     meta: {
@@ -691,34 +691,6 @@ export const MONOLITH_GALLERY: MonolithGalleryFrame[] = [
       aperture: 'f/8.0',
       lightCondition: { es: 'Sol cenital de alto contraste', en: 'High contrast architectural daylight' },
       orientation: 'Eje longitudinal N-S',
-    },
-  },
-  {
-    id: 'gal-07',
-    title: { es: 'Cámara de Baño en Bloque de Caliza', en: 'Stone Bath Chamber with Hidden Skylight' },
-    location: 'Casa Bruma',
-    subject: { es: 'Bañera monolítica tallada en piedra con lucernario oculto', en: 'Monolithic limestone carved tub with concealed aperture' },
-    image: '/images/monolith-gallery-3.webp',
-    aspect: 'tall',
-    meta: {
-      focalLength: '35mm',
-      aperture: 'f/4.0',
-      lightCondition: { es: 'Luz cenital suave filtrada por celosía', en: 'Soft filtered overhead light well' },
-      orientation: 'Luz cenital indirecta',
-    },
-  },
-  {
-    id: 'gal-08',
-    title: { es: 'Pabellón Fundido en la Topografía Agreste', en: 'Pavilion Integrated in Mountain Topography' },
-    location: 'Refugio de Ceniza',
-    subject: { es: 'Cubierta vegetal, hormigón oscuro y bosque de coníferas', en: 'Green roof, dark concrete and conifer canopy' },
-    image: '/images/monolith-gallery-4.webp',
-    aspect: 'wide',
-    meta: {
-      focalLength: '50mm',
-      aperture: 'f/5.6',
-      lightCondition: { es: 'Luz clara de montaña tras la lluvia', en: 'Crisp mountain daylight after precipitation' },
-      orientation: 'Orientación Sur',
     },
   },
 ];

@@ -998,17 +998,14 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
               </span>
             </div>
 
-            {/* Galería en Retícula Continua 0.5px */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-l border-b border-white/10">
-              {MONOLITH_GALLERY.map((frame, index) => {
-                const isWide = index === 0 || index === 4;
+            {/* Galería en Retícula Continua 0.5px (6 láminas uniformes en grilla 3x2 sin huecos) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-l border-b border-white/10">
+              {MONOLITH_GALLERY.map((frame) => {
                 return (
                   <div
                     key={frame.id}
                     onClick={() => setLightboxFrame(frame)}
-                    className={`${
-                      isWide ? 'sm:col-span-2' : 'sm:col-span-1'
-                    } group flex flex-col border-r border-t border-white/10 bg-[#0C0B0A] cursor-pointer rounded-none`}
+                    className="group flex flex-col border-r border-t border-white/10 bg-[#0C0B0A] cursor-pointer rounded-none"
                     tabIndex={0}
                     role="button"
                     aria-label={`Open photography: ${frame.title[language]}`}
@@ -1041,7 +1038,7 @@ export const MonolithArchitectureExperience: React.FC<MonolithArchitectureExperi
                         <span className="font-swiss text-[11px] font-medium tracking-wide text-[#94A3B8] block">
                           {frame.location}
                         </span>
-                        <h4 className="font-swiss font-medium text-sm text-white line-clamp-1 group-hover:text-[#F4F1EA] transition-colors">
+                        <h4 className="font-swiss font-medium text-sm text-white line-clamp-2 group-hover:text-[#F4F1EA] transition-colors">
                           {frame.title[language]}
                         </h4>
                         <p className="font-swiss text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">
